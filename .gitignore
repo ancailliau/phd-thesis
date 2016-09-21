@@ -1,0 +1,14 @@
+*.mp
+*.log
+*.tmp
+*.tui
+*.tuo
+test-context
+*.aux
+*.bbl
+*.blg
+*.pdf
+*.tmp
+*.tuc
+*.tui
+*.tuo

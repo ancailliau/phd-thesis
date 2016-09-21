@@ -1,0 +1,195 @@
+% runtime graphics of job "chap-3"
+mpgraph:=1;
+randomseed:=2118;
+_special_div_ := 10000; 
+graphictextformat:="context";
+graphictextdirective "\global \loadfontfileoncetrue ";
+
+string contextversion;
+contextversion:="2013.06.07 17:34";
+
+boolean collapse_data; collapse_data:=true;
+def data_mpd_file="chap-3-mpgraph.mpd"; enddef ;
+def data_mpo_file="chap-3-mpgraph.mpo"; enddef ;
+def data_mpy_file="chap-3-mpgraph.mpy"; enddef ;
+
+
+color OverlayColor,OverlayLineColor;
+
+def initialize_form_numbers =
+do_initialize_numbers;
+enddef;
+
+vardef ForegroundBox =
+unitsquare xysized(HSize,VSize)
+enddef ;
+vardef PageFraction =
+if 10>1: (7-1)/(10-1) else: 1 fi
+enddef ;
+
+string txtfile ; txtfile := "chap-3-mpgraph.mpb" ;
+string txtfont ; txtfont := "texnansi-lmtt10" ;
+string txtpref ; txtpref := "00001::::" ;
+
+if unknown context_page: input mp-page; fi;
+
+boolean PageStateAvailable,OnRightPage,InPageBody;
+PageStateAvailable:=true;
+
+path PlainTextArea;
+;
+defaultfont:="ec-lmr10";
+defaultscale:=10.0pt/10pt;
+
+cmykcolors:=false;
+spotcolors:=false;
+
+OverlayWidth:=341.43306pt  ;
+OverlayHeight:=455.24924pt  ;
+OverlayDepth:=455.24924pt  ;
+OverlayColor:=(0,0,0);
+OverlayLineWidth:=0pt ;
+OverlayLineColor:=(0,0,0);
+BaseLineSkip:=12.05539pt;
+LineHeight:=12.05539pt;
+BodyFontSize:=10.0pt;
+TopSkip:=10.0pt;
+StrutHeight:=8.67989pt;
+StrutDepth:=3.37549pt;
+CurrentWidth:=341.43306pt;
+CurrentHeight:=455.24924pt;
+EmWidth:=10.0pt;
+ExHeight:=4.3055pt;
+PageNumber:=7;
+RealPageNumber:=7;
+LastPageNumber:= 10;
+
+prologues:=1;
+mpprocset:=1;
+
+HSize:=341.43306pt;
+VSize:=455.24924pt;
+
+mp_shade_version := 2 ;
+
+OnRightPage:=true;
+InPageBody:=false ;
+
+def LoadPageState =
+OnRightPage:=true;
+OnOddPage:=true;
+RealPageNumber:=7;
+PageNumber:=7;
+NOfPages:=10;
+PaperHeight:=845.04684pt;
+PaperWidth:=597.50787pt;
+PrintPaperHeight:=845.04684pt;
+PrintPaperWidth:=597.50787pt;
+TopSpace:=136.57323pt;
+BottomSpace:=139.4185pt;
+BackSpace:=128.0374pt;
+CutSpace:=128.03741pt;
+MakeupHeight:=569.05511pt;
+MakeupWidth:=341.43306pt;
+TopHeight:=0.0pt;
+TopDistance:=0.0pt;
+HeaderHeight:=56.90294pt;
+HeaderDistance:=0.0pt;
+TextHeight:=455.24924pt;
+FooterDistance:=0.0pt;
+FooterHeight:=56.90294pt;
+BottomDistance:=0.0pt;
+BottomHeight:=0.0pt;
+LeftEdgeWidth:=0.0pt;
+LeftEdgeDistance:=0.0pt;
+LeftMarginWidth:=75.58197pt;
+LeftMarginDistance:=11.99829pt;
+TextWidth:=341.43306pt;
+RightMarginDistance:=11.99829pt;
+RightMarginWidth:=75.58197pt;
+RightEdgeDistance:=0.0pt;
+RightEdgeWidth:=0.0pt;
+InnerMarginDistance:=11.99829pt;
+InnerMarginWidth:=75.58197pt;
+OuterMarginDistance:=11.99829pt;
+OuterMarginWidth:=75.58197pt;
+InnerEdgeDistance:=0.0pt;
+InnerEdgeWidth:=0.0pt;
+OuterEdgeDistance:=0.0pt;
+OuterEdgeWidth:=0.0pt;
+PageOffset:=0.0pt;
+PageDepth:=1.94443pt;
+LayoutColumns:=1;
+LayoutColumnDistance:=0.0pt;
+LayoutColumnWidth:=341.43306pt;
+enddef;
+
+ResetTextAreas;
+;
+SaveTextAreas;
+ResetTextAreas;
+;
+;
+PlainTextArea:=boundingbox((0pt,0pt)--(0pt,0pt)
+shifted (0pt,0pt));
+
+local_multi_par_area:=true;
+;
+let mprunend = end ;
+beginfig(1);
+verbatimtex \global \loadfontfileoncetrue  etex;
+
+def connectcircle (expr a, b, circle_size) =
+numeric ang; ang := angle(b-a);
+drawarrow (a + getanchor(ang, circle_size))
+-- (b - getanchor(ang, circle_size));
+enddef ;
+
+def getanchor (expr ang, circle_size) =
+(cosd(ang) * circle_size/2, sind(ang) * circle_size/2)
+enddef ;
+
+pair a, b, c;
+numeric circle_size;
+circle_size := 8mm;
+a := (0, 1cm);
+b := (1.8cm, .5cm);
+c := (1.8cm, 1.5cm);
+draw fullcircle scaled circle_size shifted a withcolor black;
+draw fullcircle scaled circle_size shifted b withcolor black;
+draw fullcircle scaled circle_size shifted c withcolor black;
+
+label.top(btex  $.5$ etex
+, a+(c-a)/2);
+label.bot(btex  $.5$ etex
+, a+(b-a)/2);
+
+label.bot(btex  a etex
+ scaled .75, a+(c-a)*.65);
+label.top(btex  b etex
+ scaled .75, a+(b-a)*.65);
+
+label(btex  C \neg T etex
+ scaled .75, a);
+label(btex  C T etex
+ scaled .75, c);
+label(btex  C \neg T etex
+ scaled .75, b);
+
+drawarrow a + getanchor(135, circle_size) * 2 -- a + getanchor(135, circle_size) ;
+connectcircle(a,b,circle_size);
+connectcircle(a,c,circle_size);
+drawarrow
+c + getanchor(135, circle_size) ..
+controls (c + getanchor(135, circle_size * 3))
+and (a + getanchor(90, circle_size * 3)) ..
+a + getanchor(90, circle_size);
+drawarrow
+b + getanchor(-135, circle_size) ..
+controls (b + getanchor(-135, circle_size * 3))
+and (a + getanchor(-90, circle_size * 3)) ..
+a + getanchor(-90, circle_size);
+;
+endfig;
+let end=mprunend;
+end.

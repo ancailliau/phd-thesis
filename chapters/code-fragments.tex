@@ -1,0 +1,265 @@
+
+
+\startluacode
+
+function drawHistories (histories)
+    context.startMPcode()
+	local vspacing = 1.4
+	for i, h in ipairs(histories) do
+		drawHistory (h, (vspacing * #histories) - vspacing * i)
+	end
+    context.stopMPcode()
+end
+
+function drawHistory(items, position)
+	local circle_size = 2
+	local histories = #items
+	
+	context ("labeloffset := 2mm;")
+	print (position)
+
+	context( "draw" )	
+	for i=1,(histories-2) do
+		context( "(%fcm, %fcm) -- ", i - 1, position )
+    end
+	context( "(%fcm, %fcm);", histories-1, position )
+	
+    
+	for i, item in ipairs(items) do
+		context( "pair a ; a := (%fcm, %fcm); ", i - 1, position)
+		if (item.color == 0) then
+			context( "fill fullcircle scaled %imm shifted a withcolor red;", circle_size)
+		else
+			context( "fill fullcircle scaled %imm shifted a withcolor .5green;", circle_size)
+		end
+		context( "label.top(btex %s etex,a);", item.top)
+		context( "label.bot(btex %s etex,a);", item.bottom)
+    end
+end
+
+\stopluacode
+
+
+
+% Realizability
+
+\startsubsection[title={To Merge with previous}]
+    
+        In the non-probabilistic framework, a goal defines a set of 
+        intended behaviours. In the probabilistic framework, a goal defines a set of 
+        computation trees. The underlying agent model presented in \cite[Let02a] 
+        needs to be revised to be consistent with the probabilistic framework.
+        
+        A computation tree is a tree of states. A computation tree can be 
+        represented, with a labelling function, as a set of sequences of states that 
+        is prefix closed, i.e. all prefixes of a sequences are member of the set 
+        \cite[Kup00a]. Consider the following computation tree where $s_i$ are 
+        states of the system:
+        
+        \midaligned{
+        \startMPcode
+        		def connectcircle (expr a, b, circle_size) =
+        			numeric ang; ang := angle(b-a);
+            		drawarrow (a + getanchor(ang, circle_size))
+            				  -- (b - getanchor(ang, circle_size));
+        		enddef ;
+        		
+        		def getanchor (expr ang, circle_size) =
+        			(cosd(ang) * circle_size/2, sind(ang) * circle_size/2)
+        		enddef ;
+        
+        		hspacing := 8mm;
+        		vspacing := 8mm;
+        		size := 6mm;
+        		
+        		draw fullcircle scaled size shifted (1*hspacing,0) withcolor black;
+        		draw fullcircle scaled size shifted (2*hspacing,0) withcolor black;
+        		draw fullcircle scaled size shifted (3*hspacing,0) withcolor black;
+        		draw fullcircle scaled size shifted (4*hspacing,0) withcolor black;
+        		draw fullcircle scaled size shifted (5*hspacing,0) withcolor black;
+        		
+        		draw fullcircle scaled size shifted (2*hspacing,1*vspacing) withcolor black;
+        		draw fullcircle scaled size shifted (4.5*hspacing,1*vspacing) withcolor black;
+        		
+        		draw fullcircle scaled size shifted (3.25*hspacing,2*vspacing) withcolor black;
+        		
+        		connectcircle ((2*hspacing,1*vspacing), (1*hspacing,0), size);
+        		connectcircle ((2*hspacing,1*vspacing), (2*hspacing,0), size);
+        		connectcircle ((2*hspacing,1*vspacing), (3*hspacing,0), size);
+        		connectcircle ((4.5*hspacing,1*vspacing), (4*hspacing,0), size);
+        		connectcircle ((4.5*hspacing,1*vspacing), (5*hspacing,0), size);
+        		connectcircle ((3.25*hspacing,2*vspacing), (2*hspacing,1*vspacing), size);
+        		connectcircle ((3.25*hspacing,2*vspacing), (4.5*hspacing,1*vspacing), size);
+        		
+        		label(btex $s_{11}$ etex, (1*hspacing,0));
+        		label(btex $s_{12}$ etex, (2*hspacing,0));
+        		label(btex $s_{13}$ etex, (3*hspacing,0));
+        		label(btex $s_{21}$ etex, (4*hspacing,0));
+        		label(btex $s_{22}$ etex, (5*hspacing,0));
+        		label(btex $s_1$ etex, (2*hspacing,1*vspacing));
+        		label(btex $s_2$ etex, (4.5*hspacing,1*vspacing));
+        		label(btex $s_\epsilon$ etex, (3.25*hspacing,2*vspacing));
+        \stopMPcode
+        }
+        
+        \noindent This tree can be represented by the set of behaviours
+        
+        \startformula
+        \lbrace s_\epsilon, s_\epsilon s_1, s_\epsilon s_1s_{11}, s_
+        \epsilon s_1s_{12}, s_\epsilon s_1s_{13}, s_\epsilon s_2, s_\epsilon 
+        s_2s_{21}, s_\epsilon s_2s_{22} \rbrace
+        \stopformula
+        
+        For a more concise representation, we can introduce a sequence of 
+        natural numbers representing the computation tree above, as the indices 
+        suggest. The sequence of natural numbers $11$ represents the sequence of 
+        state $s_\epsilon s_1 s_{11}$. The set of sequences can be represented as
+        \startformula
+        \lbrace \epsilon, 1, 11, 12, 13, 2, 21, 22 \rbrace
+        \stopformula
+        
+        In the following, for a computation tree $\tau$:
+        \startitemize
+        \item $\tau_0$ denotes the root of the computation tree. In our 
+        		example, $\tau_0$ denotes $s_\epsilon$.
+        \item $\tau_{[t]}$ denotes the sequence of states corresponding to 
+        		the sequence $t$. In our example, $\tau_{[11]}$ denotes the sequence $s_
+        		\epsilon s_1 s_{11}$.
+        \item $\tau_{t}$ represents the state corresponding to the sequence 
+        $t$. In our example $\tau_{11}$ represents the state $s_{11}$. $\tau_{t\cdot 
+        s}$ represents the state corresponding to the sequence $t$ followed by the 
+        sequence $s$. In our example, $\tau_{2\cdot 2}$ represents the state 
+        $s_{22}$.
+        \stopitemize
+        
+        An agent is composed by
+        \startitemize
+        \item An interface, stating the variables that are monitored and 
+        	controlled by the agent. 
+        \item A transition system, composed by a condition on the initial 
+        states and a transition function mapping a sequence of monitored states to a 
+        next state of controlled variables. 
+        \item A set of goal the agent is responsible for. 
+        \stopitemize
+        
+        In the sequel, $Mon(ag)$ denotes the set of monitorable variables 
+        for the agent $ag$ and $Ctrl(ag)$ denotes the set of controllable variables 
+        for the agent $ag$, and $Voc(ag)$ denotes the union of the two. $V^{|
+        Ctrl(ag)}$, $V^{|Mon(ag)}$ respectively, denotes the projection of the set 
+        of variables $V$ on the controlled, monitored respectively, variables by the 
+        agent.
+        
+        denoted $Init(ag)$
+        
+        $Next(ag)$
+        
+        A computation tree over a set of variable $V$ is a finite or 
+        infinite tree of states of $V$. The set of all computation trees over a set 
+        of variable is denoted $Trees(V)$.
+        
+        The runs of an agent is a set of $Run(ag) \subseteq Trees(V)$ such 
+        		that, for each computation tree $\tau \in Runs(ag)$,
+        \startitemize
+        \item $\tau_0^{|Ctrl(ag)} \in Init(ag)$ ,
+        \item $\langle\tau_{[i]}^{|Voc(ag)}, \tau_{i\cdot j}^{|Ctrl(ag)}
+        		\rangle \in Next(ag)$ for all sequences $i\cdot j$ in $\tau$.
+        \stopitemize
+        
+        The set of infinite computation trees of an agent $ag$ is denoted 
+        		$Behaviour(ag)$.
+        
+        \startdefinition{Responsibility Consistency Rule}
+        \startformula
+        \text{for all } ag \in Agent, g \in Goal, \text{ if } Resp(ag, g) 
+        		\text {, then } Behaviour(ag) \subseteq g
+        \stopformula
+        \stopdefinition
+        
+        \startdefinition{Realizability}
+        A goal $G$ is realizable by an agent $ag$ if there exists a 
+        		transition system with
+        \startitemize
+        \item $Init(ag) \subseteq State(Ctrl(ag))$
+        \item $Next(ag) \subseteq Paths(Voc(ag)) \times Ctrl(ag)$
+        \stopitemize
+        such that $Behaviour(ag) = G$.
+        \stopdefinition
+        
+        \stopsubsection
+        
+        
+
+        % \subsubsection {Limitation of PCTL formalisation}
+        
+        %LTL and CTL have an incomparable expressiveness. There exists a 
+        %formula in LTL that has no equivalent in CTL, and vice-versa. For example, 
+        %the reset property stating that from an error state, we can always reach a 
+        %state where the error is recovered is not expressible in LTL. On the 
+        %contrary, the stability property, stating that at some point a property is 
+        %true forever (until the program stops) cannot be expressed in CTL. CTL can 
+        %only express that we can reach a point where the property is true forever 
+        %(which is too permissive) and that all computation reach a state where the 
+        %property is true (which is too strong). It is not so obvious for the second 
+        %claim. Consider the following system:
+        %
+        %\midaligned{
+        %\startMPcode
+        %		def connectcircle (expr a, b, circle_size) =
+        %			numeric ang; ang := angle(b-a);
+        %    		drawarrow (a + getanchor(ang, circle_size))
+        %    				  -- (b - getanchor(ang, circle_size));
+        %		enddef ;
+        %		
+        %		def getanchor (expr ang, circle_size) =
+        %			(cosd(ang) * circle_size/2, sind(ang) * circle_size/2)
+        %		enddef ;
+        %	
+        %		pair a, b, c;
+        %		numeric circle_size;
+        %		circle_size := 8mm;
+        %		
+        %		width := 6mm;
+        %		height := 6mm;
+        %		
+        %		a := (0, 0);
+        %		b := (1.5cm, 0);
+        %		c := (3cm, 0);
+        %		
+        %		draw unitsquare xscaled width yscaled height smoothed .5mm shifted (c-(width/2,height/2)) withcolor black;
+        %		draw unitsquare xscaled width yscaled height smoothed .5mm shifted (a-(width/2,height/2)) withcolor black;
+        %		draw unitsquare xscaled width yscaled height smoothed .5mm shifted (b-(width/2,height/2)) withcolor black;
+        %		
+        %		label(btex $s_0$ etex scaled .75, a);
+        %		label(btex $s_1$ etex scaled .75, b);
+        %		label(btex $s_2$ etex scaled .75, c);
+        %		
+        %		label.top(btex $\lbrace a\rbrace$ etex scaled .75, a + (0, height/2));
+        %		label.top(btex $\emptyset$ etex scaled .75, b + (0, height/2));
+        %		label.top(btex $\lbrace a\rbrace$ etex scaled .75, c + (0, height/2));
+        %		
+        %		drawarrow 
+        %			a + (width/2, 0) .. b - (width/2, 0);
+        %			
+        %		drawarrow
+        %			b + (width/2, 0) .. c - (width/2, 0);
+        %			
+        %		drawarrow 
+        %			a + (getanchor(-65, circle_size) yscaled 0 - (0,height/2))
+        %			.. a + getanchor(-90, circle_size) * 1.5
+        %			.. a + (getanchor(-105, circle_size) yscaled 0 - (0,height/2));
+        %			
+        %		drawarrow 
+        %			c + (getanchor(-65, circle_size) yscaled 0 - (0,height/2))
+        %			.. c + getanchor(-90, circle_size) * 1.5
+        %			.. c + (getanchor(-105, circle_size) yscaled 0 - (0,height/2));
+        %\stopMPcode}
+        %
+        %In $s_0$, the LTL formula is satisfied, as eventually, a path 
+        %remains in $s_2$ or in $s_0$. However, the CTL formula $\forall\lozenge
+        %\forall\square a$ does not hold in $s_0$. Indeed, in $s_0$, $\forall\square 
+        %a$ is not satisfied (because $s_1$ does not satisfy $a$), and so $s_0$ does 
+        %not satisfy $\forall\lozenge\forall\square a$ as the path that remains in 
+        %$s_0$ never reach a state where $\forall\square a$. A more detailed 
+        %discussion comparing both logic can be found in \cite[Var01a].
+        
+        % PCTL vs CTL

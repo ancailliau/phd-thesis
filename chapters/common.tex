@@ -1,0 +1,254 @@
+% !TEX root = thesis.tex
+
+\startenvironment common
+
+\usemodule[bib]
+\usemodule[newmat]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FONT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definefontalternative[me]
+\definefontalternative[mi]
+\definefontalternative[se]
+\definefontalternative[si]
+
+\definefontfeature[default][default]
+	[mode=node,
+	 script=latn,
+	 kern=yes,
+	 palt=yes,
+	 tlig=yes,
+	 trep=yes,
+	 init=yes,
+	 size=yes,
+	 expansion=quality,
+	 protrusion=quality]
+	 
+\definefontfeature[frac][default][frac=yes]
+\definefontfeature[sups][default][sups=yes]
+\definefontfeature[onum][default][onum=yes]
+\definefontfeature[lnum][default][lnum=yes]
+\setupalign[hz,hanging]
+
+\starttypescript [serif] [optical] [size]
+
+  % design size 8 pt, size range (6 pt, 8.4 pt]
+  \definebodyfont [4pt,5pt,6pt,7pt,8pt] [rm]
+    [tf=SerifCaption                 sa 1,
+     it=SerifCaptionItalic           sa 1,
+     me=SerifCaptionMedium           sa 1,
+     mi=SerifCaptionMediumItalic     sa 1,
+     se=SerifCaptionSemiBold         sa 1,
+     si=SerifCaptionSemiBoldItalic   sa 1,
+     bf=SerifCaptionBold             sa 1,
+     bi=SerifCaptionBoldItalic       sa 1]
+     
+  % design size 11 pt, size range (8.4 pt, 13 pt]
+  \definebodyfont [9pt,10pt,11pt,12pt,13pt] [rm]
+    [tf=SerifRegular                 sa 1,
+     it=SerifRegularItalic           sa 1,
+     me=SerifRegularMedium           sa 1,
+     mi=SerifRegularMediumItalic     sa 1,
+     se=SerifRegularSemiBold         sa 1,
+     si=SerifRegularSemiBoldItalic   sa 1,
+     bf=SerifRegularBold             sa 1,
+     bi=SerifRegularBoldItalic       sa 1]
+     
+  % design size 19 pt, size range (13 pt, 19.9 pt]
+  \definebodyfont [14pt,15pt,16pt,17pt,18pt,19pt] [rm]
+    [tf=SerifSubhead                 sa 1,
+     it=SerifSubheadItalic           sa 1,
+     me=SerifSubheadMedium           sa 1,
+     mi=SerifSubheadMediumItalic     sa 1,
+     se=SerifSubheadSemiBold         sa 1,
+     si=SerifSubheadSemiBoldItalic   sa 1,
+     bf=SerifSubheadBold             sa 1,
+     bi=SerifSubheadBoldItalic       sa 1]
+     
+  % design size 72 pt, size range (19.9 pt, 72 pt]
+  \definebodyfont [20pt,21pt,22pt] [rm]
+    [tf=SerifDisplay                 sa 1,
+     it=SerifDisplayItalic           sa 1,
+     me=SerifDisplayMedium           sa 1,
+     mi=SerifDisplayMediumItalic     sa 1,
+     se=SerifDisplaySemiBold         sa 1,
+     si=SerifDisplaySemiBoldItalic   sa 1,
+     bf=SerifDisplayBold             sa 1,
+     bi=SerifDisplayBoldItalic       sa 1]
+     
+\stoptypescript
+
+\starttypescript [serif] [minionpro]
+
+    \definefontsynonym [SerifRegular]                [file:MinionPro-Regular.otf]	      [features=default]
+    \definefontsynonym [SerifRegularItalic]          [file:MinionPro-It.otf]			  [features=default]
+    \definefontsynonym [SerifRegularMedium]          [file:MinionPro-Medium.otf]		  [features=default]
+    \definefontsynonym [SerifRegularMediumItalic]    [file:MinionPro-MediumIt.otf]		  [features=default]
+    \definefontsynonym [SerifRegularSemiBold]        [file:MinionPro-Semibold.otf]		  [features=default]
+    \definefontsynonym [SerifRegularSemiBoldItalic]  [file:MinionPro-SemiboldIt.otf]	  [features=default]
+    \definefontsynonym [SerifRegularBold]            [file:MinionPro-Bold.otf]			  [features=default]
+    \definefontsynonym [SerifRegularBoldItalic]      [file:MinionPro-BoldIt.otf]		  [features=default]
+    
+    \definefontsynonym [SerifCaption]                [file:MinionPro-Capt]				  [features=default]
+    \definefontsynonym [SerifCaptionItalic]          [file:MinionPro-ItCapt.otf]		  [features=default]
+    \definefontsynonym [SerifCaptionMedium]          [file:MinionPro-MediumCapt.otf]	  [features=default]
+    \definefontsynonym [SerifCaptionMediumItalic]    [file:MinionPro-MediumItCapt.otf]	  [features=default]
+    \definefontsynonym [SerifCaptionSemiBold]        [file:MinionPro-SemiboldCapt.otf]	  [features=default]
+    \definefontsynonym [SerifCaptionSemiBoldItalic]  [file:MinionPro-SemiboldItCapt.otf]  [features=default]
+    \definefontsynonym [SerifCaptionBold]            [file:MinionPro-BoldCapt.otf]		  [features=default]
+    \definefontsynonym [SerifCaptionBoldItalic]      [file:MinionPro-BoldItCapt.otf]	  [features=default]
+    
+    \definefontsynonym [SerifSubhead]                [file:MinionPro-Subh.otf]			  [features=default]
+    \definefontsynonym [SerifSubheadItalic]          [file:MinionPro-ItSubh.otf]		  [features=default]
+    \definefontsynonym [SerifSubheadMedium]          [file:MinionPro-MediumSubh.otf]	  [features=default]
+    \definefontsynonym [SerifSubheadMediumItalic]    [file:MinionPro-MediumItSubh.otf]	  [features=default]
+    \definefontsynonym [SerifSubheadSemiBold]        [file:MinionPro-SemiboldSubh.otf]	  [features=default]
+    \definefontsynonym [SerifSubheadSemiBoldItalic]  [file:MinionPro-SemiboldItSubh.otf]  [features=default]
+    \definefontsynonym [SerifSubheadBold]            [file:MinionPro-BoldSubh.otf]		  [features=default]
+    \definefontsynonym [SerifSubheadBoldItalic]      [file:MinionPro-BoldItSubh.otf]	  [features=default]
+    
+    \definefontsynonym [SerifDisplay]                [file:MinionPro-Disp.otf]			  [features=default]
+    \definefontsynonym [SerifDisplayItalic]          [file:MinionPro-ItDisp.otf]		  [features=default]
+    \definefontsynonym [SerifDisplayMedium]          [file:MinionPro-MediumDisp.otf]	  [features=default]
+    \definefontsynonym [SerifDisplayMediumItalic]    [file:MinionPro-MediumItDisp.otf]	  [features=default]
+    \definefontsynonym [SerifDisplaySemiBold]        [file:MinionPro-SemiboldDisp.otf]	  [features=default]
+    \definefontsynonym [SerifDisplaySemiBoldItalic]  [file:MinionPro-SemiboldItDisp.otf]  [features=default]
+    \definefontsynonym [SerifDisplayBold]            [file:MinionPro-BoldDisp.otf]		  [features=default]
+    \definefontsynonym [SerifDisplayBoldItalic]      [file:MinionPro-BoldItDisp.otf]	  [features=default]
+    
+        
+\stoptypescript
+
+\definetypeface [source] [rm] [serif] [minionpro] [optical]
+\definetypeface [source] [mm] [math]  [xits]      [default]
+%\definetypeface [source] [mm] [math]  [TeX Gyre Pagella Math]      [default]
+
+\setupbodyfont[source, 11pt]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% End of FONT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setupwhitespace[medium]
+\setupindenting[medium, yes]
+
+
+\definepapersize[ciaco-thesis][width=160mm,height=240mm]
+\setuppapersize[ciaco-thesis][ciaco-thesis]
+%\setuppapersize[ciaco-thesis][A4]
+\setuplayout
+   [backspace=20mm,
+    width=120mm,
+    topspace=20mm,
+    height=200mm,
+    location={middle,middle},
+    marking=on]
+    
+\setuppagenumbering [alternative=doublesided]
+
+\setupheadertexts[]
+\setupheadertexts[chapter][][][section]
+
+\setupfootertexts[]
+\setupfootertexts
+	[pagenumber]
+	[{\switchtobodyfont[8pt]\framed[offset=2pt]{Last compiled: \currentdate[d,{/},mm]\ \currenttime}}]
+	[{\switchtobodyfont[8pt]\framed[offset=2pt]{Last compiled: \currentdate[d,{/},mm]\ \currenttime}}]
+	[pagenumber]
+	
+\define[2]\MyChapterCommand%
+  {\framed[frame=off,bottomframe=on,topframe=on,boffset=1em,toffset=1em]
+     {\vbox{\headtext{chapter} #1\blank#2}}}
+
+\setuphead[chapter][command=\MyChapterCommand,distance=0em,after={}]
+\setupheadtext[chapter=Chapter]
+
+\define[2]\MyTitleCommand%
+  {\framed[frame=off,bottomframe=on,topframe=on,boffset=1em,toffset=1em]
+     {\vbox{#2}}}
+
+\setuphead[title][command=\MyTitleCommand,distance=0em,after={\vskip1.5em}]
+	
+\setupbibtex[database={../bib-thesis},sort=author]
+\setuppublications[refcommand=key]
+
+\define[1]\goal{\ss#1\rm}
+
+\defineenumeration[definition]
+	[text={Definition},
+	style=slanted,
+	headstyle=\se,
+	title=yes,
+	titleleft={\se(},
+	titleright={)},
+	alternative=serried,
+	width=fit,
+	inbetween={},
+	right={. }]
+	
+\setupnumber[definition][way=bychapter, numbersection=no]
+
+\defineenumeration[example]
+	[text={Example},
+	 style=slanted,
+	 headstyle=\se,
+	 number=no,
+	 alternative=serried,
+	 width=fit,
+	 inbetween={},
+	 right={. },
+	 closesymbol=\mathematics{\square},
+	 %closecommand=\ifmmode\eqno\else\wordright\fi
+    ]
+	
+\setupnumber[example][way=bychapter, numbersection=no]
+
+\defineenumeration[proposition]
+	[text={Proposition},
+	 style=slanted,
+	 headstyle=\se,
+	 alternative=serried,
+	 width=fit,
+	 inbetween={},
+	 right={. },
+    ]
+
+\defineenumeration[proof]
+	[text={Proof},
+	 number=no,
+	 headstyle=italic,
+	 style=normal,
+	 alternative=serried,
+	 width=fit,
+	 inbetween={},
+	 right={. },
+	 closesymbol={\mathematics{\square}},
+    ]
+
+\enabletrackers[graphics.locating]
+\enabletrackers[graphics.conversion]
+
+\setupcaptions[minwidth=.85\textwidth, align=middle]
+
+
+\definecombinedlist[summary][section,subsection]
+\setupcombinedlist[summary][criterium=component]
+
+\setuplist[chapter]
+  [alternative=b,
+   style=bold,
+   before={\blank[4*big]}]
+
+\setupinteraction[state=start,color=darkgreen,contrastcolor=darkgreen,style={}]
+\placebookmarks[title,chapter,section,subsection][force=yes]
+
+%\usetypescriptfile[cleartype]
+
+%\starttypescript[mainface]
+%  \definetypeface  [mainface] [rm] [serif] [Minion Pro] [default]
+%  \definetypeface  [mainface] [ss] [sans]  [Myriad Pro] [default]
+%  \definetypeface  [mainface] [tt] [mono]  [consolas][default]
+%  \definetypeface  [mainface] [mm] [math]  [cambria] [default]
+%\stoptypescript
+
+%\setupbodyfont[reset,modern]
+
+\stopenvironment
