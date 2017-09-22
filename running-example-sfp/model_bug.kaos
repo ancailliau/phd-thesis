@@ -1,0 +1,79 @@
+# Goals
+
+declare goal [ make_up_water_provided ]
+  name "Achieve [Make Up Water Provided When Loss Of Cooling]"
+  rsr .90
+  refinedby response_to_loss_of_cooling, pump_on_when_activated
+end
+
+declare goal [ response_to_loss_of_cooling ]
+  name "Achieve [Make Up Water Requested When Loss Of Cooling]"
+  refinedby alarm_raised, pump_activated
+end
+
+declare goal [ pump_on_when_activated ]
+  name "Achieve [Make Up Water Provided When Requested]"
+  refinedby valve_open, pump_motor_on
+end
+
+declare goal [ alarm_raised ]
+  name "Achieve [Alarm Raised When Low Water]"
+  assignedto software
+  obstructedby alarm_not_raised
+end
+
+declare goal [ pump_activated ]
+  name "Achieve [Make Up Water Requested When Alarm Raised]"
+  assignedto operator
+  obstructedby no_response
+end
+
+declare goal [ valve_open ]
+  name "Achieve [Valve Opened When Water Requested]"
+  assignedto software
+end
+
+declare goal [ pump_motor_on ]
+  name "Achieve [Make Up Pump Motor On When Water Requested]"
+  assignedto pump
+end
+
+# Obstacles
+
+declare obstacle [ alarm_not_raised ]
+  name "AlarmFailure"
+  resolvedby [restoration:response_to_loss_of_cooling] walkdown
+  probability 0.1
+end
+
+declare obstacle [ no_response ]
+  name "MakeUpWaterNotRequested"
+  resolvedby [substitution:response_to_loss_of_cooling] automated_request
+  probability 0.2
+end
+
+# Countermeasures
+
+declare goal [ automated_request ]
+  name "Achieve [Make Up Water Automatically Requested When Alarm Raised]"
+  assignedto software
+end
+
+declare goal [ walkdown ]
+  name "Achieve [Make Up Water Requested When Walkdown]"
+  assignedto operator
+end
+
+# Agents
+
+declare agent [ software ]
+  name "Controlling Software"
+end
+
+declare agent [ operator ]
+  name "Operator"
+end
+
+declare agent [ pump ]
+  name "Pump"
+end

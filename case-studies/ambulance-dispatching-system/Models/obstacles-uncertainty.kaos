@@ -1,0 +1,434 @@
+import "ads.kaos"
+
+@experts.quantiles "(.1, .5, .9)"
+
+### Experts estimates
+
+override obstacle [ ambulance_not_at_station ]
+  probability[e1] quantiles[13.33%, 33.33%, 53.33%]
+  # probability[e2] quantiles[15.00%, 40.00%, 75.00%]	
+  # probability[e3] quantiles[10.00%, 15.00%, 25.00%]	
+  # probability[e4] quantiles[30.00%, 10.00%, 50.00%]	
+  # probability[e5] quantiles[2.00%, 4.00%, 10.00%]
+end
+
+override obstacle [ allocated_ambulance_not_available ]
+  probability[e1] quantiles[0.00%, 0.00%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[2.00%, 3.00%, 5.00%]	
+  # probability[e4] quantiles[10.00%, 20.00%, 30.00%]
+  # probability[e5] quantiles[20.00%, 30.00%, 40.00%]
+end 
+
+override obstacle [ ambulance_broken ] 
+  probability[e1] quantiles[0.00%, 0.00%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[0.00%, 1.00%, 1.00%]	
+  # probability[e4] quantiles[5.00%, 5.00%, 5.00%]	
+  # probability[e5] quantiles[4.00%, 6.00%, 10.00%]
+end
+
+override obstacle [ ambulance_traffic_deviation ]
+  probability[e1] quantiles[6.67%, 20.00%, 33.33%]	
+  # probability[e2] quantiles[15.00%, 50.00%, 75.00%]	
+  # probability[e3] quantiles[30.00%, 50.00%, 65.00%]	
+  # probability[e4] quantiles[40.00%, 50.00%, 70.00%]	
+  # probability[e5] quantiles[20.00%, 30.00%, 40.00%]
+end
+
+override obstacle [ ambulance_in_unfamiliar_area ]
+  probability[e1] quantiles[6.67%, 13.33%, 20.00%]	
+  # probability[e2] quantiles[15.00%, 30.00%, 50.00%]	
+  # probability[e3] quantiles[15.00%, 18.00%, 25.00%]	
+  # probability[e4] quantiles[20.00%, 20.00%, 30.00%]	
+  # probability[e5] quantiles[20.00%, 24.00%, 30.00%]
+end
+
+override obstacle [ ambulance_not_available_when_moborder_displayed ]
+  probability[e1] quantiles[0.00%, 0.00%, 0.00%]
+  # probability[e2] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 1.00%]	
+  # probability[e4] quantiles[10.00%, 20.00%, 30.00%]
+  # probability[e5] quantiles[20.00%, 30.00%, 40.00%]
+end
+
+override obstacle [ available_bed_no_assigned ]	
+  probability[e1] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[5.00%, 7.00%, 10.00%]	
+  # probability[e5] quantiles[2.00%, 4.00%, 6.00%]
+end
+
+override obstacle [ avls_out_of_service ]
+  probability[e1] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle [ gps_black_spot ]
+  probability[e1] quantiles[33.33%, 40.00%, 46.67%]	
+  # probability[e2] quantiles[5.00%, 20.00%, 40.00%]	
+  # probability[e3] quantiles[12.00%, 14.00%, 16.00%]	
+  # probability[e4] quantiles[10.00%, 15.00%, 20.00%]	
+  # probability[e5] quantiles[2.00%, 2.00%, 4.00%]
+end
+
+override obstacle [ crew_distracted ]
+  probability[e1] quantiles[0.00%, 6.67%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e3] quantiles[1.00%, 1.00%, 2.00%]	
+  # probability[e4] quantiles[5.00%, 5.00%, 5.00%]	
+  # probability[e5] quantiles[0.00%, 2.00%, 4.00%]
+end
+
+override obstacle [ crew_not_in_ambulance ]
+  probability[e1] quantiles[6.67%, 13.33%, 13.33%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[5.00%, 8.00%, 10.00%]	
+  # probability[e4] quantiles[10.00%, 15.00%, 20.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle [ destination_confused ]
+  probability[e1] quantiles[0.00%, 6.67%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[3.00%, 5.00%, 8.00%]	
+  # probability[e4] quantiles[5.00%, 5.00%, 7.00%]	
+  # probability[e5] quantiles[2.00%, 2.00%, 4.00%]
+end
+
+override obstacle [ fire_environment ] 
+  probability[e1] quantiles[0.00%, 0.00%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[0.00%, 3.00%, 5.00%]	
+  # probability[e4] quantiles[7.00%, 7.00%, 7.00%]	
+  # probability[e5] quantiles[0.00%, 2.00%, 2.00%]
+end 
+
+override obstacle [ forget_to_press_status_leaving ] 
+  probability[e1] quantiles[13.33%, 20.00%, 26.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 10.00%]	
+  # probability[e3] quantiles[6.00%, 10.00%, 18.00%]	
+  # probability[e4] quantiles[20.00%, 25.00%, 40.00%]	
+  # probability[e5] quantiles[10.00%, 12.00%, 16.00%]
+end
+
+override obstacle [ forget_to_press_status_on_scene ] 
+  probability[e1] quantiles[13.33%, 20.00%, 26.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 10.00%]	
+  # probability[e3] quantiles[6.00%, 10.00%, 18.00%]	
+  # probability[e4] quantiles[20.00%, 25.00%, 40.00%]	
+  # probability[e5] quantiles[10.00%, 12.00%, 16.00%]
+end
+
+override obstacle [ forget_to_press_status_to_hospital ] 
+  probability[e1] quantiles[13.33%, 20.00%, 26.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 10.00%]	
+  # probability[e3] quantiles[6.00%, 10.00%, 18.00%]	
+  # probability[e4] quantiles[20.00%, 25.00%, 40.00%]	
+  # probability[e5] quantiles[10.00%, 12.00%, 16.00%]
+end
+
+override obstacle [ forget_to_press_status_at_hospital ] 
+  probability[e1] quantiles[13.33%, 20.00%, 26.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 10.00%]	
+  # probability[e3] quantiles[6.00%, 10.00%, 18.00%]	
+  # probability[e4] quantiles[20.00%, 25.00%, 40.00%]	
+  # probability[e5] quantiles[10.00%, 12.00%, 16.00%]
+end
+
+override obstacle [ forget_to_press_status_radio ] 
+  probability[e1] quantiles[13.33%, 20.00%, 26.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 10.00%]	
+  # probability[e3] quantiles[6.00%, 10.00%, 18.00%]	
+  # probability[e4] quantiles[20.00%, 25.00%, 40.00%]	
+  # probability[e5] quantiles[10.00%, 12.00%, 16.00%]
+end
+
+override obstacle [ forget_to_press_status_unavailable ] 
+  probability[e1] quantiles[13.33%, 20.00%, 26.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 10.00%]	
+  # probability[e3] quantiles[6.00%, 10.00%, 18.00%]	
+  # probability[e4] quantiles[20.00%, 25.00%, 40.00%]	
+  # probability[e5] quantiles[10.00%, 12.00%, 16.00%]
+end
+
+override obstacle [ forget_to_press_status_station ] 
+  probability[e1] quantiles[13.33%, 20.00%, 26.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 10.00%]	
+  # probability[e3] quantiles[6.00%, 10.00%, 18.00%]	
+  # probability[e4] quantiles[20.00%, 25.00%, 40.00%]	
+  # probability[e5] quantiles[10.00%, 12.00%, 16.00%]
+end
+
+override obstacle [ gps_not_working ]
+  probability[e1] quantiles[0.00%, 6.67%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e3] quantiles[10.00%, 20.00%, 25.00%]	
+  # probability[e4] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle [ hazardous_environment ] 
+  probability[e1] quantiles[0.00%, 6.67%, 13.33%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 10.00%]	
+  # probability[e3] quantiles[0.00%, 5.00%, 10.00%]	
+  # probability[e4] quantiles[25.00%, 30.00%, 65.00%]	
+  # probability[e5] quantiles[2.00%, 4.00%, 6.00%]
+end
+
+override obstacle [ insufficient_capacity ]
+  probability[e1] quantiles[0.00%, 6.67%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[5.00%, 5.00%, 5.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle [ mdt_turned_off ]
+  probability[e1] quantiles[53.33%, 66.67%, 80.00%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[1.00%, 1.00%, 1.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle [ mobilization_cancelled ]
+  probability[e1] quantiles[13.33%, 20.00%, 33.33%]
+  # probability[e2] quantiles[0.00%, 25.00%, 40.00%]	
+  # probability[e3] quantiles[1.00%, 1.00%, 2.00%]
+  # probability[e4] quantiles[15.00%, 20.00%, 20.00%]
+  # probability[e5] quantiles[4.00%, 6.00%, 10.00%]
+end
+
+override obstacle [ ambulance_in_wrong_direction ] 
+  probability[e1] quantiles[0.00%, 6.67%, 13.33%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[0.00%, 2.00%, 10.00%]	
+  # probability[e4] quantiles[5.00%, 5.00%, 10.00%]	
+  # probability[e5] quantiles[2.00%, 4.00%, 6.00%]
+end
+
+override obstacle [ mobilization_taken_by_other_ambulance ]	
+  probability[e1] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle [ no_bed ]	
+  probability[e1] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[3.00%, 5.00%, 10.00%]	
+  # probability[e4] quantiles[10.00%, 15.00%, 25.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle[ out_of_paper ]	
+  probability[e1] quantiles[33.33%, 40.00%, 46.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e3] quantiles[0.00%, 1.00%, 1.00%]	
+  # probability[e4] quantiles[5.00%, 5.00%, 10.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle[ overweight_patient ]	
+  probability[e1] quantiles[0.00%, 0.00%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[3.00%, 5.00%, 10.00%]	
+  # probability[e5] quantiles[2.00%, 2.00%, 2.00%]
+end
+
+override obstacle[ paper_jam ]
+  probability[e1] quantiles[13.33%, 20.00%, 33.33%]	
+  # probability[e2] quantiles[0.00%, 5.00%, 50.00%]	
+  # probability[e3] quantiles[0.00%, 1.00%, 1.00%]	
+  # probability[e4] quantiles[20.00%, 20.00%, 40.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle[ patient_cannot_reach_ambulance ]	
+  probability[e1] quantiles[0.00%, 13.33%, 20.00%]	
+  # probability[e2] quantiles[0.00%, 10.00%, 25.00%]	
+  # probability[e3] quantiles[0.00%, 3.00%, 5.00%]	
+  # probability[e4] quantiles[5.00%, 10.00%, 25.00%]	
+  # probability[e5] quantiles[2.00%, 4.00%, 6.00%]
+end
+
+override obstacle[ patient_not_transportable ]	
+  probability[e1] quantiles[0.00%, 13.33%, 20.00%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e3] quantiles[10.00%, 15.00%, 20.00%]	
+  # probability[e4] quantiles[5.00%, 5.00%, 5.00%]	
+  # probability[e5] quantiles[2.00%, 2.00%, 4.00%]
+end
+
+override obstacle[ printer_off ]
+  probability[e1] quantiles[0.00%, 6.67%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[1.00%, 1.00%, 1.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle[missing_qualification]	
+  probability[e1] quantiles[0.00%, 26.67%, 40.00%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[10.00%, 15.00%, 20.00%]	
+  # probability[e4] quantiles[20.00%, 30.00%, 40.00%]	
+  # probability[e5] quantiles[2.00%, 2.00%, 4.00%]
+end
+
+override obstacle[ ressource_unavailable ]	
+  probability[e1] quantiles[0.00%, 26.67%, 40.00%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[10.00%, 15.00%, 20.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle[ressource_out_of_order]	
+  probability[e1] quantiles[0.00%, 6.67%, 13.33%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[25.00%, 40.00%, 45.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle[ special_unit_required ]	
+  probability[e1] quantiles[0.00%, 13.33%, 20.00%]	
+  # probability[e2] quantiles[20.00%, 35.00%, 75.00%]	
+  # probability[e3] quantiles[3.00%, 5.00%, 8.00%]	
+  # probability[e4] quantiles[20.00%, 25.00%, 40.00%]	
+  # probability[e5] quantiles[6.00%, 8.00%, 10.00%]
+end
+
+override obstacle[ unreachable_patient ]	
+  probability[e1] quantiles[0.00%, 6.67%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 10.00%]	
+  # probability[e3] quantiles[0.00%, 3.00%, 5.00%]	
+  # probability[e4] quantiles[15.00%, 20.00%, 35.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle[ wrong_info_about_patient ]
+  probability[e1] quantiles[33.33%, 66.67%, 100.00%]
+  # probability[e2] quantiles[75.00%, 100.00%, 100.00%]
+  # probability[e3] quantiles[5.00%, 7.00%, 15.00%]
+  # probability[e4] quantiles[25.00%, 30.00%, 30.00%]	
+  # probability[e5] quantiles[2.00%, 6.00%, 10.00%]
+end
+
+override obstacle[ wrong_leaving_button_pressed ]
+  probability[e1] quantiles[0.00%, 0.00%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[10.00%, 10.00%, 10.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle[ wrong_on_scene_button_pressed ]
+  probability[e1] quantiles[0.00%, 0.00%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[10.00%, 10.00%, 10.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle[ wrong_to_hospital_button_pressed ]
+  probability[e1] quantiles[0.00%, 0.00%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[10.00%, 10.00%, 10.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle[ wrong_at_hospital_button_pressed ]
+  probability[e1] quantiles[0.00%, 0.00%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[10.00%, 10.00%, 10.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle[ wrong_radio_button_pressed ]
+  probability[e1] quantiles[0.00%, 0.00%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[10.00%, 10.00%, 10.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle[ wrong_station_button_pressed ]
+  probability[e1] quantiles[0.00%, 0.00%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[10.00%, 10.00%, 10.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+override obstacle[ wrong_unavailable_button_pressed ]
+  probability[e1] quantiles[0.00%, 0.00%, 6.67%]	
+  # probability[e2] quantiles[0.00%, 0.00%, 5.00%]	
+  # probability[e3] quantiles[0.00%, 0.00%, 0.00%]	
+  # probability[e4] quantiles[10.00%, 10.00%, 10.00%]	
+  # probability[e5] quantiles[0.00%, 0.00%, 0.00%]
+end
+
+
+#### Calibrations
+
+declare expert [ e1 ]
+	name "Expert 1"
+end
+
+# declare expert [ e2 ]
+# 	name "Expert 2"
+# end
+# 
+# declare expert [ e3 ]
+# 	name "Expert 3"
+# end
+# 
+# declare expert [ e4 ]
+# 	name "Expert 4"
+# end
+# 
+# declare expert [ e5 ]
+# 	name "Expert 5"
+# end
+
+declare calibration [ calibration_1 ]
+	name "Calibration [Allocated Ambulance Not At Station]"
+	probability 50%
+	probability[e1] quantiles[13.33%, 33.33%, 53.33%]
+	# probability[e2] quantiles[15.00%, 40.00%, 75.00%]
+	# probability[e3] quantiles[10.00%, 15.00%, 25.00%]
+	# probability[e4] quantiles[30.00%, 10.00%, 50.00%]
+	# probability[e5] quantiles[ 2.00%,  4.00%, 10.00%]
+end
+
+declare calibration [ calibration_2 ]
+	name "Calibration [Mobilization Cancelled]"
+	probability 13%
+	probability[e1] quantiles[13.33%, 20.00%, 33.33%]
+	# probability[e2] quantiles[ 0.00%, 25.00%, 40.00%]
+	# probability[e3] quantiles[ 1.00%,  1.00%,  2.00%]
+	# probability[e4] quantiles[15.00%, 20.00%, 20.00%]
+	# probability[e5] quantiles[ 4.00%,  6.00%, 10.00%]
+end
+
+declare calibration [ calibration_3 ]
+	name "Calibration [MDT Turned Off]"
+	probability 33.3%
+	probability[e1] quantiles[53.33%, 66.67%, 80.00%]
+	# probability[e2] quantiles[ 0.00%,  0.00%,  0.00%]
+	# probability[e3] quantiles[ 0.00%,  0.00%,  0.00%]
+	# probability[e4] quantiles[ 1.00%,  1.00%,  1.00%]
+	# probability[e5] quantiles[ 0.00%,  0.00%,  0.00%]
+end

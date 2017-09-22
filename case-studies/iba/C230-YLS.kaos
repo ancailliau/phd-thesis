@@ -1,0 +1,385 @@
+declare goal [ root ]
+  name "Avoid [Injury and Illness Caused By YLS]"
+  refinedby avoid_contact_with_object_and_equipement,
+    avoid_falls,
+    avoid_bodily_reaction,
+    avoid_fires_and_explosion,
+    avoid_exposure_to_harmful_substances_or_environments
+  rsr 99.99%
+end
+
+# Avoid [Contact with object and equipement]
+
+declare goal [ avoid_contact_with_object_and_equipement ]
+  name "Avoid [Contact with object and equipement]"
+  refinedby avoid_caught_in_or_crushed_in_collapsing_structure,
+    avoid_struck_by_object,
+    avoid_caught_in_running_equipment_or_machinery
+end
+
+declare goal [ avoid_caught_in_or_crushed_in_collapsing_structure ]
+  name "Avoid [Caught in or crushed in collapsing structure]"
+  obstructedby caught_in_or_crushed_in_collapsing_structure
+end
+
+declare goal [ avoid_struck_by_object ]
+  name "Avoid [Struck by object]"
+  refinedby avoid_struck_by_falling_object,
+    avoid_struck_by_dislodged_flying_object_particle
+end
+
+declare goal [ avoid_caught_in_running_equipment_or_machinery ]
+  name "Avoid [Caught in running equipment or machinery]"
+  obstructedby caught_in_running_equipment_or_machinery
+end
+
+declare goal [ avoid_struck_by_falling_object ]
+  name "Avoid [Struck by falling object]"
+  obstructedby struck_by_falling_object
+end
+
+declare goal [ avoid_struck_by_dislodged_flying_object_particle ]
+  name "Avoid [Struck by dislodged flying object, particle]"
+  obstructedby struck_by_dislodged_flying_object_particle
+end
+
+declare obstacle [ caught_in_or_crushed_in_collapsing_structure ] 
+  name "Caught in or crushed in collapsing structure"
+  refinedby caught_in_or_crushed_in_collapsing_yoke
+end
+
+declare obstacle [ caught_in_or_crushed_in_collapsing_yoke ] 
+  name "Caught in or crushed in collapsing yoke"
+  refinedby caught_in_or_crushed_by_collasped_accessory_during_yoke_movement
+  refinedby caught_in_or_crushed_by_collapsed_yoke_during_yoke_movement
+  refinedby caught_in_or_crushed_by_collapsed_yoke_due_to_broken_pillars
+end
+
+declare obstacle [ caught_in_or_crushed_by_collasped_accessory_during_yoke_movement ]
+  name "Caught in or crushed by collasped accessory during yoke movement"
+  probability 10e-4
+end
+
+declare obstacle [ caught_in_or_crushed_by_collapsed_yoke_during_yoke_movement ]
+  name "Caught in or crushed by collapsed yoke during yoke movement"
+  probability 10e-4
+end
+
+declare obstacle [ caught_in_or_crushed_by_collapsed_yoke_due_to_broken_pillars ]
+  name "Caught in or crushed by collapsed yoke due to broken pillars"
+  probability 10e-5
+end
+
+declare obstacle [ struck_by_falling_object ] 
+  name "Struck by falling object"
+  refinedby struck_by_falling_pillar
+  refinedby struck_by_falling_wood_plate
+end
+
+declare obstacle [ struck_by_falling_pillar ] 
+  name "Struck by falling pillar"
+  refinedby struck_by_falling_pillar_during_positioning_manipulation
+  refinedby struck_by_falling_pillar_during_storage
+  refinedby struck_by_falling_pillar_during_transport
+end
+
+declare obstacle [ struck_by_falling_pillar_during_positioning_manipulation ] 
+  name "Struck by falling pillar during positioning/manipulation"
+  probability 10e-4
+end
+
+declare obstacle [ struck_by_falling_pillar_during_storage ] 
+  name "Struck by falling pillar during storage"
+  probability 10e-3
+end
+
+declare obstacle [ struck_by_falling_pillar_during_transport ] 
+  name "Struck by falling pillar during transport"
+  probability 10e-3
+end
+
+declare obstacle [ struck_by_falling_wood_plate ] 
+  name "Struck by falling wood plate"
+  probability 10e-3
+end
+
+declare obstacle [ struck_by_dislodged_flying_object_particle ] 
+  name "Struck by dislodged flying object, particle"
+  refinedby struck_by_dislogded_oil_line
+  refinedby struck_by_dislodged_upper_yoke
+end
+
+declare obstacle [ struck_by_dislogded_oil_line ] 
+  name "Struck by dislogded oil line"
+  probability 10e-5
+end
+
+declare obstacle [ struck_by_dislodged_upper_yoke ] 
+  name "Struck by dislodged upper yoke"
+  refinedby huge_mechanical_failure
+  refinedby height_difference_between_cylinders
+  refinedby bad_positionning_of_safety_pillars
+end
+
+declare obstacle [ huge_mechanical_failure ] 
+  name "Huge Mechanical Failure"
+  probability 10e-5
+end
+
+declare obstacle [ height_difference_between_cylinders ] 
+  name "Height Difference Between Cylinders"
+  probability 10e-5
+end
+
+declare obstacle [ bad_positionning_of_safety_pillars ] 
+  name "Bad Positionning of Safety Pillars"
+  probability 10e-5
+end
+
+declare obstacle [ caught_in_running_equipment_or_machinery ] 
+  name "Caught in running equipment or machinery"
+  refinedby compressed_or_pinched_by_lowering_yoke, 
+    safety_pillars_removed
+  refinedby caught_in_lowering_yoke, 
+    safety_pillars_removed
+end
+
+declare obstacle [ compressed_or_pinched_by_lowering_yoke ] 
+  name "Compressed Or Pinched By Lowering Yoke"
+  refinedby body_part_partially_between_yokes_when_erroneous_activation, 
+    erroneous_lower_operation_activaction
+  refinedby body_part_partially_between_yokes_when_hydrolic_failure, 
+    hydrolic_failure
+  refinedby body_part_partially_between_yokes_when_ycs_failure, 
+    yoke_control_system_failure
+end
+
+declare obstacle [ caught_in_lowering_yoke ] 
+  name "Caught in Lowering Yoke"
+  refinedby operator_caugth_in_when_erroneous_activation, 
+    erroneous_lower_operation_activaction
+  refinedby operator_caugth_in_when_hydrolic_failure, 
+    hydrolic_failure
+  refinedby operator_caugth_in_when_ycs_failure, 
+    yoke_control_system_failure
+end
+
+declare obstacle [ body_part_partially_between_yokes_when_erroneous_activation ] 
+  name "Body Part Partially Between Yokes When Erroneous Activation"
+  probability 10e-1
+end
+
+declare obstacle [ body_part_partially_between_yokes_when_hydrolic_failure ] 
+  name "Body Part Partially Between Yokes When Hydrolic Failure"
+  probability 10e-1
+end
+
+declare obstacle [ body_part_partially_between_yokes_when_ycs_failure ] 
+  name "Body Part Partially Between Yokes When YCS Failure"
+  probability 10e-1
+end
+
+declare obstacle [ operator_caugth_in_when_erroneous_activation ] 
+  name "Operator Caugth-in When Erroneous Activation"
+  probability 10e-2
+end
+
+declare obstacle [ operator_caugth_in_when_hydrolic_failure ] 
+  name "Operator Caugth-in When Hydrolic Failure"
+  probability 10e-1
+end
+
+declare obstacle [ operator_caugth_in_when_ycs_failure ] 
+  name "Operator Caugth-in When YCS Failure"
+  probability 1
+end
+
+declare obstacle [ safety_pillars_removed ] 
+  name "Safety Pillars Removed"
+  probability 1
+end
+
+declare obstacle [ erroneous_lower_operation_activaction ] 
+  name "Erroneous Lower Operation Activaction"
+  probability 10e-4
+end
+
+declare obstacle [ hydrolic_failure ] 
+  name "Hydrolic Failure"
+  probability 10e-4
+end
+
+declare obstacle [ yoke_control_system_failure ] 
+  name "Yoke Control System Failure"
+  probability 10e-4
+end
+
+# Avoid [Falls]
+
+declare goal [ avoid_falls ] 
+  name "Avoid [Falls]"
+  refinedby avoid_fall_to_floor_walkway_or_other_surface
+end
+
+declare goal [ avoid_fall_to_floor_walkway_or_other_surface ] 
+  name "Avoid [Fall to floor, walkway, or other surface]"
+  obstructedby fall_to_floor_walkway_or_other_surface
+end
+
+declare obstacle [ fall_to_floor_walkway_or_other_surface ]
+  name "Fall to floor, walkway, or other surface"
+  refinedby fall_to_floor_on_spilled_oil, spilled_oil_on_the_ground
+  refinedby fall_to_floor_on_command_cables
+end
+
+declare obstacle [ fall_to_floor_on_spilled_oil ]
+  name "Fall to floor On Spilled Oil"
+  probability 10e-2
+end
+
+declare obstacle [ spilled_oil_on_the_ground ]
+  name "Spilled Oil On the Ground"
+  probability 10e-2
+end
+
+declare obstacle [ fall_to_floor_on_command_cables ]
+  name "Fall to floor On Command Cables"
+  probability 10e-4
+end
+
+# Avoid [Bodily reaction]
+
+declare goal [ avoid_bodily_reaction ]
+  name "Avoid [Bodily reaction]"
+  refinedby avoid_bodily_reaction_back_pain
+end
+
+declare goal [ avoid_bodily_reaction_back_pain ]
+  name "Avoid [Bodily reaction (back pain)]"
+  obstructedby bodily_reaction_when_moving_pillars
+end
+
+declare obstacle [ bodily_reaction_when_moving_pillars ]
+  name "Bodily reaction when moving pillars"
+  refinedby bodily_reaction_when_transporting_pillars
+  refinedby bodily_reaction_when_positioning_pillars_in_out
+end
+
+declare obstacle [ bodily_reaction_when_positioning_pillars_in_out ]
+  name "Bodily reaction when positioning pillars in/out"
+  probability 10e-3
+end
+
+declare obstacle [ bodily_reaction_when_transporting_pillars ]
+  name "Bodily reaction when transporting pillars"
+  probability 10e-3
+end
+
+# Avoid [Fires and explosion]
+
+declare goal [ avoid_fires_and_explosion ]
+  name "Avoid [Fires and explosion]"
+  refinedby avoid_explosion_of_pressure_vessel_or_piping,
+    avoid_ignition_of_clothing_from_controlled_heat_source
+end
+
+declare goal [ avoid_explosion_of_pressure_vessel_or_piping ]
+  name "Avoid [Explosion of pressure vessel or piping]"
+  obstructedby explosion_of_pressure_vessel_or_piping
+end
+
+declare goal [ avoid_ignition_of_clothing_from_controlled_heat_source ]
+  name "Avoid [Ignition of clothing from controlled heat source]"
+  obstructedby ignition_of_clothing_from_controlled_heat_source
+end
+
+declare obstacle [ explosion_of_pressure_vessel_or_piping ] 
+  name "Explosion of pressure vessel or piping"
+  refinedby explosion_from_compressor
+end
+
+declare obstacle [ explosion_from_compressor ] 
+  name "Explosion from Compressor"
+  probability 10e-5
+end
+
+declare obstacle [ ignition_of_clothing_from_controlled_heat_source ] 
+  name "Ignition of clothing from controlled heat source"
+  refinedby ignition_of_clothing_from_hot_compressor
+  refinedby ignition_of_clothing_from_hot_oil_line
+end
+
+declare obstacle [ ignition_of_clothing_from_hot_compressor ] 
+  name "Ignition of clothing from Hot Compressor"
+  probability 10e-5
+end
+
+declare obstacle [ ignition_of_clothing_from_hot_oil_line ] 
+  name "Ignition of clothing from Hot Oil Line"
+  probability 10e-5
+end
+
+# Avoid [Exposure to harmful substances or environments]
+
+declare goal [ avoid_exposure_to_harmful_substances_or_environments ]
+  name "Avoid [Exposure to harmful substances or environments]"
+  refinedby avoid_contact_with_hot_object_or_substances, avoid_contact_with_electric_current
+end
+
+declare goal [ avoid_contact_with_hot_object_or_substances ]
+  name "Avoid [Contact with hot object or substances]"
+  obstructedby contact_with_hot_object_or_substances
+end
+
+declare goal [ avoid_contact_with_electric_current ]
+  name "Avoid [Contact with electric current]"
+  refinedby avoid_contact_with_wiring_transformers_or_other_electrical_components, 
+    avoid_contact_with_electric_current_of_machine_tool_appliance_or_light_fixture
+end
+
+declare goal [ avoid_contact_with_wiring_transformers_or_other_electrical_components ]
+  name "Avoid [Contact with wiring, transformers, or other electrical components]"
+  obstructedby contact_with_wiring_transformers_or_other_electrical_components
+end
+
+declare goal [ avoid_contact_with_electric_current_of_machine_tool_appliance_or_light_fixture ]
+  name "Avoid [Contact with electric current of machine, tool, appliance, or light fixture]"
+  obstructedby contact_with_electric_current_of_machine_tool_appliance_or_light_fixture
+end
+
+
+declare obstacle [ contact_with_hot_object_or_substances ]
+  name "Contact with hot object or substances"
+  refinedby contact_with_hot_compressor
+end
+
+declare obstacle [ contact_with_hot_compressor ]
+  name "Contact with hot compressor"
+  probability 10e-6
+end
+
+declare obstacle [ contact_with_wiring_transformers_or_other_electrical_components ]
+  name "Contact with wiring, transformers, or other electrical components"
+  refinedby contact_with_electrical_command_cable
+end
+
+declare obstacle [ contact_with_electrical_command_cable ]
+  name "Contact with electrical command cable"
+  probability 10e-3
+end
+
+declare obstacle [ contact_with_electric_current_of_machine_tool_appliance_or_light_fixture ]
+  name "Contact with electric current of machine, tool, appliance, or light fixture"
+  refinedby contact_with_electrical_current_from_electrovalve
+  refinedby contact_with_electrical_current_from_command
+end
+
+declare obstacle [ contact_with_electrical_current_from_electrovalve ]
+  name "Contact with electrical current from electrovalve"
+  probability 10e-4
+end
+
+declare obstacle [ contact_with_electrical_current_from_command ]
+  name "Contact with electrical current from command"
+  probability 10e-3
+end

@@ -1,0 +1,106 @@
+combination,combination_probability,violation_severity
+Alarm Not Raised And Low Water,0.002,-0.00800000000000001
+Make Up Water Not Requested And Alarm Raised,0.0003,-0.00970000000000004
+Make Up Water Not Requested And Alarm Raised:Alarm Not Raised And Low Water,6E-07,-0.00770060000000006
+Valve Mechanical Failure,0.002,-0.00800000000000001
+Valve Mechanical Failure:Alarm Not Raised And Low Water,4E-06,-0.00600400000000001
+Valve Mechanical Failure:Make Up Water Not Requested And Alarm Raised,6E-07,-0.00770060000000006
+Unavailable Due To Maintenance,0.0008,-0.00919999999999999
+Unavailable Due To Maintenance:Alarm Not Raised And Low Water,1.6E-06,-0.00720160000000003
+Unavailable Due To Maintenance:Make Up Water Not Requested And Alarm Raised,2.4E-07,-0.00890024
+Unavailable Due To Maintenance:Valve Mechanical Failure,1.6E-06,-0.00720160000000003
+Valve Electrical Failure,0.002,-0.00800000000000001
+Valve Electrical Failure:Alarm Not Raised And Low Water,4E-06,-0.00600400000000001
+Valve Electrical Failure:Make Up Water Not Requested And Alarm Raised,6E-07,-0.00770060000000006
+Valve Electrical Failure:Valve Mechanical Failure,4E-06,-0.00600400000000001
+Valve Electrical Failure:Unavailable Due To Maintenance,1.6E-06,-0.00720160000000003
+Pump Mechanical Failure,0.1314,0.1214
+Pump Mechanical Failure:Alarm Not Raised And Low Water,0.0002628,0.1231372
+Pump Mechanical Failure:Make Up Water Not Requested And Alarm Raised,3.942E-05,0.12166058
+Pump Mechanical Failure:Valve Mechanical Failure,0.0002628,0.1231372
+Pump Mechanical Failure:Unavailable Due To Maintenance,0.00010512,0.12209488
+Pump Mechanical Failure:Valve Electrical Failure,0.0002628,0.1231372
+UPS Battery Failure,0.021,0.011
+UPS Battery Failure:Alarm Not Raised And Low Water,4.2E-05,0.012958
+UPS Battery Failure:Make Up Water Not Requested And Alarm Raised,6.3E-06,0.0112937
+UPS Battery Failure:Valve Mechanical Failure,4.2E-05,0.012958
+UPS Battery Failure:Unavailable Due To Maintenance,1.68E-05,0.0117832
+UPS Battery Failure:Valve Electrical Failure,4.2E-05,0.012958
+UPS Battery Failure:Pump Mechanical Failure,0.0027594,0.1396406
+Primary Power Supply Down,0.0438,-0.01
+Primary Power Supply Down:Alarm Not Raised And Low Water,8.76E-05,-0.00800000000000001
+Primary Power Supply Down:Make Up Water Not Requested And Alarm Raised,1.314E-05,-0.00970000000000004
+Primary Power Supply Down:Valve Mechanical Failure,8.76E-05,-0.00800000000000001
+Primary Power Supply Down:Unavailable Due To Maintenance,3.504E-05,-0.00919999999999999
+Primary Power Supply Down:Valve Electrical Failure,8.76E-05,-0.00800000000000001
+Primary Power Supply Down:Pump Mechanical Failure,0.00575532,0.1214
+Primary Power Supply Down:UPS Battery Failure,0.0009198,0.011
+Diesel Generator Failure,0.0096,-0.01
+Diesel Generator Failure:Alarm Not Raised And Low Water,1.92E-05,-0.00800000000000001
+Diesel Generator Failure:Make Up Water Not Requested And Alarm Raised,2.88E-06,-0.00970000000000004
+Diesel Generator Failure:Valve Mechanical Failure,1.92E-05,-0.00800000000000001
+Diesel Generator Failure:Unavailable Due To Maintenance,7.68E-06,-0.00919999999999999
+Diesel Generator Failure:Valve Electrical Failure,1.92E-05,-0.00800000000000001
+Diesel Generator Failure:Pump Mechanical Failure,0.00126144,0.1214
+Diesel Generator Failure:UPS Battery Failure,0.0002016,0.011
+Diesel Generator Failure:Primary Power Supply Down,0.00042048,-0.00957952000000006
+Power Cabling Failure,0.01752,0.00751999999999997
+Power Cabling Failure:Alarm Not Raised And Low Water,3.504E-05,0.00948495999999999
+Power Cabling Failure:Make Up Water Not Requested And Alarm Raised,5.256E-06,0.00781474400000004
+Power Cabling Failure:Valve Mechanical Failure,3.504E-05,0.00948495999999999
+Power Cabling Failure:Unavailable Due To Maintenance,1.4016E-05,0.00830598400000004
+Power Cabling Failure:Valve Electrical Failure,3.504E-05,0.00948495999999999
+Power Cabling Failure:Pump Mechanical Failure,0.002302128,0.136617872
+Power Cabling Failure:UPS Battery Failure,0.00036792,0.02815208
+Power Cabling Failure:Primary Power Supply Down,0.000767376,0.00751999999999997
+Power Cabling Failure:Diesel Generator Failure,0.000168192,0.00751999999999997
+Pump Electrical Failure,0.00876,-0.00124000000000002
+Pump Electrical Failure:Alarm Not Raised And Low Water,1.752E-05,0.00074247999999999
+Pump Electrical Failure:Make Up Water Not Requested And Alarm Raised,2.628E-06,-0.000942628000000001
+Pump Electrical Failure:Valve Mechanical Failure,1.752E-05,0.00074247999999999
+Pump Electrical Failure:Unavailable Due To Maintenance,7.008E-06,-0.000447007999999971
+Pump Electrical Failure:Valve Electrical Failure,1.752E-05,0.00074247999999999
+Pump Electrical Failure:Pump Mechanical Failure,0.001151064,0.129008936
+Pump Electrical Failure:UPS Battery Failure,0.00018396,0.01957604
+Pump Electrical Failure:Primary Power Supply Down,0.000383688,-0.00124000000000002
+Pump Electrical Failure:Diesel Generator Failure,8.4096E-05,-0.00124000000000002
+Pump Electrical Failure:Power Cabling Failure,0.0001534752,0.0161265248
+Diesel Generator Not Started,0.002,-0.01
+Diesel Generator Not Started:Alarm Not Raised And Low Water,4E-06,-0.00800000000000001
+Diesel Generator Not Started:Make Up Water Not Requested And Alarm Raised,6E-07,-0.00970000000000004
+Diesel Generator Not Started:Valve Mechanical Failure,4E-06,-0.00800000000000001
+Diesel Generator Not Started:Unavailable Due To Maintenance,1.6E-06,-0.00919999999999999
+Diesel Generator Not Started:Valve Electrical Failure,4E-06,-0.00800000000000001
+Diesel Generator Not Started:Pump Mechanical Failure,0.0002628,0.1214
+Diesel Generator Not Started:UPS Battery Failure,4.2E-05,0.011
+Diesel Generator Not Started:Primary Power Supply Down,8.76E-05,-0.01
+Diesel Generator Not Started:Diesel Generator Failure,1.92E-05,-0.01
+Diesel Generator Not Started:Power Cabling Failure,3.504E-05,0.00751999999999997
+Diesel Generator Not Started:Pump Electrical Failure,1.752E-05,-0.00124000000000002
+Switch Failure,0.00876,-0.01
+Switch Failure:Alarm Not Raised And Low Water,1.752E-05,-0.00800000000000001
+Switch Failure:Make Up Water Not Requested And Alarm Raised,2.628E-06,-0.00970000000000004
+Switch Failure:Valve Mechanical Failure,1.752E-05,-0.00800000000000001
+Switch Failure:Unavailable Due To Maintenance,7.008E-06,-0.00919999999999999
+Switch Failure:Valve Electrical Failure,1.752E-05,-0.00800000000000001
+Switch Failure:Pump Mechanical Failure,0.001151064,0.1214
+Switch Failure:UPS Battery Failure,0.00018396,0.011
+Switch Failure:Primary Power Supply Down,0.000383688,-0.01
+Switch Failure:Diesel Generator Failure,8.4096E-05,-0.01
+Switch Failure:Power Cabling Failure,0.0001534752,0.00751999999999997
+Switch Failure:Pump Electrical Failure,7.67376E-05,-0.00124000000000002
+Switch Failure:Diesel Generator Not Started,1.752E-05,-0.01
+Valve Not Opened When Valve Control Not Unavailable,0.0001,-0.01
+Valve Not Opened When Valve Control Not Unavailable:Alarm Not Raised And Low Water,2E-07,-0.00800000000000001
+Valve Not Opened When Valve Control Not Unavailable:Make Up Water Not Requested And Alarm Raised,3E-08,-0.00970000000000004
+Valve Not Opened When Valve Control Not Unavailable:Valve Mechanical Failure,2E-07,-0.00800000000000001
+Valve Not Opened When Valve Control Not Unavailable:Unavailable Due To Maintenance,8E-08,-0.00919999999999999
+Valve Not Opened When Valve Control Not Unavailable:Valve Electrical Failure,2E-07,-0.00800000000000001
+Valve Not Opened When Valve Control Not Unavailable:Pump Mechanical Failure,1.314E-05,0.1214
+Valve Not Opened When Valve Control Not Unavailable:UPS Battery Failure,2.1E-06,0.011
+Valve Not Opened When Valve Control Not Unavailable:Primary Power Supply Down,4.38E-06,-0.01
+Valve Not Opened When Valve Control Not Unavailable:Diesel Generator Failure,9.6E-07,-0.01
+Valve Not Opened When Valve Control Not Unavailable:Power Cabling Failure,1.752E-06,0.00751999999999997
+Valve Not Opened When Valve Control Not Unavailable:Pump Electrical Failure,8.76E-07,-0.00124000000000002
+Valve Not Opened When Valve Control Not Unavailable:Diesel Generator Not Started,2E-07,-0.01
+Valve Not Opened When Valve Control Not Unavailable:Switch Failure,8.76E-07,-0.01

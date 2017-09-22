@@ -1,0 +1,224 @@
+import "ads.kaos"
+
+### Experts estimates
+
+override obstacle [ ambulance_not_at_station ]
+  esr 33.33%
+end
+
+override obstacle [ allocated_ambulance_not_available ]
+  esr 0.01%	
+end 
+
+override obstacle [ ambulance_broken ] 
+  esr 0.01%	
+end
+
+override obstacle [ ambulance_traffic_deviation ]
+  esr 10%
+end
+
+override obstacle [ ambulance_in_unfamiliar_area ]
+  esr 13.33%	
+end
+
+override obstacle [ ambulance_not_available_when_moborder_displayed ]
+  esr 0.01%
+end
+
+override obstacle [ available_bed_no_assigned ]	
+  esr 0.01%	
+end
+
+override obstacle [ avls_out_of_service ]
+  esr 0.01%	
+end
+
+override obstacle [ gps_black_spot ]
+  esr 10%	
+end
+
+override obstacle [ crew_distracted ]
+  esr 6.67%	
+end
+
+override obstacle [ crew_not_in_ambulance ]
+  esr 13.33%	
+end
+
+override obstacle [ destination_confused ]
+  esr 6.67%	
+end
+
+override obstacle [ fire_environment ] 
+  esr 0.01%	
+end 
+
+override obstacle [ forget_to_press_status_leaving ] 
+  esr 5%	
+end
+
+override obstacle [ forget_to_press_status_on_scene ] 
+  esr 5%	
+end
+
+override obstacle [ forget_to_press_status_to_hospital ] 
+  esr 5%	
+end
+
+override obstacle [ forget_to_press_status_at_hospital ] 
+  esr 5%	
+end
+
+override obstacle [ forget_to_press_status_radio ] 
+  esr 5%	
+end
+
+override obstacle [ forget_to_press_status_unavailable ] 
+  esr 5%	
+end
+
+override obstacle [ forget_to_press_status_station ] 
+  esr 5%	
+end
+
+override obstacle [ gps_not_working ]
+  esr 6.67%	
+end
+
+override obstacle [ hazardous_environment ] 
+  esr 6.67%	
+end
+
+override obstacle [ insufficient_capacity ]
+  esr 6.67%	
+end
+
+override obstacle [ mdt_turned_off ]
+  esr 3%	
+end
+
+override obstacle [ mobilization_cancelled ]
+  esr 2%
+end
+
+override obstacle [ ambulance_in_wrong_direction ] 
+  esr 6.67%	
+end
+
+override obstacle [ mobilization_taken_by_other_ambulance ]	
+  esr 0.01%	
+end
+
+override obstacle [ no_bed ]	
+  esr 0.01%	
+end
+
+override obstacle[ out_of_paper ]	
+  esr 40.01%	
+end
+
+override obstacle[ overweight_patient ]	
+  esr 0.01%	
+end
+
+override obstacle[ paper_jam ]
+  esr 10%	
+end
+
+override obstacle[ patient_cannot_reach_ambulance ]	
+  esr 13.33%	
+end
+
+override obstacle[ patient_not_transportable ]	
+  esr 13.33%	
+end
+
+override obstacle[ printer_off ]
+  esr 6.67%	
+end
+
+override obstacle[missing_qualification]	
+  esr 5%
+end
+
+override obstacle[ ressource_unavailable ]	
+  esr 5%
+end
+
+override obstacle[ressource_out_of_order]	
+  esr 6.67%	
+end
+
+override obstacle[ special_unit_required ]	
+  esr 13.33%	
+end
+
+override obstacle[ unreachable_patient ]	
+  esr 6.67%	
+end
+
+override obstacle[ wrong_info_about_patient ]
+  esr 5%
+end
+
+override obstacle[ wrong_leaving_button_pressed ]
+  esr 0.01%	
+end
+
+override obstacle[ wrong_on_scene_button_pressed ]
+  esr 0.01%	
+end
+
+override obstacle[ wrong_to_hospital_button_pressed ]
+  esr 0.01%	
+end
+
+override obstacle[ wrong_at_hospital_button_pressed ]
+  esr 0.01%	
+end
+
+override obstacle[ wrong_radio_button_pressed ]
+  esr 0.01%	
+end
+
+override obstacle[ wrong_station_button_pressed ]
+  esr 0.01%	
+end
+
+override obstacle[ wrong_unavailable_button_pressed ]
+  esr 0.01%	
+end
+
+override obstacle [ gps_innaccurate ] 
+  esr 0.01%
+end
+
+override obstacle [ incident_not_reachable ]
+  esr 1%
+end
+
+override obstacle [ stopped_in_traffic ]
+  esr 7%
+end
+
+override obstacle [ ressource_confusion ]
+  esr 0.01%
+end
+
+override obstacle [ crew_not_near_printer ]
+  esr 1%
+end
+
+override obstacle [ mdt_blackspot ]
+  esr 3%
+end
+
+override obstacle [ moborder_corrupted ]
+esr 0.01%
+end
+
+override obstacle [ network_overloaded ]
+  esr 0.01%
+end
+

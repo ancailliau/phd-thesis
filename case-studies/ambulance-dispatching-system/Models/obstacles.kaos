@@ -1,0 +1,700 @@
+
+# Obstacles for moborder_printed
+
+override goal [ moborder_printed ]
+  obstructedby moborder_not_printed
+end
+
+declare obstacle [ moborder_not_printed ]
+  name "Mobilization Order Not Printed"
+  definition 
+    "The mobilization order is not printed within 50 seconds at the allocated
+    ambulance station."
+  refinedby paper_jam
+  refinedby out_of_paper
+  refinedby printer_off
+end
+
+declare obstacle [ paper_jam ]
+	name "Paper Jam"
+  definition "There is a paper jam for more than 50 seconds in the allocated
+  ambulance station printer."
+end
+
+declare obstacle [ out_of_paper ]
+	name "Out Of Paper"
+  definition "There is no paper for more than 50 seconds in the allocated
+  ambulance station printer."
+end
+
+declare obstacle [ printer_off ]
+	name "Printer Off"
+  definition "The allocated ambulance station printer is turned off for more
+  than 50 seconds."
+end
+
+# Obstacles for moborder_displayed
+
+override goal [ moborder_displayed ]
+  obstructedby moborder_not_displayed
+end
+
+declare obstacle [ moborder_not_displayed ]
+  name "Mobilization Order Not Displayed"
+  definition "The transmitted mobilization order is not displayed within 5
+  seconds."
+  refinedby mdt_turned_off
+end
+
+declare obstacle [ mdt_turned_off ]
+	name "MDT Turned Off"
+  definition 
+    "The MDT is turned off for more than 5 seconds and mobilization order was
+    transmitted."
+end
+
+# Obstacles for maintain_location_info_known
+
+override goal [ achieve_ambulance_location_captured ]
+  obstructedby location_known_not_info_known
+end
+
+declare obstacle [ location_known_not_info_known ]
+  name "Accurate Location Not Captured Every 3 Seconds"
+  definition "Accurate ambulance location was not captured every 3 seconds."
+  refinedby gps_black_spot
+  refinedby gps_innaccurate
+  refinedby avls_out_of_service
+end
+
+declare obstacle [ avls_out_of_service ]
+  name "AVLS Out of Service"
+  definition "The AVLS component in the ambulance is out of service."
+end
+
+declare obstacle [ gps_black_spot ]
+	name "GPS Black Spot"
+  definition "The ambulance is in a black spot for more than 3 seconds."
+end
+  
+declare obstacle [ gps_innaccurate ]
+  name "GPS Innaccurate"
+  definition "The GPS position differs by more than 50 meters for more than 3
+  seconds."
+end
+
+# Obstacles for accurate_availability_information_encoded
+
+override goal [ status_leaving_encoded ]
+  obstructedby status_leaving_not_encoded
+end
+
+declare obstacle [ status_leaving_not_encoded ]
+  name "Accurate Leaving Status Not Encoded On MDT Or Innaccurate"
+  definition
+    "Accurate Leaving status information is not encoded on the Mobile Data Terminal
+    when the status changes; or the encoded status is not accurate."
+  refinedby forget_to_press_status_leaving
+  refinedby wrong_leaving_button_pressed
+end
+
+declare obstacle [ forget_to_press_status_leaving ]
+	name "Forget To Encode Leaving Status"
+  definition 
+    "The ambulance staff forgets to encode the Leaving status."
+end
+ 
+declare obstacle [ wrong_leaving_button_pressed ]
+	name "Other Status Than Leaving Encoded "
+  definition 
+    "The ambulance staff encodes an other status than the Leaving status when required."
+end
+
+override goal [ status_on_scene_encoded ]
+  obstructedby status_on_scene_not_encoded
+end
+
+declare obstacle [ status_on_scene_not_encoded ]
+  name "Accurate OnScene Status Not Encoded On MDT Or Innaccurate"
+  definition
+    "Accurate OnScene status information is not encoded on the Mobile Data Terminal
+    when the status changes; or the encoded status is not accurate."
+  refinedby forget_to_press_status_on_scene
+  refinedby wrong_on_scene_button_pressed
+end
+
+declare obstacle [ forget_to_press_status_on_scene ]
+	name "Forget To Encode OnScene Status"
+  definition 
+    "The ambulance staff forgets to encode the OnScene status."
+end
+ 
+declare obstacle [ wrong_on_scene_button_pressed ]
+	name "Other Status Than OnScene Encoded "
+  definition 
+    "The ambulance staff encodes an other status than the OnScene status when required."
+end
+
+override goal [ status_to_hospital_encoded ]
+  obstructedby status_to_hospital_not_encoded
+end
+
+declare obstacle [ status_to_hospital_not_encoded ]
+  name "Accurate ToHospital Status Not Encoded On MDT Or Innaccurate"
+  definition
+    "Accurate ToHospital status information is not encoded on the Mobile Data Terminal
+    when the status changes; or the encoded status is not accurate."
+  refinedby forget_to_press_status_to_hospital
+  refinedby wrong_to_hospital_button_pressed
+end
+
+declare obstacle [ forget_to_press_status_to_hospital ]
+	name "Forget To Encode ToHospital Status"
+  definition 
+    "The ambulance staff forgets to encode the ToHospital status."
+end
+ 
+declare obstacle [ wrong_to_hospital_button_pressed ]
+	name "Other Status Than ToHospital Encoded "
+  definition 
+    "The ambulance staff encodes an other status than the ToHospital status when required."
+end
+
+override goal [ status_at_hospital_encoded ]
+  obstructedby status_at_hospital_not_encoded
+end
+
+declare obstacle [ status_at_hospital_not_encoded ]
+  name "Accurate AtHospital Status Not Encoded On MDT Or Innaccurate"
+  definition
+    "Accurate AtHospital status information is not encoded on the Mobile Data Terminal
+    when the status changes; or the encoded status is not accurate."
+  refinedby forget_to_press_status_at_hospital
+  refinedby wrong_at_hospital_button_pressed
+end
+
+declare obstacle [ forget_to_press_status_at_hospital ]
+	name "Forget To Encode AtHospital Status"
+  definition 
+    "The ambulance staff forgets to encode the AtHospital status."
+end
+ 
+declare obstacle [ wrong_at_hospital_button_pressed ]
+	name "Other Status Than AtHospital Encoded "
+  definition 
+    "The ambulance staff encodes an other status than the AtHospital status when required."
+end
+
+override goal [ status_radio_encoded ]
+  obstructedby status_radio_not_encoded
+end
+
+declare obstacle [ status_radio_not_encoded ]
+  name "Accurate AvailableRadio Status Not Encoded On MDT Or Innaccurate"
+  definition
+    "Accurate AvailableRadio status information is not encoded on the Mobile Data Terminal
+    when the status changes; or the encoded status is not accurate."
+  refinedby forget_to_press_status_radio
+  refinedby wrong_radio_button_pressed
+end
+
+declare obstacle [ forget_to_press_status_radio ]
+	name "Forget To Encode AvailableRadio Status"
+  definition 
+    "The ambulance staff forgets to encode the AvailableRadio status."
+end
+ 
+declare obstacle [ wrong_radio_button_pressed ]
+	name "Other Status Than AvailableRadio Encoded "
+  definition 
+    "The ambulance staff encodes an other status than the AvailableRadio status when required."
+end
+
+override goal [ status_station_encoded ]
+  obstructedby status_station_not_encoded
+end
+
+declare obstacle [ status_station_not_encoded ]
+  name "Accurate AvailableStation Status Not Encoded On MDT Or Innaccurate"
+  definition
+    "Accurate AvailableStation status information is not encoded on the Mobile Data Terminal
+    when the status changes; or the encoded status is not accurate."
+  refinedby forget_to_press_status_station
+  refinedby wrong_station_button_pressed
+end
+
+declare obstacle [ forget_to_press_status_station ]
+	name "Forget To Encode AvailableStation Status"
+  definition 
+    "The ambulance staff forgets to encode the AvailableStation status."
+end
+ 
+declare obstacle [ wrong_station_button_pressed ]
+	name "Other Status Than AvailableStation Encoded "
+  definition 
+    "The ambulance staff encodes an other status than the AvailableStation status when required."
+end
+
+override goal [ status_unavailable_encoded ]
+  obstructedby status_unavailable_not_encoded
+end
+
+declare obstacle [ status_unavailable_not_encoded ]
+  name "Accurate Unavailable Status Not Encoded On MDT Or Innaccurate"
+  definition
+    "Accurate Unavailable status information is not encoded on the Mobile Data Terminal
+    when the status changes; or the encoded status is not accurate."
+  refinedby forget_to_press_status_unavailable
+  refinedby wrong_unavailable_button_pressed
+end
+
+declare obstacle [ forget_to_press_status_unavailable ]
+	name "Forget To Encode Unavailable Status"
+  definition 
+    "The ambulance staff forgets to encode the Unavailable status."
+end
+ 
+declare obstacle [ wrong_unavailable_button_pressed ]
+	name "Other Status Than Unavailable Encoded "
+  definition 
+    "The ambulance staff encodes an other status than the Unavailable status when required."
+end
+
+# Obstacles for achieve_mobilized_ambulance_on_scene
+
+override goal [ achieve_mobilized_ambulance_on_scene ]
+  obstructedby mobilized_ambulance_not_intervention
+end
+
+declare obstacle [ mobilized_ambulance_not_intervention ]
+  name "Mobilized Ambulance Not On Scene"
+  definition
+    "The mobilized ambulance is not on the incident scene within 12 minutes."
+  refinedby mobilization_cancelled
+  refinedby destination_confused
+  refinedby ambulance_stopped_or_in_wrong_direction
+  refinedby incident_not_reachable
+end
+
+declare obstacle [ incident_not_reachable ]
+  name "Incident Location Unreachable"
+  definition 
+    "The incident location is not safely reachable by the ambulance staff."
+end
+
+declare obstacle [ destination_confused ]
+	name "Destination Confused" 
+  definition
+    "The incident location is confused, and the ambulance is not on scene
+    within 12 minutes."
+end
+  
+declare obstacle [ mobilization_cancelled ]
+  name "Mobilization Cancelled"
+  definition
+    "The mobilization is cancelled."
+end
+
+declare obstacle [ ambulance_stopped_or_in_wrong_direction ] 
+  name "Ambulance Stopped Or In Wrong Direction"
+  definition 
+    "The ambulance is stopped or in the wrong direction and will not reach the
+    incident scene within the time constraints."
+  refinedby ambulance_stopped
+  refinedby ambulance_in_wrong_direction
+end
+
+declare obstacle [ ambulance_stopped ]
+  name "Ambulance Stopped"
+  definition 
+    "The ambulance is stopped and will not reach the incident scene within the
+    time constraints."
+  refinedby ambulance_broken
+  refinedby stopped_in_traffic
+end
+
+declare obstacle [ ambulance_broken ] 
+	name "Ambulance Broken Down Or Accident"
+  definition 
+    "The ambulance is broken down or involved in an accident and will not reach
+    the incident scene within the time constraints."
+end
+
+declare obstacle [ stopped_in_traffic ]
+	name "Ambulance Stuck In Traffic Jam Toward Incident"
+  definition 
+    "The ambulance is stuck in a traffic jam and will not reach the incident
+    scene within the time constraints."
+end
+
+declare obstacle [ ambulance_in_wrong_direction ] 
+  name "Ambulance In Wrong Direction"
+  definition 
+    "The ambulance is headed in the wrong direction and will not reach the
+    incident scene within the time constraints."
+  refinedby ambulance_lost
+  refinedby ambulance_traffic_deviation
+end
+
+declare obstacle [ ambulance_lost ]
+  name "Ambulance Lost"
+  definition 
+    "The ambulance is lost and will not reach the incident scene within the
+    time constraints."
+  refinedby ambulance_in_unfamiliar_area, gps_not_working
+end
+
+declare obstacle [ ambulance_in_unfamiliar_area ]
+  name "Ambulance In Unfamiliar Area"
+  definition 
+    "The ambulance is in an unfamiliar area."
+end
+
+declare obstacle [ gps_not_working ]
+	name "GPS Broken"
+  definition 
+    "The GPS of the ambulance driver break down."
+end
+
+declare obstacle [ ambulance_traffic_deviation ]
+  name "Ambulance In Traffic Deviation"
+  definition 
+    "The ambulance is in a traffic deviation and will not reach the incident
+    scene within the time constraints."
+end
+
+# Obstacles for achieve_incident_resolved_by_intervention
+
+override goal [ achieve_incident_resolved_on_scene ]
+  obstructedby patient_not_treated_at_location
+end
+
+override goal [ patient_to_appropriate_hospital ]
+  obstructedby patient_not_admitted_or_transported_at_hospital
+end
+
+declare obstacle [ patient_not_treated_at_location ]
+  name "Patient Not Treated At Location"
+  definition
+    "The patient was not treated at the incident location."
+  refinedby critical_care_not_given
+  refinedby patient_unreachable_safely
+end
+
+declare obstacle [ patient_unreachable_safely ]
+  name "Patient Not Safely Reachable"
+  definition
+    "The patient was not reachable safely by the ambulance staff."
+  refinedby fire_environment
+  refinedby hazardous_environment
+  refinedby unreachable_patient
+end
+
+declare obstacle [ fire_environment ] 
+  name "Fire Environment" 
+  definition
+    "The patient was not reachable safely by the ambulance staff due to a fiery
+    environment."
+end
+
+declare obstacle [ hazardous_environment ] 
+  name "Hazardous Environment" 
+  definition
+    "The patient was not reachable safely by the ambulance staff due to a
+    hazardous environment exluding fire."
+end
+
+declare obstacle [ unreachable_patient ] 
+  name "Unreachable Patient" 
+  definition
+    "The patient was not reachable safely by the ambulance staff but patient in
+    a safe environment (e.g. locked in a lift)."
+end
+
+declare obstacle [ critical_care_not_given ]
+  name "Critical Care Not Given"
+  definition
+    "Critical care at location is not given to the patient."
+  refinedby insufficient_ressource
+  refinedby ressource_not_used
+end
+
+declare obstacle [ressource_not_used]
+  name "Available Ressource Not Used"
+  definition
+    "Available ressource required to care for the patient is not used."
+  refinedby wrong_info_about_patient
+  refinedby ressource_out_of_order
+  refinedby missing_qualification
+end
+
+declare obstacle[ressource_out_of_order]
+	name "Ressource Out Of Order"
+  definition
+    "Available ressource required to care for the patient is out of order."
+end
+
+declare obstacle [missing_qualification]
+	name "Qualification Missing For Ressource"
+  definition
+    "The staff does not have the required qualifications to provide the
+    critical care required by the patient condition. For example, the ambulance
+    staff is not allowed to deliver a drug but has the drug at disposal."
+end
+            
+declare obstacle [ insufficient_ressource ]
+  name "Insufficient Ressource"
+  definition
+    "Ressource required by the patient condition is not available in sufficient
+    quantities."
+  refinedby ressource_confusion
+  refinedby ressource_unavailable
+  refinedby wrong_info_about_patient
+end
+
+declare obstacle [ ressource_confusion ]
+	name "Ressource Confusion"
+  definition
+    "Ressource required by the patient condition is not used due to confusion."
+end
+
+declare obstacle [ ressource_unavailable ]
+	name "Ressource Not Available"
+  definition
+    "Ressource required by the patient condition is not available."
+end
+
+declare obstacle [ wrong_info_about_patient ]
+  name "Wrong Info About Patient"
+  definition
+    "Critical care is not provided to the patient as information is missing on
+    his condition. This includes interventions were additional care would have
+    been given if, for example, medical history, allergies, drug prescriptions,
+    etc. was known."
+end
+
+declare obstacle [ patient_not_admitted_or_transported_at_hospital ]
+  name "Patient Not Admitted At Or Transported To Hospital"
+  definition
+    "The patient is not admitted or transported to the nearest and most
+    appropriate hospital."
+  refinedby patient_not_transported
+  refinedby patient_not_admitted
+end
+
+declare obstacle [ patient_not_transported ]
+  name "Patient Not Transported"
+  definition
+    "The patient is not transported to the nearest and most appropriate
+    hospital."
+  refinedby patient_not_in_ambulance
+  refinedby ambulance_broken
+  refinedby patient_not_transportable
+end
+
+declare obstacle [ patient_not_in_ambulance ]
+  name "Patient Not In Ambulance"
+  definition
+    "The patient is not in the ambulance but should be transported to the hospital."
+  refinedby insufficient_capacity
+  refinedby overweight_patient
+  refinedby patient_cannot_reach_ambulance
+end
+
+declare obstacle [ patient_not_transportable ]
+	name "Patient Not Transportable"
+  definition
+    "The patient is not safely transportable from the incident scene to the
+    nearest and most appropriate hospital."
+end
+
+declare obstacle [ insufficient_capacity ]
+  name "Insufficient Capacity"
+  definition
+    "The ambulance capacity is reached. Patient cannot be transported safely."
+end
+
+declare obstacle [ overweight_patient ]
+  name "Overweight Patient"
+  definition
+    "The weight of the patient is over the maximal weight allowed for safe
+    transportation by the ambulance."
+end
+
+declare obstacle [ patient_cannot_reach_ambulance ]
+  name "Patient Cannot Reach Ambulance"
+  definition
+    "The patient cannot safely reach the ambulance."
+end
+
+declare obstacle [ patient_not_admitted ]
+  name "Patient Not Admitted At Hospital"
+  definition
+    "The patient is not admitted at the nearest and most appropriate hospital."
+  refinedby no_bed
+  refinedby available_bed_no_assigned
+  refinedby special_unit_required
+end
+
+declare obstacle [ available_bed_no_assigned ]
+	name "Available Bed Not Assigned"
+  definition
+    "The patient is not admitted at the nearest and most appropriate hospital,
+    even if beds are available."
+end
+
+declare obstacle [ special_unit_required ]
+	name "Special Unit Required"
+  definition
+    "A special equipment or specific staff is required to admit the patient at
+    the hospital and such equipment or staff is not available at nearest and
+    most appropriate hospital."
+end
+
+declare obstacle [ no_bed ]
+  name "No Bed Available"
+  definition
+    "The nearest and most appropriate hospital has no available beds for the
+    patient."
+end
+
+# Obstacles for achieve_allocation_at_station
+
+override goal [ achieve_allocation_at_station_when_moborder_received ]
+  obstructedby not_allocation_when_moborder_printed
+end
+
+declare obstacle [ not_allocation_when_moborder_printed ]
+  name "Allocated Ambulance Not Mobilized And Mobilization Order Printed And Confirmed"
+  definition
+    "The allocated ambulance is not mobilized but the mobilization order is
+    printed and the mobilization is confirmed by the operator."
+  refinedby ambulance_not_at_station
+  refinedby allocated_ambulance_not_available
+  refinedby printed_mobilization_order_ignored
+  refinedby mobilization_taken_by_other_ambulance
+end
+
+declare obstacle [ ambulance_not_at_station ]
+  name "Allocated Ambulance Not At Station"
+  definition
+    "The ambulance is not at the station when the mobilization order is printed
+    and/or the call is made."
+end
+
+declare obstacle [ allocated_ambulance_not_available ]
+  name "Allocated Ambulance Not Available"
+  definition
+    "The ambulance is at the station but not yet available (for example,
+    cleaning and refurbishing the ambulance)."
+end
+
+declare obstacle [ printed_mobilization_order_ignored ]
+  name "Printed Mobilization Order Ignored"
+  definition
+    "The printed mobilization order is ignored by the ambulance staff."
+  refinedby crew_not_near_printer		
+end
+
+declare obstacle [ crew_not_near_printer ]
+	name "Crew Not Near Printer"
+  definition
+    "The ambulance staff is not near the station printer."
+end
+
+declare obstacle [ mobilization_taken_by_other_ambulance ]
+  name "Mobilization Taken By Other Ambulance"
+  definition
+    "The mobilization order is taken by an other ambulance staff."
+end
+
+# Obstacles for moborder_transmitted_to_mdt
+
+override goal [ moborder_transmitted_to_mdt ]
+  obstructedby moborder_not_transmitted_to_mdt
+end
+
+declare obstacle [ moborder_not_transmitted_to_mdt ]
+  name "Mobilization Order Not Transmitted To MDT"
+  refinedby network_overloaded
+	refinedby mdt_blackspot
+  refinedby moborder_corrupted
+end
+
+declare obstacle [ mdt_blackspot ]
+	name "MDT In Blackspot" 
+  definition 
+    "The MDT that shall received the information is in a blackspot
+    and no longer able to send and receive data."
+	end
+  
+declare obstacle [ moborder_corrupted ]
+	name "Corrupted Mobilization Order"
+  definition 
+    "The mobilization order is corrupted and cannot be transmitted reliably to
+    the corresponding MDT."
+end
+
+declare obstacle [ network_overloaded ]
+	name "Network Overloaded"
+  definition 
+    "The network used to transmit information between the dispatching software
+    and the MDTs is overloaded and not able to transmit information."
+end
+
+# Obstacles for achieve_allocation_on_road
+
+override goal [ achieve_allocation_on_road_when_moborder_received ]
+  obstructedby no_allocation_when_moborder_displayed
+end
+
+declare obstacle [ no_allocation_when_moborder_displayed ]
+  name "Allocated Ambulance Not Mobilized And Mobilization Order Displayed And Confirmed"
+  definition
+    "The allocated ambulance is not mobilized when the mobilization order is
+    displayed on the MDT and the mobilization is confirmed by radio. The
+    mobilization did not occured within 10 seconds of the print or confirmation."
+  refinedby ambulance_not_available_when_moborder_displayed
+  refinedby displayed_mobilization_order_ignored
+end
+
+declare obstacle [ ambulance_not_available_when_moborder_displayed ]
+  name "Ambulance Not Available And Mobilization Order Displayed"
+  definition
+    "The ambulance is not available even if the mobilizatin order is displayed
+    and the mobilization order is confirmed."
+end
+
+declare obstacle [ displayed_mobilization_order_ignored ]
+  name "Displayed Mobilization Order Ignored"
+  definition
+    "The displayed mobilization order is ignored by the ambulance staff."
+  refinedby crew_distracted
+  refinedby crew_not_in_ambulance
+end
+
+declare obstacle [ crew_distracted ]
+  name "Crew Distracted"
+  definition
+    "The ambulance staff is distracted and ignores the displayed mobilization order."
+end
+
+declare obstacle [ crew_not_in_ambulance ]
+	name "Crew Not In Ambulance"
+  definition
+    "The ambulance staff is not in the ambulance and is therefore not able to
+    read the displayed mobilization order."
+end
+
+# Obstacles for achieve_ambulance_location_sent
+
+override goal [ achieve_ambulance_location_sent ]
+  obstructedby ambulance_location_not_sent
+end
+
+declare obstacle [ ambulance_location_not_sent ]
+  name "Captured Ambulance Location Not Sent"
+  definition 
+    "The captured ambulance location is not sent."
+  refinedby mdt_turned_off
+end

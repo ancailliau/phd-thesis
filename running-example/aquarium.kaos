@@ -1,0 +1,347 @@
+# declare goal
+#   id root
+#   name "Maintain [Environment Condition Appropriate]"
+#   refinedby m_water_level, m_water_temp, m_water_ph
+# end
+
+declare goal [ m_water_level ]
+  name "Maintain [Water Level Appropriate]"
+  refinedby a_water_level_low, a_water_level_high
+end
+
+declare goal [ m_water_temp ]
+  name "Maintain [Water Temperature Appropriate]"
+  refinedby a_water_temp_low, a_water_temp_high
+end
+
+declare goal [ m_water_ph ]
+  name "Maintain [Water PH Level Appropriate]"
+  refinedby m_ph_measured, m_water_ph_measured
+  rds .8
+end
+
+# Refinement for m_water_level [
+
+declare goal [ a_water_level_low ]
+  name "Achieve [Water Level Appropriate When Low Water]"
+  definition "Every 10 minutes, the water level is above the low limit."
+  refinedby m_water_level_measured, a_water_level_measured_low
+end
+
+  declare goal [ m_water_level_measured ]
+    name "Maintain [Water Level Measured]"
+    assignedto auto
+  end
+
+  declare goal [ a_water_level_measured_low ]
+    name "Achieve [Water Level Appropriate When Measured Low Water]"
+    refinedby a_water_pumped_in, a_pump_activated_when_low
+  end
+
+    declare goal [ a_water_pumped_in ]
+      name "Achieve [Water Pumped In When Pump Activated]"
+      assignedto pump_a
+    end
+
+    declare goal [ a_pump_activated_when_low ]
+      name "Achieve [Pump A Activated Until Measured Water Level Appropriate]"
+      assignedto auto
+    end
+
+declare goal [ a_water_level_high ]
+  name "Achieve [Water Level Appropriate When High Water]"
+  refinedby a_water_level_measured_high, m_water_level_measured
+end
+
+  declare goal [ a_water_level_measured_high ]
+    name "Achieve [Water Level Appropriate When Measured Low Water]"
+    refinedby a_water_pumped_out, a_pump_activated_when_high
+  end
+
+    declare goal [ a_water_pumped_out ]
+      name "Achieve [Water Pumped Out When Pump Activated]"
+      assignedto pump_b
+    end
+
+    declare goal [ a_pump_activated_when_high ]
+      name "Achieve [Pump B Activated Until Measured Water Level Appropriate]"
+      assignedto auto
+    end
+
+# ] End of refinement for m_water_level
+
+# Refinement for m_water_temp [
+
+declare goal [ a_water_temp_low ]
+  name "Achieve [Water Temperature Appropriate When Low]"
+  definition "Every 10 minutes, the water level is above the low limit."
+  refinedby m_water_temp_measured, a_water_temp_measured_low
+end
+
+  declare goal [ m_water_temp_measured ]
+    name "Maintain [Water Temperature Measured]"
+    assignedto auto
+  end
+
+  declare goal [ a_water_temp_measured_low ]
+    name "Achieve [Water Temperature Appropriate When Measured Low]"
+    refinedby a_heater_on_when_activated, a_heater_activated_when_low
+  end
+
+    declare goal [ a_heater_on_when_activated ]
+      name "Achieve [Heater On When Heater Activated]"
+      assignedto heater
+    end
+
+    declare goal [ a_heater_activated_when_low ]
+      name "Achieve [Heater Activated Until Measured Water Temperature Appropriate]"
+      assignedto auto
+    end
+
+declare goal [ a_water_temp_high ]
+  name "Achieve [Water Temperature Appropriate When High]"
+  refinedby a_water_temp_measured_high, m_water_temp_measured
+end
+
+  declare goal [ a_water_temp_measured_high ]
+    name "Achieve [Water Temperature Appropriate When Measured Low]"
+    refinedby a_cooler_on_when_activated, a_cooler_activated_when_low
+  end
+
+    declare goal [ a_cooler_on_when_activated ]
+      name "Achieve [Cooler Fan On When Cooler Fan Activated]"
+      assignedto cooler
+    end
+
+    declare goal [ a_cooler_activated_when_low ]
+      name "Achieve [Cooler Fan Activated Until Measured Water Temperature Appropriate]"
+      assignedto auto
+    end
+
+# ] End of refinement for m_water_temp
+
+# Refinement for m_water_ph [
+
+declare goal [ m_ph_measured ]
+  name "Maintain [Water PH Level Measured]"
+  assignedto auto
+end
+
+declare goal [ m_water_ph_measured ]
+  name "Maintain [Measured Water PH Level Appropriate]"
+  refinedby a_warned_when_innappropriate, a_ph_level_appropriate_when_warned
+end
+
+declare goal [ a_warned_when_innappropriate ]
+  name "Achieve [Operator Warned When Measured PH Level Inappropriate]"
+  refinedby a_sms_sent, a_warned_when_sent
+end
+
+declare goal [ a_sms_sent ]
+  name "Achieve [SMS Sent When Measured PH Level Inappropriate]"
+  assignedto auto
+end
+
+declare goal [ a_warned_when_sent ]
+  name "Achieve [Operator Warned When SMS Sent]"
+  assignedto operator
+end
+
+declare goal [ a_ph_level_appropriate_when_warned ]
+  name "Achieve [Water PH Level Appropriate When Operator Warned]"
+  assignedto operator
+end
+
+# ] End of refinement for m_water_ph
+
+# Agents
+
+declare agent [ auto ]
+  name "Automation System"
+  type software
+end
+
+declare agent [ pump_a ]
+  name "Pump A"
+  type environment
+end
+
+declare agent [ pump_b ]
+  name "Pump B"
+  type environment
+end
+
+declare agent [ heater ]
+  name "Heater"
+  type environment
+end
+
+declare agent [ cooler ]
+  name "Cooler Fan"
+  type environment
+end
+
+declare agent [ operator ]
+  name "Operator"
+  type environment
+end
+
+
+# Obstacles for a_pump_activated_when_low [
+
+override goal [ a_pump_activated_when_low ]
+  obstructedby o_root_a_pump_activated_when_low
+end
+
+declare obstacle [ o_root_a_pump_activated_when_low ]
+  name "Pump A Not Activated Until Measured Water Level Appropriate"
+  refinedby o_no_power
+  refinedby o_faulty_code
+  refinedby o_compromised_system
+end
+
+  declare obstacle [ o_no_power ]
+    name "No Power Available"
+    refinedby o_power_outage, o_critical_battery
+  end
+
+    declare obstacle [ o_power_outage ]
+      name "Power Outage"
+      eps .03
+    end
+
+    declare obstacle [ o_critical_battery ]
+      name "Critical Battery Level"
+      eps .08
+    end
+
+  declare obstacle [ o_faulty_code ]
+    name "Faulty Code"
+      eps .012
+  end
+
+  declare obstacle [ o_compromised_system ]
+    name "Compromised System"
+      eps .018
+  end
+
+# ] End of obstacles for a_pump_activated_when_low
+
+# Obstacles for a_water_pumped_in [
+
+override goal [ a_water_pumped_in ]
+  obstructedby o_root_a_water_pumped_in
+end
+
+declare obstacle [ o_root_a_water_pumped_in ]
+  name "Water Not Pumped In When Pump Activated"
+  refinedby o_relay_broken
+  refinedby o_pump_leak
+  refinedby o_pump_broken
+  refinedby o_empty_reserve
+end
+
+  declare obstacle [ o_relay_broken ]
+    name "Relay Broken"
+    eps .25
+  end
+
+  declare obstacle [ o_pump_leak ]
+    name "Pump Leak"
+    eps .26
+  end
+
+  declare obstacle [ o_pump_broken ]
+    name "Pump Broken"
+    eps .14
+  end
+
+  declare obstacle [ o_empty_reserve ]
+    name "Empty Water Reserve"
+    eps .09
+  end
+
+# ] End of obstacles for a_water_pumped_in
+
+# Obstacles for a_sms_sent [
+
+override goal [ a_sms_sent ]
+  obstructedby o_root_a_sms_sent
+end
+
+declare obstacle [ o_root_a_sms_sent ]
+  name "SMS Not Sent When Measured PH Level Inappropriate"
+  refinedby o_non_working_device
+  refinedby o_comm_error
+end
+
+  declare obstacle [ o_comm_error ]
+    name "Communication Error And Working Device"
+    refinedby o_blackspot
+    refinedby o_phonenr_not_working
+    refinedby o_no_credit
+  end
+
+  declare obstacle [ o_non_working_device ]
+    name "Non Working Device"
+    refinedby o_faulty_code, dp_faulty_code_no_sms
+    refinedby o_compromised_system, dp_compromised_system_no_sms
+    refinedby o_power_outage, o_critical_battery
+  end
+
+    declare domprop [ dp_faulty_code_no_sms ]
+      name "SMS Not Sent If Faulty Code"
+      eps .01
+    end
+
+    declare domprop [ dp_compromised_system_no_sms ]
+      name "SMS Not Sent If Compromised System"
+      eps .09
+    end
+
+    declare obstacle [ o_blackspot ]
+      name "Blackspot"
+      eps .29
+    end
+
+    declare obstacle [ o_phonenr_not_working ]
+      name "Phone# Not Working"
+      eps .17
+    end
+
+    declare obstacle [ o_no_credit ]
+      name "No Phone Credit Available"
+      eps .16
+    end
+
+# ] End of obstacles for a_sms_sent
+
+# Obstacles for a_warned_when_sent [
+
+override goal [ a_warned_when_sent ]
+  obstructedby o_root_a_warned_when_sent
+end
+
+  declare obstacle [ o_root_a_warned_when_sent ]
+    name "Operator Not Warned When SMS Sent"
+    refinedby o_unresponsive
+    refinedby o_gsm_out_of_service
+    refinedby o_operator_in_blackspot
+  end
+
+  declare obstacle [ o_unresponsive ]
+    name "Operator Not Responsive"
+    eps .16
+  end
+
+  declare obstacle [ o_gsm_out_of_service ]
+    name "Operator's GSM Out Of Service"
+    eps .19
+  end
+
+  declare obstacle [ o_operator_in_blackspot ]
+    name "Operator In Black Spot"
+    eps .01
+  end
+
+# ] End of obstacles for a_warned_when_sent

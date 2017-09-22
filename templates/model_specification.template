@@ -1,0 +1,81 @@
+@using UCLouvain.KAOSTools.Core
+@using UCLouvain.KAOSTools.Core.SatisfactionRates
+@using System.Linq
+@model KAOSModel
+
+\startsubsection[title={Goal specifications}]
+
+This section provides the complete specifications for the goals
+in XXX, presented in \in{Section}[].
+
+@{
+  var goals = Model.Goals();
+  foreach(var goal in goals)
+	{
+    @Raw("\\startkaosspec\n")
+    @Raw("\t\\GoalName {"+goal.FriendlyName+"}\n")
+    @Raw("\t\\KaosAttribute {Def} {"+goal.Definition+"}\n")
+    if (goal.RDS > 0) {
+      @Raw("\t\\KaosAttribute {RSR} {"+goal.RDS+"}\n")
+    }
+    foreach (var r in goal.Refinements()) {
+      @Raw("\t\\KaosAttribute {RefinedBy} {")
+      @Raw(string.Join(", ", r.SubGoals().Select(x => x.FriendlyName)
+                              .Union(r.DomainProperties().Select(x => x.FriendlyName))
+                              .Union(r.DomainHypotheses().Select(x => x.FriendlyName))
+                              ))
+      @Raw("}\n")
+    }
+    foreach (var r in goal.Obstructions()) {
+      @Raw("\t\\KaosAttribute {ObstructedBy} {")
+      @Raw(r.Obstacle().FriendlyName)
+      @Raw("}\n")
+    }
+    foreach (var r in goal.AgentAssignments()) {
+      @Raw("\t\\KaosAttribute {AssignedTo} {")
+      @Raw(string.Join(", ", r.Agents().Select(x => x.FriendlyName)
+                              ))
+      @Raw("}\n")
+    }
+    @Raw("\\stopkaosspec\n")
+	}
+}
+
+\stopsubsection
+
+\startsubsection[title={Obstacle specifications}]
+
+This section provides the complete specifications for the obstacles
+in XXX, presented in \in{Section}[].
+
+@{
+  var obstacles = Model.Obstacles();
+  foreach(var obstacle in obstacles)
+	{
+    @Raw("\\startkaosspec\n")
+    @Raw("\t\\GoalName {"+obstacle.FriendlyName+"}\n")
+    @Raw("\t\\KaosAttribute {Def} {"+obstacle.Definition+"}\n")
+	  
+    var satrate = (DoubleSatisfactionRate) Model.satisfactionRateRepository.GetObstacleSatisfactionRate(obstacle.Identifier);
+    if (satrate != null) {
+      @Raw("\t\\KaosAttribute {ESR} {"+string.Format("{0:P2}",satrate.SatisfactionRate).Replace(" %","\\%")+"}\n")
+    }
+    
+    foreach (var r in obstacle.Refinements()) {
+      @Raw("\t\\KaosAttribute {RefinedBy} {")
+      @Raw(string.Join(", ", r.SubObstacles().Select(x => x.FriendlyName)
+                              .Union(r.DomainProperties().Select(x => x.FriendlyName))
+                              .Union(r.DomainHypotheses().Select(x => x.FriendlyName))
+                              ))
+      @Raw("}\n")
+    }
+    foreach (var r in obstacle.Resolutions()) {
+      @Raw("\t\\KaosAttribute {Resolvedby} {")
+      @Raw(r.ResolvingGoal().FriendlyName)
+      @Raw("}\n")
+    }
+    @Raw("\\stopkaosspec\n")
+	}
+}
+
+\stopsubsection

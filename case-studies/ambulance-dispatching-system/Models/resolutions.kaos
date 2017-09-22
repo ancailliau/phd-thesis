@@ -1,0 +1,308 @@
+import "ads.kaos"
+
+# Resolutions for mobilization_taken_by_other_ambulance
+
+override obstacle [ mobilization_taken_by_other_ambulance ]
+  resolvedby [mitigation:achieve_amb_mobilized_when_amb_allocated] 
+             mobilization_known_by_other
+  resolvedby [prevention:achieve_allocation_at_station_when_moborder_received]
+             avoid_mobilization_without_order
+end
+
+declare goal [ mobilization_known_by_other ]
+  name "Achieve [Mobilization By Other Ambulance Known]"
+  definition "The dispatching software shall known that the mobilization order
+  is taken by an other ambulance than the one allocated to it."
+end
+
+declare goal [ avoid_mobilization_without_order ]
+  name "Avoid [Mobilization Without Order]"
+  definition "Ambulances shall not be mobilized without proper mobilization
+  order from the dispatching software."
+end
+
+# Resolutions for displayed_mobilization_order_ignored
+
+override obstacle [ displayed_mobilization_order_ignored ]
+  resolvedby [prevention:achieve_allocation_on_road_when_moborder_received] 
+             achieve_alarm_when_moborder_received
+  resolvedby [mitigation:achieve_amb_mobilized_when_amb_allocated]
+             failed_mobilization_recovered
+  resolvedby [mitigation:achieve_amb_mobilized_when_amb_allocated]
+             late_mobilization
+end
+
+declare goal [ achieve_alarm_when_moborder_received ]
+  name "Achieve [Alarm When Mobilization Order Displayed]"
+end
+
+declare goal [ failed_mobilization_recovered ]
+  name "Achieve [Failed Mobilization Recovered]"
+end
+
+declare goal [ late_mobilization ]
+  name "Achieve [Late Mobilization When Crew Not Responsive]"
+end
+
+# Resolutions for ambulance_not_at_station
+
+override obstacle [ ambulance_not_at_station ]
+  name "Allocated Ambulance Not At Station"
+  resolvedby [mitigation:achieve_allocation_at_station]
+             moborder_displayed_on_mdt_when_at_station
+  resolvedby [prevention:achieve_allocation_at_station_when_moborder_received]
+             ambulance_leaving_station_when_allocated
+end
+
+declare goal [ ambulance_leaving_station_when_allocated ]
+  name "Avoid [Ambulance Leaving Station When Allocated]"
+  definition "Ambulances shall not leave their station when allocated
+  (but not yet mobilized)."
+end
+
+declare goal [ ambulance_contact_dispatching_before_leaving ]
+  name "Achieve [Dispatching Contacted Before Leaving Station]"
+  definition "The dispatching shall be contacted before leaving the station."
+  assignedto staff
+end
+
+declare goal [ moborder_displayed_on_mdt_when_at_station ]
+  name "Achieve [Mobilization Order Displayed On MDT When At Station]"
+  definition "The mobilization order shall be displayed on the MDT when
+  ambulances are at station."
+end
+
+# Resolutions for allocated_ambulance_not_available
+
+override obstacle [ allocated_ambulance_not_available ]
+  resolvedby [mitigation:achieve_amb_mobilized_when_amb_allocated] 
+             other_ambulance_mobilized_when_not_available
+  resolvedby [prevention:achieve_allocation_at_station_when_moborder_received] 
+             avoid_ambulance_unavailable_when_allocated
+end
+
+declare goal [ other_ambulance_mobilized_when_not_available ]
+  name "Achieve [Other Ambulance Mobilized When Allocated Ambulance Not Available]"
+  definition "An other ambulance shall be mobilized if the allocated ambulance
+  is not available."
+end
+
+declare goal [ avoid_ambulance_unavailable_when_allocated ]
+  name "Avoid [Ambulance Unavailable When Allocated]"
+  definition "The status shall not change to available when ambulance is
+  allocated. This might be enforced by asking the staff to ask for permission
+  when 'Available' before switching to 'Unavailable'."
+end
+
+# Resolutions for printed_mobilization_order_ignored
+
+override obstacle [ printed_mobilization_order_ignored ]
+  resolvedby [mitigation:achieve_amb_mobilized_when_amb_allocated]
+             other_ambulance_mobilized_when_moborder_ignored
+  resolvedby [prevention:achieve_allocation_at_station_when_moborder_received] 
+             alarm_when_moborder_printed
+end
+
+declare goal [ other_ambulance_mobilized_when_moborder_ignored ]
+  name "Achieve [Other Ambulance Mobilized After Timeout]"
+  definition "An other ambulance shall be mobilized when the allocated
+  ambulance do not confirm the mobilization within 3 minutes."
+end
+
+declare goal [ alarm_when_moborder_printed ]
+  name "Achieve [Alarm When Mobilization Order Printed]"
+  definition "An alarm shall emit sound and light signal when the mobilization
+  order is printed at station."
+end
+
+# Resolutions for ambulance_not_available_when_moborder_displayed
+
+override obstacle [ ambulance_not_available_when_moborder_displayed ]
+  resolvedby [mitigation:achieve_amb_mobilized_when_amb_allocated]
+             other_ambulance_mobilized_when_not_available
+  resolvedby [prevention:achieve_allocation_on_road_when_moborder_received] 
+             avoid_ambulance_unavailable_when_allocated
+end
+
+# Resolutions for insufficient_ressource
+
+override obstacle [ insufficient_ressource ]
+  resolvedby [mitigation:achieve_incident_resolved_by_intervention]
+             other_ambulance_on_scene_when_insufficient_ressource
+end
+
+declare goal [ other_ambulance_on_scene_when_insufficient_ressource ]
+  name "Achieve [Additional Ambulance On Scene When Insufficient Ressource]"
+  definition "An other ambulance shall arrive on scene with the sufficient
+  ressource when the mobilized ambulance does not have the sufficient ressource
+  for the patient."
+end
+
+# Resolutions for wrong_info_about_patient
+
+override obstacle [ wrong_info_about_patient ]
+  resolvedby [mitigation:achieve_incident_resolved_by_intervention] 
+             baby_unit_when_required
+  resolvedby [mitigation:achieve_incident_resolved_by_intervention] 
+             obesity_ambulance_when_required
+  resolvedby [mitigation:achieve_incident_resolved_by_intervention] 
+             medical_doctor_when_required
+end
+
+declare goal [ baby_unit_when_required ]
+  name "Achieve [Baby Emergency Unit On Scene When Baby Patient]"
+  definition "An ambulance equiped with the specific ressources
+  for emergency care of babies shall be on scene whene the patient
+  has less than 2 years."
+end
+
+declare goal [ obesity_ambulance_when_required ]
+  name "Achieve [Obesity Ambulance On Scene When Overweight Patient]"
+  definition "An ambulance equiped with the specific ressources
+  for transporting overweight patient shall be on scene whene the patient
+  weight over 180 kg."
+end
+
+declare goal [ medical_doctor_when_required ]
+  name "Achieve [Medical Doctor On Scene When Specific Critical Care Required]"
+  definition "A medical doctor shall be on scene when highly critical care is
+  required."
+end
+
+# Resolutions for insufficient_capacity
+
+override obstacle [ insufficient_capacity ]
+  resolvedby [mitigation:achieve_incident_resolved_by_intervention]
+             more_ambulance_on_scene
+end
+
+declare goal [ more_ambulance_on_scene ]
+  name "Achieve [Ambulances On Scene When Insufficient Capacity]"
+  definition "When the capacity of the ambulances on scene is insufficient,
+  more ambulance shall be on scene within 12 minutes."
+end
+
+# Resolutions for overweight_patient
+
+override obstacle [ overweight_patient ]
+  resolvedby [mitigation:achieve_incident_resolved_by_intervention] 
+             obesity_ambulance_when_required
+end
+
+# Resolutions for patient_unreachable_safely
+
+override obstacle [ fire_environment ] 
+  resolvedby [mitigation:achieve_incident_resolved_by_intervention]
+             fire_brigade_on_scene
+end
+
+declare goal [ fire_brigade_on_scene ]
+  name "Achieve [Fire Brigade On Scene When Fire Environment]"
+  definition "The fire brigade shall be on scene within 20 minutes when the
+  environment of the patient is fiery."
+end
+
+override obstacle [ hazardous_environment ] 
+  name "Hazardous Environment" 
+  resolvedby [mitigation:achieve_incident_resolved_by_intervention] 
+             hart_team_on_scene
+end
+
+declare goal [ hart_team_on_scene ]
+  name "Achieve [HART On Scene When Fire Environment]"
+  definition "The HART (Hazardous Area Response Team) shall be on scene within
+  20 minutes when the environment of the patient is hazardous."
+end
+
+override obstacle [ unreachable_patient ] 
+  resolvedby [mitigation:achieve_incident_resolved_by_intervention]
+             rescue_unit_on_scene
+end
+
+declare goal [ rescue_unit_on_scene ]
+  name "Achieve [Rescue Unit On Scene When Unreachable Patient]"
+  definition "The rescue unit shall be on scene within 20 minutes when the
+  patient is unreachable."
+end
+
+# Resolutions for patient_cannot_reach_ambulance
+
+override obstacle [ patient_cannot_reach_ambulance ]
+  resolvedby [mitigation:achieve_incident_resolved_by_intervention] 
+             rescue_unit_on_scene
+end
+
+# Resolutions for patient_not_admitted
+
+override obstacle [ patient_not_admitted ]
+  resolvedby [prevention:patient_to_appropriate_hospital] assign_dest_hospital
+end
+
+declare goal [ assign_dest_hospital ]
+  name "Achieve [Ambulance To Assigned Hospital]"
+  definition "The ambulance shall have an hospital assigned when allocated and
+  transport the patient to that hospital. The assigned hospital shall accept
+  all patient sent upon request from the dispatch center."
+end
+
+# Resolutions for no_bed
+
+override obstacle [ no_bed ]
+  resolvedby [prevention:patient_to_appropriate_hospital] avoid_sending_ambulance_to_full_hopital
+end
+
+declare goal [ avoid_sending_ambulance_to_full_hopital ]
+  name "Avoid [Sending Ambulance To Hospital With No Bed Available]"
+  definition "No ambulance shall be sent to an hospital with no bed available."
+end
+
+# Resolutions for mobilization_cancelled
+  
+override obstacle [ mobilization_cancelled ]
+  resolvedby [weakening:achieve_incident_resolved]
+             mobilized_ambulance_intervention_or_mobilization_cancelled
+end
+
+declare goal [ mobilized_ambulance_intervention_or_mobilization_cancelled ]
+  name "Achieve [Ambulance On Scene Or Cancelled When Incident Reported]"
+  definition 
+    "An ambulance shall be on scene within 12 minutes for every reported
+    incident, or the intervention shall be cancelled."
+end
+
+# Resolutions for ambulance_stopped
+
+override obstacle [ ambulance_stopped ]
+  resolvedby [restoration:achieve_ambulance_intervention]
+             other_ambulance_when_stopped
+end
+
+declare goal [ other_ambulance_when_stopped ]
+  name "Achieve [Other Ambulance Mobilized When Mobilized Ambulance Stopped]"
+  definition "An other ambulance shall be mobilized within 2 minutes when the
+  allocated ambulance is stopped."
+end
+
+# Resolutions for ambulance_in_unfamiliar_area
+
+override obstacle [ ambulance_in_unfamiliar_area ]
+  name "Ambulance In Unfamiliar Area"
+  resolvedby [prevention:achieve_mobilized_ambulance_on_scene] 
+             avoid_ambulance_in_unfamiliar_area
+end
+
+declare goal [ avoid_ambulance_in_unfamiliar_area ]
+  name "Avoid [Ambulance In Unfamiliar Area]"
+end
+
+# Resolutions for ambulance_traffic_deviation
+
+override obstacle [ ambulance_traffic_deviation ]
+  name "Ambulance In Traffic Deviation"
+  resolvedby [prevention:achieve_mobilized_ambulance_on_scene] 
+             avoid_traffic_deviation
+end
+
+declare goal [ avoid_traffic_deviation ]
+  name "Avoid [Ambulance In Traffic Deviation]"
+end

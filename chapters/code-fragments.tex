@@ -1,4 +1,24 @@
 
+   \framed[toffset=.2em,width=local,frame=off,before=,after=,align=middle]{%
+      {\setupTABLE[c][each][align={flushleft},frame=off,offset=2pt]
+      \bTABLE
+      \bTR
+        \bTD[nc=2]	{\cronos\bf Goal} \framed[location=top,frame=off,align=flushleft,width=8cm]{Achieve [Make Up Water Provided When LOC \\
+        \spoiler{Achieve [} And No Valve Mechanical Failure]} \eTD
+      \eTR
+      \bTR
+        \bTD[loffset=10pt] {\cronos\bf FormalSpec}	\eTD
+        \bTD \startformula[align=right] \startalign[n=1,align={left}]
+          \NC LossOfCooling \wedge \neg MakeUpValveFailure \NR  \noalign{\vskip-.5em}
+          \NC \Rightarrow MakeUpWaterProvided \NR
+        \stopalign \stopformula \eTD
+      \eTR
+      \eTABLE}
+    }\vskip-1.8em
+
+
+
+
 
 \startluacode
 
@@ -263,3 +283,321 @@ end
         %discussion comparing both logic can be found in \cite[Var01a].
         
         % PCTL vs CTL
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+			
+        			Note that we are not interested in the proportion of behaviors where
+        			$C\Rightarrow\Theta T$ is satisfied among all possible behaviors. In fact,
+        			the chance of observing a behavior satisfying $C\Rightarrow\Theta T$
+        			tends towards $0$ in the long run. Imagine a very small system sending
+        			messages with a probability of $\vfrac{9}{10}$ to deliver a message, as the following
+        			figure suggest:
+			
+        			\vskip1em\midaligned{\startMPcode
+                    		def connectcircle (expr a, b, circle_size) =
+                    			numeric ang; ang := angle(b-a);
+                        		drawarrow (a + getanchor(ang, circle_size))
+                        				  -- (b - getanchor(ang, circle_size));
+                    		enddef ;
+            		
+                    		def getanchor (expr ang, circle_size) =
+                    			(cosd(ang) * circle_size/2, sind(ang) * circle_size/2)
+                    		enddef ;
+            	
+                    		pair a, b, c, d;
+                    		numeric circle_size;
+                    		circle_size := 8mm;
+            		
+                    		width := 1.4cm;
+                    		height := 6mm;
+            		
+                    		a := (2.5cm, 1cm);
+                    		b := (2.5cm, 0cm);
+                    		c := (0cm, 0cm);
+                    		d := (5cm, 0cm);
+            		
+                    		draw unitsquare xscaled width yscaled height smoothed .5mm 
+        						shifted (a-(width/2,height/2)) withcolor black;
+                    		draw unitsquare xscaled width yscaled height smoothed .5mm 
+        						shifted (b-(width/2,height/2)) withcolor black;
+                    		draw unitsquare xscaled width yscaled height smoothed .5mm 
+        						shifted (c-(width/2,height/2)) withcolor black;
+                    		draw unitsquare xscaled width yscaled height smoothed .5mm 
+        						shifted (d-(width/2,height/2)) withcolor black;
+            		
+                    		label(btex Start etex scaled .75, a);
+                    		label(btex Try etex scaled .75, b);
+                    		label(btex Delivered etex scaled .75, c);
+                    		label(btex Lost etex scaled .75, d);
+
+        					drawarrow a - (0, height/2) -- b + (0, height/2);
+        					drawarrow b + (width/2, 0) .. b + (d-b)/2 + (0, height/2) .. d - (width/2, 0);
+        					drawarrow d - (width/2, 0) .. b + (d-b)/2 - (0, height/2) .. b + (width/2, 0);
+        					drawarrow b - (width/2, 0) -- c + (width/2, 0);
+        					drawarrow c + (0, height/2) .. controls (c + (0, 1cm))
+        								and (a - (1cm, 0)) .. a - (width/2, 0);
+								
+                    		label.top(btex $\frac{1}{10}$ etex scaled .75, b + (d-b)/2 + (0, height/2));
+                    		label.top(btex $\frac{9}{10}$ etex scaled .75, b + (c-b)/2);
+                    	\stopMPcode}\vskip1em
+			
+        			To satisfy $Try\Rightarrow\bigcirc Delivered$, every message must be successfully
+        			delivered. The probability to deliver one message is $\vfrac{9}{10}$,
+        			and $n$ messages is $\vfrac{9}{10}^n$. When
+        			$n \rightarrow \infty$, $\vfrac{9}{10}^n \rightarrow 0$. However, the probability
+        			to satisfy $Try\rightarrow\bigcirc Delivered$ is $1$ in \italic{Start},
+        			\italic{Delivered} and \italic{Lost} states, and $\vfrac{9}{10}$ in
+        			\italic{Try} state. Therefore, the satisfaction rate for $Try\Rightarrow\bigcirc Delivered$
+        			is $\vfrac{9}{10}$.
+            
+            
+                    \startdefinition[dfn:satisfaction-rate]{Satisfaction Rate}
+                      	The satisfaction rate of a goal $C\Rightarrow \Theta T$ 
+                       	is the maximal probability $p$ such that
+        				\startformula
+        					Pr(\lbrace\pi\in behaviors(s)\ |\ \pi\models C\rightarrow \Theta T\rbrace) \geq p
+        				\stopformula
+        				in all states $s$.
+                    \stopdefinition	
+            
+                    \startexample
+        %    			Consider a very simple system for a mine pump where we only have 4 
+        %    			possible finite behaviors of two states:
+        %            
+        %        	    \startformula \startalign
+        %            	 	\NC p_1 \NC = (LowWater, PumpOff), (LowWater, PumpOff) \NR
+        %             		\NC p_2 \NC = (HighWater, PumpOff), (LowWater, PumpOn) \NR
+        %    	         	\NC p_3 \NC = (HighWater, PumpOff), (HighWater, PumpOn) \NR
+        %        	    	\NC p_4 \NC = (HighWater, PumpOff), (HighWater, PumpOff) \NR
+        %    	        \stopalign \stopformula
+        %            
+        %          		The requirement $HighWater \Rightarrow X PumpOn$ is satisfied on 
+        %    			three of the possible behaviors: $p_1$, $p_2$, and $p_3$. The behavior 
+        %    			$p_4$ does not satisfy the requirement and $p_1$ vacuously satisfy our 
+        %    			requirement. Intuitively, if all behaviors are observed at the same rate, 
+        %    			the satisfaction rate for this requirement is $\fraction{2}{3}$.
+                    \stopexample
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+    
+            
+            % For example, the assertion `{\bf sooner-or-later} $P$' where $P$
+            % is a set of state corresponds to the behaviors
+            % $s_0s_1...s_{n-1}s_n$ where $s_0,...,s_{n-1} \in\not P$ and $s_n
+            % \in P$. In other words, this corresponds to the behaviors
+            % $(S\setminus B)^*B$ where $S$ is the set of possible states. As
+            % this is countable, we have
+            % 
+            % \startformula
+            %   Pr(\text{'\bf sooner-or-later }P') = \sum_{\hat\pi \in (S\setminus B)^*B} Pr(Cyl(\hat\pi))
+            % \stopformula
+            % 
+            % As example, consider the Markov chain presented in
+            % \in{Figure}[fig:incorrect-pctl]. We want to compute the
+            % probability of the assertion `{\bf sooner-or-later} PumpOn' for
+            % the initial state. The behaviors corresponding to the assertion
+            % have the form $(s_0)^ns_1$ where $n$ is a natural number. We have
+            % 
+            % \startformula
+            %   Pr(\text{'\bf sooner-or-later }PumpOn') = \sum_{i=0}^\infty (.5)^n\times.5 = 1
+            % \stopformula
+            
+          
+%            \noindent\bold{Probabilistic Goals.} Based on the formal definition 
+%            of probability measure over behaviors, the satisfaction rate of a goal is 
+%            formally defined as:
+%            
+%            \startdefinition[dfn:satisfactionrate]{Satisfaction Rate}
+%                The satisfaction rate of a goal $\square\phi$, is defined as 
+%                $Pr(\{\pi \in behaviors(s)\ |\ \pi \models \phi\})$ 
+%                where $behaviors(s)$ are the possible behaviors in the system starting in any possible state $s$.
+%            \stopdefinition	
+%            
+%            We assume that the behavior of the system can be captured by a 
+%    		Markov Chain, even if not explicitly provided. Extending the definition 
+%    		above, $P(G|H)$ is formally characterized as:
+%            
+%            \startformula
+%            	Pr(\{\pi \in \{\pi'\in behaviors\ |\ \pi' \models H\}\ |\ \pi \models G \})
+%            \stopformula
+%            
+%            We focus on non-vacuous satisfaction of our requirements. The 
+%            problem of antecedent failure was recognized to be a problem is application 
+%            of formal verification \cite[Bea94a]. Vacuous satisfaction potentially hides 
+%            faults in complex models as parts of the assertion are not necessary for the 
+%            satisfaction. Techniques exists to detect vacuity in formalized requirements 
+%            \cite[Kup03a]. We assume that the requirements are not vacuously satisfied 
+%            by the system of interest.
+%            
+            %The key idea behind the detection is to replace sub-formula by 
+    		%$True$ or $False$ depending on their polarity and check the transformed 
+			%assertion against the model. 
+            
+            %\startexample
+            %Assume the requirement $HighWater \Rightarrow_{\geq 95\%} 
+			%\lozenge_{\leq 2min} PumpOn$.
+            %\startitemize
+            %\item Replacing $HighWater$ by $True$ leads to $Pr_1[\square 
+            %P_{\geq 95\%}[\lozenge_{\leq 2min} PumpOn]]$. If this is true in our system, 
+            %it means that the motor is always turned on within two minutes, whether the 
+            %water is high or not does not impact the satisfaction, and our requirement 
+            %is vacuously satisfied.
+            
+            %\item Replacing $\lozenge_{\leq 2min} PumpOn$ by $False$ leads to 
+            %$Pr_1[\square P_{\geq 95\%}[\neg HighWater]] \equiv Pr_1[\square \neg 
+            %HighWater]$. If this is true in our system, water is never high, and our 
+            %requirement is vacuously satisfied.
+            %\stopitemize
+            %\stopexample
+            
+            
+			
+%			The probability of satisfaction of a goal $C \Rightarrow \Theta T$ 
+%			is the proportion between (a) the number of possible behaviors satisfying 
+%			the goal's antecedent $C$ and consequent $\Theta T$ and (b) the number of 
+%			possible behaviors satisfying the condition $C$.
+            
+            %For a behavioral goal $C\Rightarrow\Theta T$, we are obviously 
+            %interested in non-vacuous satisfaction, leaving aside those trivial cases 
+            %where the goal is satisfied due to C being false. We therefore focus our 
+            %attention on behaviors where the goal antecedent C is satisfied.
+        
+        
+        
+      
+      \stopsubsection
+          
+      \startsubsection[title={Formal Specification of Probabilistic Obstacles}]
+      
+    
+      A probabilistic obstacle $\ltlF (C \wedge \neg\Theta T)$ with a satisfaction rate $x$
+      might be formalized using PCTL* as
+        
+      \startformula
+        
+        \ltlF \mathbb{P}_{> x} (C\wedge\neg\Theta T)
+        
+      \stopformula
+        
+      For example, assume the goal \goal{Achieve[OwnerWarnedWhenPHLevelCritical]} 
+      with a required degree of satisfaction of $.95$
+      formalized as
+      
+      \startformula
+        \ltlG \mathbb{P}_{\geq .95}(PHLevelCritical \rightarrow \ltlF_{< 5 \text{min}} OwnerWarned)
+      \stopformula
+      
+      It states that the owner shall be warned within 5 minutes when the PH
+      level of her aquarium is critical in 95\% of cases. An obstacle to this
+      expresses that there is more than 5\% of cases where the owner is not
+      warned within the time bounds.
+      
+      The minimal state probability to observe
+      
+      \startformula PHLevelCritical \rightarrow \ltlF_{< 5 \text{min}} OwnerWarned \stopformula
+      
+      shall be $.95$. The state with such state probability has the maximal state probability to satisfy the negation 
+      
+      \startformula PHLevelCritical \wedge \ltlG_{\geq 5 \text{min}} OwnerWarned \stopformula
+      
+      Therefore, the goal is not satisfied if the maximal probability is strictly
+      greater than $.05$:
+      
+      \startformula
+        \ltlF \mathbb{P}_{> .05}(PHLevelCritical \wedge \ltlG_{\geq 5 \text{min}} OwnerWarned)
+      \stopformula
+      
+      \stopsubsection
+      
+
+      
+            \stopsubsection
+      
+            % Proof for the Pr_{\geq p} [ True ] \equiv True               
+            % \startformula\startalign[n=3,align={left, left, right}]
+            %   \NC Pr_{\geq p} [ True ] 
+            %   \NC \equiv Pr (\{\pi \in behaviors\ |\ \pi \models True\}) \geq p 	
+            %   \NC \hskip.5cm\text{(Def. $Pr_{\geq p}$)}\NR
+            %   \NC \NC \equiv Pr (\{\pi \in behaviors\ |\ \pi_0 \models True\})\geq p
+            %   \NC \hskip.5cm\text{(Sat. relation for AP)}\NR
+            %   \NC \NC \equiv Pr (\{\pi \in behaviors\}) \geq p 											
+            %   \NC \hskip.5cm\text{(Def. $\models True$)}\NR
+            %   \NC \NC \equiv 1 \geq p 																
+            %   \NC \hskip.5cm\text{(Def. $Pr$)}\NR
+            %   \NC \NC \equiv True 																	
+            %   \NC \hskip.5cm\text{($0\leq p\leq1$)}\NR
+            % \stopalign\stopformula
+  
+      %    \startsubsection
+      %    	[reference=sec:patterns-probabilistic-goals,
+      %		   title={Specification Patterns for Probabilistic Goals}]
+      %    
+      %      Formalising probabilistic requirements is a tedious and error-prone task,
+      %      although essential for formal and automated reasoning. Specifications
+      %      patterns encodes common formalisation to ease the specification of
+      %      probabilistic goals. Refinement patterns encodes known tactics for
+      %      decomposing goals into subgoals. We present here the probabilistic
+      %      specification and refinement patterns inspired from the specification
+      %      patterns presented in \cite[Dar95a].
+      %      
+
+      
+      %      \startexample
+      %            For example, the goal \goal{Achieve [AmbulanceOnSceneWhenMobilized]} 
+      %            stating that an ambulance shall be on incident scene within 10 minutes when 
+      %            mobilized, can be formalized using the \italic{Achieve} specification 
+      %            pattern. Using LTL, the goal might be formalized as follow:
+      %          
+      %            \startformula
+      %            	\forall i: Incident, a: Ambulance \centerdot (Mobilized(a, i) \Rightarrow \ltlF_{\leq 10 min} OnScene (a, i))
+      %            \stopformula
+      %          
+      %            Back to our example, if ambulance is expected to be on scene within 
+      %            10 minutes only in 95\% of cases, the probabilistic achieve specification 
+      %            pattern produces the following formalisation :
+      %          
+      %            \startformula\startalign[n=1, align={left}]
+      %                \NC \forall i: Incident, a: Ambulance \centerdot \NR
+      %                \NC \hskip 2em Mobilized(a, i) \Rightarrow_{\geq 95\%} \ltlF_{\leq 10 min} OnScene (a, i) \NR
+      %            \stopalign\stopformula
+      %          
+      %            Formally, the PCTL assertion states that we are almost sure that in 
+      %            every state reachable from the initial state, 95\% of the behaviors starting in 
+      %            these states are such that a mobilized ambulance is on scene within 10 
+      %            minutes.
+      %       
+      %      \stopexample
+      %      
+
+      
+      %    \stopsubsection
+      %      
+      %    \startsubsection[title={Specification Patterns for Probabilistic Obstacles}]
+      %  	\stopsubsection
+      

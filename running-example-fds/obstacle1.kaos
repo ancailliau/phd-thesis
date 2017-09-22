@@ -1,0 +1,188 @@
+override goal [ transmitted_when_connected ]
+	name "Achieve [Data Transmitted When Connected]"
+	rsr .95
+	assignedto gridnode
+	obstructedby data_not_transmitted_in_time
+end
+
+declare obstacle [ data_not_transmitted_in_time ]
+	name "Data Not Transmitted in Time"
+	refinedby not_transmitted_in_time_when_grps_off, gprs_off
+	refinedby not_transmitted_in_time_when_grps_on, gprs_on
+end
+
+declare obstacle [ not_transmitted_in_time_when_grps_off ]
+	name "Data Not Transmitted in Time When GPRS Off"
+	refinedby not_transmitted_in_time_when_grps_off_and_wifi_off, wifi_off
+	refinedby not_transmitted_in_time_when_grps_off_and_wifi_on, wifi_on
+end
+
+declare obstacle [ not_transmitted_in_time_when_grps_on ]
+	name "Data Not Transmitted in Time When GPRS On"
+	refinedby not_transmitted_in_time_when_grps_on_and_wifi_off, wifi_off
+	refinedby not_transmitted_in_time_when_grps_on_and_wifi_on, wifi_on
+end
+
+declare obstacle [ not_transmitted_in_time_when_grps_off_and_wifi_off ]
+	name "Data Not Transmitted in Time When GPRS Off And Wifi Off"
+	refinedby not_transmitted_in_time_when_grps_off_and_wifi_off_and_bluetooth_on, bluetooth_on
+	refinedby not_transmitted_in_time_when_grps_off_and_wifi_off_and_bluetooth_off, bluetooth_off
+end
+
+declare obstacle [ not_transmitted_in_time_when_grps_off_and_wifi_on ]
+	name "Data Not Transmitted in Time When GPRS Off And Wifi On"
+	refinedby not_transmitted_in_time_when_grps_off_and_wifi_on_and_bluetooth_on, bluetooth_on
+	refinedby not_transmitted_in_time_when_grps_off_and_wifi_on_and_bluetooth_off, bluetooth_off
+end
+
+declare obstacle [ not_transmitted_in_time_when_grps_on_and_wifi_off ]
+	name "Data Not Transmitted in Time When GPRS On And Wifi Off"
+	refinedby not_transmitted_in_time_when_grps_on_and_wifi_off_and_bluetooth_on, bluetooth_on
+	refinedby not_transmitted_in_time_when_grps_on_and_wifi_off_and_bluetooth_off, bluetooth_off
+end
+
+declare obstacle [ not_transmitted_in_time_when_grps_on_and_wifi_on ]
+	name "Data Not Transmitted in Time When GPRS On And Wifi On"
+	refinedby not_transmitted_in_time_when_grps_on_and_wifi_on_and_bluetooth_on, bluetooth_on
+	refinedby not_transmitted_in_time_when_grps_on_and_wifi_on_and_bluetooth_off, bluetooth_off
+end
+
+# Leafs
+
+declare obstacle [ not_transmitted_in_time_when_grps_off_and_wifi_off_and_bluetooth_on ]
+	name "Data Not Transmitted in Time When GPRS Off And Wifi Off And Bluetooth On"
+	probability .08
+end
+
+declare obstacle [ not_transmitted_in_time_when_grps_off_and_wifi_off_and_bluetooth_off ]
+	name "Data Not Transmitted in Time When GPRS Off And Wifi Off And Bluetooth Off"
+	probability 1
+end
+
+declare obstacle [ not_transmitted_in_time_when_grps_off_and_wifi_on_and_bluetooth_on ]
+	name "Data Not Transmitted in Time When GPRS Off And Wifi On And Bluetooth On"
+	probability .02
+end
+
+declare obstacle [ not_transmitted_in_time_when_grps_off_and_wifi_on_and_bluetooth_off ]
+	name "Data Not Transmitted in Time When GPRS Off And Wifi On And Bluetooth Off"
+	probability .02
+end
+
+declare obstacle [ not_transmitted_in_time_when_grps_on_and_wifi_off_and_bluetooth_on ]
+	name "Data Not Transmitted in Time When GPRS On And Wifi Off And Bluetooth On"
+	probability .01
+end
+
+declare obstacle [ not_transmitted_in_time_when_grps_on_and_wifi_off_and_bluetooth_off ]
+	name "Data Not Transmitted in Time When GPRS On And Wifi Off And Bluetooth Off"
+	probability .01
+end
+
+declare obstacle [ not_transmitted_in_time_when_grps_on_and_wifi_on_and_bluetooth_on ]
+	name "Data Not Transmitted in Time When GPRS On And Wifi On And Bluetooth On"
+	probability .01
+end
+
+declare obstacle [ not_transmitted_in_time_when_grps_on_and_wifi_on_and_bluetooth_off ]
+	name "Data Not Transmitted in Time When GPRS On And Wifi On And Bluetooth Off"
+	probability .01
+end
+
+# 
+
+declare obstacle [ gprs_off ]
+	name "GPRS Off"
+	probability 1
+	resolvedby avoid_gprs_off
+end
+
+declare obstacle [ wifi_off ]
+	name "Wifi Off"
+	probability 1
+	resolvedby avoid_wifi_off
+end
+
+declare obstacle [ bluetooth_off ]
+	name "Bluetooth Off"
+	probability 1
+	resolvedby avoid_bluetooth_off
+end
+
+declare obstacle [ gprs_on ]
+	name "GPRS On"
+	probability 1
+	resolvedby avoid_gprs_on
+end
+
+declare obstacle [ wifi_on ]
+	name "Wifi On"
+	probability 1
+	resolvedby avoid_wifi_on
+end
+
+declare obstacle [ bluetooth_on ]
+	name "Bluetooth On"
+	probability 1
+	resolvedby avoid_bluetooth_on
+end
+
+#
+
+declare goal [ avoid_gprs_off ]
+	name "Maintain [GPRS On]"
+#	cost[cm_cost] 3
+end
+
+declare goal [ avoid_wifi_off ]
+	name "Maintain [Wifi On]"
+#	cost[cm_cost] 2
+end
+
+declare goal [ avoid_bluetooth_off ]
+	name "Maintain [Bluetooth On]"
+#	cost[cm_cost] 1
+end
+
+declare goal [ avoid_gprs_on ]
+	name "Maintain [GPRS Off]"
+#	cost[cm_cost] 0
+end
+
+declare goal [ avoid_wifi_on ]
+	name "Maintain [Wifi Off]"
+#	cost[cm_cost] 0
+end
+
+declare goal [ avoid_bluetooth_on ]
+	name "Maintain [Bluetooth Off]"
+#	cost[cm_cost] 0
+end
+
+# Constraints
+# 
+# declare constraint [ cst11 ]
+# 	name "Wifi"
+# 	conflict avoid_wifi_on, avoid_wifi_off
+# 	or avoid_wifi_on, avoid_wifi_off
+# end
+# 
+# declare constraint [ cst12 ]
+# 	name "Bluetooth"
+# 	conflict avoid_bluetooth_on, avoid_bluetooth_off
+# 	or avoid_bluetooth_on, avoid_bluetooth_off
+# end
+# 
+# declare constraint [ cst13 ]
+# 	name "GPRS"
+# 	conflict avoid_gprs_on, avoid_gprs_off
+# 	or avoid_gprs_on, avoid_gprs_off
+# end
+# 
+# declare view
+#   name "Obstacle to Achieve [Data Transmitted When Connected]"
+#   include[obstructed_goal] goal where id = transmitted_when_connected
+#   include[root_obstacles]  obstacle where obstructed_goal in obstructed_goal
+#   include[obstacles]       obstacle where parent in obstacles
+#   include[resolutions]     goal where resolved_obstacle in root_obstacles or resolved_obstacle in obstacles
+# end

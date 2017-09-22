@@ -1,0 +1,217 @@
+# "Achieve [Data Transmitted OffSite]"
+
+declare goal [ data_transmitted_offsite ]
+	name "Achieve [Data Transmitted OffSite]"
+	refinedby sensors_connected, transmitted_when_connected
+end
+
+declare goal [ sensors_connected ]
+	name "Maintain [Sensors Connected]"
+	refinedby overlay_network, connected_when_overlay
+end
+
+declare goal [ transmitted_when_connected ]
+	name "Achieve [Data Transmitted When Connected]"
+	assignedto gridnode
+end
+
+declare goal [ overlay_network ]
+	name "Maintain [Overlay Network]"
+	refinedby compute_spanning_tree, spanning_tree_deployed
+end
+
+declare domprop [ connected_when_overlay ]
+	name "Sensors Connected When Overlay Network"
+end
+
+declare goal [ compute_spanning_tree ]
+	name "Maintain [Spanning Tree Computed]"
+	assignedto gridnode
+end
+
+declare goal [ spanning_tree_deployed ]
+	name "Maintain [Spanning Tree Deployed]"
+	assignedto gridnode
+end
+
+# "Achieve [Locals Warned When Imminent Flooding]"
+
+declare goal [ locals_warned ]
+	name "Achieve [Locals Warned When Imminent Flooding]"
+	refinedby prediction_computed, warning_when_computed
+end
+
+declare goal [ prediction_computed ]
+	name "Achieve [Point Prediction Computed]"
+	refinedby computed_when_data_acquired, data_from_upstream_node, data_from_sensors
+end
+
+declare goal [ warning_when_computed ]
+	name "Achieve [Locals Warned When Prediction Computed]"
+	assignedto gridnode
+end
+
+declare goal [ data_from_upstream_node ]
+	name "Achieve [Data Acquired From Upstream Node]"
+	refinedby data_acquired_when_connected, sensors_connected
+end
+
+declare goal [ computed_when_data_acquired ]
+	name "Achieve [Prediction Computed When Data Acquired]"
+	assignedto gridnode
+end
+
+declare goal [ data_acquired_when_connected ]
+	name "Achieve [Data Acquired When Connected]"
+	refinedby data_requested, data_sent, data_received_when_sent
+end
+
+declare goal [ data_requested ]
+	name "Achieve [Data Requested]"
+	assignedto gridnode
+end
+
+declare goal [ data_sent ]
+	name "Achieve [Data Sent When Requested]"
+	assignedto gridnode
+end
+
+declare domprop [ data_received_when_sent ]
+	name "Data Received When Sent"
+end
+
+declare goal [ data_from_sensors ]
+	name "Achieve [Data Acquired Form Sensors]"
+	refinedby ultrasound_acquired, depth_acquired, velocity_acquired
+end
+
+declare goal [ ultrasound_acquired ]
+	name "Achieve [Ultrasound Data Acquired]"
+	assignedto ultrasound
+end
+
+declare goal [ depth_acquired ]
+	name "Achieve [Depth Data Acquired]"
+	assignedto depthsensor
+end
+
+declare goal [ velocity_acquired ]
+	name "Achieve [Accurate Velocity Data Acquired]"
+	refinedby still_image_acquired, tracers_identified, velocity_computed
+end
+
+declare goal [ still_image_acquired ]
+	name "Achieve [Still Images Acquired]"
+	assignedto camera
+end
+
+declare goal [ tracers_identified ]
+	name "Achieve [Accurate Velocity Computed From Images]"
+	assignedto gridnode
+end
+
+# 
+
+declare goal [ low_power_consumption ]
+	name "Maintain [Low Power Consumption]"
+	refinedby low_power_camera, avoid_energy_link
+end
+
+declare goal [ low_power_camera ]
+	name "Maintain [Low Power Camera Processing]"
+	obstructedby high_power_camera_processing
+end
+
+declare obstacle [ high_power_camera_processing ]
+	name "High Power Consumption Camera Processing"
+	refinedby high_capture_rate
+	refinedby high_resolution_images
+end
+
+declare obstacle [ high_capture_rate ]
+	name "High Capture Rate"
+	resolvedby maintain_low_res
+end
+
+declare obstacle [ high_resolution_images ]
+	name "High Resolution Images Captured"
+	resolvedby maintain_low_rate2
+end
+
+declare goal [ maintain_low_res ]
+	name "Maintain [Low Resolution Images Captured]"
+	assignedto gridnode
+end
+
+declare goal [ maintain_low_rate2 ]
+	name "Maintain [Low Capture Rate]"
+	assignedto gridnode
+end
+
+declare goal [ avoid_energy_link ]
+	name "Avoid [Energy Consuming Link]"
+	obstructedby consuming_link
+end
+
+declare obstacle  [ consuming_link ]
+	name "Energy Consuming Link Enabled And Active"
+	refinedby energy_link_active
+	refinedby energy_link_enabled
+end
+
+declare obstacle [ energy_link_active ]
+	name "Energy Consuming Link Active"
+	resolvedby maintain_fh_algo
+end
+
+declare obstacle [ energy_link_enabled ]
+	name "Energy Consuming Link Enabled"
+	refinedby gprs_active
+	refinedby wifi_active
+end
+
+declare obstacle [ gprs_active ]
+	name "GPRS Link Enabled"
+	resolvedby avoid_gprs
+end
+
+declare obstacle [ wifi_active ]
+	name "Wifi Enabled"
+	resolvedby avoid_wifi
+end
+
+declare goal [ avoid_gprs ]
+	name "Avoid [GPRS Link]"
+	assignedto gridnode
+end
+
+declare goal [ avoid_wifi ]
+	name "Avoid [Wifi Link]"
+	assignedto gridnode
+end
+
+declare goal [ maintain_fh_algo ]
+	name "Maintain [Fewer Hop Spanning Tree Computed]"
+	assignedto gridnode
+end
+
+# Agents
+
+declare agent [ depthsensor ]
+	name "Depth Sensor"
+end
+
+declare agent [ camera ]
+	name "Camera"
+end
+
+declare agent [ ultrasound ]
+	name "Ultrasound Sensor"
+end
+
+declare agent [ gridnode ]
+	name "GridStix Node"
+end
+
+# import "./obstacle1.kaos"
+# import "./obstacle2.kaos"

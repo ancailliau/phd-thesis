@@ -1,0 +1,5 @@
+
+	declare obstacle [ smoke_detector_broken ]
+		name "Smoke Detector Broken"
+		probability quantile[1.2%,2%,3%]
+	end

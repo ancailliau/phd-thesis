@@ -1,0 +1,142 @@
+% !TEX root = thesis.tex
+
+\startcomponent bnf
+\environment common
+\product thesis
+
+\startchapter[reference=chap:bnf,title={KAOSTools Formal Specification Grammar}]
+
+\loadmarkfile{buff-imp-kt}
+\definetyping[BNF][option=BNF,bodyfont=small,lines=yes]
+
+\setuptyping
+  [BNF]
+  []
+
+\startBNF
+<Formula> := 
+    "forall" <Variable> ":" <Identifier> 
+             ("," <Variable> ":" <Identifier>)* "." <Formula>
+    | "exists" <Variable> ":" <Identifier> 
+               ("," <Variable> ":" <Identifier>)* "." <Formula>
+    | <StrongBinary>
+
+# 'when A then B' is equivalent to 'always (if A then B)'
+<StrongBinary> :=
+    "when" <Binary> "then" <Formula>
+    | <Binary>
+
+# 'if A then B' is the implication
+# 'A iff B' is the equivalence
+<Binary> :=
+    "if" <TemporalBinary> "then" <Formula>
+    | <TemporalBinary> "iff" <Formula>
+    | <TemporalBinary>
+
+<TemporalBinary> :=
+    <And> "until" <EventuallyTimeBoundEmphasis>? <Formula>
+    | <And> "release" <Formula>
+    | <And> <GloballyTimeBoundEmphasis>? "unless" <Formula>
+    | <And>
+    
+<And> :=
+    <Or> "and" <Formula>
+    | <Or>
+    
+<Or> := 
+    <Unary> "or" <Formula>
+    | <Unary>
+    
+<Unary> :=
+    "not" <Unary>
+    | "next" <Unary>
+    | ("sooner-or-later" | "eventually") <EventuallyTimeBoundEmphasis>? <Unary>
+    | ("always" | "globally") <GloballyTimeBoundEmphasis>? <Unary>
+    | <Atom>
+
+<Atom> :=
+    <RelationReference>
+    | <Comparison>
+    | <AttributeReference>
+    | <PredicateReference>
+    | "(" <Formula> ")"
+
+<Comparison> :=
+    <ComparisonMember> <Comparator> <ComparisonMember>
+    
+<Comparator> :=
+    ( "==" | "!=" | ">=" | "<=" | ">" | "<" ) 
+    
+<ComparisonMember> := 
+   <AttributeReference> | <PredicateReference> | <VariableReference> 
+   | """ <String>? """ | <Float> | <Integer> | <Bool>
+
+<AttributeReference> :=
+   <Variable> "." <Identifier>
+
+<RelationReference> :=
+   "(" <Variable> ("," <Variable>)* ")" "in" <Identifier>
+
+<PredicateReference> :=  
+   <Identifier> ( "(" (<Variable> ( "," <Variable> )*)? ")" )
+
+<VariableReference> := <Variable>
+
+<EventuallyTimeBoundEmphasis> := 
+   "," <EventuallyTimeBound> ","
+
+<GloballyTimeBoundEmphasis> := 
+   "," <GloballyTimeBound> ","
+
+<EventuallyTimeBound> := 
+   ("strictly" )? "before" <TimeConstraint>
+   | ("strictly" )? "after" <TimeConstraint>
+   | "in" <TimeConstraint>
+
+<GloballyTimeBound> :=
+   "for" ("strictly" )? "more" "than" <TimeConstraint>
+   | "for" ("strictly" )? "less" "than" <TimeConstraint>
+   | "for" <TimeConstraint>
+   
+<TimeConstraint> :=
+   (<Integer> <TimeUnit>) ( <Integer> <TimeUnit>)*
+   
+<TimeUnit> :=
+   ( "day" | "days" | "d" )
+   | ( "hour" | "hours" | "h" )
+   | ( "minute" | "minutes" | "min" )
+   | ( "second" | "seconds" | "s" )
+   | ( "milisecond" | "miliseconds" | "ms" )
+
+<LogicFormula> := 
+   <LogicFormulaBinary>
+
+<LogicFormulaBinary> :=
+    "if" <LogicFormulaAnd> "then" <LogicFormula>
+    | <LogicFormulaAnd> "iff" <LogicFormula>
+    | <LogicFormulaAnd>
+
+<LogicFormulaAnd> :=
+    <LogicFormulaOr> "and" <LogicFormula>
+    | <LogicFormulaOr>
+
+<LogicFormulaOr> := 
+    <LogicFormulaUnary> "or" <LogicFormula>
+    | <LogicFormulaUnary>
+
+<LogicFormulaUnary> :=
+    "not" <LogicFormulaUnary>
+    | <LogicFormulaAtom>
+
+<LogicFormulaAtom> :=
+   "true" | "false"
+    | <RelationReference>
+    | <Comparison>
+    | <AttributeReference>
+    | <PredicateReference>
+    | "(" <LogicFormula> ")"
+\stopBNF
+
+\stopchapter
+
+\stopcomponent

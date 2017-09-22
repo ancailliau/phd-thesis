@@ -1,0 +1,30 @@
+# Goals
+
+declare goal [ anchor ]
+	formalspec when Current() and not sooner-or-later (Current() and always not Milestone()) then sooner-or-later Target()
+	refinedby child1,child2
+end
+declare goal [ child1 ]
+	formalspec when Current() and not sooner-or-later (Current() and always not Milestone()) then sooner-or-later Milestone()
+	obstructedby o
+end
+declare goal [ child2 ]
+	formalspec when Milestone() then sooner-or-later Target()
+end
+declare goal [ cm ]
+	obstructedby o2
+end
+declare goal [ id_29088ad6-2d1b-4536-b385-a620592e1785 ]
+	formalspec when Current() and not sooner-or-later (Current() and always not Milestone()) then sooner-or-later Target()
+	refinedby anchor,cm
+end
+
+# Obstacles
+
+declare obstacle [ o ]
+	name " And "
+	formalspec sooner-or-later ((Current() and not sooner-or-later (Current() and always not Milestone())) and always not Milestone())
+	resolvedby [prevention:anchor] cm
+end
+declare obstacle [ o2 ]
+end

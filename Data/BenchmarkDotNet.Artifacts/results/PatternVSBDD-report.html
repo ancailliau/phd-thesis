@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>PatternVSBDD</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.10.5, OS=centos 7
+Processor=Intel Core i7-6700 CPU 3.40GHz (Skylake), ProcessorCount=8
+Frequency=10000000 Hz, Resolution=100.0000 ns, Timer=UNKNOWN
+  [Host]     : Mono 5.0.0 (Stable 5.0.0.78/ba317ed), 64bit 
+  DefaultJob : Mono 5.0.0 (Stable 5.0.0.78/ba317ed), 64bit 
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>               Method</th><th>NbGoals</th><th>NbObstructions</th><th>NbObstacles</th><th>       Mean</th><th>      Error</th><th>     StdDev</th><th>     Median</th>
+</tr>
+</thead><tbody><tr><td>PatternBasedComputation</td><td>10</td><td>      10</td><td>   10</td><td>  35.801 us</td><td>  1.4508 us</td><td>  4.2777 us</td><td>  35.882 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10</td><td>      10</td><td>   10</td><td>  69.434 us</td><td>  0.3931 us</td><td>  0.3485 us</td><td>  69.380 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10</td><td>      10</td><td>   10</td><td>   3.654 us</td><td>  0.0070 us</td><td>  0.0065 us</td><td>   3.654 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10</td><td>      10</td><td>  100</td><td> 443.511 us</td><td>  1.6486 us</td><td>  1.4614 us</td><td> 443.051 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10</td><td>      10</td><td>  100</td><td> 845.454 us</td><td>  1.5620 us</td><td>  1.3846 us</td><td> 845.612 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10</td><td>      10</td><td>  100</td><td>  26.827 us</td><td>  0.0607 us</td><td>  0.0568 us</td><td>  26.830 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10</td><td>      10</td><td> 1000</td><td>34,762.113 us</td><td> 87.0031 us</td><td> 81.3828 us</td><td>34,716.778 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10</td><td>      10</td><td> 1000</td><td>85,092.931 us</td><td>203.1771 us</td><td>190.0520 us</td><td>85,099.288 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10</td><td>      10</td><td> 1000</td><td> 298.534 us</td><td>  1.5540 us</td><td>  1.4536 us</td><td> 298.034 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10</td><td>      10</td><td>10000</td><td>3,426,715.260 us</td><td>10,200.2632 us</td><td>9,541.3316 us</td><td>3,424,200.003 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10</td><td>      10</td><td>10000</td><td>13,243,373.829 us</td><td>1,731,770.5363 us</td><td>1,778,400.6727 us</td><td>12,300,876.353 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10</td><td>      10</td><td>10000</td><td>3,403.930 us</td><td> 67.6211 us</td><td>136.5980 us</td><td>3,363.580 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10</td><td>     100</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10</td><td>     100</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10</td><td>     100</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>PatternBasedComputation</td><td>10</td><td>     100</td><td>  100</td><td> 456.045 us</td><td>  2.7158 us</td><td>  2.5404 us</td><td> 455.656 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10</td><td>     100</td><td>  100</td><td> 821.463 us</td><td> 16.3093 us</td><td> 21.2067 us</td><td> 811.616 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10</td><td>     100</td><td>  100</td><td>  27.272 us</td><td>  0.0796 us</td><td>  0.0706 us</td><td>  27.287 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10</td><td>     100</td><td> 1000</td><td>34,887.054 us</td><td>168.5884 us</td><td>149.4492 us</td><td>34,879.415 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10</td><td>     100</td><td> 1000</td><td>84,341.162 us</td><td>978.6190 us</td><td>915.4008 us</td><td>84,199.303 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10</td><td>     100</td><td> 1000</td><td> 296.583 us</td><td>  1.8414 us</td><td>  1.7224 us</td><td> 296.618 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10</td><td>     100</td><td>10000</td><td>3,419,830.209 us</td><td>4,214.1644 us</td><td>3,519.0178 us</td><td>3,420,166.916 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10</td><td>     100</td><td>10000</td><td>12,432,859.625 us</td><td>67,000.6895 us</td><td>62,672.4804 us</td><td>12,424,552.593 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10</td><td>     100</td><td>10000</td><td>3,293.144 us</td><td> 17.9898 us</td><td> 16.8277 us</td><td>3,297.361 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10</td><td>    1000</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10</td><td>    1000</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10</td><td>    1000</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>PatternBasedComputation</td><td>10</td><td>    1000</td><td>  100</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10</td><td>    1000</td><td>  100</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10</td><td>    1000</td><td>  100</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>PatternBasedComputation</td><td>10</td><td>    1000</td><td> 1000</td><td>34,947.358 us</td><td>108.0351 us</td><td>101.0561 us</td><td>34,888.891 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10</td><td>    1000</td><td> 1000</td><td>82,382.093 us</td><td> 94.9432 us</td><td> 79.2819 us</td><td>82,395.996 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10</td><td>    1000</td><td> 1000</td><td> 294.047 us</td><td>  1.1858 us</td><td>  1.1092 us</td><td> 294.039 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10</td><td>    1000</td><td>10000</td><td>3,414,416.407 us</td><td>7,059.4102 us</td><td>6,603.3760 us</td><td>3,413,069.860 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10</td><td>    1000</td><td>10000</td><td>12,637,240.975 us</td><td>50,413.9116 us</td><td>47,157.1996 us</td><td>12,644,652.278 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10</td><td>    1000</td><td>10000</td><td>3,320.339 us</td><td> 26.4790 us</td><td> 24.7685 us</td><td>3,319.467 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>100</td><td>      10</td><td>   10</td><td> 476.578 us</td><td>  3.1168 us</td><td>  2.7630 us</td><td> 476.376 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>100</td><td>      10</td><td>   10</td><td> 326.087 us</td><td>  1.6730 us</td><td>  1.5649 us</td><td> 325.453 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>100</td><td>      10</td><td>   10</td><td>   3.186 us</td><td>  0.0078 us</td><td>  0.0073 us</td><td>   3.182 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>100</td><td>      10</td><td>  100</td><td> 904.627 us</td><td>  3.4826 us</td><td>  3.0872 us</td><td> 904.444 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>100</td><td>      10</td><td>  100</td><td>1,375.396 us</td><td> 13.1204 us</td><td> 12.2728 us</td><td>1,379.426 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>100</td><td>      10</td><td>  100</td><td>  27.348 us</td><td>  0.0708 us</td><td>  0.0663 us</td><td>  27.357 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>100</td><td>      10</td><td> 1000</td><td>35,489.620 us</td><td> 35.0872 us</td><td> 29.2994 us</td><td>35,484.959 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>100</td><td>      10</td><td> 1000</td><td>84,655.621 us</td><td>121.3958 us</td><td>113.5537 us</td><td>84,606.718 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>100</td><td>      10</td><td> 1000</td><td> 298.844 us</td><td>  0.6321 us</td><td>  0.5278 us</td><td> 298.824 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>100</td><td>      10</td><td>10000</td><td>3,453,109.848 us</td><td>7,020.4477 us</td><td>6,566.9305 us</td><td>3,452,216.057 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>100</td><td>      10</td><td>10000</td><td>12,688,612.418 us</td><td>56,369.2020 us</td><td>52,727.7813 us</td><td>12,706,117.754 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>100</td><td>      10</td><td>10000</td><td>3,408.428 us</td><td> 13.0522 us</td><td> 11.5704 us</td><td>3,410.831 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>100</td><td>     100</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>  BDDBasedComputation</td><td>100</td><td>     100</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>100</td><td>     100</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>PatternBasedComputation</td><td>100</td><td>     100</td><td>  100</td><td> 936.818 us</td><td>  3.4869 us</td><td>  3.0910 us</td><td> 937.152 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>100</td><td>     100</td><td>  100</td><td>1,359.688 us</td><td> 12.0540 us</td><td> 11.2753 us</td><td>1,356.516 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>100</td><td>     100</td><td>  100</td><td>  28.880 us</td><td>  0.0928 us</td><td>  0.0868 us</td><td>  28.842 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>100</td><td>     100</td><td> 1000</td><td>34,789.895 us</td><td>106.0603 us</td><td> 99.2088 us</td><td>34,741.775 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>100</td><td>     100</td><td> 1000</td><td>82,264.532 us</td><td>172.6327 us</td><td>161.4807 us</td><td>82,263.704 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>100</td><td>     100</td><td> 1000</td><td> 305.440 us</td><td>  1.1691 us</td><td>  1.0936 us</td><td> 305.566 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>100</td><td>     100</td><td>10000</td><td>3,414,812.420 us</td><td>5,411.5313 us</td><td>5,061.9492 us</td><td>3,415,725.284 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>100</td><td>     100</td><td>10000</td><td>16,437,369.703 us</td><td>106,643.3393 us</td><td>89,052.0097 us</td><td>16,422,659.878 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>100</td><td>     100</td><td>10000</td><td>5,590.368 us</td><td> 77.6352 us</td><td> 86.2913 us</td><td>5,577.382 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>100</td><td>    1000</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>  BDDBasedComputation</td><td>100</td><td>    1000</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>100</td><td>    1000</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>PatternBasedComputation</td><td>100</td><td>    1000</td><td>  100</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>  BDDBasedComputation</td><td>100</td><td>    1000</td><td>  100</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>100</td><td>    1000</td><td>  100</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>PatternBasedComputation</td><td>100</td><td>    1000</td><td> 1000</td><td>57,277.938 us</td><td> 35.6871 us</td><td> 29.8003 us</td><td>57,265.319 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>100</td><td>    1000</td><td> 1000</td><td>126,066.906 us</td><td>2,481.5237 us</td><td>4,660.9030 us</td><td>126,120.001 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>100</td><td>    1000</td><td> 1000</td><td> 511.642 us</td><td>  3.5005 us</td><td>  3.5947 us</td><td> 510.455 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>100</td><td>    1000</td><td>10000</td><td>4,087,963.040 us</td><td>306,911.1696 us</td><td>904,934.5081 us</td><td>3,421,552.676 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>100</td><td>    1000</td><td>10000</td><td>12,224,501.577 us</td><td>13,193.6280 us</td><td>11,017.2758 us</td><td>12,225,048.789 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>100</td><td>    1000</td><td>10000</td><td>3,264.195 us</td><td> 16.5606 us</td><td> 15.4908 us</td><td>3,262.874 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>1000</td><td>      10</td><td>   10</td><td>37,241.029 us</td><td>117.8101 us</td><td>104.4355 us</td><td>37,240.890 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>1000</td><td>      10</td><td>   10</td><td>19,724.198 us</td><td> 48.0012 us</td><td> 44.9003 us</td><td>19,707.005 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>1000</td><td>      10</td><td>   10</td><td>   3.173 us</td><td>  0.0077 us</td><td>  0.0072 us</td><td>   3.170 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>1000</td><td>      10</td><td>  100</td><td>38,758.445 us</td><td>155.1538 us</td><td>137.5398 us</td><td>38,753.900 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>1000</td><td>      10</td><td>  100</td><td>21,667.314 us</td><td> 76.8699 us</td><td> 71.9041 us</td><td>21,629.355 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>1000</td><td>      10</td><td>  100</td><td>  26.855 us</td><td>  0.0836 us</td><td>  0.0782 us</td><td>  26.856 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>1000</td><td>      10</td><td> 1000</td><td>73,663.603 us</td><td>153.1019 us</td><td>135.7208 us</td><td>73,644.303 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>1000</td><td>      10</td><td> 1000</td><td>109,510.160 us</td><td>213.7497 us</td><td>189.4835 us</td><td>109,482.679 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>1000</td><td>      10</td><td> 1000</td><td> 295.448 us</td><td>  1.5230 us</td><td>  1.4246 us</td><td> 295.863 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>1000</td><td>      10</td><td>10000</td><td>3,480,272.450 us</td><td>3,646.7359 us</td><td>3,411.1587 us</td><td>3,480,508.043 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>1000</td><td>      10</td><td>10000</td><td>13,051,381.006 us</td><td>53,204.0200 us</td><td>49,767.0685 us</td><td>13,042,782.716 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>1000</td><td>      10</td><td>10000</td><td>3,323.192 us</td><td> 18.6277 us</td><td> 17.4243 us</td><td>3,317.557 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>1000</td><td>     100</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>  BDDBasedComputation</td><td>1000</td><td>     100</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>1000</td><td>     100</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>PatternBasedComputation</td><td>1000</td><td>     100</td><td>  100</td><td>38,764.399 us</td><td>114.8899 us</td><td>101.8469 us</td><td>38,725.254 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>1000</td><td>     100</td><td>  100</td><td>22,910.877 us</td><td> 64.7562 us</td><td> 60.5730 us</td><td>22,913.181 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>1000</td><td>     100</td><td>  100</td><td>  30.797 us</td><td>  0.1289 us</td><td>  0.1206 us</td><td>  30.832 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>1000</td><td>     100</td><td> 1000</td><td>72,775.941 us</td><td>173.0260 us</td><td>161.8486 us</td><td>72,750.574 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>1000</td><td>     100</td><td> 1000</td><td>112,208.444 us</td><td>126.2717 us</td><td>111.9366 us</td><td>112,195.774 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>1000</td><td>     100</td><td> 1000</td><td> 302.963 us</td><td>  0.6534 us</td><td>  0.5792 us</td><td> 303.154 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>1000</td><td>     100</td><td>10000</td><td>3,474,563.886 us</td><td>6,466.8186 us</td><td>6,049.0655 us</td><td>3,472,921.838 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>1000</td><td>     100</td><td>10000</td><td>13,387,157.128 us</td><td>33,392.3829 us</td><td>27,884.1494 us</td><td>13,392,118.384 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>1000</td><td>     100</td><td>10000</td><td>3,258.494 us</td><td> 17.1227 us</td><td> 16.0166 us</td><td>3,261.985 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>1000</td><td>    1000</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>  BDDBasedComputation</td><td>1000</td><td>    1000</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>1000</td><td>    1000</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>PatternBasedComputation</td><td>1000</td><td>    1000</td><td>  100</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>  BDDBasedComputation</td><td>1000</td><td>    1000</td><td>  100</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>1000</td><td>    1000</td><td>  100</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>PatternBasedComputation</td><td>1000</td><td>    1000</td><td> 1000</td><td>76,458.239 us</td><td>207.8882 us</td><td>194.4587 us</td><td>76,449.896 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>1000</td><td>    1000</td><td> 1000</td><td>113,315.082 us</td><td>368.4265 us</td><td>344.6263 us</td><td>113,429.124 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>1000</td><td>    1000</td><td> 1000</td><td> 327.875 us</td><td>  1.2697 us</td><td>  1.1877 us</td><td> 327.826 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>1000</td><td>    1000</td><td>10000</td><td>3,389,290.814 us</td><td>5,850.1527 us</td><td>5,186.0075 us</td><td>3,390,315.584 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>1000</td><td>    1000</td><td>10000</td><td>12,598,945.587 us</td><td>24,899.5303 us</td><td>23,291.0339 us</td><td>12,600,053.057 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>1000</td><td>    1000</td><td>10000</td><td>3,296.950 us</td><td> 10.9260 us</td><td>  9.1237 us</td><td>3,296.058 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10000</td><td>      10</td><td>   10</td><td>3,609,062.268 us</td><td>4,774.5465 us</td><td>4,232.5107 us</td><td>3,608,152.713 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10000</td><td>      10</td><td>   10</td><td>1,864,941.237 us</td><td>1,274.7668 us</td><td>1,192.4176 us</td><td>1,865,387.735 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10000</td><td>      10</td><td>   10</td><td>   3.153 us</td><td>  0.0091 us</td><td>  0.0085 us</td><td>   3.155 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10000</td><td>      10</td><td>  100</td><td>3,679,509.991 us</td><td>2,829.1141 us</td><td>2,507.9357 us</td><td>3,679,746.037 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10000</td><td>      10</td><td>  100</td><td>1,975,363.342 us</td><td>2,731.0832 us</td><td>2,554.6567 us</td><td>1,975,382.455 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10000</td><td>      10</td><td>  100</td><td>  28.629 us</td><td>  0.1995 us</td><td>  0.1867 us</td><td>  28.683 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10000</td><td>      10</td><td> 1000</td><td>3,731,868.689 us</td><td>7,629.5180 us</td><td>6,763.3683 us</td><td>3,731,132.723 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10000</td><td>      10</td><td> 1000</td><td>2,180,785.088 us</td><td>14,344.7174 us</td><td>13,418.0562 us</td><td>2,187,720.627 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10000</td><td>      10</td><td> 1000</td><td> 301.108 us</td><td>  0.8453 us</td><td>  0.7907 us</td><td> 301.220 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10000</td><td>      10</td><td>10000</td><td>7,215,003.039 us</td><td>72,551.9190 us</td><td>64,315.3802 us</td><td>7,214,528.359 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10000</td><td>      10</td><td>10000</td><td>20,229,255.707 us</td><td>255,734.7431 us</td><td>239,214.4141 us</td><td>20,218,840.735 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10000</td><td>      10</td><td>10000</td><td>3,339.219 us</td><td> 23.7865 us</td><td> 22.2500 us</td><td>3,333.397 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10000</td><td>     100</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10000</td><td>     100</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10000</td><td>     100</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>PatternBasedComputation</td><td>10000</td><td>     100</td><td>  100</td><td>3,623,683.237 us</td><td>3,567.7276 us</td><td>3,162.6973 us</td><td>3,623,836.775 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10000</td><td>     100</td><td>  100</td><td>1,915,807.591 us</td><td>6,434.2819 us</td><td>6,018.6307 us</td><td>1,917,135.994 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10000</td><td>     100</td><td>  100</td><td>  31.023 us</td><td>  0.2012 us</td><td>  0.1882 us</td><td>  30.940 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10000</td><td>     100</td><td> 1000</td><td>3,741,218.638 us</td><td>17,522.8907 us</td><td>15,533.5846 us</td><td>3,735,573.164 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10000</td><td>     100</td><td> 1000</td><td>2,220,074.218 us</td><td>7,642.2071 us</td><td>7,148.5245 us</td><td>2,218,669.293 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10000</td><td>     100</td><td> 1000</td><td> 299.015 us</td><td>  1.3250 us</td><td>  1.2394 us</td><td> 298.908 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10000</td><td>     100</td><td>10000</td><td>7,115,856.873 us</td><td>4,666.4053 us</td><td>3,896.6594 us</td><td>7,115,384.644 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10000</td><td>     100</td><td>10000</td><td>19,935,896.284 us</td><td>1,493,952.4153 us</td><td>2,536,844.5815 us</td><td>18,521,126.264 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10000</td><td>     100</td><td>10000</td><td>3,358.277 us</td><td> 28.2321 us</td><td> 26.4083 us</td><td>3,354.441 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10000</td><td>    1000</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10000</td><td>    1000</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10000</td><td>    1000</td><td>   10</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>PatternBasedComputation</td><td>10000</td><td>    1000</td><td>  100</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10000</td><td>    1000</td><td>  100</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10000</td><td>    1000</td><td>  100</td><td>         NA</td><td>         NA</td><td>         NA</td><td>         NA</td>
+</tr><tr><td>PatternBasedComputation</td><td>10000</td><td>    1000</td><td> 1000</td><td>3,755,905.499 us</td><td>2,400.2852 us</td><td>2,127.7901 us</td><td>3,755,412.135 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10000</td><td>    1000</td><td> 1000</td><td>2,271,469.240 us</td><td>11,843.1527 us</td><td>11,078.0913 us</td><td>2,272,975.150 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10000</td><td>    1000</td><td> 1000</td><td> 381.122 us</td><td>  1.9688 us</td><td>  1.8417 us</td><td> 380.829 us</td>
+</tr><tr><td>PatternBasedComputation</td><td>10000</td><td>    1000</td><td>10000</td><td>7,086,544.938 us</td><td>1,506.2710 us</td><td>1,257.8044 us</td><td>7,086,599.387 us</td>
+</tr><tr><td>  BDDBasedComputation</td><td>10000</td><td>    1000</td><td>10000</td><td>19,011,522.625 us</td><td>18,071.8057 us</td><td>11,953.3810 us</td><td>19,005,804.993 us</td>
+</tr><tr><td>BDDBasedComputationPrebuilt</td><td>10000</td><td>    1000</td><td>10000</td><td>3,453.634 us</td><td> 25.7752 us</td><td> 24.1101 us</td><td>3,451.066 us</td>
+</tr></tbody></table>
+</body>
+</html>

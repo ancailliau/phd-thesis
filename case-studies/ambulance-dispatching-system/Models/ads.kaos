@@ -1,0 +1,654 @@
+
+@title "Ambulance Dispatching System"
+@author "Antoine Cailliau, Axel van Lamsweerde"
+@version "0.3"
+
+# Goals
+
+declare goal [ achieve_incident_resolved ]
+  name "Achieve [Incident Resolved]"
+  definition 
+    "All incidents in the real-world shall be resolved. An incident
+    is resolved if the victim is treated on the incident scene or
+    transported to the hospital."
+  rsr 95%
+  refinedby achieve_incident_reported, 
+            achieve_ambulance_intervention, 
+            achieve_incident_resolved_by_intervention
+end
+
+declare goal [ avoid_ambulance_mobilized_at_station ]
+  name "Avoid [Ambulance Mobilized At Station]"
+  rsr 0%
+  definition
+    "Ambulance at station shall be mobilized only if no ambulance on
+    road can reach the incident scene within the time constraints."
+  $remark "This is an optional goal during the day but that the required
+    satisfaction rate is increased for the night."
+end
+
+declare goal [ ambulance_status_tracked ]
+  name "Maintain [Accurate Ambulance Status Known]"
+  definition
+    "The status of the ambulance shall be accurately known by the dispatching
+    software. A status is accurate if the known status correspond to the status
+    of the ambulance in the real-world. The status shall be known by the
+    dispatching software within 3 minutes when encoded by the staff."
+  refinedby status_encoded, encoded_status_known
+end
+
+declare goal [ status_encoded ]
+  name "Maintain [Accurate Status Encoded]"
+  definition "The accurate status shall always be encoded."
+  refinedby status_leaving_encoded,
+            status_on_scene_encoded,
+            status_to_hospital_encoded,
+            status_at_hospital_encoded,
+            status_radio_encoded,
+            status_station_encoded,
+            status_unavailable_encoded
+end
+
+declare goal [ encoded_status_known ]
+  name "Achieve [Encoded Status Known]"
+  refinedby accurate_availability_info_sent,
+            accurate_availability_info_transmitted,
+            accurate_availability_info_recorded  
+end
+
+# maintain_location_info_known
+
+# begin refinement of achieve_incident_resolved
+
+declare goal [ achieve_incident_reported ]
+  name "Achieve [Incident Reported]"
+  definition 
+    "All incident in the real-world shall be reported to the 
+    ambulance dispatching."
+  assignedto public
+end
+
+declare goal [ achieve_ambulance_intervention ]
+  name "Achieve [Ambulance On Scene When Incident Reported]"
+  definition 
+    "An ambulance shall be on scene within 12 minutes for every reported
+    incident."
+  refinedby achieve_ambulance_mobilized_when_inc_reported, 
+            achieve_ambulance_left_station,
+            achieve_mobilized_ambulance_on_scene
+end
+
+declare goal [ achieve_incident_resolved_by_intervention ]
+  name "Achieve [Incident Resolved When Ambulance On Scene]"
+  definition
+    "The incident shall be resolved by the ambulance staff when
+    the ambulance in on the incident scene."
+  refinedby achieve_incident_resolved_on_scene, 
+            achieve_incident_resolved_at_hospital
+end
+
+declare goal [ achieve_incident_resolved_on_scene ]
+  name "Achieve [Incident Resolved On Scene When No Transport Required]"
+  definition
+    "The incident shall be resolved on the incident scene if no transport of
+    the victim towards an hospital is required."
+  assignedto staff
+end
+
+declare goal [ achieve_incident_resolved_at_hospital ]
+  name "Achieve [Patient Transported At Hospital When Required]"
+  definition
+    "The patient shall be transported to the nearest and most appropriate
+    hospital when required by the patient condition. The incident is resolved
+    when the patient is at hospital."
+    refinedby appropriate_hospital_known, patient_to_appropriate_hospital
+end
+
+declare goal [ appropriate_hospital_known ]
+  name "Maintain [Appropriate Hospital Known]"
+  definition
+    "The nearest and most appropriate hospital is known by the ambulance staff.
+    Such hospital is indicated on the mobilization order."
+  assignedto staff
+end
+
+declare goal [ patient_to_appropriate_hospital ]
+  name "Achieve [Patient Transported At Hospital When Required]"
+  definition
+    "The patient shall be transported to the indicated hospital when required
+    by the patient condition."
+  assignedto staff
+end
+
+# endof refinement
+
+# Refinement for achieve_ambulance_left_station
+
+declare goal [ achieve_ambulance_left_station ]
+  name "Achieve [Ambulance Left Station When Mobilized]"
+  definition 
+    "The mobilized ambulance shall leave the ambulance station within 2 minutes
+    and the departure shall be confirmed by the staff to the dispatching
+    software."
+  refinedby achieve_ambulance_left, leaving_status_known
+end
+
+declare goal [ achieve_ambulance_left ] 
+  name "Achieve [Ambulance Physically Leaving Station When Mobilized]"
+  definition 
+    "The mobilized ambulance shall leave the ambulance station within 2
+    minutes."
+  assignedto staff
+end
+
+declare goal [ leaving_status_known ] 
+  name "Achieve [Ambulance Leaving Status Known]"
+  definition 
+    "The ambulance leaving status is known by the dispatching software when
+    the mobilized ambulance left the ambulance station."
+  refinedby status_leaving_encoded, 
+    accurate_availability_info_sent, 
+    accurate_availability_info_transmitted,
+    ambulance_left_when_status_transmitted
+end
+
+declare domhyp [ ambulance_left_when_status_transmitted ]
+  name "Ambulance Left Station When Status Transmitted"
+  definition 
+    "The ambulance leaving status is known by the dispatching software when the
+    leaving status has been transmitted."
+end
+
+# begin refinement of achieve_ambulance_intervention
+
+declare goal [ achieve_ambulance_mobilized_when_inc_reported ]
+  name "Achieve [Ambulance Mobilized When Incident Reported]"
+  definition 
+    "When an incident is reported, an ambulance shall be mobilized within 2
+    minutes."
+  refinedby maintain_accurate_incident_form,
+            achieve_ambulance_mobilized_when_inc_reported_based_on_if
+end
+
+declare goal [ achieve_mobilized_ambulance_on_scene ]
+  name "Achieve [Mobilized Ambulance On Scene]"
+  definition
+    "The mobilized ambulance shall be on the incident scene within 12 minutes."
+  assignedto staff
+end
+
+# endof refinement
+
+# begin refinement of achieve_ambulance_mobilized_when_inc_reported
+
+declare goal [ maintain_accurate_incident_form ]
+  name "Maintain [Accurate Incident Form]"
+  definition 
+    "The information about the incident shall be accurate. Informations about
+    the incident includes when it occurs and its position."
+  assignedto operator
+end
+
+declare goal [ achieve_ambulance_mobilized_when_inc_reported_based_on_if ]
+  name "Achieve [Ambulance Mobilized Based On Incident Form]"
+  definition  
+    "An ambulance shall be mobilized when an incident is reported within 2
+    minutes, based on the informations in the incident form."
+  refinedby achieve_ambulance_allocation_based_on_if,
+            achieve_amb_mobilized_when_amb_allocated
+end
+
+# endof refinement
+
+# begin refinement of achieve_ambulance_mobilized_when_inc_reported_based_on_if
+
+declare goal [ achieve_ambulance_allocation_based_on_if ]
+  name "Achieve [Ambulance Allocated Based On Incident Form]"
+  definition
+    "An ambulance shall be allocated when an incident is reported within 1
+    minute, based on the informations in the incident form. An ambulance is
+    allocated when the dispatching system decided which ambulance shall
+    intervene on that incident."
+  refinedby maintain_ambulance_available, 
+            achieve_ambulance_allocation_based_on_if_when_available
+end
+
+declare goal [ achieve_amb_mobilized_when_amb_allocated ]
+  name "Achieve [Ambulance Mobilized When Allocated]"
+  definition 
+    "The allocated ambulance shall be mobilized within 1 minute. An ambulance
+    is mobilized when the ambulance staff confirmed the mobilization order."
+  refinedby achieve_allocation_at_station,
+            achieve_allocation_on_road
+end
+
+# endof refinement
+
+# begin refinement of achieve_ambulance_allocation_based_on_if
+
+declare domhyp [ maintain_ambulance_available ]
+  name "Ambulance Available"
+  definition
+    "At least an ambulance is available. An ambulance is available when not
+    allocated or mobilized on an incident."
+end
+
+declare goal [ achieve_ambulance_allocation_based_on_if_when_available ]
+  name "Achieve [Ambulance Allocated Based On Incident Form When Ambulance Available]"
+  definition 
+    "An available ambulance shall be allocated based on the informations on the
+    incident form, within 1 minute."
+  refinedby maintain_ambulance_info_available,
+            achieve_ambulance_allocation_based_on_if_and_af_when_available
+end
+
+# endof refinement
+
+# begin refinement of achieve_amb_mobilized_when_amb_allocated
+
+declare goal [ achieve_allocation_at_station ]
+  name "Achieve [Ambulance Mobilized When Allocated At Station]"
+  definition
+    "The allocated ambulance at station shall be mobilized within 1 minute."
+  refinedby achieve_allocation_at_station_based_on_info, 
+            maintain_ambulance_availability_available
+end
+
+declare goal [ achieve_allocation_on_road ]
+  name "Achieve [Ambulance Mobilized When Allocated On Road]"
+  definition
+    "The allocated ambulance on road shall be mobilized within 1 minute."
+  refinedby achieve_allocation_on_road_based_on_info, 
+            maintain_ambulance_availability_available
+end
+
+# endof refinement
+
+# begin refinement of achieve_ambulance_allocation_based_on_if_when_available
+
+declare goal [ maintain_ambulance_info_available ]
+  name "Maintain [Accurate Ambulance Info Known]"
+  definition
+    "Accurate availability and accurate location about the ambulance shall be
+    known by the software system."
+  refinedby maintain_location_info_known, 
+            maintain_ambulance_availability_available
+end
+
+declare goal [ achieve_ambulance_allocation_based_on_if_and_af_when_available ]
+  name "Achieve [Ambulance Allocation Based On Incident Form And Ambulance Info When Ambulance Available]"
+  definition
+    "An available ambulance shall be allocated within 1 minute when an incident is reported,
+    based on the incident informations reported in the incident form and the
+    ambulance availability information."
+  assignedto cad
+end
+
+# endof refinement
+
+# begin refinement of achieve_allocation_at_station and achieve_allocation_on_road
+
+declare goal [ achieve_allocation_at_station_based_on_info ]
+  name "Achieve [Allocated Ambulance Mobilization At Station Based On Location Info]"
+  definition
+    "The allocated ambulance at station shall be mobilized within 1 minute.
+    Whether the ambulance is at station is determined by the location
+    information."
+  refinedby moborder_displayed_on_mdt,
+            moborder_printed_at_station,
+            mobilized_by_phone,
+            achieve_allocation_at_station_when_moborder_received
+end
+
+declare goal [ achieve_allocation_on_road_based_on_info ]
+  name "Achieve [Allocated Ambulance Mobilization On Road Based On Location Info]"
+  definition
+    "The allocated ambulance on road shall be mobilized within 1 minute. Whether the ambulance
+    is on road is determined by the location information."
+  refinedby moborder_displayed_on_mdt,
+            moborder_printed_at_station,
+            mobilized_by_radio,
+            achieve_allocation_on_road_when_moborder_received
+end
+
+declare goal [ maintain_location_info_known ]
+  name "Maintain [Accurate Ambulance Location Known]"
+  definition
+    "Accurate location of the ambulance is known by the dispatching software.
+    A location is accurate if the position of the ambulance in the real-world
+    and the dispatching do not differ by more than 250 meters."
+  refinedby achieve_ambulance_location_sent_every_3_seconds,
+            achieve_ambulance_location_known_when_sent
+end
+
+declare goal [ achieve_ambulance_location_sent_every_3_seconds ] 
+  name "Achieve [Ambulance Location Sent Every 3 Seconds]"
+  definition "The ambulance location is sent every 3 seconds."
+  refinedby achieve_ambulance_location_captured, 
+            achieve_ambulance_location_sent
+end
+
+declare goal [ achieve_ambulance_location_captured ] 
+  name "Achieve [Accurate Location Captured Every 3 Seconds]"
+  definition "Accurate ambulance location is captured every 3 seconds. A
+  captured location is accurate if it do not differ by more than 50 meters from
+  the real position."
+  assignedto avls
+end
+
+declare goal [ achieve_ambulance_location_sent ] 
+  name "Achieve [Location Sent When Captured]"
+  definition "The ambulance location is sent when captured."
+  assignedto mdt
+end
+
+declare goal [ achieve_ambulance_location_known_when_sent ] 
+  name "Maintain [Ambulance Location Known When Sent]"
+  definition "The ambulance location is known by the dispatching software
+  when sent."
+  refinedby achieve_ambulance_location_transmitted_when_sent,
+            achieve_ambulance_location_known_when_transmitted
+end
+
+declare goal [ achieve_ambulance_location_transmitted_when_sent ] 
+  name "Maintain [Ambulance Location Transmitted When Sent]"
+  assignedto ci
+end
+
+declare goal [ achieve_ambulance_location_known_when_transmitted ] 
+  name "Maintain [Ambulance Location Known When Transmitted]"
+  assignedto cad
+end
+
+declare domhyp [ location_accurate_when_sent_every_3_seconds ]
+  name "Ambulance Location Accurate When Sent Every 3 Seconds"
+  definition 
+    "The ambulance location is accurate when the location of the ambulance is
+    sent every 3 seconds. Given that the average maximal speed of an ambulance
+    is 60km/h in an urban area, the maximal displacement in 3 seconds is 200 m."
+end
+
+# endof refinement
+
+
+# begin refinement of maintain_ambulance_info_available
+
+declare goal [ maintain_ambulance_availability_available ]
+  name "Maintain [Accurate Ambulance Availability Known]"
+  definition
+    "Accurate information about the availability of the ambulance is known by the
+    dispatching software."
+  refinedby accurate_availability_information_encoded,
+            accurate_availability_info_based_on_ei
+end
+
+# endof refinement
+
+# begin refinement of maintain_ambulance_availability_available
+
+declare goal [ accurate_availability_information_encoded ]
+  name "Maintain [Accurate Status Encoded On MDT]"
+  definition
+    "Accurate status information regarding the availability shall be encoded on
+    the Mobile Data Terminal, i.e. staff is expected to press the button
+    corresponding to their status."
+  refinedby status_leaving_encoded,
+    status_radio_encoded,
+    status_station_encoded,
+    status__unavailable_encoded
+end
+
+declare goal [ status_leaving_encoded ] 
+  name "Maintain [Status Leaving Encoded When Leaving Station]" 
+  assignedto staff 
+end
+
+declare goal [ status_on_scene_encoded ] 
+  name "Maintain [Status OnScene Encoded When On Scene]" 
+  assignedto staff 
+end
+
+declare goal [ status_to_hospital_encoded ] 
+  name "Maintain [Status ToHospital Encoded When Leaving Towards Hospital]" 
+  assignedto staff 
+end
+
+declare goal [ status_at_hospital_encoded ] 
+  name "Maintain [Status AtHospital Encoded When At Hospital]" 
+  assignedto staff 
+end
+
+declare goal [ status_radio_encoded ] 
+  name "Maintain [Status AvailableRadio Encoded When Available by Radio]" 
+  assignedto staff 
+end
+
+declare goal [ status_station_encoded ] 
+  name "Maintain [Status AvailableStation Encoded When Available at Station]" 
+  assignedto staff 
+end
+
+declare goal [ status_unavailable_encoded ] 
+  name "Maintain [Status Unavailable Encoded When Unavailable]" 
+  assignedto staff 
+end
+
+declare goal [ accurate_availability_info_based_on_ei ]
+  name "Maintain [Status Known Based On Encoded Information]"
+  definition
+    "Availability of the ambulance shall be known by the dispatching software
+    when encoded by the ambulance staff."
+  refinedby accurate_mapping_mdt,
+            accurate_availability_info_based_on_ei_and_am
+end
+
+declare goal [ accurate_availability_info_based_on_ei_and_am ]
+  name "Maintain [Status Known Based On Encoded Status And Accurate Mapping]"
+  definition
+    "Availability of the ambulance shall be known by the dispatching software
+    when encoded by the ambulance staff, based on the mapping between the MDTs
+    and the ambulances."
+  refinedby accurate_availability_info_sent,
+            accurate_availability_info_transmitted,
+            accurate_availability_info_recorded
+end
+
+declare goal [ accurate_availability_info_sent ]
+  name "Achieve [Status Sent When Encoded]"
+  definition
+    "The encoded status information shall be sent to the dispatching
+    software."
+  assignedto mdt
+end
+
+declare goal [ accurate_availability_info_transmitted ]
+  name "Achieve [Status Transmitted]"
+  definition
+    "The encoded availability information shall be transmitted to the dispatching
+    software."
+  assignedto ci
+end
+
+declare goal [ accurate_availability_info_recorded ]
+  name "Maintain [Status Recorded]"
+  definition
+    "The encoded availability information shall be recorded when transmitted."
+  assignedto cad
+end
+
+# endof refinement
+
+# begin refinement of achieve_allocation_at_station_based_on_info
+
+declare goal [ moborder_printed_at_station ]
+  name "Achieve [Mobilization Order Printed At Station]"
+  definition
+    "The mobilization order shall be printed at station when ambulance
+    is allocated within 50 seconds."
+  refinedby moborder_sent_to_printer,
+            moborder_transmitted_to_printer,
+            moborder_printed
+end
+
+declare goal [ mobilized_by_phone ]
+  name "Achieve [Mobilization Order Confirmed By Phone]"
+  definition
+    "The mobilization order shall be confirmed by a phone call within 50 seconds."
+  assignedto operator
+end
+
+declare goal [ achieve_allocation_at_station_when_moborder_received ]
+  name "Achieve [Allocated Ambulance Mobilization When Mobilization Order Printed And Phone Contact]"
+  definition
+    "The allocated ambulance shall be mobilized when the mobilization order is
+    printed on the station printer and the mobilization has been confirmed by a
+    phone call. The mobilization occurs within 10 seconds of the print or confirmation."
+  assignedto staff
+end
+
+declare goal [ moborder_sent_to_printer ]
+  name "Achieve [Mobilization Order Sent To Printer]"
+  definition
+    "The mobilization order shall be printed on the station printer
+    when the ambulance is allocated. The station printer is the printer
+    at the station to which the ambulance is assigned."
+  refinedby accurate_mapping_printer, 
+            moborder_sent_to_printer_based_on_am
+end
+
+declare domhyp [ accurate_mapping_printer ]
+  name "Accurate Printer Mapping"
+  definition
+    "A mapping between the ambulance and the corresponding printer at their
+    assigned station is known by the dispatching software."
+end
+
+declare goal [ moborder_sent_to_printer_based_on_am ]
+  name "Achieve [Mobilization Order Sent To Printer Based On Mapping]"
+  definition
+    "The mobilization order shall be sent to the station printer when the
+    ambulance is allocated."
+  assignedto cad
+end
+
+declare goal [ moborder_transmitted_to_printer ]
+  name "Achieve [Mobilization Order Transmitted]"
+  definition
+    "The sent mobilization order shall be transmitted to the station printer."
+  assignedto ci
+end
+
+declare goal [ moborder_printed ]
+  name "Achieve [Mobilization Order Printed]"
+  definition
+    "The transmitted mobilization order shall be printed."
+  assignedto printer
+end
+
+# endof refinement
+
+# begin refinement of achieve_allocation_on_road_based_on_info
+
+declare goal [ moborder_displayed_on_mdt ]
+  name "Achieve [Mobilization Order Displayed On MDT]"
+  definition
+    "The mobilization order shall be displayed on the Mobile Data Terminal
+    within 40 seconds."
+  refinedby moborder_sent_to_mdt,
+            moborder_transmitted_to_mdt,
+            moborder_displayed
+end
+
+declare goal [ mobilized_by_radio ]
+  name "Achieve [Mobilization Order Confirmed by Radio]"
+  definition
+    "The mobilization order shall be confirmed orally by radio."
+  assignedto operator
+end
+
+declare goal [ achieve_allocation_on_road_when_moborder_received ]
+  name "Achieve [Allocated Ambulance Mobilization When Mobilization Order Displayed And Radio Contact]"
+  definition
+    "The allocated ambulance shall be mobilized when the mobilization order is
+    displayed on the MDT and the mobilization is confirmed by radio. The
+    mobilization occurs within 10 seconds of the print or confirmation."
+  assignedto staff
+end
+
+declare goal [ moborder_sent_to_mdt ]
+  name "Achieve [Mobilization Order Sent To MDT]"
+  definition
+    "The mobilization order shall be sent to the MDT corresponding to the
+    allocated ambulance."
+  refinedby accurate_mapping_mdt, 
+            moborder_sent_to_mdt_based_on_am
+end
+
+declare domhyp [ accurate_mapping_mdt ]
+  name "Accurate MDT Mapping"
+  definition
+    "An accurate mapping between the ambulances and their corresponding MDT
+    is available."
+end
+
+declare goal [ moborder_sent_to_mdt_based_on_am ]
+  name "Achieve [Mobilization Order Sent To MDT Based On Mapping]"
+  definition
+    "The mobilization order shall be sent to the correspondign ambulance based
+    on the mapping between ambulances and MDTs within 5 seconds."
+  assignedto cad
+end
+
+declare goal [ moborder_transmitted_to_mdt ]
+  name "Achieve [Mobilization Order Transmitted]"
+  definition
+    "The sent mobilization order shall be transmitted within 5 seconds."
+  assignedto ci
+end
+
+declare goal [ moborder_displayed ]
+  name "Achieve [Mobilization Order Displayed]"
+  definition
+    "The transmitted mobilization order shall be displayed on the MDT within 5 seconds."
+  assignedto mdt
+end
+
+# endof refinement
+
+# Agents
+
+declare agent [ public ]
+  name "Public"
+end
+
+declare agent [ staff ]
+  name "Ambulance Staff"
+end
+
+declare agent [ operator ]
+  name "Operator"
+end
+
+declare agent [ cad ]
+  name "CAD"
+end
+
+declare agent [ avls ]
+  name "AVLS"
+end
+
+declare agent [ mdt ]
+  name "MDT"
+end
+
+declare agent [ ci ]
+  name "Communication Infrastructure"
+end
+
+declare agent [ printer ]
+  name "Printer"
+end
+
+# Obstacles
+
+import "obstacles.kaos"

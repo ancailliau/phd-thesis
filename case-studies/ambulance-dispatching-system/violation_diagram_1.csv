@@ -1,0 +1,55 @@
+combination,uncertainty_spread,violation_uncertainty
+Paper Jam,0.185925043771264,0.772
+Out Of Paper,0.315802813153436,0.266
+Printer Off,0.253780373350346,0.044
+MDT Turned Off,0.596400490302801,0.412
+AVLS Out of Service,0,0
+GPS Black Spot,0.140774030832037,0.949
+GPS Innaccurate,0,0
+Forget To Encode Leaving Status,0.123702465542628,0.942
+Other Status Than Leaving Encoded,0.21590579620823,0.038
+Forget To Encode OnScene Status,0,0
+Other Status Than OnScene Encoded,0,0
+Forget To Encode ToHospital Status,0,0
+Other Status Than ToHospital Encoded,0,0
+Forget To Encode AtHospital Status,0,0
+Other Status Than AtHospital Encoded,0,0
+Forget To Encode AvailableRadio Status,0.123702465542628,0.942
+Other Status Than AvailableRadio Encoded,0.21590579620823,0.038
+Forget To Encode AvailableStation Status,0.123702465542628,0.942
+Other Status Than AvailableStation Encoded,0.21590579620823,0.038
+Forget To Encode Unavailable Status,0,0
+Other Status Than Unavailable Encoded,0,0
+Incident Location Unreachable,0,0
+Destination Confused,0.0731484407368844,0.105
+Mobilization Cancelled,0.150056572724365,0.756
+Ambulance Broken Down Or Accident,0.132896135124119,0.053
+Ambulance Stuck In Traffic Jam Toward Incident,0,0
+Ambulance In Unfamiliar Area,0,0
+GPS Broken,0,0
+Ambulance In Traffic Deviation,0.322621998118064,1
+Fire Environment,0.274864015012058,0.003
+Hazardous Environment,0.0710415229367113,0.307
+Unreachable Patient,0.183482859323443,0.045
+Ressource Out Of Order,0.280128716422839,0.089
+Qualification Missing For Ressource,0.198048630503434,0.31
+Ressource Confusion,0,0
+Ressource Not Available,0.16872085667082,0.49
+Wrong Info About Patient,0.422682223187287,0.937
+Patient Not Transportable,0.124961267731372,0.439
+Insufficient Capacity,0.177564010937945,0.09
+Overweight Patient,0.138736746949469,0.069
+Patient Cannot Reach Ambulance,0.0779143884531567,0.299
+Available Bed Not Assigned,0.122876176000407,0.202
+Special Unit Required,0.163876523599829,0.883
+No Bed Available,0.180997381135268,0.207
+Allocated Ambulance Not At Station,0.293366324665401,0.982
+Allocated Ambulance Not Available,0.205461106559133,0.172
+Crew Not Near Printer,0,0
+Mobilization Taken By Other Ambulance,0,0
+MDT In Blackspot,0,0
+Corrupted Mobilization Order,0,0
+Network Overloaded,0,0
+Ambulance Not Available And Mobilization Order Displayed,0.214193627349981,0.534
+Crew Distracted,0.179063316678738,0.021
+Crew Not In Ambulance,0.0884135103222503,0.726

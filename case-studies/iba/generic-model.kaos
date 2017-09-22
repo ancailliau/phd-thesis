@@ -1,0 +1,288 @@
+# Avoid [Occupational Injury and Illness]
+
+declare goal [ goal ] name "Avoid [Occupational Injury and Illness]" refinedby goal0, goal1, goal2, goal3, goal4, goal5, goal6 end
+
+# 0 Avoid [Contact with object and equipement]
+
+declare goal [ goal0 ]     name "Avoid [Contact with object and equipement]"                                   refinedby goal01, goal02, goal03, goal04, goal05, goal06, goal09 end
+#declare goal [ goal00 ]    name "Avoid [Contact with objects and equipment, unspecified"                      end
+declare goal [ goal01 ]    name "Avoid [Struck against object]"                                                refinedby goal011, goal012, goal013, goal019 end
+#declare goal [ goal010 ]   name "Avoid [Struck against object, unspecified"                                   end
+declare goal [ goal011 ]   name "Avoid [Stepped on object]"                                                    end
+declare goal [ goal012 ]   name "Avoid [Struck against stationary object]"                                     end
+declare goal [ goal013 ]   name "Avoid [Struck against moving object]"                                         end
+declare goal [ goal019 ]   name "Avoid [Struck against object, n.e.c.]"                                        end
+declare goal [ goal02 ]    name "Avoid [Struck by object]"                                                     refinedby goal021, goal022, goal023, goal024, goal029 end
+#declare goal [ goal020 ]   name "Avoid [Struck by object, unspecified"                                        end
+declare goal [ goal021 ]   name "Avoid [Struck by falling object]"                                             end
+declare goal [ goal022 ]   name "Avoid [Struck by flying object]"                                              refinedby goal0221, goal0222, goal0229 end
+#declare goal [ goal0220 ]  name "Avoid [Struck by flying object, unspecified"                                 end
+declare goal [ goal0221 ]  name "Avoid [Struck by dislodged flying object, particle]"                          end
+declare goal [ goal0222 ]  name "Avoid [Struck by discharged object or substance]"                             end
+declare goal [ goal0229 ]  name "Avoid [Struck by flying object, n.e.c.]"                                      end
+declare goal [ goal023 ]   name "Avoid [Struck by swinging or slipping object]"                                refinedby goal0231, goal0232, goal0239 end 
+#declare goal [ goal0230 ]  name "Avoid [Struck by swinging or slipping object, unspecified"                   end
+declare goal [ goal0231 ]  name "Avoid [Struck by or slammed in swinging door or gate]"                        end
+declare goal [ goal0232 ]  name "Avoid [Struck by slipping handheld object]"                                   end
+declare goal [ goal0239 ]  name "Avoid [Struck by swinging or slipping object, n.e.c.]"                        end
+declare goal [ goal024 ]   name "Avoid [Struck by rolling, sliding objects on floor or ground level]"          end
+declare goal [ goal029 ]   name "Avoid [Struck by object, n.e.c.]"                                             end
+declare goal [ goal03 ]    name "Avoid [Caught in or compressed by equipment or objects]"                      refinedby goal031, goal032, goal039 end
+#declare goal [ goal030 ]   name "Avoid [Caught in or compressed by equipment or objects, unspecified"         end
+declare goal [ goal031 ]   name "Avoid [Caught in running equipment or machinery]"                             end
+declare goal [ goal032 ]   name "Avoid [Compressed or pinched by rolling, sliding, or shifting objects]"       end
+declare goal [ goal039 ]   name "Avoid [Caught in or compressed by equipment or objects, n.e.c.]"              end
+declare goal [ goal04 ]    name "Avoid [Caught in or crushed in collapsing materials]"                         refinedby goal041, goal042, goal043, goal044, goal049 end
+#declare goal [ goal040 ]   name "Avoid [Caught in or crushed in collapsing materials, unspecified"            end
+declare goal [ goal041 ]   name "Avoid [Excavation or trenching cave-in]"                                      end
+declare goal [ goal042 ]   name "Avoid [Other cave-in]"                                                        end
+declare goal [ goal043 ]   name "Avoid [Landslide]"                                                            end
+declare goal [ goal044 ]   name "Avoid [Caught in or crushed in collapsing structure]"                         end
+declare goal [ goal049 ]   name "Avoid [Caught in or crushed in collapsing materials, n.e.c.]"                 end
+declare goal [ goal05 ]    name "Avoid [Rubbed or abraded by friction or pressure]"                            refinedby goal051, goal052, goal053, goal059 end
+#declare goal [ goal050 ]   name "Avoid [Rubbed or abraded by friction or pressure, unspecified"               end
+declare goal [ goal051 ]   name "Avoid [Rubbed or abraded by kneeling on surface]"                             end
+declare goal [ goal052 ]   name "Avoid [Rubbed or abraded by objects being handled]"                           end
+declare goal [ goal053 ]   name "Avoid [Rubbed or abraded by foreign matter in eye]"                           end
+declare goal [ goal059 ]   name "Avoid [Rubbed or abraded by friction or pressure, n.e.c.]"                    end
+declare goal [ goal06 ]    name "Avoid [Rubbed, abraded, or jarred by vibration]"                              refinedby goal061, goal062, goal069 end
+#declare goal [ goal060 ]   name "Avoid [Rubbed, abraded, or jarred by vibration, unspecified"                 end
+declare goal [ goal061 ]   name "Avoid [Rubbed, abraded, or jarred by vehicle or mobile equipment vibration]"  end
+declare goal [ goal062 ]   name "Avoid [Rubbed, abraded, or jarred by other machine or equipment vibration]"   end
+declare goal [ goal069 ]   name "Avoid [Rubbed, abraded, or jarred by vibration, n.e.c.]"                      end
+declare goal [ goal09 ]    name "Avoid [Contact with objects and equipment, n.e.c.]"                           end
+
+# 1 Avoid [Falls]
+
+declare goal [ goal1 ]    name "Avoid [Falls]"                                                                 refinedby goal11, goal12, goal13, goal19 end
+#declare goal [ goal10 ]   name "Avoid [Fall, unspecified]"                                                    end
+declare goal [ goal11 ]   name "Avoid [Fall to lower level]"                                                   refinedby goal111, goal112, goal113, goal114, goal115, goal116, goal117, goal118, goal119 end
+#declare goal [ goal110 ]  name "Avoid [Fall to lower level, unspecified]"                                     end
+declare goal [ goal111 ]  name "Avoid [Fall down stairs or steps]"                                             end
+declare goal [ goal112 ]  name "Avoid [Fall from floor, dock, or ground level]"                                refinedby goal1121, goal1122, goal1123, goal1124, goal1129 end
+#declare goal [ goal1120 ] name "Avoid [Fall from floor, dock, or ground level, unspecified]"                  end
+declare goal [ goal1121 ] name "Avoid [Fall through existing floor opening]"                                   end
+declare goal [ goal1122 ] name "Avoid [Fall through floor surface]"                                            end
+declare goal [ goal1123 ] name "Avoid [Fall from loading dock]"                                                end
+declare goal [ goal1124 ] name "Avoid [Fall from ground level to lower level]"                                 end
+declare goal [ goal1129 ] name "Avoid [Fall from floor, dock, or ground level, n.e.c.]"                        end
+declare goal [ goal113 ]  name "Avoid [Fall from ladder]"                                                      end
+declare goal [ goal114 ]  name "Avoid [Fall from piled or stacked material]"                                   end
+declare goal [ goal115 ]  name "Avoid [Fall from roof]"                                                        refinedby goal1151, goal1152, goal1153, goal1154, goal1159 end
+#declare goal [ goal1150 ] name "Avoid [Fall from roof, unspecified]"                                          end
+declare goal [ goal1151 ] name "Avoid [Fall through existing roof opening]"                                    end
+declare goal [ goal1152 ] name "Avoid [Fall through roof surface]"                                             end
+declare goal [ goal1153 ] name "Avoid [Fall through skylight]"                                                 end
+declare goal [ goal1154 ] name "Avoid [Fall from roof edge]"                                                   end
+declare goal [ goal1159 ] name "Avoid [Fall from roof, n.e.c.]"                                                end
+declare goal [ goal116 ]  name "Avoid [Fall from scaffold, staging]"                                           end
+declare goal [ goal117 ]  name "Avoid [Fall from building girders or other structural steel]"                  end
+declare goal [ goal118 ]  name "Avoid [Fall from nonmoving vehicle]"                                           end
+declare goal [ goal119 ]  name "Avoid [Fall to lower level, n.e.c.]"                                           end
+declare goal [ goal12 ]   name "Avoid [Jump to lower level]"                                                   refinedby goal121, goal122, goal123, goal129 end
+#declare goal [ goal120 ]  name "Avoid [Jump to lower level, unspecified]"                                     end
+declare goal [ goal121 ]  name "Avoid [Jump from scaffold, platform, loading dock]"                            end
+declare goal [ goal122 ]  name "Avoid [Jump from structure, structural element, n.e.c.]"                       end
+declare goal [ goal123 ]  name "Avoid [Jump from nonmoving vehicle]"                                           end
+declare goal [ goal129 ]  name "Avoid [Jump to lower level, n.e.c.]"                                           end
+declare goal [ goal13 ]   name "Avoid [Fall on same level]"                                                    refinedby goal131, goal132, goal139 end
+#declare goal [ goal130 ]  name "Avoid [Fall on same level, unspecified]"                                      end
+declare goal [ goal131 ]  name "Avoid [Fall to floor, walkway, or other surface]"                              end
+declare goal [ goal132 ]  name "Avoid [Fall onto or against objects]"                                          end
+declare goal [ goal139 ]  name "Avoid [Fall on same level, n.e.c.]"                                            end
+declare goal [ goal19 ]   name "Avoid [Fall, n.e.c.]"                                                          end
+
+# 2 Avoid [Bodily reaction and exertion]
+                                                                                                             
+declare goal [ goal2 ]      name "Avoid [Bodily reaction and exertion]"                                       refinedby goal21, goal22, goal23, goal24, goal25, goal29 end
+#declare goal [ goal20 ]     name "Avoid [Bodily reaction and exertion, unspecified]"                          end
+declare goal [ goal21 ]     name "Avoid [Bodily reaction]"                                                    refinedby goal211, goal212, goal213, goal214, goal215, goal216, goal217, goal219 end
+#declare goal [ goal210 ]    name "Avoid [Bodily reaction, unspecified]"                                       end
+declare goal [ goal211 ]    name "Avoid [Bodily reaction when bending, climbing, crawling, reaching, twisting]" end
+declare goal [ goal212 ]    name "Avoid [Sudden reaction when surprised, frightened, startled]"               end
+declare goal [ goal213 ]    name "Avoid [Bodily reaction when running--without other incident]"               end
+declare goal [ goal214 ]    name "Avoid [Bodily reaction when sitting]"                                       end
+declare goal [ goal215 ]    name "Avoid [Bodily reaction when slipping, tripping, losing of balance--without fall]" end
+declare goal [ goal216 ]    name "Avoid [Bodily reaction when standing]"                                      end
+declare goal [ goal217 ]    name "Avoid [Bodily reaction when walking--without other incident]"               end
+declare goal [ goal219 ]    name "Avoid [Bodily reaction, n.e.c.]"                                            end
+declare goal [ goal22 ]     name "Avoid [Overexertion]"                                                       refinedby goal221, goal222, goal223, goal224, goal229 end
+#declare goal [ goal220 ]    name "Avoid [Overexertion, unspecified]"                                          end
+declare goal [ goal221 ]    name "Avoid [Overexertion in lifting]"                                            end
+declare goal [ goal222 ]    name "Avoid [Overexertion in pulling or pushing objects]"                         end
+declare goal [ goal223 ]    name "Avoid [Overexertion in holding, carrying, turning, or wielding objects]"    end
+declare goal [ goal224 ]    name "Avoid [Overexertion in throwing objects]"                                   end
+declare goal [ goal229 ]    name "Avoid [Overexertion, n.e.c.]"                                               end
+declare goal [ goal23 ]     name "Avoid [Repetitive motion]"                                                  refinedby goal231, goal232, goal233, goal239 end
+#declare goal [ goal230 ]    name "Avoid [Repetitive motion, unspecified]"                                     end
+declare goal [ goal231 ]    name "Avoid [Typing or keyentry]"                                                 end
+declare goal [ goal232 ]    name "Avoid [Repetitive use of tools]"                                            end
+declare goal [ goal233 ]    name "Avoid [Repetitive placing, grasping, or moving objects, except tools]"      end
+declare goal [ goal239 ]    name "Avoid [Repetitive motion, n.e.c.]"                                          end
+declare goal [ goal24 ]     name "Avoid [Sustained viewing]"                                                  end
+declare goal [ goal25 ]     name "Avoid [Bodily conditions, n.e.c.]"                                          end
+declare goal [ goal29 ]     name "Avoid [Bodily reaction and exertion, n.e.c.]"                               end
+
+# 3 Avoid [Exposure to harmful substances or environments]
+                                                                                                                       
+declare goal [ goal3 ]      name "Avoid [Exposure to harmful substances or environments]"                               refinedby goal31, goal32, goal33, goal34, goal35, goal36, goal37, goal38, goal39 end
+#declare goal [ goal30 ]     name "Avoid [Exposure to harmful substances or environments, unspecified]"                 end
+declare goal [ goal31 ]     name "Avoid [Contact with electric current]"                                               refinedby goal311, goal312, goal313, goal314, goal315, goal319 end
+#declare goal [ goal310 ]    name "Avoid [Contact with electric current, unspecified]"                                  end
+declare goal [ goal311 ]    name "Avoid [Contact with electric current of machine, tool, appliance, or light fixture]" end
+declare goal [ goal312 ]    name "Avoid [Contact with wiring, transformers, or other electrical components]"           end
+declare goal [ goal313 ]    name "Avoid [Contact with overhead power lines]"                                           end
+declare goal [ goal314 ]    name "Avoid [Contact with underground, buried power lines]"                                end
+declare goal [ goal315 ]    name "Avoid [Struck by lightning]"                                                         end
+declare goal [ goal319 ]    name "Avoid [Contact with electric current, n.e.c.]"                                       end
+declare goal [ goal32 ]     name "Avoid [Contact with temperature extremes]"                                           refinedby goal321, goal322, goal323, goal324 end
+#declare goal [ goal320 ]    name "Avoid [Contact with temperature extremes, unspecified]"                              end
+declare goal [ goal321 ]    name "Avoid [Exposure to environmental heat]"                                              end
+declare goal [ goal322 ]    name "Avoid [Exposure to environmental cold]"                                              end
+declare goal [ goal323 ]    name "Avoid [Contact with hot objects or substances]"                                      end
+declare goal [ goal324 ]    name "Avoid [Contact with cold objects or substances]"                                     end
+declare goal [ goal33 ]     name "Avoid [Exposure to air pressure changes]"                                            refinedby goal331, goal332, goal339 end
+#declare goal [ goal330 ]    name "Avoid [Exposure to air pressure change, unspecified]"                                end
+declare goal [ goal331 ]    name "Avoid [Pressure changes underwater]"                                                 end
+declare goal [ goal332 ]    name "Avoid [Pressure changes in airplane, other aircraft]"                                end
+declare goal [ goal339 ]    name "Avoid [Exposure to air pressure change, n.e.c.]"                                     end
+declare goal [ goal34 ]     name "Avoid [Exposure to caustic, noxious, or allergenic substances]"                      refinedby goal341, goal342, goal343, goal344, goal349 end
+#declare goal [ goal340 ]    name "Avoid [Exposure to caustic, noxious, or allergenic substances, unspecified]"         end
+declare goal [ goal341 ]    name "Avoid [Inhalation of substance]"                                                     refinedby goal3411, goal3412 end
+#declare goal [ goal3410 ]   name "Avoid [Inhalation of substance, unspecified]"                                        end
+declare goal [ goal3411 ]   name "Avoid [Inhalation in enclosed, restricted, or confined space]"                       end
+declare goal [ goal3412 ]   name "Avoid [Inhalation in open or nonconfined space]"                                     end
+declare goal [ goal342 ]    name "Avoid [Contact with skin or other exposed tissue]"                                   end
+declare goal [ goal343 ]    name "Avoid [Injections, stings, venomous bites]"                                          refinedby goal3431, goal3432, goal3433, goal3439 end
+#declare goal [ goal3430 ]   name "Avoid [Injections, stings, venomous bites, unspecified]"                             end
+declare goal [ goal3431 ]   name "Avoid [Needle sticks]"                                                               end
+declare goal [ goal3432 ]   name "Avoid [Bee, wasp, hornet sting]"                                                     end
+declare goal [ goal3433 ]   name "Avoid [Other stings or venomous bites]"                                              end
+declare goal [ goal3439 ]   name "Avoid [Injections, stings, venomous bites, n.e.c.]"                                  end
+declare goal [ goal344 ]    name "Avoid [Ingestion of substance]"                                                       end
+declare goal [ goal349 ]    name "Avoid [Exposure to caustic, noxious, or allergenic substances, n.e.c.]"              end
+declare goal [ goal35 ]     name "Avoid [Exposure to noise]"                                                           refinedby goal351, goal352 end
+#declare goal [ goal350 ]    name "Avoid [Exposure to noise, unspecified]"                                              end
+declare goal [ goal351 ]    name "Avoid [Exposure to noise over time]"                                                 end
+declare goal [ goal352 ]    name "Avoid [Exposure to noise in single incident]"                                        end
+declare goal [ goal36 ]     name "Avoid [Exposure to radiation]"                                                       refinedby goal361, goal362, goal363, goal369 end
+#declare goal [ goal360 ]    name "Avoid [Exposure to radiation, unspecified]"                                          end
+declare goal [ goal361 ]    name "Avoid [Exposure to sun]"                                                             end
+declare goal [ goal362 ]    name "Avoid [Exposure to welding light]"                                                   end
+declare goal [ goal363 ]    name "Avoid [Exposure to radioactive material]"                                            end
+declare goal [ goal369 ]    name "Avoid [Exposure to radiation, n.e.c.]"                                               end
+declare goal [ goal37 ]     name "Avoid [Exposure to traumatic or stressful event, n.e.c.]"                            end
+declare goal [ goal38 ]     name "Avoid [Oxygen deficiency, n.e.c.]"                                                   refinedby goal381, goal382, goal383, goal384, goal389 end
+declare goal [ goal381 ]    name "Avoid [Drowning, submersion]"                                                        end
+declare goal [ goal382 ]    name "Avoid [Choking on object or substance]"                                              end
+declare goal [ goal383 ]    name "Avoid [Depletion of oxygen from cave-in or collapsed materials]"                     end
+declare goal [ goal384 ]    name "Avoid [Depletion of oxygen in other enclosed, restricted, or confined space]"        end
+declare goal [ goal389 ]    name "Avoid [Other oxygen deficiency, n.e.c.]"                                             end
+declare goal [ goal39 ]     name "Avoid [Exposure to harmful substances or environments, n.e.c.]"                      end
+
+# 4      Transportation Accident
+
+declare goal [ goal4 ]      name "Avoid [Transportation Accident]"                                                            refinedby goal41, goal42, goal43, goal44, goal45, goal46, goal49 end
+#declare goal [ goal40 ]     name "Avoid [Transportation accident, unspecified]"                                              end
+declare goal [ goal41 ]     name "Avoid [Highway accident]"                                                                   refinedby goal411, goal412, goal413, goal414, goal419 end
+#declare goal [ goal410 ]    name "Avoid [Highway accident, unspecified]"                                                     end
+declare goal [ goal411 ]    name "Avoid [Collision between vehicles, mobile equipment]"                                       refinedby goal4111, goal4112, goal4113, goal4114, goal4115, goal4116, goal4119 end
+#declare goal [ goal4110 ]   name "Avoid [Collision between vehicles, mobile equipment, unspecified]"                         end
+declare goal [ goal4111 ]   name "Avoid [Re-entrant collision]"                                                              end
+declare goal [ goal4112 ]   name "Avoid [Moving in same direction]"                                                          end
+declare goal [ goal4113 ]   name "Avoid [Moving in opposite directions, oncoming]"                                           end
+declare goal [ goal4114 ]   name "Avoid [Moving in intersection]"                                                            end
+declare goal [ goal4115 ]   name "Avoid [Moving and standing vehicle, mobile equipment--in roadway]"                         end
+declare goal [ goal4116 ]   name "Avoid [Moving and standing vehicle, mobile equipment--side of road]"                       end
+declare goal [ goal4119 ]   name "Avoid [Collision between vehicles, mobile equipment, n.e.c.]"                              end
+declare goal [ goal412 ]    name "Avoid [Vehicle struck stationary object or equipment in roadway]"                          end
+declare goal [ goal413 ]    name "Avoid [Vehicle struck stationary object, equipment on side of road]"                       end
+declare goal [ goal414 ]    name "Avoid [Noncollision accident]"                                                             refinedby goal4141, goal4142, goal4143, goal4144, goal4149 end
+#declare goal [ goal4140 ]   name "Avoid [Noncollision accident, unspecified]"                                                end
+declare goal [ goal4141 ]   name "Avoid [Jack-knifed or overturned--no collision]"                                           end
+declare goal [ goal4142 ]   name "Avoid [Ran off highway--no collision]"                                                     end
+declare goal [ goal4143 ]   name "Avoid [Struck by shifting load]"                                                           end
+declare goal [ goal4144 ]   name "Avoid [Sudden start or stop, n.e.c.]"                                                      end
+declare goal [ goal4149 ]   name "Avoid [Noncollision accident, n.e.c.]"                                                     end
+declare goal [ goal419 ]    name "Avoid [Highway accident, n.e.c.]"                                                          end
+declare goal [ goal42 ]     name "Avoid [Nonhighway accident, except rail, air, water]"                                      refinedby goal421, goal422, goal423, goal429 end
+#declare goal [ goal420 ]    name "Avoid [Nonhighway accident, unspecified]"                                                  end
+declare goal [ goal421 ]    name "Avoid [Collision between vehicles or mobile equipment]"                                    end
+declare goal [ goal422 ]    name "Avoid [Vehicle, mobile equipment struck stationary object]"                                end
+declare goal [ goal423 ]    name "Avoid [Noncollision accident]"                                                             refinedby goal4231, goal4232, goal4233, goal4234, goal4235, goal4236, goal4239 end
+#declare goal [ goal4230 ]   name "Avoid [Noncollision accident, unspecified]"                                                end
+declare goal [ goal4231 ]   name "Avoid [Fall from moving vehicle, mobile equipment]"                                        end
+declare goal [ goal4232 ]   name "Avoid [Fell from and struck by vehicle, mobile equipment]"                                 end
+declare goal [ goal4233 ]   name "Avoid [Overturned]"                                                                        end
+declare goal [ goal4234 ]   name "Avoid [Loss of control]"                                                                   end
+declare goal [ goal4235 ]   name "Avoid [Struck by shifting load]"                                                           end
+declare goal [ goal4236 ]   name "Avoid [Sudden start or stop, n.e.c.]"                                                      end
+declare goal [ goal4239 ]   name "Avoid [Noncollision accident, n.e.c.]"                                                     end
+declare goal [ goal429 ]    name "Avoid [Nonhighway accident, n.e.c.]"                                                       end
+declare goal [ goal43 ]     name "Avoid [Pedestrian, nonpassenger struck by vehicle, mobile equipment]"                      refinedby goal431, goal432, goal433 end
+#declare goal [ goal430 ]    name "Avoid [Pedestrian struck by vehicle, mobile equipment, unspecified]"                       end
+declare goal [ goal431 ]    name "Avoid [Pedestrian struck by vehicle, mobile equipment in roadway]"                         end
+declare goal [ goal432 ]    name "Avoid [Pedestrian struck by vehicle, mobile equipment on side of road]"                    end
+declare goal [ goal433 ]    name "Avoid [Pedestrian struck by vehicle, mobile equipment in parking lot or non-roadway area]" end
+declare goal [ goal44 ]     name "Avoid [Railway accident]"                                                                  refinedby goal441, goal442, goal443, goal444, goal445, goal446, goal447, goal449 end
+#declare goal [ goal440 ]    name "Avoid [Railway accident, unspecified]"                                                     end
+declare goal [ goal441 ]    name "Avoid [Collision between railway vehicles]"                                                end
+declare goal [ goal442 ]    name "Avoid [Collision between railway vehicle and other vehicle]"                               end
+declare goal [ goal443 ]    name "Avoid [Collision between railway vehicle and other object]"                                end
+declare goal [ goal444 ]    name "Avoid [Fell from and struck by railway vehicle]"                                           end
+declare goal [ goal445 ]    name "Avoid [Derailment]"                                                                        end
+declare goal [ goal446 ]    name "Avoid [Explosion, fire, n.e.c.]"                                                           end
+declare goal [ goal447 ]    name "Avoid [Fall in, on, or from railway vehicle in motion, n.e.c.]"                            end
+declare goal [ goal449 ]    name "Avoid [Railway accident, n.e.c.]"                                                          end
+declare goal [ goal45 ]     name "Avoid [Water vehicle accident]"                                                            refinedby goal451, goal452, goal453, goal454, goal455, goal459 end
+#declare goal [ goal450 ]    name "Avoid [Water vehicle accident, unspecified]"                                               end
+declare goal [ goal451 ]    name "Avoid [Collision]"                                                                         end
+declare goal [ goal452 ]    name "Avoid [Explosion, fire, n.e.c.]"                                                           end
+declare goal [ goal453 ]    name "Avoid [Fall from ship, boat, n.e.c.]"                                                      end
+declare goal [ goal454 ]    name "Avoid [Fall on ship, boat]"                                                                end
+declare goal [ goal455 ]    name "Avoid [Sinking, capsized water vehicle]"                                                   end
+declare goal [ goal459 ]    name "Avoid [Water vehicle accident, n.e.c.]"                                                    end
+declare goal [ goal46 ]     name "Avoid [Aircraft accident]"                                                                 refinedby goal461, goal469 end
+#declare goal [ goal460 ]    name "Avoid [Aircraft accident, unspecified]"                                                    end
+declare goal [ goal461 ]    name "Avoid [During takeoff or landing]"                                                         end
+declare goal [ goal469 ]    name "Avoid [Aircraft accident, n.e.c.]"                                                         end
+declare goal [ goal49 ]     name "Avoid [Transportation accident, n.e.c.]"                                                   end
+
+# 5      Fires and explosion
+
+declare goal [ goal5 ]      name "Avoid [Fires and explosion]"                                                               refinedby goal51, goal52 end
+#declare goal [ goal50 ]     name "Avoid [Fire or explosion, unspecified]"                                                   end
+declare goal [ goal51 ]     name "Avoid [Fire--unintended or uncontrolled]"                                                 refinedby goal511, goal512, goal513, goal519 end
+#declare goal [ goal510 ]    name "Avoid [Fire, unspecified]"                                                                end
+declare goal [ goal511 ]    name "Avoid [Fire in residence, building, or other structure]"                                  end
+declare goal [ goal512 ]    name "Avoid [Forest, brush, or other outdoor fire]"                                             end
+declare goal [ goal513 ]    name "Avoid [Ignition of clothing from controlled heat source]"                                 end
+declare goal [ goal519 ]    name "Avoid [Fire, n.e.c.]"                                                                     end
+declare goal [ goal52 ]     name "Avoid [Explosion]"                                                                        refinedby goal521, goal522, goal529 end
+#declare goal [ goal520 ]    name "Avoid [Explosion, unspecified]"                                                           end
+declare goal [ goal521 ]    name "Avoid [Explosion of battery]"                                                             end
+declare goal [ goal522 ]    name "Avoid [Explosion of pressure vessel or piping]"                                           end
+declare goal [ goal529 ]    name "Avoid [Explosion, n.e.c.]"                                                                end
+
+# 6      Assault and violent acts
+
+declare goal [ goal6 ]      name "9"                                                          refinedby goal61, goal62, goal63 end
+#declare goal [ goal60 ]     name "Avoid [Assaults and violent acts, unspecified]"                                           end
+declare goal [ goal61 ]     name "Avoid [Assaults and violent acts by person(s)]"                                           refinedby goal611, goal612, goal613, goal614, goal615, goal616, goal617, goal619 end
+#declare goal [ goal610 ]    name "Avoid [Assaults and violent acts by person(s), unspecified]"                              end
+declare goal [ goal611 ]    name "Avoid [Biting]"                                                                           end
+declare goal [ goal612 ]    name "Avoid [Hitting, kicking, beating]"                                                        end
+declare goal [ goal613 ]    name "Avoid [Shooting]"                                                                         end
+declare goal [ goal614 ]    name "Avoid [Squeezing, pinching, scratching, twisting]"                                        end
+declare goal [ goal615 ]    name "Avoid [Stabbing]"                                                                         end
+declare goal [ goal616 ]    name "Avoid [Rape]"                                                                             end
+declare goal [ goal617 ]    name "Avoid [Threats or verbal assaults]"                                                       end
+declare goal [ goal619 ]    name "Avoid [Assaults and violent acts by person(s), n.e.c.]"                                   end
+declare goal [ goal62 ]     name "Avoid [Self-inflicted injury]"                                                            refinedby goal621, goal622 end
+#declare goal [ goal620 ]    name "Avoid [Self-inflicted injury, unspecified]"                                               end
+declare goal [ goal621 ]    name "Avoid [Suicide, attempted suicide]"                                                       end
+declare goal [ goal622 ]    name "Avoid [Self-inflicted injury or fatality--intent unknown]"                                end
+declare goal [ goal63 ]     name "Avoid [Assaults by animals]"                                                              refinedby goal631, goal639 end
+#declare goal [ goal630 ]    name "Avoid [Assaults by animals, unspecified]"                                                 end
+declare goal [ goal631 ]    name "Avoid [Nonvenomous bites]"                                                                end
+declare goal [ goal639 ]    name "Avoid [Assaults by animals, n.e.c.]"                                                      end

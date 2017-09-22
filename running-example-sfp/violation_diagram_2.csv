@@ -1,0 +1,79 @@
+combination,uncertainty_spread,violation_uncertainty
+Alarm Not Raised And Low Water,0,0
+Make Up Water Not Requested And Alarm Raised,0,0
+Make Up Water Not Requested And Alarm Raised:Alarm Not Raised And Low Water,0,0
+Valve Mechanical Failure,0,0
+Valve Mechanical Failure:Alarm Not Raised And Low Water,0,0
+Valve Mechanical Failure:Make Up Water Not Requested And Alarm Raised,0,0
+Unavailable Due To Maintenance,0,0
+Unavailable Due To Maintenance:Alarm Not Raised And Low Water,0,0
+Unavailable Due To Maintenance:Make Up Water Not Requested And Alarm Raised,0,0
+Unavailable Due To Maintenance:Valve Mechanical Failure,0,0
+Valve Electrical Failure,0,0
+Valve Electrical Failure:Alarm Not Raised And Low Water,0,0
+Valve Electrical Failure:Make Up Water Not Requested And Alarm Raised,0,0
+Valve Electrical Failure:Valve Mechanical Failure,0,0
+Valve Electrical Failure:Unavailable Due To Maintenance,0,0
+Pump Mechanical Failure,0.135288351690219,0.783
+Pump Mechanical Failure:Alarm Not Raised And Low Water,0.145364694877817,0.791
+Pump Mechanical Failure:Make Up Water Not Requested And Alarm Raised,0.145354271166003,0.791
+Pump Mechanical Failure:Valve Mechanical Failure,0.145364694877817,0.791
+Pump Mechanical Failure:Unavailable Due To Maintenance,0.144935309096078,0.789
+Pump Mechanical Failure:Valve Electrical Failure,0.145983315240369,0.791
+Power Supply Failure,0.399339635692779,0.019
+Power Supply Failure:Alarm Not Raised And Low Water,0.400440731359092,0.024
+Power Supply Failure:Make Up Water Not Requested And Alarm Raised,0.400438856612535,0.024
+Power Supply Failure:Valve Mechanical Failure,0.400440731359092,0.024
+Power Supply Failure:Unavailable Due To Maintenance,0.355041848750248,0.021
+Power Supply Failure:Valve Electrical Failure,0.356629601054286,0.021
+Power Supply Failure:Pump Mechanical Failure,0.171480067339211,0.846
+Power Cabling Failure,0.00774540865851176,0.002
+Power Cabling Failure:Alarm Not Raised And Low Water,0.00720291562872588,0.002
+Power Cabling Failure:Make Up Water Not Requested And Alarm Raised,0.0058374247549244,0.003
+Power Cabling Failure:Valve Mechanical Failure,0.00720291562872588,0.002
+Power Cabling Failure:Unavailable Due To Maintenance,0.00733514152432805,0.002
+Power Cabling Failure:Valve Electrical Failure,0.0120700117977578,0.004
+Power Cabling Failure:Pump Mechanical Failure,0.149556581933227,0.806
+Power Cabling Failure:Power Supply Failure,0.279545898145196,0.035
+Pump Electrical Failure,0.0708941828371812,0.019
+Pump Electrical Failure:Alarm Not Raised And Low Water,0.0722760544567699,0.024
+Pump Electrical Failure:Make Up Water Not Requested And Alarm Raised,0.0722955643414482,0.024
+Pump Electrical Failure:Valve Mechanical Failure,0.0722760544567699,0.024
+Pump Electrical Failure:Unavailable Due To Maintenance,0.0713492101470487,0.024
+Pump Electrical Failure:Valve Electrical Failure,0.0734120337599083,0.024
+Pump Electrical Failure:Pump Mechanical Failure,0.143996766401095,0.805
+Pump Electrical Failure:Power Supply Failure,0.246565318987343,0.049
+Pump Electrical Failure:Power Cabling Failure,0.0791059768445726,0.027
+Diesel Generator Not Started,0,0
+Diesel Generator Not Started:Alarm Not Raised And Low Water,0,0
+Diesel Generator Not Started:Make Up Water Not Requested And Alarm Raised,0,0
+Diesel Generator Not Started:Valve Mechanical Failure,0,0
+Diesel Generator Not Started:Unavailable Due To Maintenance,0,0
+Diesel Generator Not Started:Valve Electrical Failure,0,0
+Diesel Generator Not Started:Pump Mechanical Failure,0.135288351690219,0.783
+Diesel Generator Not Started:Power Supply Failure,0.399339635692779,0.019
+Diesel Generator Not Started:Power Cabling Failure,0.00774540865851176,0.002
+Diesel Generator Not Started:Pump Electrical Failure,0.0708941828371812,0.019
+Switch Failure,0,0
+Switch Failure:Alarm Not Raised And Low Water,0,0
+Switch Failure:Make Up Water Not Requested And Alarm Raised,0,0
+Switch Failure:Valve Mechanical Failure,0,0
+Switch Failure:Unavailable Due To Maintenance,0,0
+Switch Failure:Valve Electrical Failure,0,0
+Switch Failure:Pump Mechanical Failure,0.135288351690219,0.783
+Switch Failure:Power Supply Failure,0.399339635692779,0.019
+Switch Failure:Power Cabling Failure,0.00774540865851176,0.002
+Switch Failure:Pump Electrical Failure,0.0708941828371812,0.019
+Switch Failure:Diesel Generator Not Started,0,0
+Valve Not Opened When Valve Control Not Unavailable,0,0
+Valve Not Opened When Valve Control Not Unavailable:Alarm Not Raised And Low Water,0,0
+Valve Not Opened When Valve Control Not Unavailable:Make Up Water Not Requested And Alarm Raised,0,0
+Valve Not Opened When Valve Control Not Unavailable:Valve Mechanical Failure,0,0
+Valve Not Opened When Valve Control Not Unavailable:Unavailable Due To Maintenance,0,0
+Valve Not Opened When Valve Control Not Unavailable:Valve Electrical Failure,0,0
+Valve Not Opened When Valve Control Not Unavailable:Pump Mechanical Failure,0.135288351690219,0.783
+Valve Not Opened When Valve Control Not Unavailable:Power Supply Failure,0.399339635692779,0.019
+Valve Not Opened When Valve Control Not Unavailable:Power Cabling Failure,0.00774540865851176,0.002
+Valve Not Opened When Valve Control Not Unavailable:Pump Electrical Failure,0.0708941828371812,0.019
+Valve Not Opened When Valve Control Not Unavailable:Diesel Generator Not Started,0,0
+Valve Not Opened When Valve Control Not Unavailable:Switch Failure,0,0

@@ -1,0 +1,69 @@
+combination,combination_probability,violation_severity
+Fake Ride Offer,0.001,-0.05
+Ride Offer Outdated,0.01,-0.05
+Fake Ride Request,0.001,-0.049
+Ride Request Out-dated,0.01,-0.04
+Departure Date/Time Miscoded,0.009,-0.041
+Departure Point Miscoded,0.011,-0.039
+Arrival Date/Time Miscoded,0.009,-0.041
+Arrival Point Miscoded,0.011,-0.039
+No Request Matching For That Time,0.02,-0.03
+No Request Matching For That Position,0.01,-0.04
+No Offer Matching For That Time,0.02,-0.03
+No Offer Matching For That Position,0.01,-0.04
+Ride Offer Cancelled And Ride List Proposed,0.02,-0.03
+Ride Request Cancelled And Ride List Proposed,0.02,-0.03
+Ride List Not Convenient,0.01,-0.04
+Ride Offer Modified,0.007,-0.043
+Ride Request Modified,0.006,-0.044
+Ride Offer Cancelled And Selected,0.01,-0.04
+Ride Request Cancelled And Selected,0.01,-0.04
+Ride Offer Cancelled And Elected,0.01,-0.05
+Ride Request Cancelled And Elected,0.01,-0.05
+No Pickup Point Near Departure Point,0.005,-0.05
+Detour Too Important For Reaching Pickup Point,0.01,-0.05
+No Pickup Point Accessible To Driver,0.005,-0.05
+No Pickup Point Accessible To Passenger,0.005,-0.05
+No Drop Point Near Destination,0.01,-0.05
+Detour Too Important For Reaching Drop Point,0.005,-0.05
+No Drop Point Accessible To Driver,0.005,-0.05
+No Drop Point Accessible To Passenger,0.005,-0.05
+Pickup Time Incompatible With Road And Pickup Point,0.005,-0.05
+Pickup Time Incompatible With Other Pickups,0.005,-0.05
+Journey Longer Than Proposed Time,0.005,-0.05
+Drop Time Incompatible With Road And Drop Point,0.005,-0.05
+Drop Time Incompatible With Other Pickups,0.005,-0.05
+Wrong Contact Information,0.07,-0.05
+Failed Communication,0.03,-0.05
+Ride Offer Cancelled And Instructions Sent,0.015,-0.05
+Ride Request Cancelled And Instructions Sent,0.015,-0.05
+Instruction In Wrong Language,0.005,-0.05
+Printing Failed,0.01,-0.05
+Ride Offer Cancelled Last Minute,0.03,-0.05
+Ride Request Cancelled Last Minute,0.02,-0.05
+Too Many Luggage,0.005,-0.05
+Too Many Riders,0.005,-0.05
+Not Enough Seats,0.005,-0.05
+Riders Do Not Recognize,0.01,-0.05
+Location Imprecise,0.02,-0.05
+Passenger Late At Pickup Point,0.06,-0.05
+Driver Late At Pickup Point,0.02,-0.05
+Ride Request Cancelled And Driver At Pickup Point,0.01,-0.05
+Ride Offer Cancelled And Passenger At Pickup Point,0.01,-0.05
+Passenger Forgot,0.01,-0.05
+Driver Forgot,0.02,-0.05
+Passenger Get Lost,0.02,-0.05
+Driver Get Lost To Pickup Point,0.06,-0.05
+Instructions Not Received In Time,0.02,-0.05
+Pickup Point Not Reachable To Passenger,0.005,-0.05
+Pickup Point Not Reachable To Driver,0.005,-0.05
+Pickup Point Confused,0.01,-0.05
+Instructions Not Clear,0.005,-0.05
+Other Passenger Late,0.005,-0.05
+Detour On Planned Road,0.015,-0.05
+Stuck In Traffic Jams,0.1,-0.05
+Wrong instructions Sent,0.001,-0.05
+Car Broken Down,0.005,-0.05
+Driver Get Lost To Drop Point,0.03,-0.05
+Drop Point Inaccessible By Car,0.005,-0.05
+Drop Point Confused,0.01,-0.05

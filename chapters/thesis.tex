@@ -2,18 +2,91 @@
 
 \startproduct thesis
 
-\component chap-0		
-\component chap-1
-\component chap-2
-\component chap-3
-\component chap-4
-\component chap-5
-\component chap-6
-\component chap-7
-\component chap-8
-\component chap-9
-\component chap-10
-\component chap-11
-\component chap-12
+\startstandardmakeup
+	
+    \framed[align=normal,frame=off]{%
+      \cronos\tfd%
+      Software Requirements Engineering:\blank[small]
+      A Risk-driven Approach
+    }
+    
+    \blank[2*line]
+
+    Requirements Engineering (RE) is the branch of Software Engineering
+    concerned with the elicitation, evaluation, specification, analysis and
+    evolution of the objectives, functionalities, qualities and constraints of
+    a software-intensive system. Our natural inclination to conceive idealized
+    systems often results in lack of anticipation of exceptional conditions.
+    Risk analysis aims at identifying, assessing and controlling these
+    conditions.
+    
+    \blank[line]
+    
+    Goals are a natural abstraction for the objectives to be satisfied by the
+    software-to-be. Obstacle analysis was introduced as a goal-oriented form of
+    risk analysis; an obstacle to a goal is a precondition for the
+    non-satisfaction for this goal. Obstacle analysis is structured in three
+    steps: {\it identification} of as many obstacles as possible, {\it
+    assessment} of the likelihood and criticality of the obstacles and {\it
+    resolution} of the critical and likely obstacles.
+    
+    \blank[line]
+    
+    The thesis presents a model-based quantitative framework for obstacle
+    assessment and control. In the proposed framework, experts estimate
+    fine-grained obstacles, with their uncertainty margins. Theses estimates
+    are up-propagated through the obstacle and goal model. Comparing the
+    estimated satisfaction rate of high-level goals to their required
+    satisfaction rate determines the criticality of the obstacles. As a result,
+    the most critical and likely obstacles are highlighted. Countermeasures to
+    these obstacles are then identified. The countermeasures maximizing the
+    satisfaction rate of high-level goals while minimizing the resolution cost
+    are selected to be integrated in the ideal model, thereby documenting
+    exceptional cases. Using these techniques, the thesis proposes to drive the
+    runtime adaptation of software systems by the satisfaction of high-level
+    goals, monitoring low-level obstacles to determine the most appropriate
+    countermeasures to deploy in order to guarantee the required satisfaction
+    rates.
+    
+\stopstandardmakeup
+
+% Remerciement
+% staff ingi
+% iba
+% EMTs
+
+\startfrontmatter
+	\component chap-0
+\stopfrontmatter
+
+% remmerciement
+% yves de sadeleer
+   
+\startbodymatter		
+    \setcounter[userpage][1]
+    \component chap-1
+    \component chap-2
+    \component chap-3
+    \component chap-4
+    \component chap-5
+    \component chap-6
+    \component chap-7
+    \component chap-8
+    \component chap-9
+    \component chap-10
+    \component chap-11
+\stopbodymatter
+
+\startbackmatter
+	\component chap-12
+\stopbackmatter
+
+\startappendices
+ \startchapter[title={Case-studies}]
+   \component app-bas
+   \component app-cool
+ \stopchapter
+ \component bnf
+\stopappendices
 
 \stopproduct

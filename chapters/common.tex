@@ -12,6 +12,48 @@
 \definefontalternative[se]
 \definefontalternative[si]
 
+%% temp
+
+\definefontalternative[lf] %light
+\definefontalternative[bl] %black
+\definefontalternative[li] %light italic
+\definefontalternative[ci] %black italic
+
+\definefontalternative[na]
+\definefontalternative[nb]
+\definefontalternative[nc]
+\definefontalternative[nd]
+\definefontalternative[ne]
+\definefontalternative[nf]
+\definefontalternative[ng]
+\definefontalternative[nh]
+\definefontalternative[ni]
+\definefontalternative[nj]
+
+\definefontalternative[da]
+\definefontalternative[db]
+\definefontalternative[dc]
+\definefontalternative[dd]
+\definefontalternative[de]
+\definefontalternative[df]
+\definefontalternative[dg]
+\definefontalternative[dh]
+\definefontalternative[di]
+\definefontalternative[dj]
+
+\definefontalternative[ea]
+\definefontalternative[eb]
+\definefontalternative[ec]
+\definefontalternative[ed]
+\definefontalternative[ee]
+\definefontalternative[ef]
+\definefontalternative[eg]
+\definefontalternative[eh]
+\definefontalternative[ei]
+\definefontalternative[ej]
+
+%%
+
 \definefontfeature[default][default]
 	[mode=node,
 	 script=latn,
@@ -22,7 +64,11 @@
 	 init=yes,
 	 size=yes,
 	 expansion=quality,
-	 protrusion=quality]
+	 protrusion=quality,onum=yes]
+   
+\definefontfeature[f:smcp][smcp=yes, tlig=yes, trep=yes]
+%\definefontfeature[f:c2sc][c2sc=yes]
+\def\sc{\feature[+][f:smcp]}
 	 
 \definefontfeature[frac][default][frac=yes]
 \definefontfeature[sups][default][sups=yes]
@@ -119,8 +165,148 @@
         
 \stoptypescript
 
+\starttypescript [serif] [cronospro]
+
+    \definefontsynonym [SerifRegular]                [file:CronosPro-Regular.otf]	      [features=default]
+    \definefontsynonym [SerifRegularItalic]          [file:CronosPro-Italic.otf]			  [features=default]
+    \definefontsynonym [SerifRegularSemiBold]        [file:CronosPro-Semibold.otf]		  [features=default]
+    \definefontsynonym [SerifRegularSemiBoldItalic]  [file:CronosPro-SemiboldIt.otf]	  [features=default]
+    \definefontsynonym [SerifRegularBold]            [file:CronosPro-Bold.otf]			  [features=default]
+    \definefontsynonym [SerifRegularBoldItalic]      [file:CronosPro-BoldIt.otf]		  [features=default]
+    
+    \definefontsynonym [SerifCaption]                [file:CronosPro-Capt]				  [features=default]
+    \definefontsynonym [SerifCaptionItalic]          [file:CronosPro-CaptIt.otf]		  [features=default]
+    \definefontsynonym [SerifCaptionSemiBold]        [file:CronosPro-SemiboldCapt.otf]	  [features=default]
+    \definefontsynonym [SerifCaptionSemiBoldItalic]  [file:CronosPro-SemiboldCaptIt.otf]  [features=default]
+    \definefontsynonym [SerifCaptionBold]            [file:CronosPro-BoldCapt.otf]		  [features=default]
+    \definefontsynonym [SerifCaptionBoldItalic]      [file:CronosPro-BoldCaptIt.otf]	  [features=default]
+    
+    \definefontsynonym [SerifSubhead]                [file:CronosPro-Subh.otf]			  [features=default]
+    \definefontsynonym [SerifSubheadItalic]          [file:CronosPro-SubhIt.otf]		  [features=default]
+    \definefontsynonym [SerifSubheadSemiBold]        [file:CronosPro-SemiboldSubh.otf]	  [features=default]
+    \definefontsynonym [SerifSubheadSemiBoldItalic]  [file:CronosPro-SemiboldSubhIt.otf]  [features=default]
+    \definefontsynonym [SerifSubheadBold]            [file:CronosPro-BoldSubh.otf]		  [features=default]
+    \definefontsynonym [SerifSubheadBoldItalic]      [file:CronosPro-BoldSubhIt.otf]	  [features=default]
+    
+    \definefontsynonym [SerifDisplay]                [file:CronosPro-Disp.otf]			  [features=default]
+    \definefontsynonym [SerifDisplayItalic]          [file:CronosPro-ItDisp.otf]		  [features=default]
+    \definefontsynonym [SerifDisplaySemiBold]        [file:CronosPro-SemiboldDisp.otf]	  [features=default]
+    \definefontsynonym [SerifDisplaySemiBoldItalic]  [file:CronosPro-SemiboldDispIt.otf]  [features=default]
+    \definefontsynonym [SerifDisplayBold]            [file:CronosPro-BoldDisp.otf]		  [features=default]
+    \definefontsynonym [SerifDisplayBoldItalic]      [file:CronosPro-BoldDispIt.otf]	  [features=default]
+
+\stoptypescript
+
+\starttypescript [sans] [optical] [size]
+  \definebodyfont [11pt] [ss]
+    [tf=SansRegular                	 		sa .9,
+     it=SansRegularItalic         	  	sa .9,
+     se=SansRegularSemiBold        	 		sa .9,
+     si=SansRegularSemiBoldItalic  	 		sa .9,
+     bf=SansRegularBold            	 		sa .9,
+     bi=SansRegularBoldItalic      	 		sa .9,
+     lf=SansRegularLight          	  	sa .9,
+     bl=SansRegularBlack          	  	sa .9,
+     li=SansRegularLightItalic    	  	sa .9,
+     ci=SansRegularBlackItalic    	  	sa .9,     
+     na=SansCondensed						        sa .9,
+     nb=SansCondensedItalic					    sa .9,       
+     nc=SansCondensedLight					    sa .9,        
+     nd=SansCondensedLightItalic			  sa .9,  
+     ne=SansCondensedSemiBold				    sa .9,     
+     nf=SansCondensedSemiBoldItalic			sa .9,
+     ng=SansCondensedBold					      sa .9,         
+     nh=SansCondensedBoldItalic				  sa .9,   
+     ni=SansCondensedBlack					    sa .9,        
+     nj=SansCondensedBlackItalic			  sa .9,     
+     da=SansSemiCondensed					      sa .9,
+     db=SansSemiCondensedItalic				  sa .9,       
+     dc=SansSemiCondensedLight			  	sa .9,        
+     dd=SansSemiCondensedLightItalic		sa .9,  
+     de=SansSemiCondensedSemiBold			  sa .9,     
+     df=SansSemiCondensedSemiBoldItalic	sa .9,
+     dg=SansSemiCondensedBold		    		sa .9,         
+     dh=SansSemiCondensedBoldItalic			sa .9,   
+     di=SansSemiCondensedBlack			  	sa .9,        
+     dj=SansSemiCondensedBlackItalic		sa .9,     
+     ea=SansSemiExtended					      sa .9,
+     eb=SansSemiExtendedItalic		  		sa .9,       
+     ec=SansSemiExtendedLight			    	sa .9,        
+     ed=SansSemiExtendedLightItalic			sa .9,  
+     ee=SansSemiExtendedSemiBold	  		sa .9,     
+     ef=SansSemiExtendedSemiBoldItalic	sa .9,
+     eg=SansSemiExtendedBold			    	sa .9,         
+     eh=SansSemiExtendedBoldItalic			sa .9,   
+     ei=SansSemiExtendedBlack			    	sa .9,        
+     ej=SansSemiExtendedBlackItalic			sa .9
+    ]     
+\stoptypescript
+
+\starttypescript [sans] [myriadpro]
+
+    \definefontsynonym [SansRegular]                [file:MyriadPro-Regular.otf]	  [features=default]
+    \definefontsynonym [SansRegularItalic]          [file:MyriadPro-It.otf]			  [features=default]
+    \definefontsynonym [SansRegularLight]           [file:MyriadPro-Light.otf]		  [features=default] 
+    \definefontsynonym [SansRegularLightItalic]     [file:MyriadPro-LightIt.otf]	  [features=default]
+    \definefontsynonym [SansRegularSemiBold]        [file:MyriadPro-Semibold.otf]	  [features=default]
+    \definefontsynonym [SansRegularSemiBoldItalic]  [file:MyriadPro-SemiboldIt.otf]	  [features=default]
+    \definefontsynonym [SansRegularBold]            [file:MyriadPro-Bold.otf]		  [features=default]
+    \definefontsynonym [SansRegularBoldItalic]      [file:MyriadPro-BoldIt.otf]		  [features=default]
+    \definefontsynonym [SansRegularBlack]           [file:MyriadPro-Black.otf]		  [features=default]   
+    \definefontsynonym [SansRegularBlackItalic]     [file:MyriadPro-BlackIt.otf]	  [features=default]   
+
+    \definefontsynonym [SansCondensed]                [file:MyriadPro-Cond.otf]	  		  [features=default]
+    \definefontsynonym [SansCondensedItalic]          [file:MyriadPro-CondIt.otf]		  [features=default]
+    \definefontsynonym [SansCondensedLight]           [file:MyriadPro-LightCond.otf]	  [features=default]  
+    \definefontsynonym [SansCondensedLightItalic]     [file:MyriadPro-LightCondIt.otf]	  [features=default]
+    \definefontsynonym [SansCondensedSemiBold]        [file:MyriadPro-SemiboldCond.otf]	  [features=default]
+    \definefontsynonym [SansCondensedSemiBoldItalic]  [file:MyriadPro-SemiboldCondIt.otf] [features=default]
+    \definefontsynonym [SansCondensedBold]            [file:MyriadPro-BoldCond.otf]		  [features=default]
+    \definefontsynonym [SansCondensedBoldItalic]      [file:MyriadPro-BoldCondIt.otf]	  [features=default]
+    \definefontsynonym [SansCondensedBlack]           [file:MyriadPro-BlackCond.otf]	  [features=default] 
+    \definefontsynonym [SansCondensedBlackItalic]     [file:MyriadPro-BlackCondIt.otf]	  [features=default]
+
+    \definefontsynonym [SansSemiCondensed]                [file:MyriadPro-SemiCn.otf]	  		  [features=default]
+    \definefontsynonym [SansSemiCondensedItalic]          [file:MyriadPro-SemiCnIt.otf]		  [features=default]
+    \definefontsynonym [SansSemiCondensedLight]           [file:MyriadPro-LightSemiCn.otf]	  [features=default]  
+    \definefontsynonym [SansSemiCondensedLightItalic]     [file:MyriadPro-LightSemiCnIt.otf]	  [features=default]
+    \definefontsynonym [SansSemiCondensedSemiBold]        [file:MyriadPro-SemiboldSemiCn.otf]	  [features=default]
+    \definefontsynonym [SansSemiCondensedSemiBoldItalic]  [file:MyriadPro-SemiboldSemiCnIt.otf] [features=default]
+    \definefontsynonym [SansSemiCondensedBold]            [file:MyriadPro-BoldSemiCn.otf]		  [features=default]
+    \definefontsynonym [SansSemiCondensedBoldItalic]      [file:MyriadPro-BoldSemiCnIt.otf]	  [features=default]
+    \definefontsynonym [SansSemiCondensedBlack]           [file:MyriadPro-BlackSemiCn.otf]	  [features=default] 
+    \definefontsynonym [SansSemiCondensedBlackItalic]     [file:MyriadPro-BlackSemiCnIt.otf]	  [features=default]
+
+    \definefontsynonym [SansSemiExtended]                [file:MyriadPro-SemiExt.otf]	  		  [features=default]
+    \definefontsynonym [SansSemiExtendedItalic]          [file:MyriadPro-SemiExtIt.otf]		  [features=default]
+    \definefontsynonym [SansSemiExtendedLight]           [file:MyriadPro-LightSemiExt.otf]	  [features=default]  
+    \definefontsynonym [SansSemiExtendedLightItalic]     [file:MyriadPro-LightSemiExtIt.otf]	  [features=default]
+    \definefontsynonym [SansSemiExtendedSemiBold]        [file:MyriadPro-SemiboldSemiExt.otf]	  [features=default]
+    \definefontsynonym [SansSemiExtendedSemiBoldItalic]  [file:MyriadPro-SemiboldSemiExtIt.otf] [features=default]
+    \definefontsynonym [SansSemiExtendedBold]            [file:MyriadPro-BoldSemiExt.otf]		  [features=default]
+    \definefontsynonym [SansSemiExtendedBoldItalic]      [file:MyriadPro-BoldSemiExtIt.otf]	  [features=default]
+    \definefontsynonym [SansSemiExtendedBlack]           [file:MyriadPro-BlackSemiExt.otf]	  [features=default] 
+    \definefontsynonym [SansSemiExtendedBlackItalic]     [file:MyriadPro-BlackSemiExtIt.otf]	  [features=default]            
+\stoptypescript
+
+%\loadtypescriptfile[lucida-typeone]
+
 \definetypeface [source] [rm] [serif] [minionpro] [optical]
-\definetypeface [source] [mm] [math]  [xits]      [default]
+\definetypeface [source] [ss] [sans]  [myriadpro] [optical]
+\definetypeface [source] [mm] [math]  [modern]    [default][rscale=0.90]
+
+%\definefontfeature[source][rm][onum=yes]
+
+\definetypeface [cronos] [rm] [serif] [cronospro] [optical]
+
+\definebodyfontenvironment[default][em=italic]
+
+
+% TODO Fix this ugly font.
+\definetypeface [source] [tt] [mono] [modern] [default] [rscale=1]
+%\definetypeface [source] [ss] [sans] [modern] [default] [rscale=0.95]
+
+% \definetypeface [source] [ss] [sans]  [myriadpro] [optical]
 %\definetypeface [source] [mm] [math]  [TeX Gyre Pagella Math]      [default]
 
 \setupbodyfont[source, 11pt]
@@ -130,61 +316,366 @@
 \setupwhitespace[medium]
 \setupindenting[medium, yes]
 
-
 \definepapersize[ciaco-thesis][width=160mm,height=240mm]
-\setuppapersize[ciaco-thesis][ciaco-thesis]
-%\setuppapersize[ciaco-thesis][A4]
+%\setuppapersize[ciaco-thesis][ciaco-thesis]
+\setuppapersize[ciaco-thesis][A4]
 \setuplayout
    [backspace=20mm,
     width=120mm,
     topspace=20mm,
     height=200mm,
-    location={middle,middle},
-    marking=on]
+    location={middle,middle}]
+    %marking=on]
     
 \setuppagenumbering [alternative=doublesided]
 
 \setupheadertexts[]
-\setupheadertexts[chapter][][][section]
+\setupheadertexts[{\getmarking[chapter]}][][][{\getmarking[section]}]
+\setupheader[style={\ssx\na}]
+
+\setuphead[chapter][header=empty] 
+%\setuphead[chapter][header=empty,footer=none] 
 
 \setupfootertexts[]
 \setupfootertexts
 	[pagenumber]
-	[{\switchtobodyfont[8pt]\framed[offset=2pt]{Last compiled: \currentdate[d,{/},mm]\ \currenttime}}]
-	[{\switchtobodyfont[8pt]\framed[offset=2pt]{Last compiled: \currentdate[d,{/},mm]\ \currenttime}}]
+	[]%[{{\currentdate[d,{/},mm,{/},yy]\ \currenttime}}]
+	[]%[{{\currentdate[d,{/},mm,{/},yy]\ \currenttime}}]
 	[pagenumber]
+
+\setupfooter[style={\ssx\na}]
 	
 \define[2]\MyChapterCommand%
   {\framed[frame=off,bottomframe=on,topframe=on,boffset=1em,toffset=1em]
-     {\vbox{\headtext{chapter} #1\blank#2}}}
+     {\vbox{{{\ss\dc\headtext{chapter}} {\ss#1}}\blank{\ss#2}}}}
 
-\setuphead[chapter][command=\MyChapterCommand,distance=0em,after={}]
+\setuphead[chapter][command=\MyChapterCommand,distance=0em,after={\blank[2em]},numbercommand=\dc,textcommand=\di]
 \setupheadtext[chapter=Chapter]
+
+\startsectionblockenvironment[appendix]
+   \setupheadtext[chapter=Appendix]
+\stopsectionblockenvironment
 
 \define[2]\MyTitleCommand%
   {\framed[frame=off,bottomframe=on,topframe=on,boffset=1em,toffset=1em]
-     {\vbox{#2}}}
+     {\vbox{{\ss#2}}}}
 
-\setuphead[title][command=\MyTitleCommand,distance=0em,after={\vskip1.5em}]
+\setuphead[title][command=\MyTitleCommand,distance=0em,after={\blank[2em]},numbercommand=\dc,textcommand=\di]
+
+\setuphead[section][numbercommand={\cronos\bf},textcommand={\cronos\bf}]
+
+\definepagebreak
+  [mychapterpagebreak]
+  [yes,header,footer,right]
+ %[yes,header,left]
+ %[yes,header,footer,right]
+
+\setuphead
+  [chapter]
+  [page=mychapterpagebreak]
+
+% \setuphead[subsubsection][numbercommand={\ss\dc},textcommand={\ss\dc}]
+
+%%%% BIBLIOGRAPHY SETTING
+
+\usebtxdataset[../bib-thesis.bib]
+\usebtxdefinitions[aps]
+\setupbtx
+  [alternative=tag,
+   authorconversion=normalshort,
+   interaction=start]
+\setupbtx
+  [aps:cite]
+  [alternative=tag]
+
+\setupbtxlist
+  [aps]
+  [alternative=b,		
+   distance=0\emwidth,			% distance between key and text?
+   width=5\emwidth,   
+   margin=0\emwidth, 			% hanging margin
+   numbering=tag,
+   sorttype=tag,
+  ]
+
+\definebtxrendering
+  [mystyle]
+  [aps] % inherits from "aps"
+  [sorttype=tag,
+   numbering=tag]
+   
+   
+\startbtxrenderingdefinitions[aps]
+
+\definebtx
+  [aps:\s!list:editor-in]
+  [aps:\s!list]
+  [\c!style=\v!italic]
+
+\starttexdefinition unexpanded btx:aps:title:quoted
+    \btxdoif {title} {
+        % we make the title active, opening file
+        \btxdoifelse {file} {
+            \texdefinition{btx:format:inject}
+                {url(file:\btxflush{file})}
+                {
+                    \texdefinition{btx:aps:composed-title}{title}
+                }
+        } {
+            "\texdefinition{btx:aps:composed-title}{title}"
+        }
+        \btxcomma
+    }
+\stoptexdefinition
+
+\starttexdefinition unexpanded btx:aps:optional-title:quoted
+    \doif{\btxparameter{\c!title}}\v!yes {
+        \texdefinition {btx:aps:title:quoted}
+    }
+\stoptexdefinition
+
+\starttexdefinition unexpanded btx:aps:editor-in
+    \btxdoif {booktitle} {
+        \btxlabeltext{in}
+        \btxstartstyleandcolor [aps:\s!list:editor-in]
+        \doifnot {\btxfoundname{author}} {editor} {
+            \btxspace
+            \texdefinition{btx:aps:author-or-editor} {editor}
+        }
+        \btxspace
+        \texdefinition{btx:aps:composed-title}{booktitle}
+        \btxstopstyleandcolor
+        \btxcomma
+    }
+\stoptexdefinition
+
+\definebreakpoints[doi]
+\definebreakpoint [doi][:][nleft=3,type=1]
+\definebreakpoint [doi][/][nleft=3,type=1]
+\definebreakpoint [doi][-][nleft=3,type=1]
+\definebreakpoint [doi][.][nleft=3,type=1]
+
+\startsetups btx:aps:list:inbook
+    \texdefinition{btx:aps:author}
+    \texdefinition{btx:aps:optional-title:quoted}
+    \btxflush{booktitle}
+    \btxcomma
+    \btxflush{publisher}
+    \btxcomma
+    \texdefinition{btx:aps:year}
+    \btxperiod
+\stopsetups
+
+\startsetups btx:aps:list:inproceedings
+    \texdefinition{btx:aps:author}
+    \texdefinition{btx:aps:title:quoted}
+    \btxflush{booktitle}
+    \btxcomma
+    \btxdoif {organization} {
+        \btxflush{organization}
+        \btxcomma
+    }
+    \texdefinition{btx:aps:year}
+    \btxperiod
+\stopsetups
+
+\startsetups btx:aps:list:article
+    \texdefinition{btx:aps:author}
+    \texdefinition{btx:aps:optional-title:quoted}
+    \texdefinition{btx:aps:journal-volume-year}
+    \btxperiod
+\stopsetups
+
+\startsetups btx:aps:list:webpage
+    \texdefinition{btx:aps:author}
+    \texdefinition{btx:aps:optional-title:quoted}
+    {
+    \goto {\hyphenatedurl{\btxflush{url}}} [url(\btxflush{url})]%
+    }
+    \btxcomma
+    \texdefinition{btx:aps:year}
+\stopsetups
+
+\starttexdefinition btx:aps:url
+    \ifconditional\btxinteractive
+        \goto {\hyphenatedurl{\btxflush{url}}} [url(\btxflush{url})]
+    \else
+        \hyphenatedurl{\btxflush{url}}
+    \fi
+\stoptexdefinition
+
+\startsetups btx:aps:list:misc
+    \texdefinition{btx:aps:author}
+    \texdefinition{btx:aps:title}
+    \btxdoif {organization} {
+        \btxspace
+        \btxflush{organization}
+        \btxperiod
+    }
+    \btxdoif {howpublished} {
+        \btxspace
+        \btxflush{howpublished}
+    }
+    \texdefinition{btx:aps:year}
+\stopsetups
+
+\starttexdefinition btx:aps:journal-volume-year
+    \btxdoif {journal} {
+        \btxstartstyleandcolor [aps:list:journal]
+            % expandedjournal abbreviatedjournal
+            \btxflush{expandedjournal -> journal}
+        \btxstopstyleandcolor
+        \btxdoifelse {volume} {
+            \btxcomma
+            Vol. \btxflush{volume}
+            \btxdoif {number} {
+              \btxcomma
+              No. \btxflush{number}
+            }
+        } {
+            \btxdoif {number} {
+                \btxcomma
+                No. \btxflush{number}
+            }
+        }
+    }
+    \btxcomma
+    \texdefinition{btx:aps:year}
+    \btxdoif {pages} {
+      \btxcomma
+      \btxflush{pages}
+    }
+\stoptexdefinition
+
+\starttexdefinition unexpanded btx:aps:publisher-wherefrom-year
+    \removeunwantedspaces
+    \removepunctuation
+    \btxcomma
+    \btxflush{publisher}
+    \btxcomma
+    \texdefinition{btx:aps:year}
+\stoptexdefinition
+
+\stopbtxrenderingdefinitions
+
+\setupbtx[aps:cite:num][sorttype=year]
+
+%%%%%% END OF BIBLIOGRAPHY
+
+\setupcaptions[
+  style={\tfx},
+    headstyle=\cronos\tfx\bf,
+    width=10cm]
+   
+\usecolors[xwi]
+
+%\define[1]\goal{\ss#1\rm}
+%\define[1]\obstacle{\ss#1\rm}
+\definehighlight[goal][style=sans,color=navyblue]
+\definehighlight[obstacle][style=sans, color=orangered]
+\definehighlight[domprop][style=sans, color=olivedrab]
+\definehighlight[agent][style=sans, color=plum]
+\definehighlight[predicate][style=sans]
+\definehighlight[type][style=sans]
+\definehighlight[entity][style=sans]
+\definehighlight[association][style=sans]
+
+\definehighlight[tool][style=sans]
+
+\definehighlight[spoiler][style=sans, color=white]
+
+\definecolor[review][h=E1F9CE] 
+
+\defineframedtext[ReviewBox]
+\setupframedtexts
+  [ReviewBox]
+  [width=\makeupwidth,
+   backgroundcolor=review,
+   background=color,
+   frame=no,
+   location=middle]
+
+\defineenumeration[review]
+	[text={To review},
+	 style=slanted,
+	 headstyle=\se,
+	 number=no,
+	 alternative=serried,
+	 width=fit,
+	 inbetween={},
+	 right={. },
+	% closesymbol=\mathematics{\square},
+	 before={\startReviewBox},
+	 after=\stopReviewBox
+    ]
 	
-\setupbibtex[database={../bib-thesis},sort=author]
-\setuppublications[refcommand=key]
+\setupnumber[review][way=bychapter, numbersection=no]
 
-\define[1]\goal{\ss#1\rm}
+
+\defineframedtext[TodoBox]
+\setupframedtexts
+  [TodoBox]
+  [width=\makeupwidth,
+   backgroundcolor=lightcoral,
+   background=color,
+   frame=no,
+   location=middle]
+   
+\defineenumeration[todo]
+	[text={Todo},
+	 style=slanted,
+	 headstyle=\se,
+	 %number=no,
+	 alternative=serried,
+	 width=fit,
+	 inbetween={},
+	 right={. },
+	% closesymbol=\mathematics{\square},
+	 before={\startTodoBox},
+	 after=\stopTodoBox
+    ]
+	
+\setupnumber[todo][]
 
 \defineenumeration[definition]
 	[text={Definition},
 	style=slanted,
-	headstyle=\se,
+	headstyle=\cronos\bf,
 	title=yes,
-	titleleft={\se(},
+	titleleft={\cronos\bf(},
 	titleright={)},
 	alternative=serried,
 	width=fit,
 	inbetween={},
-	right={. }]
+	right={. },
+  prefix=yes,
+  prefixsegments=chapter]
 	
-\setupnumber[definition][way=bychapter, numbersection=no]
+\setupnumber[definition][way=bysection]
+
+%\defineframedtext[ExampleBox]
+%\setupframedtexts
+%  [ExampleBox]
+%  [width=\makeupwidth,
+%   linecorrection=off,
+%   backgroundcolor=oldlace,
+%   background=color,
+%   frame=no,
+%   location=middle]
+   
+\definetextbackground
+  [ExampleBackground]
+  [frame=on,
+   frameoffset=0pt,
+   backgroundoffset=0pt,
+   leftoffset=\bodyfontsize,
+   rightoffset=\bodyfontsize,
+   topoffset=.5\bodyfontsize,
+   bottomoffset=.5\bodyfontsize,
+   background=color,
+   backgroundcolor=oldlace,
+   location=paragraph,
+  ]
 
 \defineenumeration[example]
 	[text={Example},
@@ -195,21 +686,28 @@
 	 width=fit,
 	 inbetween={},
 	 right={. },
-	 closesymbol=\mathematics{\square},
-	 %closecommand=\ifmmode\eqno\else\wordright\fi
-    ]
+   indenting=no,
+	 before={\starttextbackground[ExampleBackground]},
+	 after=\stoptextbackground
+  ]
 	
 \setupnumber[example][way=bychapter, numbersection=no]
 
 \defineenumeration[proposition]
 	[text={Proposition},
 	 style=slanted,
-	 headstyle=\se,
+	headstyle=\cronos\bf,
+	title=yes,
+	titleleft={\cronos\bf(},
+	titleright={)},
 	 alternative=serried,
 	 width=fit,
 	 inbetween={},
 	 right={. },
+  prefix=yes,
+  prefixsegments=chapter
     ]
+\setupnumber[proposition][way=bychapter, numbersection=no]
 
 \defineenumeration[proof]
 	[text={Proof},
@@ -221,13 +719,14 @@
 	 inbetween={},
 	 right={. },
 	 closesymbol={\mathematics{\square}},
+    closecommand=\mathortext\eqno\wordright
     ]
 
-\enabletrackers[graphics.locating]
-\enabletrackers[graphics.conversion]
+% Draft mode
+%\enabletrackers[graphics.locating]
+%\enabletrackers[graphics.conversion]
 
 \setupcaptions[minwidth=.85\textwidth, align=middle]
-
 
 \definecombinedlist[summary][section,subsection]
 \setupcombinedlist[summary][criterium=component]
@@ -235,20 +734,197 @@
 \setuplist[chapter]
   [alternative=b,
    style=bold,
-   before={\blank[4*big]}]
+   before={\blank[5*big]}]
+   
+\setuplist[title]
+  [alternative=b,
+   style=bold,
+   before={\blank[5*big]}]
+   
+\setuplist[section]
+  [alternative=b,
+   before={\blank[big]}]
+   
+\setuplist[subsection]
+  [alternative=b,
+   before={\blank[big]}]
 
-\setupinteraction[state=start,color=darkgreen,contrastcolor=darkgreen,style={}]
+\setuphead[title][
+    incrementnumber=yes, % keep an internal title counter+list
+    number=no,           % don't display the counter
+    sectionsegments=chapter]
+
+% Use faketitle to have the style but do not appear in the table of content
+\definehead[faketitle][title]
+
+% Manually specify the composition of the section and subsection numbers
+%\setuphead[section][sectionsegments=section]
+%\setuphead[subsection][sectionsegments=section:subsection]   
+%\setuphead[subsection][sectionsegments=section:subsection]   
+
+% Redefine the toc list to include titles
+\definecombinedlist[content][title,chapter,section,subsection]
+
+\setupinteraction[state=start,color=darkolivegreen,contrastcolor=darkolivegreen,style={}]
 \placebookmarks[title,chapter,section,subsection][force=yes]
 
-%\usetypescriptfile[cleartype]
+\definestructureconversionset [frontpart:pagenumber] [] [romannumerals]
+\setupmakeup[standard][pagestate=start]
+\setuppagenumber[numberconverionset=pagenumber,way=text]
 
-%\starttypescript[mainface]
-%  \definetypeface  [mainface] [rm] [serif] [Minion Pro] [default]
-%  \definetypeface  [mainface] [ss] [sans]  [Myriad Pro] [default]
-%  \definetypeface  [mainface] [tt] [mono]  [consolas][default]
-%  \definetypeface  [mainface] [mm] [math]  [cambria] [default]
-%\stoptypescript
+\setupsectionblock[backpart][page=right]
+\setupsectionblock[appendix][page=right]
 
-%\setupbodyfont[reset,modern]
+%\setupformulae[spacebefore=small,spaceafter=small]
+
+%%%% LTL Operators
+
+\define[0]\ltlX%
+  {\bigcirc}
+
+\define[0]\ltlF%
+  {\lozenge}
+%  {\startMPcode 
+%     pickup pencircle scaled 1pt;
+%     draw unitsquare rotated 45 scaled 4.74pt withcolor black; 
+%   \stopMPcode}
+
+\define[0]\ltlG%
+  {\Box}
+%  {\startMPcode 
+%     pickup pencircle scaled 1pt;
+%     draw unitsquare scaled 7pt withcolor black; 
+%   \stopMPcode}
+
+\define[0]\ltlU%
+  {\mathcal{U}}
+
+\define[0]\ltlW%
+  {\mathcal{W}}
+
+\define[0]\ltlR%
+  {\mathcal{R}}
+       
+\def\graymath{\mframed[frame=off,
+    background=color,
+    backgroundcolor=gray,
+    backgroundoffset=2pt,
+    offset=0pt,location=low]}
+       
+
+\startluacode
+  function round2(n)
+    return context(string.format("\letterpercent.2f",n))
+  end
+
+  function round3(n)
+    return context(string.format("\letterpercent.3f",n))
+  end
+\stopluacode
+
+\setuptabulate[bodyfont=small]
+
+%\enabletrackers[visualizers.justification] % overfull/underfull
+%\enabletrackers[typesetters.suspects] % suspicious spacing
+
+\usemodule[graph]
+
+\def\setwidthof#1\to#2%
+{\bgroup%
+\setbox\scratchbox\hbox{#1}%
+\expanded{\egroup\def\noexpand#2{\the\wd\scratchbox}}}
+
+\define[2]\MPBullet{%
+\setwidthof{\inframed[strut=no,location=middle,frame=off]{#2}}\to\whatever%
+\hskip\dimexpr-\whatever/2\relax%
+\inframed[strut=no,location=middle,frame=off]{\color[#1]{#2}}}
+
+\definecolor[grey10][s=.1]
+\definecolor[grey20][s=.2]
+\definecolor[grey30][s=.3]
+\definecolor[grey40][s=.4]
+\definecolor[grey50][s=.5]
+\definecolor[grey60][s=.6]
+\definecolor[grey70][s=.7]
+\definecolor[grey80][s=.8]
+\definecolor[grey90][s=.9]
+
+\definestartstop[kaosspec]%
+  [before={{\vskip.5\baselineskip}\noindent\framed[frame=off,%
+                   width=local,%
+                   align={width},%
+                   offset=0em,%
+                   loffset=1em,%
+                   roffset=1em,%
+                   after={\vskip-\baselineskip}]%
+                   \bgroup\ss%
+                   \setupnarrower[left=2em,right=0cm]%
+                   \setupwhitespace[none]%
+                   \setupinterlinespace[line=2.7ex]},%
+   after={\egroup}]%
+
+\define[1]\GoalName%
+  {{\cronos\bf Goal} {#1}\blank[none]}
+
+\define[1]\ObstacleName%
+  {{\cronos\bf Obstacle} {#1}\blank[none]}
+
+\define[1]\DomPropName%
+  {{\cronos\bf DomProp} {#1}\blank[none]}
+
+\define[1]\DomHypName%
+  {{\cronos\bf DomHyp} {#1}\blank[none]}
+  
+\define[2]\KaosAttribute%
+  {\startnarrower[left]%
+   \setupindenting[yes,-1em]%
+   {\cronos\bf #1} {#2}%
+   \stopnarrower}
+
+%%% Syntax highligthing for kaostools specification language
+
+\loadmarkfile{buff-imp-kt}
+\definetyping[KAOSTool][option=KT]
+\definetyping[CLI][]
+
+\defineframedtext
+  [framedcode]
+  [strut=yes,
+   width=\makeupwidth,
+   framecolor=grey50,
+   offset=2mm,
+   align=right]
+
+\setuptyping
+  [KAOSTool]
+  [bodyfont=small,
+   lines=yes,
+   before={\startframedcode},
+   after={\stopframedcode}]
+
+\setuptyping
+  [CLI]
+  [bodyfont=small]
+
+\setuplinenumbering[KAOSTool][location=margin,style={\tt\tfxx},color=grey50,align=left,distance=-5pt,width=0pt]
+
+\definefloat[code][codes][]
+\setuplabeltext[en][code=Code ]
+
+\definetype
+  [typeKAOSTool]
+  [option=KT]
+
+%%% Show the overfull boxes
+
+%\version[temporary]
+
+%%% Fine-tune the hyphenation
+% Allows to hyphenate after _ (underscore) or - (hyphen)
+
+\definebreakpoints[my_breakpoints]
+\definebreakpoint [my_breakpoints] [_] [nleft=3,nright=3,type=1]
+\definebreakpoint [my_breakpoints] [-] [nleft=3,nright=3,type=1]
+\setbreakpoints   [my_breakpoints]
 
 \stopenvironment

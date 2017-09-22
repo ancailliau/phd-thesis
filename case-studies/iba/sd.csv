@@ -1,0 +1,13 @@
+combination,combination_probability,violation_severity
+Caught in or crushed by collasped accessory during yoke movement,0.001,0.000899999999999901
+Caught in or crushed by collapsed yoke during yoke movement,0.001,0.000899999999999901
+Struck by falling pillar during positioning/manipulation,0.001,0.000899999999999901
+Struck by falling pillar during storage,0.01,0.00989999999999991
+Struck by falling pillar during transport,0.01,0.00989999999999991
+Struck by falling wood plate,0.01,0.00989999999999991
+Fall to floor On Command Cables,0.001,0.000899999999999901
+Bodily reaction when positioning pillars in/out,0.01,0.00989999999999991
+Bodily reaction when transporting pillars,0.01,0.00989999999999991
+Contact with electrical command cable,0.01,0.00989999999999991
+Contact with electrical current from electrovalve,0.001,0.000899999999999901
+Contact with electrical current from command,0.01,0.00989999999999991

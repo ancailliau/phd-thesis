@@ -12,3 +12,12 @@ test-context
 *.tuc
 *.tui
 *.tuo
+.DS_Store
+.thesis.lb
+*.gz
+*.1
+*.keep
+*.mpb
+*.mpo
+*.mpx
+*.synctex

@@ -1,0 +1,5 @@
+
+declare obstacle [ acquired_depth_not_accurate ]
+  name "Acquired Depth Not Accurate"
+  refinedby falseecho
+end

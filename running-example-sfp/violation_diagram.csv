@@ -1,0 +1,13 @@
+combination,uncertainty_spread,violation_uncertainty
+Alarm Not Raised And Low Water,0,0
+Make Up Water Not Requested And Alarm Raised,0,0
+Valve Mechanical Failure,0,0
+Unavailable Due To Maintenance,0,0
+Valve Electrical Failure,0,0
+Pump Mechanical Failure,0.135288351690219,0.783
+Power Supply Failure,0.399339635692779,0.019
+Power Cabling Failure,0.00774540865851176,0.002
+Pump Electrical Failure,0.0708941828371812,0.019
+Diesel Generator Not Started,0,0
+Switch Failure,0,0
+Valve Not Opened When Valve Control Not Unavailable,0,0

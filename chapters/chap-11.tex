@@ -1,11 +1,271 @@
+% !TEX root = thesis.tex
+
 \startcomponent chap-11
 \environment common
 \product thesis
 
-\chapter {Conclusion}
+\chapter[chap:conlusion]{Conclusion}
 
-	\subsection {Summary of Contributions}
+  Obstacles preventing the satisfaction of high-level objectives shall be
+  identified, assessed and controlled to produce more adequate, precise and
+  complete requirement goal models. The techniques presented in the thesis are
+  intended to fill the gaps in the {\it obstacle assessment} and {\it
+  resolution} steps by proposing a quantitative framework.
+  
+  For the {\it obstacle assessment} step, the thesis proposed a quantitative
+  model\-based framework, anchored on an existing goal-oriented framework for
+  requirements engineering. The framework is extended with a probabilistic
+  layer allowing behavioral goals to be specified, as a first-class citizen, in
+  terms of their required and estimated satisfaction rate. The formal
+  characterization in terms of behaviors enables the estimates to be grounded
+  on real-world phenomena, allowing experts to estimates and interpret the
+  satisfaction rates, and allow the integration of other techniques such as
+  runtime monitoring. The severity of obstacles is determined by propagating
+  the satisfaction rate of fine-grained obstacles along the goal/obstacle
+  refinement trees. The most critical obstacle combinations are then
+  highlighted to guide the exploration of countermeasures in the next {\it
+  resolution} step.
+  
+  Regarding the {\it obstacle resolution} step, the thesis proposed to select
+  appropriate countermeasures guaranteeing the satisfaction of the required
+  satisfaction rate of the high-level goals while minimizing the cost. An
+  integration operator was introduced as a model transformation guaranteeing
+  progress towards more complete goal models, minimal changes to the ideal
+  model and preservation of the correctness of the refinements. Anchor goals
+  were introduced to define where the countermeasures goals shall be
+  integrated. Countermeasures then document the ideal goal model with dedicated
+  constructs thereby separating the specification of the ideal cases from the
+  exceptional ones. This enables a greater readability of the specifications
+  and incremental integration. Refactoring operators allows the analyst to
+  attach and detach exceptions, deferring the decision of what is exceptional
+  from what is not to the later stages of the requirement process. Design
+  decisions, as countermeasure goal integration, are documented and traceable
+  to domain-specific risks and high-level objectives.
+  
+  The quantitative techniques presented in the thesis were extended to cope
+  with knowledge uncertainty about the satisfaction rate of probabilistic
+  system goals and their obstructing obstacles. The impact of uncertainty on
+  high-level goals is quantified via two metrics: goal violation uncertainty
+  and uncertainty spread. The satisfaction rate of high-level goals, together
+  with their uncertainty margins, are computed by repeated propagation through
+  the goal/obstacle model of sampled satisfaction rate of leaf obstacles. As a
+  result, the critical obstacles with problematic uncertainty margins are
+  highlighted. Problematic uncertainties might then be reduced by combining
+  multiple sources of estimates. Countermeasures are then selected to guarantee
+  the required satisfaction rate of high-level goals up to an uncertainty
+  threshold.
+  
+  Lastly, the thesis proposed an obstacle-driven runtime adaptation approach
+  aimed at increasing the actual satisfaction rate of probabilistic system
+  goals. Leaf obstacles are monitored at runtime to let the system dynamically
+  switch to more appropriate countermeasures goals that increase the
+  satisfaction rate of the high-level goals under the current conditions
+  thereby documenting the rationale for adaptation. The approach ensures that
+  the required satisfaction rate of high-level goals remains satisfied when the
+  obstacle satisfaction rates are changing, taking advantage of the
+  goal/obstacle refinement structure. Our proposed technique does not depend on
+  explicit and detailed behavior models, enabling the application of monitoring
+  to more complex software systems.
+  
+  The proposed techniques proved to be effective for the {\it obstacle
+  assessment} and {\it resolution} steps. The two extensions enabling to cope
+  with uncertainty and to perform assessment and control at runtime suggest
+  that the quantitative framework could be extended to support other type of
+  analysis and reasoning. The proposed techniques are domain-agnostic and not
+  support application specific soft goals or variables that may enable more
+  finer-grained analysis at an increased specification cost. The uncertainty
+  managment layer is based on probability distributions and the runtime
+  adaptation technique requires formal specifications that might impede the
+  application of the techniques by untrained experts.
+  
+  \section {Summary of Contributions}
+    
+    The contributions of the thesis are summarized below.
+    
+    \startitemize
+    
+      \item The thesis introduced probabilistic goals and obstacles with a
+      formal semantic in terms of desirable/undesirable behaviors enabling the
+      estimates to be grounded on real-world phenomena and the integration with
+      other techniques such as runtime monitoring. The thesis also defined
+      independence of probabilistic goals and obstacles together with
+      structural criteria.
+      
+      \item The thesis proposed two propagation algorithms for computing the
+      satisfaction rate of high-level goals from the estimated satisfaction
+      rate of leaf obstacles. The BDD-based propagation procedure is efficient
+      when repeated propagations are required whereas the Pattern-based
+      propagation procedure is finer-grained at an increased specification
+      cost. The thesis proposed an algorithm for highlighting the critical and
+      likely risks.
+      
+      \item The thesis introduced valid countermeasures that guarantee progress
+      towards more complete goal models. The thesis proposed an algorithm for
+      selecting the most appropriate countermeasures and an integration
+      operator for integrating these selected countermeasures. The integration
+      operator guarantee progress towards more complete models,
+      minimal changes to the ideal model, and the correctness of the refinement
+      structure by propagating required changes. The thesis extended the goal
+      specification language for supporting exception handling at a requirement
+      level.
+      
+      \item The thesis extended the quantitative framework for {\it obstacle
+      assessment} and {\it obstacle resolution} steps to cope with knowledge
+      uncertainty by supporting multi-value estimates of satisfaction rate. The
+      thesis proposed two metrics for measuring the uncertainty margins on
+      high-level objectives: the goal violation uncertainty and the uncertainty
+      spread. The thesis proposed an algorithm for identifying the critical
+      obstacles with problematic uncertainty margins and an algorithm for
+      selecting the most appropriate countermeasures given an uncertainty
+      threshold.
+      
+      \item The thesis proposed an obstacle-driven adaptation mechanism to
+      drive runtime adaptation using the satisfaction of high-level
+      probabilistic goals. The proposed monitoring technique extends the
+      non-probabilistic $LTL_3$ approach \cite[Bau11a] to support monitoring of
+      probabilistic assertions. Countermeasure selection and integration is
+      performed on-the-fly.
+      
+      \item The techniques are supported by a set of tools, together with a
+      specification language enabling their application on real case-studies.
+      
+      \item The tools and techniques were evaluated on three realistic
+      case-studies: a car pooling system, an industrial yoke lifting system and
+      an ambulance dispatching system.
+      
+      \item The thesis provided a state-of-the-art review presenting an overview of
+      the research on quantitative, risk-driven requirements engineering.
+    
+    \stopitemize
+  
+	\section {Open Issues and Perspectives}
 	
-	\subsection {Open Issues and Perspectives}
-	
+  This section lists some open issues and discusses perspectives for future work.
+  
+  \noindent {\bf Obstacle and countermeasure identification} The obstacle
+  assessment and resolution steps are as good as the initial obstacle
+  identification step. It is not possible to assess and resolve obstacles that
+  were not identified. In the same vein, it is not possible to select
+  countermeasures that were not identified. Unknown unknown is a critical
+  challenge in Requirements Engineering.
+  
+  Detecting incomplete goal and obstacle models at runtime could improve the
+  obstacle identification step. Monitoring the high-level goals and obstacles
+  may highlight missing obstacles by the comparing the estimated satisfaction
+  rate obtained by up-propagation with the monitored one. This appears to be a
+  promising approach to highlight behavior traces exposing unknown obstacles
+  or countermeasures. This could be integrated with learning obstacles and
+  countermeasures from observed traces \cite[Alr12a,Alr16a] or from an
+  executable specification \cite[Ram12a].
+  
+  Related to identification, it is common for risk analysis to be performed
+  once and not maintained as software evolve. The risk analysis quickly becomes
+  obsolete, incomplete and inadequate. Missing requirements might be detected
+  during testing \cite[Lut03a]. Integrating testing and risk analysis could
+  continuously check whether the software system covers the identified risks,
+  and whether the risk analysis is adequate, precise, complete, and consistent
+  with regard to the evolving software. Requirements-Driven
+  \cite[Raj08a,Wha06a] and Risk-Driven testing \cite[Erd14a,Red05a,Klo11a]
+  approaches appears to be a promising direction.
+  
+  \noindent {\bf Dynamic risk analysis.} To date, our approach and most of the
+  risk analysis approaches only consider a static view of the software system,
+  where the dynamic of the system and its evolution over time are barely taken
+  into account. Most of the analysis are performed on snapshots of the software
+  system.
+  
+  The risk-driven adaptation technique presented an approach where satisfaction
+  rates are monitored to switch to appropriate countermeasures. However,
+  monitoring is not always possible or desirable, for exemple, in ultra-low
+  power systems. On-the-fly adaptations are not necessarily desirable in
+  very-critical safety applications where these on-the-fly adaptation makes the
+  certification of theses systems hard. Explicit modeling of the evolution of
+  the satisfaction rates over the time would enable optimal countermeasure
+  selection to be computed at RE time for software systems where monitoring is
+  not possible or desirable.
+  
+  \noindent {\bf Change detection.} Over time, \quote{real} satisfaction rates
+  could abruptly change, the monitored satisfaction rate however then tends to
+  slowly reflect this changes. Algorithms are available for detecting such
+  abrupt changes such as \cite[Epi10a,Liu13a,Fil14a] and the filtering approach
+  proposed in \cite[Fil15a] could improve the accuracy of the monitored
+  satisfaction rates.
+  
+  \noindent {\bf When to adapt?} The question of \quote{when} to adapt is still
+  an open issue. If the cost of an adaptation is cheaper than the penalty of a
+  violation, it might be preferable to adapt before the violation occurs.
+  However, some adaptations are costly and should not be performed unless the
+  violation last. In addition, software adaptations exhibit latencies that
+  should be taken into account at RE time \cite[Cam14a,Cam16a]. Prediction
+  approaches, such as \cite[Pol07a,Mor16a], appears to be a promising direction
+  for more cost-effective adaptation.
+  
+  \noindent {\bf Obstacle dependence.} Little support is available to model the
+  impact of obstacles on other obstacles: the occurence of an obstacle might
+  increase the satisfaction rate of others, the selection of a countermeasures
+  might changes the probability of other obstacles, and so forth. These complex
+  interactions are largely overlooked in today risk-driven requirements
+  engineering. How dynamic fault trees model and deals with such complexity
+  could improves the current requirements-based approaches.
+  
+  \noindent {\bf Agent reliability.} The impact of agents was not studied in
+  this thesis. Intuitively, some agents might be more reliable than others, and
+  some instances of agents might exhibit different characteristics. In
+  addition, a resolution strategy transfer the responsibilities of an
+  unrealiable to a more reliable agent. How agent reliability can be precisely
+  defined at the requirements level, how it impacts the obstacle assessment and
+  resolution are open issues.
+  
+  \noindent {\bf Risk-driven design.} Our approach is focused on determining
+  whether the required satisfaction rate of high-level goals are met, given the
+  satisfaction rates of leaf obstacles. Another type of analysis would include
+  the following reverse question: what are the satisfaction rates of low-level
+  obstacles given a required degree of satisfaction? Parametric model checking
+  might be used to questions such as \quote{\it how many ambulances are
+  required to guarantee a 5\% satisfaction rate?} on the low-level obstacles.
+  Combining these with the proposed quantitative framework might answer
+  questions on high-level goals, such as \quote{\it how many ambulances are
+  required to guarantee a 95\% required satisfaction rate for the ambulance
+  timely on scene?}.
+  
+  \noindent {\bf Finer-grained obstacle assessment and resolution.} Two
+  interesting directions might improve the obstacle assessment and resolution
+  step.
+  
+  \startitemize
+  
+    \item The satisfaction rate of a goal, an obstacle respectively, is defined
+    as the highest, the lowest respectively, state probability that the
+    specification is satisfied. Considering the highest, lowest and average
+    state probability may provide finer-grained analysis of the system
+    internals. In particular, this extra information could be used to make
+    better decisions about the software adaptations to be performed at
+    runtime\emdash{}for example, it might be worthless to trigger an adaptation if
+    the state with the highest state probability is not visited often.
+  
+    \item The proposed approach selects countermeasures in order to minimize a
+    cost. However, design decisions often result from fine-grained tradeoff
+    analysis with multiple competing criteria \cite[Che06a]. Refined criteria
+    taking soft goals or domain-specific variables into account could lead to
+    better countermeasure selections.
+    
+    \item A drawback of Monte Carlo simulations is that the number of
+    simulations required to obtain accurate estimations grows in the presence
+    of rare events \cite[Jeg13a,Rui17a]. Specific propagation procedure could
+    be developped to better support rare obstacles.    
+  
+  \stopitemize
+  
+  \noindent {\bf Security risk analysis.} How the proposed approach transpose
+  to security risk analysis is an open question to us. In particular, an
+  in-depth comparision with existing security-based approaches such as {\it
+  attack trees} and {\it threat trees} \cite[Sch99a,Hel02a,Sch11a], {\it
+  UMLSec} \cite[Jur01a,Jur02a], {\it SecureUML} \cite[Lod02a], {\it Abuse Case}
+  \cite[McD99a], or {\it Misuse Case} \cite[Sin05a] could exhibit interesting
+  transfer from one community to the other.
+  
+  While these limitations might limit the applicability of our techniques to
+  specific cases, it also paves the way to more research in the area of
+  risk-driven requirements engineering.
+  
 \stopcomponent

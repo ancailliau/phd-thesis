@@ -1,0 +1,109 @@
+override goal [ velocity_computed ]
+	name "Achieve [Accurate Velocity Computed From Tracers]"
+	assignedto gridnode
+	obstructedby inaccurate_velocity
+end
+
+declare obstacle [ inaccurate_velocity ]
+	name "Inaccurate Velocity Computed"
+	refinedby inaccurate_lowres, lowres_images
+	refinedby inaccurate_highres, highres_images
+end
+
+declare obstacle	 [ inaccurate_lowres ]
+	name "Inaccurate Velocity Computed When Low Resolution"
+	refinedby lowrate_images, inveloc_computed_when_lowlow
+	refinedby highrate_images, inveloc_computed_when_lowhigh
+end
+
+declare obstacle	 [ inaccurate_highres ]
+	name "Inaccurate Velocity Computed When High Resolution"
+	refinedby lowrate_images, inveloc_computed_when_highlow
+	refinedby highrate_images, inveloc_computed_when_highhigh
+end
+
+declare obstacle [ lowrate_images ]
+	name "Low Capture Rate"
+	probability 1
+	resolvedby maintain_high_rate
+end
+
+declare obstacle [ highrate_images ]
+	name "High Capture Rate"
+	probability 1
+	resolvedby maintain_low_rate
+end
+
+declare obstacle [ lowres_images ]
+	name "Low Resolution Images"
+	probability 1
+	resolvedby maintain_highres_images
+end
+
+declare obstacle [ highres_images ]
+	name "High Resolution Images"
+	probability 1
+	resolvedby maintain_lowres_images
+end
+
+declare obstacle [ inveloc_computed_when_lowlow ]
+	name "Inaccurate Velocity Computed When Low Resolution Images And Low Capture Rate"
+	probability .20
+end
+
+declare obstacle [ inveloc_computed_when_lowhigh ]
+	name "Inaccurate Velocity Computed When Low Resolution Images And High Capture Rate"
+	probability .10
+end
+
+declare obstacle [ inveloc_computed_when_highlow ]
+	name "Inaccurate Velocity Computed When High Resolution Images And Low Capture Rate"
+	probability .05
+end
+
+declare obstacle [ inveloc_computed_when_highhigh ]
+	name "Inaccurate Velocity Computed When High Resolution Images And High Capture Rate"
+	probability .02
+end
+
+declare goal [ maintain_highres_images ]
+	name "Maintain [High Resolution Images Captured]"
+	assignedto gridnode
+#	cost[cm_cost] 5
+#	cost[speed_cost] 2
+end
+
+declare goal [ maintain_high_rate ]
+	name "Maintain [High Capture Rate]"
+	assignedto gridnode
+#	cost[cm_cost] 3
+#	cost[speed_cost] 5
+end
+
+declare goal [ maintain_lowres_images ]
+	name "Maintain [Low Resolution Images Captured]"
+	assignedto gridnode
+#	cost[cm_cost] 2
+#	cost[speed_cost] 0
+end
+
+declare goal [ maintain_low_rate ]
+	name "Maintain [Low Capture Rate]"
+	assignedto gridnode
+#	cost[cm_cost] 2
+#	cost[speed_cost] 0
+end
+
+# Constraints
+
+# declare constraint [ cst1 ]
+# 	name "Capture Rate"
+# 	conflict maintain_high_rate, maintain_low_rate
+# 	or maintain_high_rate, maintain_low_rate
+# end
+# 
+# declare constraint [ cst2 ]
+# 	name "Image Resolution"
+# 	conflict maintain_highres_images, maintain_lowres_images
+# 	or maintain_highres_images, maintain_lowres_images
+# end

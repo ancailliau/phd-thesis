@@ -1,0 +1,1153 @@
+% !TEX root = ../chapters/thesis.tex
+
+\startsubsection[title={Goal specifications}]
+
+  This section provides the complete specifications for the goals of the
+  Brussels Ambulance Despatch System, presented in \in{Section}[sec:bads].
+
+  \subsubsubject{Achieve [Incident Resolved]}
+
+  \placefigure[]
+ 	  [fig:ads_spec_1]
+ 	  {Refinements for \goal{Achieve [Incident Resolved]}.}
+    {\externalfigure[../images/app-ads/ads_spec_1.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Incident Resolved]}
+  	\KaosAttribute {Def} {All incidents in the real-world shall be resolved. An incident is resolved if the victim is treated on the incident scene or transported to the hospital.}
+  	\KaosAttribute {RSR} {0.95}
+  	\KaosAttribute {RefinedBy} {Achieve [Incident Reported], Achieve [Ambulance On Scene When Incident Reported], Achieve [Incident Resolved When Ambulance On Scene]}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Incident Reported]}
+  	\KaosAttribute {Def} {All incidents in the real-world shall be reported to the ambulance dispatching.}
+  	\KaosAttribute {AssignedTo} {Public}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Ambulance On Scene When Incident Reported]}
+  	\KaosAttribute {Def} {An ambulance shall be on scene within 12 minutes for every reported incident.}
+  	\KaosAttribute {RefinedBy} {Achieve [Ambulance Mobilized When Incident Reported], Achieve [Ambulance Left Station When Mobilized], Achieve [Mobilized Ambulance On Scene]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Incident Resolved When Ambulance On Scene]}
+  	\KaosAttribute {Def} {The incident shall be resolved by the ambulance staff when the ambulance in on the incident scene.}
+  	\KaosAttribute {RefinedBy} {Achieve [Incident Resolved On Scene When No Transport Required], Achieve [Patient Transported At Hospital When Required]}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Incident Resolved When Ambulance On Scene]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_2]
+ 	  {Refinements for \goal{Achieve [Incident Resolved When Ambulance On Scene]}.}
+    {\externalfigure[../images/app-ads/ads_spec_2.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Patient Transported At Hospital When Required]}
+  	\KaosAttribute {Def} {The patient shall be transported to the nearest and most appropriate hospital when required by the patient condition. The incident is resolved when the patient is at hospital.}
+  	\KaosAttribute {RefinedBy} {Maintain [Appropriate Hospital Known], Achieve [Patient Transported At Hospital When Required]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Incident Resolved On Scene When No Transport Required]}
+  	\KaosAttribute {Def} {The incident shall be resolved on the incident scene if no transport of the victim towards an hospital is required.}
+  	\KaosAttribute {ObstructedBy} {Patient Not Treated At Location}
+  	\KaosAttribute {AssignedTo} {Ambulance Staff}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Patient Transported At Hospital When Required]}
+  	\KaosAttribute {Def} {The patient shall be transported to the indicated hospital when required by the patient condition.}
+  	\KaosAttribute {ObstructedBy} {Patient Not Admitted At Or Transported To Hospital}
+  	\KaosAttribute {AssignedTo} {Ambulance Staff}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Appropriate Hospital Known]}
+  	\KaosAttribute {Def} {The nearest and most appropriate hospital is known by the ambulance staff. Such hospital is indicated on the mobilization order.}
+  	\KaosAttribute {AssignedTo} {Ambulance Staff}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Ambulance On Scene When Incident Reported]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_3]
+ 	  {Refinements for \goal{Achieve [Ambulance On Scene When Incident Reported]}.}
+    {\externalfigure[../images/app-ads/ads_spec_3.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Ambulance Mobilized When Incident Reported]}
+  	\KaosAttribute {Def} {When an incident is reported, an ambulance shall be mobilized within 2 minutes.}
+  	\KaosAttribute {RefinedBy} {Maintain [Accurate Incident Form], Achieve [Ambulance Mobilized Based On Incident Form]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Ambulance Left Station When Mobilized]}
+  	\KaosAttribute {Def} {The mobilized ambulance shall leave the ambulance station within 2 minutes and the departure shall be confirmed by the staff to the dispatching software.}
+  	\KaosAttribute {RefinedBy} {Achieve [Ambulance Physically Leaving Station When Mobilized], Achieve [Ambulance Leaving Status Known]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Mobilized Ambulance On Scene]}
+  	\KaosAttribute {Def} {The mobilized ambulance shall be on the incident scene within 12 minutes.}
+  	\KaosAttribute {ObstructedBy} {Mobilized Ambulance Not On Scene}
+  	\KaosAttribute {AssignedTo} {Ambulance Staff}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Ambulance Mobilized When Incident Reported]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_4]
+ 	  {Refinements for \goal{Achieve [Ambulance Mobilized When Incident Reported]}.}
+    {\externalfigure[../images/app-ads/ads_spec_4.pdf]}
+    
+  \startkaosspec
+  	\GoalName {Maintain [Accurate Incident Form]}
+  	\KaosAttribute {Def} {The information about the incident shall be accurate. Informations about the incident include when it occurs and its position.}
+  	\KaosAttribute {AssignedTo} {Operator}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Ambulance Mobilized Based On Incident Form]}
+  	\KaosAttribute {Def} {An ambulance shall be mobilized when an incident is reported within 2 minutes, based on the informations in the incident form.}
+  	\KaosAttribute {RefinedBy} {Achieve [Ambulance Allocated Based On Incident Form], Achieve [Ambulance Mobilized When Allocated]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Ambulance Mobilized When Allocated]}
+  	\KaosAttribute {Def} {The allocated ambulance shall be mobilized within 1 minute. An ambulance is mobilized when the ambulance staff confirmed the mobilization order.}
+  	\KaosAttribute {RefinedBy} {Achieve [Ambulance Mobilized When Allocated At Station], Achieve [Ambulance Mobilized When Allocated On Road]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Ambulance Allocated Based On Incident Form]}
+  	\KaosAttribute {Def} {An ambulance shall be allocated when an incident is reported within 1 minute, based on the informations in the incident form. An ambulance is allocated when the dispatching system decided which ambulance shall intervene on that incident.}
+  	\KaosAttribute {RefinedBy} {Achieve [Ambulance Allocated Based On Incident Form When Ambulance Available], Ambulance Available}
+  \stopkaosspec
+
+  \subsubsubject{Achieve [Ambulance Mobilized When Allocated]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_5]
+ 	  {Refinements for \goal{Achieve [Ambulance Mobilized When Allocated]}.}
+    {\externalfigure[../images/app-ads/ads_spec_5.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Ambulance Mobilized When Allocated On Road]}
+  	\KaosAttribute {Def} {The allocated ambulance on road shall be mobilized within 1 minute.}
+  	\KaosAttribute {RefinedBy} {Achieve [Allocated Ambulance Mobilization On Road Based On Location Info], Maintain [Accurate Ambulance Availability Known]}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Ambulance Mobilized When Allocated At Station]}
+  	\KaosAttribute {Def} {The allocated ambulance at station shall be mobilized within 1 minute.}
+  	\KaosAttribute {RefinedBy} {Achieve [Allocated Ambulance Mobilization At Station Based On Location Info], Maintain [Accurate Ambulance Availability Known]}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Ambulance Mobilized When Allocated On Road]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_6]
+ 	  {Refinements for \goal{Achieve [Ambulance Mobilized When Allocated On Road]}.}
+    {\externalfigure[../images/app-ads/ads_spec_6.pdf]}
+
+  \startkaosspec
+  	\GoalName {Maintain [Accurate Ambulance Availability Known]}
+  	\KaosAttribute {Def} {Accurate information about the availability of the ambulance is known by the dispatching software.}
+  	\KaosAttribute {RefinedBy} {Maintain [Accurate Status Encoded On MDT], Maintain [Status Known Based On Encoded Information]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Allocated Ambulance Mobilization On Road Based On Location Info]}
+  	\KaosAttribute {Def} {The allocated ambulance on road shall be mobilized within 1 minute. Whether the ambulance is on road is determined by the location information.}
+  	\KaosAttribute {RefinedBy} {Achieve [Mobilization Order Displayed On MDT], Achieve [Mobilization Order Printed At Station], Achieve [Mobilization Order Confirmed by Radio], Achieve [Allocated Ambulance Mobilization When Mobilization Order Displayed And Radio Contact]}
+  \stopkaosspec
+  
+  \subsubsubject{Maintain [Accurate Ambulance Status Known]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_7]
+ 	  {Refinements for \goal{Maintain [Accurate Ambulance Status Known]}.}
+    {\externalfigure[../images/app-ads/ads_spec_7.pdf]}
+    
+  \startkaosspec
+  	\GoalName {Maintain [Accurate Ambulance Status Known]}
+  	\KaosAttribute {Def} {The status of the ambulance shall be accurately known by the dispatching software. A status is accurate if the known status correspond to the status of the ambulance in the real-world. The status shall be known by the dispatching software within 3 minutes when encoded by the staff.}
+  	\KaosAttribute {RefinedBy} {Maintain [Accurate Status Encoded], Achieve [Encoded Status Known]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Accurate Status Encoded]}
+  	\KaosAttribute {Def} {The accurate status shall always be encoded.}
+  	\KaosAttribute {RefinedBy} {Maintain [Status Leaving Encoded When Leaving Station], Maintain [Status OnScene Encoded When On Scene], Maintain [Status ToHospital Encoded When Leaving Towards Hospital], Maintain [Status AtHospital Encoded When At Hospital], Maintain [Status AvailableRadio Encoded When Available by Radio], Maintain [Status AvailableStation Encoded When Available at Station], Maintain [Status Unavailable Encoded When Unavailable]}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Encoded Status Known]}
+  	\KaosAttribute {Def} {The encoded availability information shall be known by the despatching software.}
+  	\KaosAttribute {RefinedBy} {Achieve [Status Sent When Encoded], Achieve [Status Transmitted], Maintain [Status Recorded]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Status Recorded]}
+  	\KaosAttribute {Def} {The encoded availability information shall be recorded when transmitted.}
+  	\KaosAttribute {AssignedTo} {CAD}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Status Transmitted]}
+  	\KaosAttribute {Def} {The encoded availability information shall be transmitted to the dispatching software.}
+  	\KaosAttribute {AssignedTo} {Communication Infrastructure}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Status Sent When Encoded]}
+  	\KaosAttribute {Def} {The encoded status information shall be sent to the dispatching software.}
+  	\KaosAttribute {AssignedTo} {MDT}
+  \stopkaosspec
+  
+  \subsubsubject{Maintain [Accurate Status Encoded]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_8]
+ 	  {Refinements for \goal{Maintain [Accurate Status Encoded]}.}
+    {\externalfigure[../images/app-ads/ads_spec_8.pdf]}
+
+  \startkaosspec
+  	\GoalName {Maintain [Status Leaving Encoded When Leaving Station]}
+  	\KaosAttribute {Def} {The Status Leaving is encoded when leaving the station.}
+  	\KaosAttribute {ObstructedBy} {Accurate Leaving Status Not Encoded On MDT Or Innaccurate}
+  	\KaosAttribute {AssignedTo} {Ambulance Staff}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Status OnScene Encoded When On Scene]}
+  	\KaosAttribute {Def} {The Status OnScene is encoded when arriving on scene.}
+  	\KaosAttribute {ObstructedBy} {Accurate OnScene Status Not Encoded On MDT Or Innaccurate}
+  	\KaosAttribute {AssignedTo} {Ambulance Staff}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Status ToHospital Encoded When Leaving Towards Hospital]}
+  	\KaosAttribute {Def} {The Status ToHospital is encoded when leaving the incident scene towards the hospital.}
+  	\KaosAttribute {ObstructedBy} {Accurate ToHospital Status Not Encoded On MDT Or Innaccurate}
+  	\KaosAttribute {AssignedTo} {Ambulance Staff}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Status AtHospital Encoded When At Hospital]}
+  	\KaosAttribute {Def} {The Status AtHospital is encoded when arriving at hospital.}
+  	\KaosAttribute {ObstructedBy} {Accurate AtHospital Status Not Encoded On MDT Or Innaccurate}
+  	\KaosAttribute {AssignedTo} {Ambulance Staff}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Status AvailableRadio Encoded When Available by Radio]}
+  	\KaosAttribute {Def} {The Status AvailableRadio is encoded when avaiable by radio.}
+  	\KaosAttribute {ObstructedBy} {Accurate AvailableRadio Status Not Encoded On MDT Or Innaccurate}
+  	\KaosAttribute {AssignedTo} {Ambulance Staff}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Status AvailableStation Encoded When Available at Station]}
+  	\KaosAttribute {Def} {The Status AvailableStation is encoded when available at station.}
+  	\KaosAttribute {ObstructedBy} {Accurate AvailableStation Status Not Encoded On MDT Or Innaccurate}
+  	\KaosAttribute {AssignedTo} {Ambulance Staff}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Status Unavailable Encoded When Unavailable]}
+  	\KaosAttribute {Def} {The Status Unavailable is encoded when unavailable.}
+  	\KaosAttribute {ObstructedBy} {Accurate Unavailable Status Not Encoded On MDT Or Innaccurate}
+  	\KaosAttribute {AssignedTo} {Ambulance Staff}
+  \stopkaosspec
+
+  \subsubsubject{Achieve [Allocated Ambulance Mobilization On Road Based On Location Info]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_9]
+ 	  {Refinements for \goal{Achieve [Allocated Ambulance Mobilization On Road Based On Location Info]}.}
+    {\externalfigure[../images/app-ads/ads_spec_9.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Mobilization Order Printed At Station]}
+  	\KaosAttribute {Def} {The mobilization order shall be printed at station when ambulance is allocated within 50 seconds.}
+  	\KaosAttribute {RefinedBy} {Achieve [Mobilization Order Sent To Printer], Achieve [Mobilization Order Transmitted], Achieve [Mobilization Order Printed]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Mobilization Order Displayed On MDT]}
+  	\KaosAttribute {Def} {The mobilization order shall be displayed on the Mobile Data Terminal within 40 seconds.}
+  	\KaosAttribute {RefinedBy} {Achieve [Mobilization Order Sent To MDT], Achieve [Mobilization Order Transmitted], Achieve [Mobilization Order Displayed]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Mobilization Order Confirmed by Radio]}
+  	\KaosAttribute {Def} {The mobilization order shall be confirmed orally by radio.}
+  	\KaosAttribute {AssignedTo} {Operator}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Allocated Ambulance Mobilization When Mobilization Order Displayed And Radio Contact]}
+  	\KaosAttribute {Def} {The allocated ambulance shall be mobilized when the mobilization order is displayed on the MDT and the mobilization is confirmed by radio. The mobilization occurs within 10 seconds of the print or confirmation.}
+  	\KaosAttribute {ObstructedBy} {Allocated Ambulance Not Mobilized And Mobilization Order Displayed And Confirmed}
+  	\KaosAttribute {AssignedTo} {Ambulance Staff}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Mobilization Order Displayed On MDT]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_10]
+ 	  {Refinements for \goal{Achieve [Mobilization Order Displayed On MDT]}.}
+    {\externalfigure[../images/app-ads/ads_spec_10.pdf]}
+    
+  \startkaosspec
+  	\GoalName {Achieve [Mobilization Order Sent To MDT]}
+  	\KaosAttribute {Def} {The mobilization order shall be sent to the MDT corresponding to the allocated ambulance.}
+  	\KaosAttribute {RefinedBy} {Achieve [Mobilization Order Sent To MDT Based On Mapping], Accurate MDT Mapping}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Mobilization Order Sent To MDT Based On Mapping]}
+  	\KaosAttribute {Def} {The mobilization order shall be sent to the correspondign ambulance based on the mapping between ambulances and MDTs within 5 seconds.}
+  	\KaosAttribute {AssignedTo} {CAD}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Mobilization Order Transmitted]}
+  	\KaosAttribute {Def} {The sent mobilization order shall be transmitted to the station printer.}
+  	\KaosAttribute {AssignedTo} {Communication Infrastructure}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Mobilization Order Displayed]}
+  	\KaosAttribute {Def} {The transmitted mobilization order shall be displayed on the MDT within 5 seconds.}
+  	\KaosAttribute {ObstructedBy} {Mobilization Order Not Displayed}
+  	\KaosAttribute {AssignedTo} {MDT}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Mobilization Order Printed At Station]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_11]
+ 	  {Refinements for \goal{Achieve [Mobilization Order Printed At Station]}.}
+    {\externalfigure[../images/app-ads/ads_spec_11.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Mobilization Order Sent To Printer]}
+  	\KaosAttribute {Def} {The mobilization order shall be printed on the station printer when the ambulance is allocated. The station printer is the printer at the station to which the ambulance is assigned.}
+  	\KaosAttribute {RefinedBy} {Achieve [Mobilization Order Sent To Printer Based On Mapping], Accurate Printer Mapping}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Mobilization Order Sent To Printer Based On Mapping]}
+  	\KaosAttribute {Def} {The mobilization order shall be sent to the station printer when the ambulance is allocated.}
+  	\KaosAttribute {AssignedTo} {CAD}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Mobilization Order Transmitted]}
+  	\KaosAttribute {Def} {The sent mobilization order shall be transmitted within 5 seconds.}
+  	\KaosAttribute {ObstructedBy} {Mobilization Order Not Transmitted To MDT}
+  	\KaosAttribute {AssignedTo} {Communication Infrastructure}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Mobilization Order Printed]}
+  	\KaosAttribute {Def} {The transmitted mobilization order shall be printed.}
+  	\KaosAttribute {ObstructedBy} {Mobilization Order Not Printed}
+  	\KaosAttribute {AssignedTo} {Printer}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Ambulance Mobilized When Allocated At Station]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_12]
+ 	  {Refinements for \goal{Achieve [Ambulance Mobilized When Allocated At Station]}.}
+    {\externalfigure[../images/app-ads/ads_spec_12.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Allocated Ambulance Mobilization At Station Based On Location Info]}
+  	\KaosAttribute {Def} {The allocated ambulance at station shall be mobilized within 1 minute. Whether the ambulance is at station is determined by the location information.}
+  	\KaosAttribute {RefinedBy} {Achieve [Mobilization Order Displayed On MDT], Achieve [Mobilization Order Printed At Station], Achieve [Mobilization Order Confirmed By Phone], Achieve [Allocated Ambulance Mobilization When Mobilization Order Printed And Phone Contact]}
+  \stopkaosspec
+
+  \subsubsubject{Achieve [Allocated Ambulance Mobilization At Station Based On Location Info]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_13]
+ 	  {Refinements for \goal{Achieve [Allocated Ambulance Mobilization At Station Based On Location Info]}.}
+    {\externalfigure[../images/app-ads/ads_spec_13.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Mobilization Order Confirmed By Phone]}
+  	\KaosAttribute {Def} {The mobilization order shall be confirmed by a phone call within 50 seconds.}
+  	\KaosAttribute {AssignedTo} {Operator}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Allocated Ambulance Mobilization When Mobilization Order Printed And Phone Contact]}
+  	\KaosAttribute {Def} {The allocated ambulance shall be mobilized when the mobilization order is printed on the station printer and the mobilization has been confirmed by a phone call. The mobilization occurs within 10 seconds of the print or confirmation.}
+  	\KaosAttribute {ObstructedBy} {Allocated Ambulance Not Mobilized And Mobilization Order Printed And Confirmed}
+  	\KaosAttribute {AssignedTo} {Ambulance Staff}
+  \stopkaosspec
+
+  \subsubsubject{Maintain [Accurate Ambulance Info Known]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_14]
+ 	  {Refinements for \goal{Maintain [Accurate Ambulance Info Known]}.}
+    {\externalfigure[../images/app-ads/ads_spec_14.pdf]}
+
+  \startkaosspec
+  	\GoalName {Maintain [Accurate Ambulance Location Known]}
+  	\KaosAttribute {Def} {Accurate location of the ambulance is known by the dispatching software. A location is accurate if the position of the ambulance in the real-world and the dispatching do not differ by more than 250 meters.}
+  	\KaosAttribute {RefinedBy} {Achieve [Ambulance Location Sent Every 3 Seconds], Maintain [Ambulance Location Known When Sent]}
+  \stopkaosspec
+  
+  \subsubsubject{Maintain [Accurate Ambulance Availability Known]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_15]
+ 	  {Refinements for \goal{Maintain [Accurate Ambulance Availability Known]}.}
+    {\externalfigure[../images/app-ads/ads_spec_15.pdf]}
+
+  \startkaosspec
+  	\GoalName {Maintain [Status Known Based On Encoded Information]}
+  	\KaosAttribute {Def} {Availability of the ambulance shall be known by the dispatching software when encoded by the ambulance staff.}
+  	\KaosAttribute {RefinedBy} {Maintain [Status Known Based On Encoded Status And Accurate Mapping], Accurate MDT Mapping}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Maintain [Accurate Status Encoded On MDT]}
+  	\KaosAttribute {Def} {Accurate status information regarding the availability shall be encoded on the Mobile Data Terminal, i.e. staff is expected to press the button corresponding to their status.}
+  	\KaosAttribute {RefinedBy} {Maintain [Status Leaving Encoded When Leaving Station], Maintain [Status AvailableRadio Encoded When Available by Radio], Maintain [Status AvailableStation Encoded When Available at Station], status__unavailable_encoded}
+  \stopkaosspec
+  
+  \subsubsubject{Maintain [Accurate Status Encoded On MDT]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_16]
+ 	  {Refinements for \goal{Maintain [Accurate Status Encoded On MDT]}.}
+    {\externalfigure[../images/app-ads/ads_spec_16.pdf]}
+  
+  \subsubsubject{Maintain [Status Known Based On Encoded Information]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_17]
+ 	  {Refinements for \goal{Maintain [Status Known Based On Encoded Information]}.}
+    {\externalfigure[../images/app-ads/ads_spec_17.pdf]}
+
+  \startkaosspec
+  	\GoalName {Maintain [Status Known Based On Encoded Status And Accurate Mapping]}
+  	\KaosAttribute {Def} {Availability of the ambulance shall be known by the dispatching software when encoded by the ambulance staff, based on the mapping between the MDTs and the ambulances.}
+  	\KaosAttribute {RefinedBy} {Achieve [Status Sent When Encoded], Achieve [Status Transmitted], Maintain [Status Recorded]}
+  \stopkaosspec
+  
+  \subsubsubject{Maintain [Accurate Ambulance Location Known]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_18]
+ 	  {Refinements for \goal{Maintain [Accurate Ambulance Location Known]}.}
+    {\externalfigure[../images/app-ads/ads_spec_18.pdf]}
+
+  \startkaosspec
+  	\GoalName {Maintain [Ambulance Location Known When Sent]}
+  	\KaosAttribute {Def} {The ambulance location is known by the dispatching software when sent.}
+  	\KaosAttribute {RefinedBy} {Maintain [Ambulance Location Transmitted When Sent], Maintain [Ambulance Location Known When Transmitted]}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Ambulance Location Sent Every 3 Seconds]}
+  	\KaosAttribute {Def} {The ambulance location is sent every 3 seconds.}
+  	\KaosAttribute {RefinedBy} {Achieve [Accurate Location Captured Every 3 Seconds], Achieve [Location Sent When Captured]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Ambulance Location Transmitted When Sent]}
+  	\KaosAttribute {Def} {The ambulance location shall be timely transmitted to the despatching software when sent.}
+  	\KaosAttribute {AssignedTo} {Communication Infrastructure}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Ambulance Location Known When Transmitted]}
+  	\KaosAttribute {Def} {The ambulance location shall be known when transmitted to the despatching software.}
+  	\KaosAttribute {AssignedTo} {CAD}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Accurate Location Captured Every 3 Seconds]}
+  	\KaosAttribute {Def} {Accurate ambulance location is captured every 3 seconds. A captured location is accurate if it do not differ by more than 50 meters from the real position.}
+  	\KaosAttribute {ObstructedBy} {Accurate Location Not Captured Every 3 Seconds}
+  	\KaosAttribute {AssignedTo} {AVLS}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Location Sent When Captured]}
+  	\KaosAttribute {Def} {The ambulance location is sent when captured.}
+  	\KaosAttribute {ObstructedBy} {Captured Ambulance Location Not Sent}
+  	\KaosAttribute {AssignedTo} {MDT}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Ambulance Allocated Based On Incident Form]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_19]
+ 	  {Refinements for \goal{Maintain [Accurate Ambulance Location Known]}.}
+    {\externalfigure[../images/app-ads/ads_spec_19.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Ambulance Allocated Based On Incident Form When Ambulance Available]}
+  	\KaosAttribute {Def} {An available ambulance shall be allocated based on the informations on the incident form, within 1 minute.}
+  	\KaosAttribute {RefinedBy} {Maintain [Accurate Ambulance Info Known], Achieve [Ambulance Allocation Based On Incident Form And Ambulance Info When Ambulance Available]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Ambulance Allocation Based On Incident Form And Ambulance Info When Ambulance Available]}
+  	\KaosAttribute {Def} {An available ambulance shall be allocated within 1 minute when an incident is reported, based on the incident informations reported in the incident form and the ambulance availability information.}
+  	\KaosAttribute {AssignedTo} {CAD}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Accurate Ambulance Info Known]}
+  	\KaosAttribute {Def} {Accurate availability and accurate location about the ambulance shall be known by the software system.}
+  	\KaosAttribute {RefinedBy} {Maintain [Accurate Ambulance Location Known], Maintain [Accurate Ambulance Availability Known]}
+  \stopkaosspec
+
+  \subsubsubject{Achieve [Ambulance Left Station When Mobilized]}
+  
+  \placefigure[]
+ 	  [fig:ads_spec_20]
+ 	  {Refinements for \goal{Maintain [Accurate Ambulance Location Known]}.}
+    {\externalfigure[../images/app-ads/ads_spec_20.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Ambulance Physically Leaving Station When Mobilized]}
+  	\KaosAttribute {Def} {The mobilized ambulance shall leave the ambulance station within 2 minutes.}
+  	\KaosAttribute {AssignedTo} {Ambulance Staff}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Ambulance Leaving Status Known]}
+  	\KaosAttribute {Def} {The ambulance leaving status is known by the dispatching software when the mobilized ambulance left the ambulance station.}
+  	\KaosAttribute {RefinedBy} {Maintain [Status Leaving Encoded When Leaving Station], Achieve [Status Sent When Encoded], Achieve [Status Transmitted], Ambulance Left Station When Status Transmitted}
+  \stopkaosspec
+  
+\stopsubsection
+
+\startsubsection[title={Obstacle specifications}]
+
+  This section provides the complete specifications for the obstacles of the
+  Brussels Ambulance Despatch System, presented in \in{Section}[sec:bads].
+
+  \subsubsubject{Achieve [Location Sent When Captured]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_1]
+ 	  {Obstacles to \goal{Achieve [Location Sent When Captured]}.}
+    {\externalfigure[../images/app-ads/ads_obs_1.pdf]}
+  
+  \startkaosspec
+  	\GoalName {Captured Ambulance Location Not Sent}
+  	\KaosAttribute {Def} {The captured ambulance location is not sent.}
+  	\KaosAttribute {RefinedBy} {MDT Turned Off}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {MDT Turned Off}
+  	\KaosAttribute {Def} {The MDT is turned off for more than 5 seconds and mobilization order was transmitted.}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Allocated Ambulance Mobilization When Mobilization Order Displayed And Radio Contact]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_2]
+ 	  {Obstacles to \goal{Achieve [Allocated Ambulance Mobilization When Mobilization Order Displayed And Radio Contact]}.}
+    {\externalfigure[../images/app-ads/ads_obs_2.pdf]}
+  
+  \startkaosspec
+  	\GoalName {Allocated Ambulance Not Mobilized And Mobilization Order Displayed And Confirmed}
+  	\KaosAttribute {Def} {The allocated ambulance is not mobilized when the mobilization order is displayed on the MDT and the mobilization is confirmed by radio. The mobilization did not occured within 10 seconds of the print or confirmation.}
+  	\KaosAttribute {RefinedBy} {Ambulance Not Available And Mobilization Order Displayed}
+  	\KaosAttribute {RefinedBy} {Displayed Mobilization Order Ignored}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Ambulance Not Available And Mobilization Order Displayed}
+  	\KaosAttribute {Def} {The ambulance is not available even if the mobilizatin order is displayed and the mobilization order is confirmed.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Displayed Mobilization Order Ignored}
+  	\KaosAttribute {Def} {The displayed mobilization order is ignored by the ambulance staff.}
+  	\KaosAttribute {RefinedBy} {Crew Distracted}
+  	\KaosAttribute {RefinedBy} {Crew Not In Ambulance}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Crew Distracted}
+  	\KaosAttribute {Def} {The ambulance staff is distracted and ignores the displayed mobilization order.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Crew Not In Ambulance}
+  	\KaosAttribute {Def} {The ambulance staff is not in the ambulance and is therefore not able to read the displayed mobilization order.}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Mobilization Order Transmitted]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_3]
+ 	  {Obstacles to \goal{Achieve [Mobilization Order Transmitted]}.}
+    {\externalfigure[../images/app-ads/ads_obs_3.pdf]}
+
+  \startkaosspec
+  	\GoalName {Mobilization Order Not Transmitted To MDT}
+  	\KaosAttribute {Def} {}
+  	\KaosAttribute {RefinedBy} {Network Overloaded}
+  	\KaosAttribute {RefinedBy} {MDT In Blackspot}
+  	\KaosAttribute {RefinedBy} {Corrupted Mobilization Order}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {MDT In Blackspot}
+  	\KaosAttribute {Def} {The MDT that shall received the information is in a blackspot and no longer able to send and receive data.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Corrupted Mobilization Order}
+  	\KaosAttribute {Def} {The mobilization order is corrupted and cannot be transmitted reliably to the corresponding MDT.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Network Overloaded}
+  	\KaosAttribute {Def} {The network used to transmit information between the dispatching software and the MDTs is overloaded and not able to transmit information.}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Allocated Ambulance Mobilization When Mobilization Order Printed And Phone Contact]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_4]
+ 	  {Obstacles to \goal{Achieve [Allocated Ambulance Mobilization When Mobilization Order Printed And Phone Contact]}.}
+    {\externalfigure[../images/app-ads/ads_obs_4.pdf]}
+  
+  \startkaosspec
+  	\GoalName {Allocated Ambulance Not Mobilized And Mobilization Order Printed And Confirmed}
+  	\KaosAttribute {Def} {The allocated ambulance is not mobilized but the mobilization order is printed and the mobilization is confirmed by the operator.}
+  	\KaosAttribute {RefinedBy} {Allocated Ambulance Not At Station}
+  	\KaosAttribute {RefinedBy} {Allocated Ambulance Not Available}
+  	\KaosAttribute {RefinedBy} {Printed Mobilization Order Ignored}
+  	\KaosAttribute {RefinedBy} {Mobilization Taken By Other Ambulance}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Allocated Ambulance Not At Station}
+  	\KaosAttribute {Def} {The ambulance is not at the station when the mobilization order is printed and/or the call is made.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Allocated Ambulance Not Available}
+  	\KaosAttribute {Def} {The ambulance is at the station but not yet available (for example, cleaning and refurbishing the ambulance).}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Printed Mobilization Order Ignored}
+  	\KaosAttribute {Def} {The printed mobilization order is ignored by the ambulance staff.}
+  	\KaosAttribute {RefinedBy} {Crew Not Near Printer}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Crew Not Near Printer}
+  	\KaosAttribute {Def} {The ambulance staff is not near the station printer.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Mobilization Taken By Other Ambulance}
+  	\KaosAttribute {Def} {The mobilization order is taken by an other ambulance staff.}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Patient Transported At Hospital When Required]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_5]
+ 	  {Obstacles to \goal{Achieve [Patient Transported At Hospital When Required]}.}
+    {\externalfigure[../images/app-ads/ads_obs_5.pdf]}
+  
+  \startkaosspec
+  	\GoalName {Patient Not Admitted At Or Transported To Hospital}
+  	\KaosAttribute {Def} {The patient is not admitted or transported to the nearest and most appropriate hospital.}
+  	\KaosAttribute {RefinedBy} {Patient Not Transported}
+  	\KaosAttribute {RefinedBy} {Patient Not Admitted At Hospital}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Patient Not Transported}
+  	\KaosAttribute {Def} {The patient is not transported to the nearest and most appropriate hospital.}
+  	\KaosAttribute {RefinedBy} {Patient Not In Ambulance}
+  	\KaosAttribute {RefinedBy} {Ambulance Broken Down Or Accident}
+  	\KaosAttribute {RefinedBy} {Patient Not Transportable}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Patient Not In Ambulance}
+  	\KaosAttribute {Def} {The patient is not in the ambulance but should be transported to the hospital.}
+  	\KaosAttribute {RefinedBy} {Insufficient Capacity}
+  	\KaosAttribute {RefinedBy} {Overweight Patient}
+  	\KaosAttribute {RefinedBy} {Patient Cannot Reach Ambulance}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Patient Not Transportable}
+  	\KaosAttribute {Def} {The patient is not safely transportable from the incident scene to the nearest and most appropriate hospital.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Insufficient Capacity}
+  	\KaosAttribute {Def} {The ambulance capacity is reached. Patient cannot be transported safely.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Overweight Patient}
+  	\KaosAttribute {Def} {The weight of the patient is over the maximal weight allowed for safe transportation by the ambulance.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Patient Cannot Reach Ambulance}
+  	\KaosAttribute {Def} {The patient cannot safely reach the ambulance.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Patient Not Admitted At Hospital}
+  	\KaosAttribute {Def} {The patient is not admitted at the nearest and most appropriate hospital.}
+  	\KaosAttribute {RefinedBy} {No Bed Available}
+  	\KaosAttribute {RefinedBy} {Available Bed Not Assigned}
+  	\KaosAttribute {RefinedBy} {Special Unit Required}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Available Bed Not Assigned}
+  	\KaosAttribute {Def} {The patient is not admitted at the nearest and most appropriate hospital, even if beds are available.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Special Unit Required}
+  	\KaosAttribute {Def} {A special equipment or specific staff is required to admit the patient at the hospital and such equipment or staff is not available at nearest and most appropriate hospital.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {No Bed Available}
+  	\KaosAttribute {Def} {The nearest and most appropriate hospital has no available beds for the patient.}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Mobilized Ambulance On Scene]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_6]
+ 	  {Obstacles to \goal{Achieve [Mobilized Ambulance On Scene]}.}
+    {\externalfigure[../images/app-ads/ads_obs_6.pdf]}
+  
+  \startkaosspec
+  	\GoalName {Mobilized Ambulance Not On Scene}
+  	\KaosAttribute {Def} {The mobilized ambulance is not on the incident scene within 12 minutes.}
+  	\KaosAttribute {RefinedBy} {Mobilization Cancelled}
+  	\KaosAttribute {RefinedBy} {Destination Confused}
+  	\KaosAttribute {RefinedBy} {Ambulance Stopped Or In Wrong Direction}
+  	\KaosAttribute {RefinedBy} {Incident Location Unreachable}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Incident Location Unreachable}
+  	\KaosAttribute {Def} {The incident location is not safely reachable by the ambulance staff.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Destination Confused}
+  	\KaosAttribute {Def} {The incident location is confused, and the ambulance is not on scene within 12 minutes.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Mobilization Cancelled}
+  	\KaosAttribute {Def} {The mobilization is cancelled.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Ambulance Stopped Or In Wrong Direction}
+  	\KaosAttribute {Def} {The ambulance is stopped or in the wrong direction and will not reach the incident scene within the time constraints.}
+  	\KaosAttribute {RefinedBy} {Ambulance Stopped}
+  	\KaosAttribute {RefinedBy} {Ambulance In Wrong Direction}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Ambulance Stopped}
+  	\KaosAttribute {Def} {The ambulance is stopped and will not reach the incident scene within the time constraints.}
+  	\KaosAttribute {RefinedBy} {Ambulance Broken Down Or Accident}
+  	\KaosAttribute {RefinedBy} {Ambulance Stuck In Traffic Jam Toward Incident}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Ambulance Broken Down Or Accident}
+  	\KaosAttribute {Def} {The ambulance is broken down or involved in an accident and will not reach the incident scene within the time constraints.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Ambulance Stuck In Traffic Jam Toward Incident}
+  	\KaosAttribute {Def} {The ambulance is stuck in a traffic jam and will not reach the incident scene within the time constraints.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Ambulance In Wrong Direction}
+  	\KaosAttribute {Def} {The ambulance is headed in the wrong direction and will not reach the incident scene within the time constraints.}
+  	\KaosAttribute {RefinedBy} {Ambulance Lost}
+  	\KaosAttribute {RefinedBy} {Ambulance In Traffic Deviation}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Ambulance Lost}
+  	\KaosAttribute {Def} {The ambulance is lost and will not reach the incident scene within the time constraints.}
+  	\KaosAttribute {RefinedBy} {Ambulance In Unfamiliar Area, GPS Broken}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Ambulance In Unfamiliar Area}
+  	\KaosAttribute {Def} {The ambulance is in an unfamiliar area.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {GPS Broken}
+  	\KaosAttribute {Def} {The GPS of the ambulance driver break down.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Ambulance In Traffic Deviation}
+  	\KaosAttribute {Def} {The ambulance is in a traffic deviation and will not reach the incident scene within the time constraints.}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Incident Resolved On Scene When No Transport Required]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_7]
+ 	  {Obstacles to \goal{Achieve [Incident Resolved On Scene When No Transport Required]}.}
+    {\externalfigure[../images/app-ads/ads_obs_7.pdf]}
+  
+  \startkaosspec
+  	\GoalName {Patient Not Treated At Location}
+  	\KaosAttribute {Def} {The patient was not treated at the incident location.}
+  	\KaosAttribute {RefinedBy} {Critical Care Not Given}
+  	\KaosAttribute {RefinedBy} {Patient Not Safely Reachable}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Patient Not Safely Reachable}
+  	\KaosAttribute {Def} {The patient was not reachable safely by the ambulance staff.}
+  	\KaosAttribute {RefinedBy} {Fire Environment}
+  	\KaosAttribute {RefinedBy} {Hazardous Environment}
+  	\KaosAttribute {RefinedBy} {Unreachable Patient}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Fire Environment}
+  	\KaosAttribute {Def} {The patient was not reachable safely by the ambulance staff due to a fiery environment.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Hazardous Environment}
+  	\KaosAttribute {Def} {The patient was not reachable safely by the ambulance staff due to a hazardous environment exluding fire.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Unreachable Patient}
+  	\KaosAttribute {Def} {The patient was not reachable safely by the ambulance staff but patient in a safe environment (e.g. locked in a lift).}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Critical Care Not Given}
+  	\KaosAttribute {Def} {Critical care at location is not given to the patient.}
+  	\KaosAttribute {RefinedBy} {Insufficient Ressource}
+  	\KaosAttribute {RefinedBy} {Available Ressource Not Used}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Available Ressource Not Used}
+  	\KaosAttribute {Def} {Available ressource required to care for the patient is not used.}
+  	\KaosAttribute {RefinedBy} {Wrong Info About Patient}
+  	\KaosAttribute {RefinedBy} {Ressource Out Of Order}
+  	\KaosAttribute {RefinedBy} {Qualification Missing For Ressource}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Ressource Out Of Order}
+  	\KaosAttribute {Def} {Available ressource required to care for the patient is out of order.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Qualification Missing For Ressource}
+  	\KaosAttribute {Def} {The staff does not have the required qualifications to provide the critical care required by the patient condition. For example, the ambulance staff is not allowed to deliver a drug but has the drug at disposal.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Insufficient Ressource}
+  	\KaosAttribute {Def} {Ressource required by the patient condition is not available in sufficient quantities.}
+  	\KaosAttribute {RefinedBy} {Ressource Confusion}
+  	\KaosAttribute {RefinedBy} {Ressource Not Available}
+  	\KaosAttribute {RefinedBy} {Wrong Info About Patient}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Ressource Confusion}
+  	\KaosAttribute {Def} {Ressource required by the patient condition is not used due to confusion.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Ressource Not Available}
+  	\KaosAttribute {Def} {Ressource required by the patient condition is not available.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Wrong Info About Patient}
+  	\KaosAttribute {Def} {Critical care is not provided to the patient as information is missing on his condition. This includes interventions were additional care would have been given if, for example, medical history, allergies, drug prescriptions, etc. was known.}
+  \stopkaosspec
+  
+  \subsubsubject{Maintain [Status Unavailable Encoded When Unavailable]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_8]
+ 	  {Obstacles to \goal{Maintain [Status Unavailable Encoded When Unavailable]}.}
+    {\externalfigure[../images/app-ads/ads_obs_8.pdf]}
+
+  \startkaosspec
+  	\GoalName {Accurate Unavailable Status Not Encoded On MDT Or Innaccurate}
+  	\KaosAttribute {Def} {Accurate Unavailable status information is not encoded on the Mobile Data Terminal when the status changes; or the encoded status is not accurate.}
+  	\KaosAttribute {RefinedBy} {Forget To Encode Unavailable Status}
+  	\KaosAttribute {RefinedBy} {Other Status Than Unavailable Encoded}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Forget To Encode Unavailable Status}
+  	\KaosAttribute {Def} {The ambulance staff forgets to encode the Unavailable status.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Other Status Than Unavailable Encoded}
+  	\KaosAttribute {Def} {The ambulance staff encodes an other status than the Unavailable status when required.}
+  \stopkaosspec
+  
+  \subsubsubject{Maintain [Status AvailableStation Encoded When Available at Station]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_9]
+ 	  {Obstacles to \goal{Maintain [Status AvailableStation Encoded When Available at Station]}.}
+    {\externalfigure[../images/app-ads/ads_obs_9.pdf]}
+
+  \startkaosspec
+  	\GoalName {Accurate AvailableStation Status Not Encoded On MDT Or Innaccurate}
+  	\KaosAttribute {Def} {Accurate AvailableStation status information is not encoded on the Mobile Data Terminal when the status changes; or the encoded status is not accurate.}
+  	\KaosAttribute {RefinedBy} {Forget To Encode AvailableStation Status}
+  	\KaosAttribute {RefinedBy} {Other Status Than AvailableStation Encoded}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Forget To Encode AvailableStation Status}
+  	\KaosAttribute {Def} {The ambulance staff forgets to encode the AvailableStation status.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Other Status Than AvailableStation Encoded}
+  	\KaosAttribute {Def} {The ambulance staff encodes an other status than the AvailableStation status when required.}
+  \stopkaosspec
+  
+  \subsubsubject{Maintain [Status AvailableRadio Encoded When Available by Radio]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_10]
+ 	  {Obstacles to \goal{Maintain [Status AvailableRadio Encoded When Available by Radio]}.}
+    {\externalfigure[../images/app-ads/ads_obs_10.pdf]}
+
+  \startkaosspec
+  	\GoalName {Accurate AvailableRadio Status Not Encoded On MDT Or Innaccurate}
+  	\KaosAttribute {Def} {Accurate AvailableRadio status information is not encoded on the Mobile Data Terminal when the status changes; or the encoded status is not accurate.}
+  	\KaosAttribute {RefinedBy} {Forget To Encode AvailableRadio Status}
+  	\KaosAttribute {RefinedBy} {Other Status Than AvailableRadio Encoded}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Forget To Encode AvailableRadio Status}
+  	\KaosAttribute {Def} {The ambulance staff forgets to encode the AvailableRadio status.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Other Status Than AvailableRadio Encoded}
+  	\KaosAttribute {Def} {The ambulance staff encodes an other status than the AvailableRadio status when required.}
+  \stopkaosspec
+  
+  \subsubsubject{Maintain [Status AtHospital Encoded When At Hospital]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_11]
+ 	  {Obstacles to \goal{Maintain [Status AtHospital Encoded When At Hospital]}.}
+    {\externalfigure[../images/app-ads/ads_obs_11.pdf]}
+
+  \startkaosspec
+  	\GoalName {Accurate AtHospital Status Not Encoded On MDT Or Innaccurate}
+  	\KaosAttribute {Def} {Accurate AtHospital status information is not encoded on the Mobile Data Terminal when the status changes; or the encoded status is not accurate.}
+  	\KaosAttribute {RefinedBy} {Forget To Encode AtHospital Status}
+  	\KaosAttribute {RefinedBy} {Other Status Than AtHospital Encoded}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Forget To Encode AtHospital Status}
+  	\KaosAttribute {Def} {The ambulance staff forgets to encode the AtHospital status.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Other Status Than AtHospital Encoded}
+  	\KaosAttribute {Def} {The ambulance staff encodes an other status than the AtHospital status when required.}
+  \stopkaosspec
+  
+  \subsubsubject{Maintain [Status ToHospital Encoded When Leaving Towards Hospital]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_12]
+ 	  {Obstacles to \goal{Maintain [Status ToHospital Encoded When Leaving Towards Hospital]}.}
+    {\externalfigure[../images/app-ads/ads_obs_12.pdf]}
+
+  \startkaosspec
+  	\GoalName {Accurate ToHospital Status Not Encoded On MDT Or Innaccurate}
+  	\KaosAttribute {Def} {Accurate ToHospital status information is not encoded on the Mobile Data Terminal when the status changes; or the encoded status is not accurate.}
+  	\KaosAttribute {RefinedBy} {Forget To Encode ToHospital Status}
+  	\KaosAttribute {RefinedBy} {Other Status Than ToHospital Encoded}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Forget To Encode ToHospital Status}
+  	\KaosAttribute {Def} {The ambulance staff forgets to encode the ToHospital status.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Other Status Than ToHospital Encoded}
+  	\KaosAttribute {Def} {The ambulance staff encodes an other status than the ToHospital status when required.}
+  \stopkaosspec
+  
+  \subsubsubject{Maintain [Status OnScene Encoded When On Scene]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_13]
+ 	  {Obstacles to \goal{Maintain [Status OnScene Encoded When On Scene]}.}
+    {\externalfigure[../images/app-ads/ads_obs_13.pdf]}
+  
+  \startkaosspec
+  	\GoalName {Accurate OnScene Status Not Encoded On MDT Or Innaccurate}
+  	\KaosAttribute {Def} {Accurate OnScene status information is not encoded on the Mobile Data Terminal when the status changes; or the encoded status is not accurate.}
+  	\KaosAttribute {RefinedBy} {Forget To Encode OnScene Status}
+  	\KaosAttribute {RefinedBy} {Other Status Than OnScene Encoded}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Forget To Encode OnScene Status}
+  	\KaosAttribute {Def} {The ambulance staff forgets to encode the OnScene status.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Other Status Than OnScene Encoded}
+  	\KaosAttribute {Def} {The ambulance staff encodes an other status than the OnScene status when required.}
+  \stopkaosspec
+  
+  \subsubsubject{Maintain [Status Leaving Encoded When Leaving Station]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_14]
+ 	  {Obstacles to \goal{Maintain [Status Leaving Encoded When Leaving Station]}.}
+    {\externalfigure[../images/app-ads/ads_obs_14.pdf]}
+  
+  \startkaosspec
+  	\GoalName {Accurate Leaving Status Not Encoded On MDT Or Innaccurate}
+  	\KaosAttribute {Def} {Accurate Leaving status information is not encoded on the Mobile Data Terminal when the status changes; or the encoded status is not accurate.}
+  	\KaosAttribute {RefinedBy} {Forget To Encode Leaving Status}
+  	\KaosAttribute {RefinedBy} {Other Status Than Leaving Encoded}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Forget To Encode Leaving Status}
+  	\KaosAttribute {Def} {The ambulance staff forgets to encode the Leaving status.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Other Status Than Leaving Encoded}
+  	\KaosAttribute {Def} {The ambulance staff encodes an other status than the Leaving status when required.}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Accurate Location Captured Every 3 Seconds]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_15]
+ 	  {Obstacles to \goal{Achieve [Accurate Location Captured Every 3 Seconds]}.}
+    {\externalfigure[../images/app-ads/ads_obs_15.pdf]}
+  
+  \startkaosspec
+  	\GoalName {Accurate Location Not Captured Every 3 Seconds}
+  	\KaosAttribute {Def} {Accurate ambulance location was not captured every 3 seconds.}
+  	\KaosAttribute {RefinedBy} {GPS Black Spot}
+  	\KaosAttribute {RefinedBy} {GPS Innaccurate}
+  	\KaosAttribute {RefinedBy} {AVLS Out of Service}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {AVLS Out of Service}
+  	\KaosAttribute {Def} {The AVLS component in the ambulance is out of service.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {GPS Black Spot}
+  	\KaosAttribute {Def} {The ambulance is in a black spot for more than 3 seconds.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {GPS Innaccurate}
+  	\KaosAttribute {Def} {The GPS position differs by more than 50 meters for more than 3 seconds.}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Mobilization Order Printed]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_16]
+ 	  {Obstacles to \goal{Achieve [Mobilization Order Printed]}.}
+    {\externalfigure[../images/app-ads/ads_obs_16.pdf]}
+
+  \startkaosspec
+  	\GoalName {Mobilization Order Not Printed}
+  	\KaosAttribute {Def} {The mobilization order is not printed within 50 seconds at the allocated ambulance station.}
+  	\KaosAttribute {RefinedBy} {Paper Jam}
+  	\KaosAttribute {RefinedBy} {Out Of Paper}
+  	\KaosAttribute {RefinedBy} {Printer Off}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Paper Jam}
+  	\KaosAttribute {Def} {There is a paper jam for more than 50 seconds in the allocated ambulance station printer.}
+  \stopkaosspec
+  
+  \startkaosspec  
+  	\GoalName {Out Of Paper}
+  	\KaosAttribute {Def} {There is no paper for more than 50 seconds in the allocated ambulance station printer.}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Printer Off}
+  	\KaosAttribute {Def} {The allocated ambulance station printer is turned off for more than 50 seconds.}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Mobilization Order Displayed]}
+  
+  \placefigure[]
+ 	  [fig:ads_obs_17]
+ 	  {Obstacles to \goal{Achieve [Mobilization Order Displayed]}.}
+    {\externalfigure[../images/app-ads/ads_obs_17.pdf]}
+  
+  \startkaosspec
+  	\GoalName {Mobilization Order Not Displayed}
+  	\KaosAttribute {Def} {The transmitted mobilization order is not displayed within 5 seconds.}
+  	\KaosAttribute {RefinedBy} {MDT Turned Off}
+  \stopkaosspec
+
+\stopsubsection

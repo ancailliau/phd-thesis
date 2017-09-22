@@ -1,0 +1,1246 @@
+% !TEX root = ../chapters/thesis.tex
+
+\startsubsection[title={Goal specifications}]
+
+  This section provides the complete specifications for the goals of the Car
+  Pooling System, presented in \in{Section}[sec:cool].
+
+  \subsubsubject{Achieve [Ride Proposal Eventually Served]}
+
+  \placefigure[]
+ 	  [fig:cool_spec_1]
+ 	  {Refinements for \goal{Achieve [Ride Proposal Eventually Served]}.}
+    {\externalfigure[../images/app-cool/cool_spec_1.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Ride Proposal Eventually Served]}
+  	\KaosAttribute {Def} {Rides proposed by drivers shall be fulfilled within time constraints. By fulfilled, we mean that the driver did not travel alone.}
+  	\KaosAttribute {RSR} {0.95}
+  	\KaosAttribute {RefinedBy} {Achieve [Ride Offer Encoded For Ride Proposal], Achieve [Adequate Pair Found When Ride Offer Encoded]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Ride Offer Encoded For Ride Proposal]}
+  	\KaosAttribute {Def} {For any needed request, the request shall eventually be encoded in the system.}
+  	\KaosAttribute {AssignedTo} {Driver}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Adequate Pair Found When Ride Offer Encoded]}
+  	\KaosAttribute {Def} {A compatible pair containing a request and an offer shall eventually be found for any encoded offer.}
+  	\KaosAttribute {RefinedBy} {Maintain [Ride Request Accurate], Achieve [Adequate Pair Found Based On Accurate Offer]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Ride Request Accurate]}
+  	\KaosAttribute {Def} {Ride request shall always be accurate and known by the system.}
+  	\KaosAttribute {ObstructedBy} {Ride Request Not Accurate}
+  	\KaosAttribute {AssignedTo} {Passenger}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Adequate Pair Found Based On Accurate Offer]}
+  	\KaosAttribute {Def} {Based on accurate offers known by the system, an offer compatible with the request shall eventually be found when the request has been encoded.}
+  	\KaosAttribute {RefinedBy} {Achieve [Matching Suggestion Selected], Achieve [Suggestion Elected Based On Selection], Pair Found IIf Pair Elected}
+  \stopkaosspec
+
+  \subsubsubject{Achieve [Ride Need Eventually Served]}
+
+  \placefigure[]
+ 	  [fig:cool_spec_2]
+ 	  {Refinements for \goal{Achieve [Ride Need Eventually Served]}.}
+    {\externalfigure[../images/app-cool/cool_spec_2.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Ride Need Eventually Served]}
+  	\KaosAttribute {Def} {Passengers that want to go to a destination shall arrive at that destination within the specified time constraints}
+  	\KaosAttribute {RSR} {0.95}
+  	\KaosAttribute {RefinedBy} {Achieve [Ride Request Encoded For Ride Need], Achieve [Adequate Pair Found When Ride Request Encoded], Achieve [Passenger At Destination When Adequate Pair Found]}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Ride Request Encoded For Ride Need]}
+  	\KaosAttribute {Def} {For any needed request, the request shall eventually be encoded in the system.}
+  	\KaosAttribute {AssignedTo} {Passenger}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Adequate Pair Found When Ride Request Encoded]}
+  	\KaosAttribute {Def} {A compatible pair containing a request and an offer shall eventually be found for any encoded request.}
+  	\KaosAttribute {RefinedBy} {Maintain [Ride Offer Accurate], Achieve [Adequate Pair Found Based On Accurate Offer]}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Passenger At Destination When Adequate Pair Found]}
+  	\KaosAttribute {Def} {Passengers shall eventually arrive at destination when a compatible pair of request and offer has been found.}
+  	\KaosAttribute {RefinedBy} {Achieve [Ride Planned When Adequate Pair Found], Achieve [Passenger At Destination When Ride Planned]}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Adequate Pair Found Based On Accurate Offer]}
+  	\KaosAttribute {Def} {Based on accurate offers known by the system, an offer compatible with the request shall eventually be found when the request has been encoded.}
+  	\KaosAttribute {RefinedBy} {Achieve [Matching Suggestion Selected], Achieve [Suggestion Elected Based On Selection], Pair Found IIf Pair Elected}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Maintain [Ride Offer Accurate]}
+  	\KaosAttribute {Def} {Ride offers, proposed by the drivers, shall always be as accurate as possible.}
+  	\KaosAttribute {ObstructedBy} {Ride Offer Not Accurate}
+  	\KaosAttribute {AssignedTo} {Driver}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Ride Planned When Adequate Pair Found]}
+  	\KaosAttribute {Def} {For any ride for which a pair was found, the ride shall eventually be planned.}
+  	\KaosAttribute {RefinedBy} {Achieve [Ride Planned When Pair Elected], Pair Found IIf Pair Elected}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Passenger At Destination When Ride Planned]}
+  	\KaosAttribute {Def} {For any planned ride, the corresponding passenger is eventually at the destination specified in her request.}
+  	\KaosAttribute {RefinedBy} {Achieve [Ride Instructions Known By Riders When Ride Planned], Achieve [Passenger At Destination When Instructions Known]}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Passenger At Destination When Ride Planned]}
+
+  \placefigure[]
+ 	  [fig:cool_spec_3]
+ 	  {Refinements for \goal{Achieve [Passenger At Destination When Ride Planned]}.}
+    {\externalfigure[../images/app-cool/cool_spec_3.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Passenger At Destination When Ride Planned]}
+  	\KaosAttribute {Def} {For any planned ride, the corresponding passenger is eventually at the destination specified in her request.}
+  	\KaosAttribute {RefinedBy} {Achieve [Ride Instructions Known By Riders When Ride Planned], Achieve [Passenger At Destination When Instructions Known]}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Ride Instructions Known By Riders When Ride Planned]}
+  	\KaosAttribute {Def} {For any planned ride, the instructions are known by both riders when the ride is planned.}
+  	\KaosAttribute {RefinedBy} {Achieve [Ride Instructions Sent When Ride Planned], Achieve [Ride Instructions Read When Sent], Maintain [Instructions Known If Read]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Passenger At Destination When Instructions Known]}
+  	\KaosAttribute {Def} {For any ride for which instructions are known by both driver and passenger, the passenger shall eventually arrive at the destination specified in her request.}
+  	\KaosAttribute {RefinedBy} {Achieve [Passenger in Driver's Car When Instructions Known], Achieve [Passenger At Destination When In Car]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Ride Instructions Sent When Ride Planned]}
+  	\KaosAttribute {Def} {For any planned ride, instructions are sent to corresponding passenger and driver.}
+  	\KaosAttribute {ObstructedBy} {Ride Instructions Not Sent When Ride Planned}
+  	\KaosAttribute {AssignedTo} {Software}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Ride Instructions Read When Sent]}
+  	\KaosAttribute {Def} {For any sent instructions about a ride involving the recipient of the instructions, the recipient shall eventually read these.}
+  	\KaosAttribute {RefinedBy} {Achieve [Ride Instructions Read By Passenger], Achieve [Ride Instructions Read By Driver]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Instructions Known If Read]}
+  	\KaosAttribute {Def} {For any read instructions about a ride involving the recipient of the instructions, these shall remain known forever by the rider.}
+  	\KaosAttribute {RefinedBy} {Maintain [Instructions Known By Passenger], Maintain [Instructions Known By Driver]}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Passenger in Driver's Car When Instructions Known]}
+  	\KaosAttribute {Def} {For any ride for which instructions are known by both passenger and driver, the passenger shall eventually take a seat in driver’s car.}
+  	\KaosAttribute {RefinedBy} {Achieve [Riders At Pickup Point When Instructions Known], Achieve [Passenger In Driver's Car If Riders At Pickup Point]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Passenger At Destination When In Car]}
+  	\KaosAttribute {Def} {For any ride for which the passenger is in driver’s car, that passenger shall eventually arrive at destination specified in the corresponding request.}
+  	\KaosAttribute {RefinedBy} {Achieve [Drop Point Reached When Passenger In Car], Achieve [Passenger At Destination When Drop Point Reached]}
+  \stopkaosspec
+  
+
+  \subsubsubject{Achieve [Adequate Pair Found Based On Accurate Offer] and Achieve [Ride Planned When Adequate Pair Found]}
+
+  \placefigure[]
+ 	  [fig:cool_spec_4]
+ 	  {Refinements for \goal{Achieve [Adequate Pair Found Based On Accurate Offer]} and \goal{Achieve [Ride Planned When Adequate Pair Found]}.}
+    {\externalfigure[../images/app-cool/cool_spec_4.pdf]}
+    
+  \startkaosspec
+  	\GoalName {Achieve [Adequate Pair Found Based On Accurate Offer]}
+  	\KaosAttribute {Def} {Based on accurate offers known by the system, an offer compatible with the request shall eventually be found when the request has been encoded.}
+  	\KaosAttribute {RefinedBy} {Achieve [Matching Suggestion Selected], Achieve [Suggestion Elected Based On Selection], Pair Found IIf Pair Elected}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Ride Planned When Adequate Pair Found]}
+  	\KaosAttribute {Def} {For any ride for which a pair was found, the ride shall eventually be planned.}
+  	\KaosAttribute {RefinedBy} {Achieve [Ride Planned When Pair Elected], Pair Found IIf Pair Elected}
+  \stopkaosspec
+
+  \startkaosspec
+    \GoalName {Achieve [Suggestion Elected Based On Selection]}
+    \KaosAttribute {Def} {For any encoded need, when at least one suggestion has been selected, one among them shall be elected.}
+    \KaosAttribute {AssignedTo} {Software}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Matching Suggestion Selected]}
+  	\KaosAttribute {Def} {The passenger and a driver shall eventually select at least one suggestion matching the request when this request has been encoded.}
+  	\KaosAttribute {RefinedBy} {Achieve [Suggestion Selected], Maintain [Suggestion Matching]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\DomPropName {Pair Found IIf Pair Elected}
+  	\KaosAttribute {Def} {A pair request/offer is considered as found when a suggestion serving both the request and the offer has been elected.}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Ride Planned When Pair Elected]}
+  	\KaosAttribute {Def} {For any ride for which a pair has been elected, the ride shall eventually be planned.}
+  	\KaosAttribute {ObstructedBy} {Ride Not Planned And Pair Elected}
+  	\KaosAttribute {AssignedTo} {Software}
+  \stopkaosspec
+
+  \subsubsubject{Maintain [Instructions Known If Read]}
+
+  \placefigure[]
+ 	  [fig:cool_spec_5]
+ 	  {Refinements for \goal{Maintain [Instructions Known If Read]}.}
+    {\externalfigure[../images/app-cool/cool_spec_5.pdf]}
+
+  \startkaosspec
+  	\GoalName {Maintain [Instructions Known If Read]}
+  	\KaosAttribute {Def} {For any read instructions about a ride involving the recipient of the instructions, these shall remain known forever by the rider.}
+  	\KaosAttribute {RefinedBy} {Maintain [Instructions Known By Passenger], Maintain [Instructions Known By Driver]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Instructions Known By Passenger]}
+  	\KaosAttribute {Def} {For any read instructions about a ride involving the passenger, instructions shall remain known forever by the passenger.}
+  	\KaosAttribute {AssignedTo} {Passenger}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Instructions Known By Driver]}
+  	\KaosAttribute {Def} {For any read instructions about a ride involving the driver, these shall remain known forever by the driver.}
+  	\KaosAttribute {AssignedTo} {Driver}
+  \stopkaosspec
+
+  \subsubsubject{Achieve [Ride Instructions Read When Sent]}
+
+  \placefigure[]
+ 	  [fig:cool_spec_6]
+ 	  {Refinements for \goal{Achieve [Ride Instructions Read When Sent]}.}
+    {\externalfigure[../images/app-cool/cool_spec_6.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Ride Instructions Read When Sent]}
+  	\KaosAttribute {Def} {For any sent instructions about a ride involving the recipient of the instructions, the recipient shall eventually read these.}
+  	\KaosAttribute {RefinedBy} {Achieve [Ride Instructions Read By Passenger], Achieve [Ride Instructions Read By Driver]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Ride Instructions Read By Passenger]}
+  	\KaosAttribute {Def} {For any sent instructions, the recipient shall eventually read the instructions.}
+  	\KaosAttribute {ObstructedBy} {Ride Instructions Not Read By Passenger And Sent}
+  	\KaosAttribute {AssignedTo} {Passenger}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Ride Instructions Read By Driver]}
+  	\KaosAttribute {Def} {For any sent instructions, the recipient shall eventually read the instructions.}
+  	\KaosAttribute {ObstructedBy} {Ride Instructions Not Read By Driver And Sent}
+  	\KaosAttribute {AssignedTo} {Driver}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Passenger At Destination When In Car]}
+
+  \placefigure[]
+ 	  [fig:cool_spec_7]
+ 	  {Refinements for \goal{Achieve [Passenger At Destination When In Car]}.}
+    {\externalfigure[../images/app-cool/cool_spec_7.pdf]}
+  
+  \startkaosspec
+  	\GoalName {Achieve [Passenger At Destination When In Car]}
+  	\KaosAttribute {Def} {For any ride for which the passenger is in driver’s car, that passenger shall eventually arrive at destination specified in the corresponding request.}
+  	\KaosAttribute {RefinedBy} {Achieve [Drop Point Reached When Passenger In Car], Achieve [Passenger At Destination When Drop Point Reached]}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Drop Point Reached When Passenger In Car]}
+  	\KaosAttribute {Def} {For any planned ride with a passenger and a driver, if the passenger is in driver’s car then both shall eventually be at specified drop point.}
+  	\KaosAttribute {RefinedBy} {Maintain [Instructions Accurate], Maintain [Instructions Known When Passenger In Car], Achieve [Drop Point From Instructions Reached When Passenger In Car]}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Passenger At Destination When Drop Point Reached]}
+  	\KaosAttribute {Def} {For any planned ride with a passenger at specified drop location, she shall eventually be at specified destination in her corresponding request.}
+  	\KaosAttribute {AssignedTo} {Passenger}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Maintain [Instructions Accurate]}
+  	\KaosAttribute {Def} {For any ride, the drop point specified in instructions equals the drop point computed for the ride.}
+  	\KaosAttribute {AssignedTo} {Software}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Maintain [Instructions Known When Passenger In Car]}
+  	\KaosAttribute {Def} {For any ride, instructions are known if the passenger is in driver’s car.}
+  	\KaosAttribute {AssignedTo} {Software}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\GoalName {Achieve [Drop Point From Instructions Reached When Passenger In Car]}
+  	\KaosAttribute {Def} {For any ride, driver and passenger shall eventually arrive at drop point specified in corresponding instructions.}
+  	\KaosAttribute {ObstructedBy} {Drop Point Not Reached When Passenger In Car}
+  	\KaosAttribute {AssignedTo} {Driver}
+  \stopkaosspec
+  
+  \subsubsubject{Achieve [Passenger in Driver's Car When Instructions Known]}
+
+  \placefigure[]
+ 	  [fig:cool_spec_8]
+ 	  {Refinements for \goal{Achieve [Passenger in Driver's Car When Instructions Known]}.}
+    {\externalfigure[../images/app-cool/cool_spec_8.pdf]}
+
+  
+  \startkaosspec
+  	\GoalName {Achieve [Passenger in Driver's Car When Instructions Known]}
+  	\KaosAttribute {Def} {For any ride for which instructions are known by both passenger and driver, the passenger shall eventually take a seat in driver’s car.}
+  	\KaosAttribute {RefinedBy} {Achieve [Riders At Pickup Point When Instructions Known], Achieve [Passenger In Driver's Car If Riders At Pickup Point]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Riders At Pickup Point When Instructions Known]}
+  	\KaosAttribute {Def} {Riders shall eventually be at pickup point when instructions are known.}
+  	\KaosAttribute {RefinedBy} {Achieve [Passenger At Pickup Point When Instructions Known], Achieve [Driver At Pickup Point When Instructions Known], Maintain [Rider Waiting For Other Rider]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Passenger In Driver's Car If Riders At Pickup Point]}
+  	\KaosAttribute {Def} {For any ride of which passenger and driver are at pickup point, the passenger shall eventually take a seat in driver’s car.}
+  	\KaosAttribute {ObstructedBy} {Passenger Never In Driver’s Car And Riders At Pickup Point}
+  	\KaosAttribute {AssignedTo} {Passenger}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Passenger At Pickup Point When Instructions Known]}
+  	\KaosAttribute {Def} {Passenger shall eventually be at pickup point when instructions are known.}
+  	\KaosAttribute {ObstructedBy} {Instructions Known And Passenger Not At Pickup Point}
+  	\KaosAttribute {AssignedTo} {Passenger}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Driver At Pickup Point When Instructions Known]}
+  	\KaosAttribute {Def} {Driver shall eventually be at pickup point when instructions are known.}
+  	\KaosAttribute {ObstructedBy} {Instructions Known And Driver Not At Pickup Point}
+  	\KaosAttribute {AssignedTo} {Driver}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Rider Waiting For Other Rider]}
+  	\KaosAttribute {Def} {For any planned ride, the rider at pickup point shall wait for the other rider to arrive at specified pickup point.}
+  	\KaosAttribute {RefinedBy} {Maintain [Passenger Waiting For Driver], Maintain [Driver Waiting For Passenger]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Passenger Waiting For Driver]}
+  	\KaosAttribute {Def} {For any planned ride, the rider at pickup point shall wait for the other rider to arrive at specified pickup point.}
+  	\KaosAttribute {AssignedTo} {Passenger}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Driver Waiting For Passenger]}
+  	\KaosAttribute {Def} {For any planned ride, the passenger at pickup point shall wait for the driver to arrive at specified pickup point.}
+  	\KaosAttribute {AssignedTo} {Driver}
+  \stopkaosspec
+
+  \subsubsubject{Achieve [Matching Suggestion Selected]}
+
+  \placefigure[]
+ 	  [fig:cool_spec_9]
+ 	  {Refinements for \goal{Achieve [Matching Suggestion Selected]}.}
+    {\externalfigure[../images/app-cool/cool_spec_9.pdf]}
+
+  \startkaosspec
+  	\GoalName {Achieve [Matching Suggestion Selected]}
+  	\KaosAttribute {Def} {The passenger and a driver shall eventually select at least one suggestion matching the request when this request has been encoded.}
+  	\KaosAttribute {RefinedBy} {Achieve [Suggestion Selected], Maintain [Suggestion Matching]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Suggestion Selected]}
+  	\KaosAttribute {Def} {For any encoded need, a proposition shall eventually be selected.}
+  	\KaosAttribute {RefinedBy} {Achieve [Suggestion Proposed], Achieve [Suggestions Selected When Proposed]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Maintain [Suggestion Matching]}
+  	\KaosAttribute {Def} {For any selected suggestion, the request and offer from the suggestion matches.}
+  	\KaosAttribute {ObstructedBy} {Proposition Not Matching When Selected}
+  	\KaosAttribute {AssignedTo} {Software}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Suggestion Proposed]}
+  	\KaosAttribute {Def} {For any encoded request, a set of proposition shall eventually be suggested.}
+  	\KaosAttribute {ObstructedBy} {No Pair Suggestion Proposed}
+  	\KaosAttribute {AssignedTo} {Software}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Suggestions Selected When Proposed]}
+  	\KaosAttribute {Def} {For any encoded request, a suggested proposition shall eventually be selected.}
+  	\KaosAttribute {RefinedBy} {Achieve [Suggestions Selected When Proposed by Driver], Achieve [Suggestions Selected When Proposed by Passenger]}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Suggestions Selected When Proposed by Driver]}
+  	\KaosAttribute {Def} {For any encoded request, a suggested proposition shall eventually be selected by the driver.}
+  	\KaosAttribute {ObstructedBy} {No Passenger Selected}
+  	\KaosAttribute {AssignedTo} {Driver}
+  \stopkaosspec
+
+  \startkaosspec
+  	\GoalName {Achieve [Suggestions Selected When Proposed by Passenger]}
+  	\KaosAttribute {Def} {For any encoded request, a suggested proposition shall eventually be selected by the passenger.}
+  	\KaosAttribute {ObstructedBy} {No Driver Selected}
+  	\KaosAttribute {AssignedTo} {Passenger}
+  \stopkaosspec
+  
+\stopsubsection
+
+\startsubsection[title={Obstacle specifications}]
+
+  This section provides the complete specifications for the obstacles of the
+  Car Pooling System, presented in \in{Section}[sec:cool].
+
+  \subsubsubject{Ride Offer Not Accurate}
+
+  \placefigure[]
+ 	  [fig:cool_spec_10]
+ 	  {Obstacle tree for \goal{Maintain [Ride Offer Accurate]}.}
+    {\externalfigure[../images/app-cool/cool_spec_10.pdf]}
+
+  \startkaosspec
+  	\ObstacleName {Ride Offer Not Accurate}
+  	\KaosAttribute {Def} {Ride offer encoded in the system does not correspond accurately to a ride proposal in the real world.}
+  	\KaosAttribute {RefinedBy} {Fake Ride Offer}
+  	\KaosAttribute {RefinedBy} {Ride Offer Outdated}
+  	\KaosAttribute {RefinedBy} {Ride Offer Miscoded}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Fake Ride Offer}
+  	\KaosAttribute {Def} {Ride offer encoded in the system does not correspond to any ride proposal in the real world.}
+  	\KaosAttribute {ESR} {0.10\%}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Ride Offer Outdated}
+  	\KaosAttribute {Def} {Ride offer is out-dated; the author of the offer did not update information yet.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Ride Offer Miscoded}
+  	\KaosAttribute {Def} {Ride offer was miscoded; some information may be missing or inaccurate.}
+  	\KaosAttribute {RefinedBy} {Departure Date/Time Miscoded}
+  	\KaosAttribute {RefinedBy} {Departure Point Miscoded}
+  	\KaosAttribute {RefinedBy} {Arrival Date/Time Miscoded}
+  	\KaosAttribute {RefinedBy} {Arrival Point Miscoded}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Departure Date/Time Miscoded}
+  	\KaosAttribute {Def} {The departure date or time for a ride offer or request encoded in the system does not correspond to the expected date or time in the real world.}
+  	\KaosAttribute {ESR} {0.90\%}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Departure Point Miscoded}
+  	\KaosAttribute {Def} {The departure address for a ride offer or request encoded in the system does not correspond to the expect arrival point in the real world.}
+  	\KaosAttribute {ESR} {1.50\%}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Arrival Date/Time Miscoded}
+  	\KaosAttribute {Def} {The arrival date or time for a ride offer or request encoded in the system does not correspond to the expected date or time in the real world.}
+  	\KaosAttribute {ESR} {0.90\%}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Arrival Point Miscoded}
+  	\KaosAttribute {Def} {The arrival address for a ride offer or request encoded in the system does not correspond to the expect arrival point in the real world.}
+  	\KaosAttribute {ESR} {1.50\%}
+  \stopkaosspec
+    
+  \subsubsubject{Proposition Not Matching When Selected}
+
+  \placefigure[]
+ 	  [fig:cool_spec_11]
+ 	  {Obstacle tree for \goal{Maintain [Suggestion Matching]}.}
+    {\externalfigure[../images/app-cool/cool_spec_11.pdf]}
+    
+  \startkaosspec
+    \ObstacleName {Proposition Not Matching When Selected}
+    \KaosAttribute {Def} {When a proposal has been selected, the proposal does not remain matching.}
+    \KaosAttribute {RefinedBy} {Ride Offer Cancelled And Selected}
+    \KaosAttribute {RefinedBy} {Ride Request Cancelled And Selected}
+    \KaosAttribute {RefinedBy} {Ride Offer Modified}
+    \KaosAttribute {RefinedBy} {Ride Request Modified}
+  \stopkaosspec
+
+  \startkaosspec
+    \ObstacleName {Ride Offer Modified}
+    \KaosAttribute {Def} {The ride offer has been selected and is modified such that the modification make the ride offer no longer matching the corresponding request.}
+    \KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+
+  \startkaosspec
+    \ObstacleName {Ride Request Modified}
+    \KaosAttribute {Def} {The ride request has been selected and is modified such that the modification make the ride request no longer matching the corresponding offer.}
+    \KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+
+  \startkaosspec
+    \ObstacleName {Ride Offer Cancelled And Selected}
+    \KaosAttribute {Def} {Ride offer is cancelled and selected.}
+    \KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+
+  \startkaosspec
+    \ObstacleName {Ride Request Cancelled And Selected}
+    \KaosAttribute {Def} {Ride request is cancelled and selected.}
+    \KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+
+  \subsubsubject{No Pair Suggestion Proposed}
+
+  \placefigure[]
+ 	  [fig:cool_spec_12]
+ 	  {Obstacle tree for \goal{Achieve [Suggestion Proposed]}.}
+    {\externalfigure[../images/app-cool/cool_spec_12.pdf]}
+
+  \startkaosspec
+  	\ObstacleName {No Pair Suggestion Proposed}
+  	\KaosAttribute {Def} {The software do not suggest compatible pairs.}
+  	\KaosAttribute {RefinedBy} {No Request Matching Offer}
+  	\KaosAttribute {RefinedBy} {No Offer Matching Request}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Request Matching Offer}
+  	\KaosAttribute {Def} {No request matches the encoded offer.}
+  	\KaosAttribute {RefinedBy} {No Request Matching For That Time}
+  	\KaosAttribute {RefinedBy} {No Request Matching For That Position}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Offer Matching Request}
+  	\KaosAttribute {Def} {No offer matches the encoded request.}
+  	\KaosAttribute {RefinedBy} {No Offer Matching For That Time}
+  	\KaosAttribute {RefinedBy} {No Offer Matching For That Position}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Request Matching For That Time}
+  	\KaosAttribute {Def} {No request satisfies the time constraints for the encoded offer.}
+  	\KaosAttribute {ESR} {2.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Request Matching For That Position}
+  	\KaosAttribute {Def} {No request satisfies the geographic constraints for the encoded offer.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Offer Matching For That Time}
+  	\KaosAttribute {Def} {No offer satisfies the time constraints for the encoded request.}
+  	\KaosAttribute {ESR} {2.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Offer Matching For That Position}
+  	\KaosAttribute {Def} {No offer satisfies the geographic constraints for the encoded request.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+
+    
+  \subsubsubject{No Passenger Selected and No Driver Selected}
+
+  \placefigure[]
+ 	  [fig:cool_spec_13]
+ 	  {Obstacle tree for \goal{Achieve [Suggestions Selected When Proposed by Driver]} and \goal{Achieve [Suggestions Selected When Proposed by Passenger]}.}
+    {\externalfigure[../images/app-cool/cool_spec_13.pdf]}
+
+  \startkaosspec
+  	\ObstacleName {No Driver Selected}
+  	\KaosAttribute {Def} {No drivers are selected among the suggestions.}
+  	\KaosAttribute {RefinedBy} {Ride List Not Convenient}
+  	\KaosAttribute {RefinedBy} {Ride Offer Cancelled And Ride List Proposed}
+  	\KaosAttribute {RefinedBy} {Ride Request Cancelled And Ride List Proposed}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {No Passenger Selected}
+  	\KaosAttribute {Def} {No passengers are selected among the suggestions.}
+  	\KaosAttribute {RefinedBy} {Ride List Not Convenient}
+  	\KaosAttribute {RefinedBy} {Ride Offer Cancelled And Ride List Proposed}
+  	\KaosAttribute {RefinedBy} {Ride Request Cancelled And Ride List Proposed}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Ride Offer Cancelled And Ride List Proposed}
+  	\KaosAttribute {Def} {Ride offer is cancelled and the ride list is proposed.}
+  	\KaosAttribute {ESR} {2.00\%}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Ride Request Cancelled And Ride List Proposed}
+  	\KaosAttribute {Def} {Ride request is cancelled and the ride list is proposed.}
+  	\KaosAttribute {ESR} {2.00\%}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Ride List Not Convenient}
+  	\KaosAttribute {Def} {The ride list is not convenient for the driver or the passenger.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+    
+  \subsubsubject{Ride Not Planned And Pair Elected}
+
+  \placefigure[]
+ 	  [fig:cool_spec_14]
+ 	  {Obstacle tree for \goal{Achieve [Ride Planned When Pair Elected]}.}
+    {\externalfigure[../images/app-cool/cool_spec_14.pdf]}
+
+  \startkaosspec
+  	\ObstacleName {Ride Not Planned And Pair Elected}
+  	\KaosAttribute {Def} {Ride is not planned but an adequate pair has been elected.}
+  	\KaosAttribute {RefinedBy} {No Compatible Point}
+  	\KaosAttribute {RefinedBy} {No Compatible Time}
+  	\KaosAttribute {RefinedBy} {Ride Cancelled And Elected}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Compatible Point}
+  	\KaosAttribute {Def} {No pickup or drop point can be computed for the elected pair.}
+  	\KaosAttribute {RefinedBy} {No Compatible Pickup Point Found}
+  	\KaosAttribute {RefinedBy} {No Compatible Drop Point Found}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Compatible Time}
+  	\KaosAttribute {Def} {No pickup or drop time can be computed for the elected pair.}
+  	\KaosAttribute {RefinedBy} {No Compatible Pickup Time Found}
+  	\KaosAttribute {RefinedBy} {No Compatible Drop Time Found}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Ride Cancelled And Elected}
+  	\KaosAttribute {Def} {Ride offer or request is cancelled.}
+  	\KaosAttribute {RefinedBy} {Ride Offer Cancelled And Elected}
+  	\KaosAttribute {RefinedBy} {Ride Request Cancelled And Elected}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Ride Offer Cancelled And Elected}
+  	\KaosAttribute {Def} {Ride offer is cancelled and selected.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Ride Request Cancelled And Elected}
+  	\KaosAttribute {Def} {Ride request is cancelled and selected.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+
+  \placefigure[]
+ 	  [fig:cool_spec_15]
+ 	  {Obstacle tree for \obstacle{No Compatible Time}.}
+    {\externalfigure[../images/app-cool/cool_spec_15.pdf]}
+
+  \startkaosspec
+  	\ObstacleName {No Compatible Pickup Time Found}
+  	\KaosAttribute {Def} {No pickup time can be computed for the elected pair.}
+  	\KaosAttribute {RefinedBy} {Pickup Time Incompatible With Road And Pickup Point}
+  	\KaosAttribute {RefinedBy} {Pickup Time Incompatible With Other Pickups}
+  	\KaosAttribute {RefinedBy} {Journey Longer Than Proposed Time}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {No Compatible Drop Time Found}
+  	\KaosAttribute {Def} {No drop time can be computed for the elected pair.}
+  	\KaosAttribute {RefinedBy} {Drop Time Incompatible With Road And Drop Point}
+  	\KaosAttribute {RefinedBy} {Drop Time Incompatible With Other Pickups}
+  	\KaosAttribute {RefinedBy} {Journey Longer Than Proposed Time}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Pickup Time Incompatible With Road And Pickup Point}
+  	\KaosAttribute {Def} {No compatible pickup time can be computed to reach the computed pickup point at that time.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Pickup Time Incompatible With Other Pickups}
+  	\KaosAttribute {Def} {No compatible pickup time can be computed to reach the computed pickup point at that time due to other pickups.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Journey Longer Than Proposed Time}
+  	\KaosAttribute {Def} {Journey is too long to pickup and drops the passenger within time constraints.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Drop Time Incompatible With Road And Drop Point}
+  	\KaosAttribute {Def} {No compatible drop time can be computed to reach the computed drop point at that time.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Drop Time Incompatible With Other Pickups}
+  	\KaosAttribute {Def} {No compatible drop time can be computed to reach the computed drop point at that time due to other pickups.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+
+  \placefigure[]
+ 	  [fig:cool_spec_16]
+ 	  {Obstacle tree for \obstacle{No Compatible Point}.}
+    {\externalfigure[../images/app-cool/cool_spec_16.pdf]}
+  
+  \startkaosspec
+  	\ObstacleName {No Compatible Pickup Point Found}
+  	\KaosAttribute {Def} {No pickup point can be computed for the elected pair.}
+  	\KaosAttribute {RefinedBy} {No Pickup Point Accessible To Driver And Passenger}
+  	\KaosAttribute {RefinedBy} {No Pickup Point Near Departure Point}
+  	\KaosAttribute {RefinedBy} {Detour Too Important For Reaching Pickup Point}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Compatible Drop Point Found}
+  	\KaosAttribute {Def} {No drop point can be computed for the elected pair.}
+  	\KaosAttribute {RefinedBy} {No Drop Point Accessible To Driver And Passenger}
+  	\KaosAttribute {RefinedBy} {No Drop Point Near Destination}
+  	\KaosAttribute {RefinedBy} {Detour Too Important For Reaching Drop Point}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Pickup Point Near Departure Point}
+  	\KaosAttribute {Def} {Given a compatible pair of request / offer, no pickup point is located within 1km from the departure point of the passenger.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Detour Too Important For Reaching Pickup Point}
+  	\KaosAttribute {Def} {Detour made by driver to reach the pickup point from her route exceeds 3 km.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Pickup Point Accessible To Driver And Passenger}
+  	\KaosAttribute {Def} {No pickup point is accessible to both driver and passenger.}
+  	\KaosAttribute {RefinedBy} {No Pickup Point Accessible To Driver}
+  	\KaosAttribute {RefinedBy} {No Pickup Point Accessible To Passenger}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Pickup Point Accessible To Driver}
+  	\KaosAttribute {Def} {No pickup point is accessible to driver.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Pickup Point Accessible To Passenger}
+  	\KaosAttribute {Def} {No pickup point is accessible to passenger.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Drop Point Near Destination}
+  	\KaosAttribute {Def} {Given a compatible pair of request / offer, no drop point is located within 1km from the destination of the passenger.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Detour Too Important For Reaching Drop Point}
+  	\KaosAttribute {Def} {Detour made by driver to reach the drop point from her route exceeds 3 km.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Drop Point Accessible To Driver And Passenger}
+  	\KaosAttribute {Def} {No drop point is accessible to both driver and passenger.}
+  	\KaosAttribute {RefinedBy} {No Drop Point Accessible To Driver}
+  	\KaosAttribute {RefinedBy} {No Drop Point Accessible To Passenger}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Drop Point Accessible To Driver}
+  	\KaosAttribute {Def} {No drop point is accessible to driver.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {No Drop Point Accessible To Passenger}
+  	\KaosAttribute {Def} {No drop point is accessible to passenger.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+    
+  \subsubsubject{Ride Instructions Not Sent When Ride Planned}
+
+  \placefigure[]
+ 	  [fig:cool_spec_17]
+ 	  {Obstacle tree for \goal{Achieve [Ride Instructions Sent When Ride Planned]}.}
+    {\externalfigure[../images/app-cool/cool_spec_17.pdf]}
+    
+  \startkaosspec
+  	\ObstacleName {Ride Instructions Not Sent When Ride Planned}
+  	\KaosAttribute {Def} {Ride instructions are not sent but the ride is planned}
+  	\KaosAttribute {RefinedBy} {Wrong Contact Information}
+  	\KaosAttribute {RefinedBy} {Failed Communication}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Wrong Contact Information}
+  	\KaosAttribute {Def} {The contact information about the ride are not accurate.}
+  	\KaosAttribute {ESR} {7.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Failed Communication}
+  	\KaosAttribute {Def} {The communication with the ride fail.}
+  	\KaosAttribute {ESR} {3.00\%}
+  \stopkaosspec
+  
+    
+  \subsubsubject{Ride Instructions Not Read By Passenger And Sent}
+
+  \placefigure[]
+ 	  [fig:cool_spec_18]
+ 	  {Obstacle tree for \goal{Achieve [Ride Instructions Read By Passenger]}.}
+    {\externalfigure[../images/app-cool/cool_spec_18.pdf]}
+  
+  \startkaosspec
+  	\ObstacleName {Ride Instructions Not Read By Passenger And Sent}
+  	\KaosAttribute {Def} {The sent instructions are not read by the passenger.}
+  	\KaosAttribute {RefinedBy} {Ride Instruction Not Readable}
+  	\KaosAttribute {RefinedBy} {Readable Instruction Not Read By Passenger}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Ride Instruction Not Readable}
+  	\KaosAttribute {Def} {The ride instructions are not readable by the rider.}
+  	\KaosAttribute {RefinedBy} {Instruction In Wrong Language}
+  	\KaosAttribute {RefinedBy} {Printing Failed}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Readable Instruction Not Read By Passenger}
+  	\KaosAttribute {Def} {The instructions are readable but not read by passenger.}
+  	\KaosAttribute {RefinedBy} {Ride Request Cancelled And Instructions Sent}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Ride Request Cancelled And Instructions Sent}
+  	\KaosAttribute {Def} {Ride request is cancelled and instructions are sent.}
+  	\KaosAttribute {ESR} {1.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Instruction In Wrong Language}
+  	\KaosAttribute {Def} {Language of the ride instructions is not understood by the rider.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Printing Failed}
+  	\KaosAttribute {Def} {Printing the ride instructions failed.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+  
+  
+  \subsubsubject{Ride Instructions Not Read By Driver And Sent}
+
+  \placefigure[]
+ 	  [fig:cool_spec_19]
+ 	  {Obstacle tree for \goal{Achieve [Ride Instructions Read By Driver]}.}
+    {\externalfigure[../images/app-cool/cool_spec_19.pdf]}
+
+  \startkaosspec
+  	\ObstacleName {Readable Instruction Not Read By Driver}
+  	\KaosAttribute {Def} {The instructions are readable but not read by driver.}
+  	\KaosAttribute {RefinedBy} {Ride Offer Cancelled And Instructions Sent}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Ride Offer Cancelled And Instructions Sent}
+  	\KaosAttribute {Def} {Ride offer is cancelled and instructions are sent.}
+  	\KaosAttribute {ESR} {1.50\%}
+  \stopkaosspec
+    
+  \subsubsubject{Passenger Never In Driver’s Car And Riders At Pickup Point}
+
+  \placefigure[]
+ 	  [fig:cool_spec_20]
+ 	  {Obstacle tree for \goal{Achieve [Passenger In Driver's Car If Riders At Pickup Point]}.}
+    {\externalfigure[../images/app-cool/cool_spec_20.pdf]}
+  
+  \startkaosspec
+  	\ObstacleName {Passenger Never In Driver’s Car And Riders At Pickup Point}
+  	\KaosAttribute {Def} {The passenger is never in the driver’s car but both riders are at the specified pickup point.}
+  	\KaosAttribute {RefinedBy} {Not Enough Place In Car}
+  	\KaosAttribute {RefinedBy} {Riders Do Not Find Each Other}
+  	\KaosAttribute {RefinedBy} {Last Minutes Disagreement}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Not Enough Place In Car}
+  	\KaosAttribute {Def} {There is not enough places in the driver’s car.}
+  	\KaosAttribute {RefinedBy} {Too Many Luggage}
+  	\KaosAttribute {RefinedBy} {Too Many Riders}
+  	\KaosAttribute {RefinedBy} {Not Enough Seats}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Riders Do Not Find Each Other}
+  	\KaosAttribute {Def} {The riders do not find each other.}
+  	\KaosAttribute {RefinedBy} {Riders Do Not Recognize}
+  	\KaosAttribute {RefinedBy} {Location Imprecise}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Last Minutes Disagreement}
+  	\KaosAttribute {Def} {Passenger and driver disagree at the last minutes.}
+  	\KaosAttribute {RefinedBy} {Ride Request Cancelled Last Minute}
+  	\KaosAttribute {RefinedBy} {Ride Offer Cancelled Last Minute}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Ride Offer Cancelled Last Minute}
+  	\KaosAttribute {Def} {Ride offer is cancelled within the last minutes.}
+  	\KaosAttribute {ESR} {3.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Ride Request Cancelled Last Minute}
+  	\KaosAttribute {Def} {Ride request is cancelled within the last minutes.}
+  	\KaosAttribute {ESR} {2.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Too Many Luggage}
+  	\KaosAttribute {Def} {There is too many luggages in the driver’s car, precluding the passenger to take a seat.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Too Many Riders}
+  	\KaosAttribute {Def} {There is too many riders in the driver’s car, precluding the passenger to take a seat.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Not Enough Seats}
+  	\KaosAttribute {Def} {There is not enough available seats in the driver’s car, precluding the passenger to take a seat.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Riders Do Not Recognize}
+  	\KaosAttribute {Def} {Riders do not recognize each other.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Location Imprecise}
+  	\KaosAttribute {Def} {Location is sufficiently imprecise so that the passenger and driver do not find each other.}
+  	\KaosAttribute {ESR} {2.00\%}
+  \stopkaosspec
+  
+  \subsubsubject{Instructions Known And Passenger Not At Pickup Point}
+
+  \placefigure[]
+ 	  [fig:cool_spec_21]
+ 	  {Obstacle tree for \goal{Achieve [Matching Suggestion Selected]}.}
+    {\externalfigure[../images/app-cool/cool_spec_21.pdf]}
+
+  \startkaosspec
+  	\ObstacleName {Instructions Known And Passenger Not At Pickup Point}
+  	\KaosAttribute {Def} {Instructions are known by the passenger but the passenger is not at pickup point within time constraints.}
+  	\KaosAttribute {RefinedBy} {Passenger Late At Pickup Point}
+  	\KaosAttribute {RefinedBy} {Passenger Never At Pickup Point}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Passenger Late At Pickup Point}
+  	\KaosAttribute {Def} {Passenger eventually reach the pickup point but not within time constraints.}
+  	\KaosAttribute {ESR} {6.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Passenger Never At Pickup Point}
+  	\KaosAttribute {Def} {Passenger never reaches the pickup point.}
+  	\KaosAttribute {RefinedBy} {Passenger Forgot}
+  	\KaosAttribute {RefinedBy} {Passenger Get Lost}
+  	\KaosAttribute {RefinedBy} {Instructions Not Received In Time}
+  	\KaosAttribute {RefinedBy} {Pickup Point Not Reachable To Passenger}
+  	\KaosAttribute {RefinedBy} {Ride Request Cancelled And Driver At Pickup Point}
+  	\KaosAttribute {RefinedBy} {Passenger At Wrong Pickup Point}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Ride Request Cancelled And Driver At Pickup Point}
+  	\KaosAttribute {Def} {The ride request is cancelled and the driver is at pickup point.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Passenger Forgot}
+  	\KaosAttribute {Def} {Passenger forgot to go the specified pickup point}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Passenger Get Lost}
+  	\KaosAttribute {Def} {Passenger gets lost.}
+  	\KaosAttribute {ESR} {2.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Instructions Not Received In Time}
+  	\KaosAttribute {Def} {Instructions for reaching the pickup point arrives too late.}
+  	\KaosAttribute {ESR} {2.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Pickup Point Not Reachable To Passenger}
+  	\KaosAttribute {Def} {Pickup point is not reachable to passenger.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Passenger At Wrong Pickup Point}
+  	\KaosAttribute {Def} {Passenger reaches an other, wrong, pickup point.}
+  	\KaosAttribute {RefinedBy} {Pickup Point Confused}
+  	\KaosAttribute {RefinedBy} {Instructions Not Clear}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Pickup Point Confused}
+  	\KaosAttribute {Def} {Tow pickup points are confused.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Instructions Not Clear}
+  	\KaosAttribute {Def} {Instructions are not clear.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+    
+  \subsubsubject{Instructions Known And Driver Not At Pickup Point}
+
+  \placefigure[]
+ 	  [fig:cool_spec_22]
+ 	  {Obstacle tree for \goal{Achieve [Passenger At Pickup Point When Instructions Known]}.}
+    {\externalfigure[../images/app-cool/cool_spec_22.pdf]}
+  
+  \startkaosspec
+  	\ObstacleName {Instructions Known And Driver Not At Pickup Point}
+  	\KaosAttribute {Def} {Instructions are known by the driver but the driver is not at pickup point.}
+  	\KaosAttribute {RefinedBy} {Driver Late At Pickup Point}
+  	\KaosAttribute {RefinedBy} {Driver Never At Pickup Point}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Driver Late At Pickup Point}
+  	\KaosAttribute {Def} {Driver eventually reach the pickup point but not within time constraints.}
+  	\KaosAttribute {ESR} {2.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Driver Never At Pickup Point}
+  	\KaosAttribute {Def} {Driver never reaches the pickup point.}
+  	\KaosAttribute {RefinedBy} {Driver Forgot}
+  	\KaosAttribute {RefinedBy} {Driver Get Lost To Pickup Point When GPS Broken, Driver GPS Broken Down}
+  	\KaosAttribute {RefinedBy} {Instructions Not Received In Time}
+  	\KaosAttribute {RefinedBy} {Pickup Point Not Reachable To Driver}
+  	\KaosAttribute {RefinedBy} {Ride Offer Cancelled And Passenger At Pickup Point}
+  	\KaosAttribute {RefinedBy} {Driver At Wrong Pickup Point, Driver GPS Broken Down}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Ride Offer Cancelled And Passenger At Pickup Point}
+  	\KaosAttribute {Def} {The ride offer is cancelled and the passenger is at pickup point.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Driver Forgot}
+  	\KaosAttribute {Def} {Driver forgot to go the specified pickup point}
+  	\KaosAttribute {ESR} {2.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Driver GPS Broken Down}
+  	\KaosAttribute {Def} {The driver GPS is not working.}
+  	\KaosAttribute {ESR} {20.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Driver Get Lost To Pickup Point When GPS Broken}
+  	\KaosAttribute {Def} {Driver gets lost on its way to the pickup point when its GPS is broken.}
+  	\KaosAttribute {ESR} {30.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Pickup Point Not Reachable To Driver}
+  	\KaosAttribute {Def} {Pickup point is not reachable to driver.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Driver At Wrong Pickup Point}
+  	\KaosAttribute {Def} {Driver reaches an other, wrong, pickup point.}
+  	\KaosAttribute {RefinedBy} {Pickup Point Confused}
+  	\KaosAttribute {RefinedBy} {Instructions Not Clear}
+  \stopkaosspec
+  
+  \subsubsubject{Drop Point Not Reached When Passenger In Car}
+
+  \placefigure[]
+ 	  [fig:cool_spec_23]
+ 	  {Obstacle tree for \goal{Achieve [Drop Point From Instructions Reached When Passenger In Car]}.}
+    {\externalfigure[../images/app-cool/cool_spec_23.pdf]}
+  
+  \startkaosspec
+  	\ObstacleName {Drop Point Not Reached When Passenger In Car}
+  	\KaosAttribute {Def} {Drop point is not reached within time constraints when the passenger is in car.}
+  	\KaosAttribute {RefinedBy} {Drop Point Not Reached In Time}
+  	\KaosAttribute {RefinedBy} {Drop Point Never Reached}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Drop Point Not Reached In Time}
+  	\KaosAttribute {Def} {Drop point is reached late when the passenger is in car.}
+  	\KaosAttribute {RefinedBy} {Other Passenger Late}
+  	\KaosAttribute {RefinedBy} {Detour On Planned Road}
+  	\KaosAttribute {RefinedBy} {Stuck In Traffic Jams}
+  	\KaosAttribute {RefinedBy} {Wrong instructions Sent}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Drop Point Never Reached}
+  	\KaosAttribute {Def} {Drop point is never reached when the passenger is in car.}
+  	\KaosAttribute {RefinedBy} {Wrong instructions Sent}
+  	\KaosAttribute {RefinedBy} {Car Broken Down}
+  	\KaosAttribute {RefinedBy} {Driver Get Lost To Drop Point When GPS Broken Down, Driver GPS Broken Down}
+  	\KaosAttribute {RefinedBy} {Drop Point Inaccessible By Car}
+  	\KaosAttribute {RefinedBy} {Driver At Other Drop Point}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Other Passenger Late}
+  	\KaosAttribute {Def} {Drop point for a given passenger is reached late due to other passengers pickuped late.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Detour On Planned Road}
+  	\KaosAttribute {Def} {Unexpected and unplanned detour is required to reach the drop point.}
+  	\KaosAttribute {ESR} {1.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Stuck In Traffic Jams}
+  	\KaosAttribute {Def} {Driver’s car is stuck, with passenger, in traffic jams.}
+  	\KaosAttribute {ESR} {10.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Wrong instructions Sent}
+  	\KaosAttribute {Def} {Sent instructions are inaccurate.}
+  	\KaosAttribute {ESR} {0.10\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Car Broken Down}
+  	\KaosAttribute {Def} {Driver’s car broke down, when passenger is in car.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Driver Get Lost To Drop Point When GPS Broken Down}
+  	\KaosAttribute {Def} {Driver gets lost on its way to the drop point.}
+  	\KaosAttribute {ESR} {20.00\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Drop Point Inaccessible By Car}
+  	\KaosAttribute {Def} {The planned drop point is inaccessible by car.}
+  	\KaosAttribute {ESR} {0.50\%}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Driver At Other Drop Point}
+  	\KaosAttribute {Def} {Driver reach another drop point than the specified one.}
+  	\KaosAttribute {RefinedBy} {Drop Point Confused}
+  	\KaosAttribute {RefinedBy} {Instructions Not Clear}
+  \stopkaosspec
+  
+  \startkaosspec
+  	\ObstacleName {Drop Point Confused}
+  	\KaosAttribute {Def} {Two plausible drop points are confused by both the driver and the passenger.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+  
+  \subsubsubject{Ride Request Not Accurate}
+
+  \placefigure[]
+ 	  [fig:cool_spec_24]
+ 	  {Obstacle tree for \goal{Maintain [Ride Request Accurate]}.}
+    {\externalfigure[../images/app-cool/cool_spec_24.pdf]}
+
+  \startkaosspec
+  	\ObstacleName {Ride Request Not Accurate}
+  	\KaosAttribute {Def} {Ride request encoded in the system does not correspond accurately to a ride need in the real world.}
+  	\KaosAttribute {RefinedBy} {Fake Ride Request}
+  	\KaosAttribute {RefinedBy} {Ride Request Out-dated}
+  	\KaosAttribute {RefinedBy} {Ride Request Miscoded}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Fake Ride Request}
+  	\KaosAttribute {Def} {Ride request encoded in the system does not correspond to any ride need in the real world.}
+  	\KaosAttribute {ESR} {0.10\%}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Ride Request Out-dated}
+  	\KaosAttribute {Def} {Ride request is out-dated; the author of the request did not update information yet.}
+  	\KaosAttribute {ESR} {1.00\%}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Ride Request Miscoded}
+  	\KaosAttribute {Def} {Ride request origin or destination information is miscoded.}
+  	\KaosAttribute {RefinedBy} {Departure Date/Time Miscoded}
+  	\KaosAttribute {RefinedBy} {Departure Point Miscoded}
+  	\KaosAttribute {RefinedBy} {Arrival Date/Time Miscoded}
+  	\KaosAttribute {RefinedBy} {Arrival Point Miscoded}
+  \stopkaosspec
+
+  \startkaosspec
+  	\ObstacleName {Ride Instructions Not Read By Driver And Sent}
+  	\KaosAttribute {Def} {The sent instructions are not read by the driver.}
+  	\KaosAttribute {RefinedBy} {Ride Instruction Not Readable}
+  	\KaosAttribute {RefinedBy} {Readable Instruction Not Read By Driver}
+  \stopkaosspec
+
+\stopsubsection

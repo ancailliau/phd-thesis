@@ -4,32 +4,1049 @@
 \environment common
 \product thesis
 
-\chapter{Controlling Obstacle}
+\chapter[chap:controlling_obstacle]{Controlling Obstacles}
 
-	\section {Selecting Countermeasures}
-	
-		\subsection {Assessing the Impact of Countermeasures}
-		
-		\subsection {Most Appropriate Countermeasures}
-		
-		\subsection {Selecting Countermeasures***}
-	
-	\section {Integrating Countermeasures in the Goal Model}
-	
-		\subsection {The Countermeasure Integration Problem}
-	
-			\subsubsection {Ensuring Progress: Valid Countermeasure}
-		
-			\subsubsection {Ensuring Minimal Changes: Integration Schemas}
-		
-			\subsubsection {Preserving Refinement Correctness: Change Propagation}
-		
-		\subsection {Obstacle Resolution as Exception Handling}
-		
-			\subsubsection {Motivation}
-			
-			\subsubsection {Extending the Goal Specification Language}
-			
-			\subsubsection {Exception Diagrams}
+  Once identified and assessed, risks shall be adressed somehow. Critical and
+  likely risks shall be cost-effectively controlled through appropriate
+  countermeasures. Alternative countermeasures are identified and most
+  appropriate countermeasures are selected. The selection process of most
+  appropriate countermeasures might benefit from the requirement structure to
+  ensure cost-effective selections. In addition, a precise characterization of
+  appropriate countermeasures might guarantee that requirements are more
+  complete and more accurate as the countermeasures are integrated in the ideal
+  requirement model.
 
+  This chapter details what are the most appropriate countermeasures goals, how
+  to compute cost-effective selection of countermeasures goals, and how
+  selected countermeasure goals are integrated in the ideal model.
+
+  An appropriate countermeasure selection is a selection of valid
+  countermeasures that ensure the satisfaction rate of high-level goals is
+  higher than their required satisfaction rate, while maintaining a correct
+  model. A valid countermeasure guarantee progress\emdash{}that is, once
+  integrated in the model, the satisfaction rate of the high-level goals
+  increases. Two integration schemas guarantee that only required parts of the
+  model are modified. Lastly, propagation of changes ensure that correct model
+  are still correct models after the integration process. As a result, the most
+  appropriate countermeasure goals can be selected and integrated in the ideal
+  model to produce more complete and more accurate models.
+
+  This chapter is organized as follows. \in{Section}[sec:identifying_cm]
+  details what is a valid countermeasure and how these countermeasures can be
+  generated. \in{Section}[sec:iterating_oa] discuss how to determine whether an
+  new cycle of obstacle analysis is required on the countermeasure goals.
+  \in{Section}[sec:selecting_cm] details how most appropriate countermeasures
+  are assessed and selected. \in{Section}[sec:integrating] describes how
+  countermeasures are integrated into the ideal goal model.
+
+  \startsection[reference=sec:identifying_cm,title={Identifying Valid Countermeasures}]
+  
+    The critical and likely obstacles shall be controlled by appropriate
+    countermeasures \cite[Lam09a]. Countermeasures are typically identified
+    using heuristics \cite[Lam00a], or by automatically generating goal
+    revisions \cite[Alr16a].
+    
+    A {\it valid countermeasures} ensures that its integration will increase
+    the satisfaction rate of high-level goal, in other words, its integration
+    guarantee the progress towards more robust systems. To that aim, a valid
+    countermeasure must satisfy the two following conditions:
+  
+    \startitemize
+
+      \item {\bf Non-obstruction.} Either the countermeasure goal $CG$ is not
+      obstructed by the obstacle $O$ it resolves
+
+      \startformula
+        \{O, Dom\} \models\not \neg CG \hskip1cm \text {(non-obstruction)}
+      \stopformula
+
+      or $O \wedge Dom$ is no longer realizable by the environment (non-feasibility).
+
+      \item {\bf Ancestor entailment.} The countermeasure goal $CG$ must guarantee
+      a deidealized version of an ancestor of the leaf goal obstructed by
+      $O$. 
+
+    \stopitemize
+    
+    \noindent The non-obstruction condition for a probabilistic goal is
+    generalized as:
+    
+    \startformula
+      P(CG\mid O,Dom) > 0 
+    \stopformula
+    
+    The non-feasibility condition is derived from the realizability condition
+    described in \cite[Lam09a,De-07a]. The environment mentionned in the
+    condition monitors all the variables constrained by the countermeasure goal
+    and the obstructed goal and controls all the others. This non-feasibility
+    condition is critical the correctness of the {\it obstacle avoidance}
+    resolution tactic. Assume an obstacle $O$, formalized as $\ltlF(C\wedge
+    \ltlG OC)$, obstructing a goal $OG$, formalized as $C \Rightarrow \ltlF T$,
+    assigned to an agent $Ag$. The condition $O \wedge Dom$ must be realizable
+    by the environment monitoring the variables controlled by $Ag$ and
+    controlling the others; otherwise, the obstacle would never happen. In our
+    example, $OC$ is controlled by the environment. Assume that this obstacle
+    is resolved by the use of a countermeasure goal $Avoid[O]$, formalized as
+    $C \Rightarrow \neg OC$. This countermeasure goal will be refined until
+    single agents might be assigned to the leaf goals. These agents will
+    collaboratively control the variables constrained by the goal $Avoid[O]$,
+    in our example $OC$. As a variable is not be controlled by multiple agents,
+    the environment has no longer the control and monitoring capabilities to
+    realize $O \wedge Dom$. The obstacles resolved by using the {\it avoid
+    obstacle} tactic therefore satisfy the non-feasibility condition.
+    
+    Other obstacle resolution tactics such as {\it mitigate obstacle}, {\it
+    weaken goal}, or {\it substitute goal} \cite[Lam09a] can be shown to
+    produce valid countermeasures modulo propagations of their effect through
+    the refinement trees in which they are involved (such propagation will be
+    explained in \in{Section}[sec:integrating]).
+    
+    To make the ancestor entailment condition further precise we need the
+    following definitions.
+
+    \startdefinition[def:deidealized-goal]{Deidealized goal}
+      
+      A goal $G'$ is a {\it deidealized} version of goal $G$ if $G \models G'$.
+  
+    \stopdefinition
+
+    \startdefinition[def:valid-cm]{Acceptable deidealization}
+    
+      A deidealized version $G'$ of $G$ is {\it acceptable} if, for every goal
+      refinement with $G$ as a child, there exists an acceptable deidealized
+      version of its siblings and parents such that the corresponding
+      refinement still meets the completeness, consistency and minimality
+      conditions recalled in \in{Chapter}[chap-background].
+  
+    \stopdefinition
+
+    \noindent The ancestor entailment condition can now be formulated as
+    follows:
+  
+    \startformula
+      \{CG, G_1', ... , G_n', Dom'\} \models PG' 
+        \hskip1cm \text {(ancestor-entailment)}
+    \stopformula
+  
+    for some acceptable deidealized version $PG'$ of ancestor $PG$, where $PG$
+    is an ancestor of the obstructed goal $G$ and $G_1', ..., G_n'$ are
+    acceptable deidealized versions of descendants of $PG$.
+
+    \startdefinition[def:valid-cm]{Valid countermeasure}
+    
+      A countermeasure goal $CG$ against obstacle $O$ is said to be {\it valid}
+      if it satisfies the non-obstruction or non-feasibility condition together
+      with the ancestor-entailment conditions.
+  
+    \stopdefinition
+
+    For example, the countermeasure goal \goal{Achieve [Redundant Pump Motor On
+    When Primary Pump Failure]} to the obstacle \obstacle{Pump Electrical
+    Failure}, shown in \in{Figure}[fig:redundant_pump], is valid. The obstacle
+    \obstacle{Pump Electrical Failure} does not obstruct it and this
+    countermeasure together with \goal{Achieve [Valve Opened When Water
+    Requested]} guarantee the satisfaction of the parent goal \goal{Achieve
+    [Make Up Water Provided When Requested]}. In this example, the parent goal
+    is not deidealized.
+
+    \placefigure[bottom]
+    	[fig:redundant_pump]
+    	{A countermeasure goal to the obstacle \obstacle{Pump Electrical Failure}.}
+      {\externalfigure[../images/chap5/redundant_pump.pdf][scale=1000]}
+
+    Multiple candidate ancestors might be considered for the
+    ancestor-entailment condition. In our example, \goal{Achieve [Make Up Water
+    Provided When Requested]} and \goal{Achieve [Make Up Water Provided When
+    Loss Of Cooling]} are potential candidates with respect to the goal
+    \goal{Achieve [Redundant Pump Motor On When Primary Pump Failure]}. The
+    nearest candidate to this goal appears preferable for more local model
+    change\emdash{}that is, the goal \goal{Achieve [Make Up Water Provided When
+    Requested]}.
+
+    The anchor for a countermeasure goal $CG$ is the lowest ancestor goal $PG$
+    meeting the ancestor-entailment condition. It is the goal through which the
+    countermeasure goal is integrated, as discussed in
+    \in{Section}[sec:integrating].
+
+    A valid countermeasure is a sufficient condition to guarantee an increase
+    in the satisfaction rate of some high-level goal.
+
+    \startproposition{Progress}
+  
+      For any valid countermeasure goal CG, the probability of satisfaction
+      of its anchor PG increases:
+
+      \startformula P (PG') > P (PG) \stopformula
+
+      where $PG'$ in $M'$ corresponds to $PG$ in $M$.
+      
+    \stopproposition
+
+    \startproof
+
+      This can be proved {\it ab absurdo}. Assume there is no such increase:
+      $P(PG') \leq P(PG)$. Introducing conditional probabilities, we have:
+
+      \startformula
+        \startalign
+          \NC P(PG') = \NC P(O) \times P(PG'\mid O) + P(\neg O) \times P(PG'\mid \neg O)\NR
+          \NC P(PG) =  \NC P(O) \times P(PG\mid O) + P(\neg O) \times P(PG\mid \neg O)\NR
+        \stopalign
+      \stopformula
+
+      Given the obstruction of $PG$, we have: $P(PG\mid O) = 0$. Therefore,
+
+      \startformula
+        P(O) \times P(PG'\mid O) + P(\neg O) \times P(PG'\mid \neg O) \leq P(\neg O) \times P(PG\mid \neg O) 
+      \stopformula
+  
+      Since $PG'$ is a deidealized version of $PG$, we have:
+
+      \startformula
+        P(PG'\mid \neg O) \geq P(PG\mid \neg O).
+      \stopformula
+  
+      Therefore, we can multiply both sides by the positive term $P(\neg O)$
+  
+      \startformula
+        P(\neg O) \times P(PG'\mid \neg O) \geq P(\neg O) \times P(PG\mid \neg O).
+      \stopformula
+  
+      As $P(PG'\mid O) > 0$, our initial assumption gets contradicted.
+    %
+    \stopproof
+    
+  \stopsection
+  
+  \startsection[reference=sec:iterating_oa,title={Iterating Obstacle Analysis}]
+
+    As \in{Figure}[fig:redundant_pump] shows, a countermeasure goal should
+    itself be refined down to leaf goals assignable to single agents. These
+    leaf goals might be obstructed by new obstacles, a new cycle of obstacle
+    analysis may be needed at RE time. To determine whether a new obstacle
+    analysis cycle is required, the maximal change in satisfaction rate of the
+    considered high-level goal should be considered. At best, the satisfaction
+    rate of the countermeasure goal is $1$ (no possible obstruction of it). By
+    up-propagation, this satisfaction rate leads to a satisfaction rate $sr_1$
+    for the high-level goal. At worst, the satisfaction rate is $0$. This leads
+    to another satisfaction rate $sr_0$ for the high-level goal. The
+    countermeasure's maximal impact is obtained by taking the difference $sr_1
+    - sr_0$. Based on this, the analyst may decide at RE time whether a new
+    cycle is needed or not.
+
+    \startluacode
+      sr0 = 81.74
+      sr1 = 94.94
+      max_sr = sr1 - sr0
+    \stopluacode
+
+    For example, consider the countermeasure goal \goal{Achieve [Redundant Pump
+    Motor On When Primary Pump Failure]}. If the satisfaction rate of this
+    countermeasure is $0$, the satisfaction rate of the high-level goal
+    \goal{Achieve [Make Up Water Provided When Loss Of Cooling]} is
+    \ctxlua{round2(sr0)}\%. If the satisfaction rate of this countermeasure is
+    1, the satisfaction rate of the high-level goal is \ctxlua{round2(sr1)}\%.
+    The maximal impact on the high-level goal is thus
+    \ctxlua{round2(max_sr)}\%. As the impact is important, it may be worth
+    spending time in studying obstacles to this countermeasure goal at RE time
+    to better estimate the impact of its deployment.
+  
+  \stopsection
+  
+	\section[sec:selecting_cm]{Selecting Most Appropriate Countermeasures}
+
+    Thanks to the progress property introduced in the previous section, once a
+    countermeasure is integrated into the goal model, the satisfaction rate of
+    some high-level goal must improve. This improvement quantifies the impact
+    of a countermeasure and is the key to select the most appropriate ones, as
+    we aimed at maximizing this impact.
+
+    \in{Section}[sec:assessing_impact] describes how the impact of alternative
+    countermeasures is assessed. \in{Section}[sec:most_appropriate] clarifies
+    what are \quote{most appropriate} countermeasures to be selected and
+    deployed when an adaptation is required. \in{Section}[sec:selecting_cm]
+    explains how such selection is computed.
+
+		\subsection[sec:assessing_impact]{Assessing the Impact of Countermeasures}
+  
+      Integrating a countermeasure goal into the goal model impacts the
+      satisfaction rate of a high-level goal. As \in{Section}[sec:integrating]
+      will show, depending on the selected obstacle resolution strategy and
+      associated countermeasure integration schema, the obstructed goal is
+      either removed from the goal model or kept. In the former case, the
+      obstructed goal is replaced by the countermeasure goal; in the latter
+      case, a new refinement is introduced involving both the obstructed goal
+      and the countermeasure goal. The satisfaction rate of the high-level goal
+      is computed as described next to evaluate the impact of the
+      countermeasure.
+
+      \noindent {\bf Assessing countermeasure impact when the obstructed goal
+      is replaced.} In this case, when the monitored satisfaction rate of the
+      high-level goal is computed, the propagation procedure computing the
+      satisfaction rate of a high-level goal shall use the satisfaction rate of
+      the countermeasure goal in place of the satisfaction rate of the replaced
+      goal.
+  
+      For example, the goal \goal{Achieve [Make Up Water Automatically
+      Requested When Alarm Raised]} was generated using the agent substitution
+      strategy. When integrated, it replaces the goal \goal{Achieve [Make Up
+      Water Requested When Alarm Raised]}. The computation of the satisfaction
+      rate of the parent goal \goal{Achieve [Make Up Water Requested When Loss
+      Of Cooling]} uses the satisfaction rate of this countermeasure goal
+      rather than the satisfaction rate of the replaced goal. When integrated,
+      the satisfaction rate for the top goal increases from 81.74\% to 81.77\%.
+    
+%     To enable efficient computation of the impacts, the BDD-based propagation
+%     technique is extended to support resolutions. We introduce a new binary 
+%     variable $R_i$ that indicates whether the resolution $i$ is selected.
+%     As recall, the obstruction superset for a goal $PG$ refined with two
+%     subgoals $G_1$ and $G_2$ is given by
+%
+%     \startformula
+%       OS(PG) = OS(G_1) \cup OS(G_2)
+%     \stopformula
+%     
+%     Assume a resolution $i$ with anchor goal $PG$, countermeasure goal $CM$
+%     and whose corresponding obstructed goal is $G_2$. If resolution $i$ is
+%     integrated, the obstruction superset for $PG$ should be:
+%
+%     \startformula
+%       OS(PG) = OS(G_1) \cup OS(CM)
+%     \stopformula
+%     
+%     Using an extra variable $R_i$, the obstruction superset is given by
+%     
+%     \startformula\startalign[n=3]
+%       \NC OS(PG) \NC = \NC (OS(G_1) \cup OS(G_2)) \times \{\neg R_i\} \NR
+%       \NC        \NC   \NC \cup (OS(G_1) \cup OS(CM)) \times \{R_i\}  \NR
+%     \stopalign\stopformula
+%     
+%     When computing the probability of the obstruction superset, $R_i$
+%     is assigned $1$ if the resolution is selected, $0$ otherwise.
+%     
+%     \noindent In the example above, before integrating the resolution, we
+%     have:
+%
+%     \startformula\startalign[n=1,align=left]
+%       \NC OS(\goal{Achieve [Make Up Water Requested When Loss Of Cooling]}) \NR\noalign{\vskip-.5em}
+%       \NC \hskip1cm = \{\{\obstacle{Alarm Not Raised And Low Water}\}, \NR\noalign{\vskip-.5em}
+%       \NC \hskip2cm \{\obstacle{Make Up Water Not Requested And Alarm Raised}\}\} \NR
+%     \stopalign\stopformula
+%     
+%     When the resolution is integrated, we have:
+%
+%     \startformula\startalign[n=1,align=left]
+%       \NC OS(\goal{Achieve [Make Up Water Requested When Loss Of Cooling]}) \NR\noalign{\vskip-.5em}
+%       \NC \hskip1cm = \{\{\obstacle{Alarm Not Raised And Low Water}\}\} \NR
+%     \stopalign\stopformula
+%     
+%     Using the extra variable $R$ to represent the selection of the
+%     aforementioned resolution, we have
+%
+%     \startformula\startalign[n=1,align=left]
+%       \NC OS(\goal{Achieve [Make Up Water Requested When Loss Of Cooling]}) \NR\noalign{\vskip-.5em}
+%       \NC \hskip1cm = \{\{\neg R, \obstacle{Alarm Not Raised And Low Water}\}, \NR\noalign{\vskip-.5em}
+%       \NC \hskip2cm \{\neg R, \obstacle{Make Up Water Not Requested And Alarm Raised}\} \NR\noalign{\vskip-.5em}
+%       \NC \hskip2cm \{R, \obstacle{Alarm Not Raised And Low Water}\}\} \NR
+%     \stopalign\stopformula
+  
+      \noindent {\bf Assessing countermeasure impact when the obstructed goal
+      is kept.} In this case, the anchor goal is refined into two subgoals. As
+      a recall, one subgoal is the obstructed goal conjoined with the negation
+      of the obstacle condition; the other subgoal is the countermeasure goal.
+      The satisfaction rate for the anchor goal is therefore a combination of
+      the satisfaction rates of those two subgoals.
+  
+      For example, integrating the countermeasure goal \goal{Achieve [Redundant
+      Pump Motor On When Primary Pump Failure]} causes the anchor goal to be
+      refined in two subgoals: \goal{Achieve [Make Up Water Provided When
+      Requested And No Pump Failure]} and \goal{Achieve [Redundant Pump Motor
+      On When Primary Pump Failure]}. The satisfaction rate of the root goal
+      increases from 81.74\% to 94.94\%: The down-propagation of changes in the
+      goal graph reduces the formal specification of the obstacles
+      \obstacle{Pump Electrical Failure} and \obstacle{Pump Mechanical Failure}
+      to false; The satisfaction rate of the latter is therefore $0$.
+    
+%     Similarly to assessing when the obstructed goal is removed, the BDD-based propagation 
+%     is extended to support these resolutions. As in \in{Figure}[fig:integration_remove],
+%     assume a resolution $i$ with anchor goal $AG$, countermeasure goal $CM$
+%     and whose corresponding leaf obstacle is $LO$. If resolution $i$ is
+%     integrated, the obstruction superset for $PG$ should be:
+%
+%     \startformula
+%       OS(AG') = \{os\setminus\{LO\}\mid os\in OS(AG)\} \cup OS(CM)
+%     \stopformula
+%     
+%     The leaf obstacle is removed from the obstruction set of the obstructed
+%     goal $AG$ and obstacles to the countermeasure goal are taken into
+%     account. Using an extra variable $R_i$, the obstruction superset is given
+%     by
+%     
+%     \startformula\startalign[n=3]
+%       \NC OS(AG') \NC = \NC (OS(AG) \times \{\neg R_i\}) \NR
+%       \NC         \NC   \NC \cup (\left[\{os\setminus\{LO\}\mid os\in OS(AG)\} \cup OS(CM)\right] \times \{R_i\}) \NR
+%     \stopalign\stopformula
+  
+      Such computation is very easy when goal exception and goal replacement
+      annotation are used. The resolutions are integrated and removed to
+      evaluate the impact of the selection. This however requires the BDD to be
+      built at each combination, which slow down the optimization process.
+      Improvements are expected as a single BDD including all possible
+      combinations using extra variables to encode which resolution is
+      selected, could be constructed; Such BDD might be computed once at
+      RE-time.
+  
+		\subsection[sec:most_appropriate]{What are Most Appropriate Countermeasures?}
+	
+      Countermeasure selection should increase the satisfaction rate of
+      high-level goals above their RSR but cost reasonably.
+    
+      \startdefinition{Safe Selection}
+    
+        A {\it safe selection} of countermeasures is a set of countermeasures
+        that, once integrated, guarantees that the satisfaction rate of the
+        high-level goals is greater than their respective RSR.
+    
+      \stopdefinition
+    
+      A selection of countermeasures must be consistent, as conflicting
+      countermeasures shall not be selected together:
+    
+      \startformula
+        \{CM_i, CM_j, Dom\} \nvDash false \text{ for } i \neq j \hskip1cm \text{(selection-consistency)}
+      \stopformula
+    
+      Countermeasures come with a cost. The latter are elicited with regard to
+      the countermeasure's contributions to optimization goals in the goal
+      model\emdash{}such as \goal{Maximize[Operator Safety]}, \goal{Minimize[Power
+      Consumption]} or \goal{Maximize[Speed Computation]}. Without loss of
+      generality, only single costs are considered here. Multiple costs are
+      combined by a weighted sum where weights correspond to the priorities of
+      the considered soft goals.
+
+      \startdefinition{Resolution Cost}
+
+        The {\it resolution cost} of a selection is the sum of the costs associated
+        with the selected countermeasures.
+
+      \stopdefinition
+
+      A selection is {\it cost-optimal} if no other selection increases the
+      probability of satisfaction of the high-level goal without increasing the
+      resolution cost. The selection of most appropriate countermeasures is
+      defined as the one having the lowest resolution cost such that the
+      satisfaction rate for the high-level goals is maximized while being safe,
+      consistent, and cost-optimal.
+        
+		\subsection[sec:selecting_cm]{Selecting Countermeasures}
+
+      The selection of most appropriate countermeasures amounts to solving two
+      optimization problems:
+    
+      \startitemize
+
+        \item Finding the minimal cost for guaranteeing the RSR of the
+        high-level goals,
+
+        \item Finding the selections that maximizes the satisfaction rate of
+        the high-level goals given this cost.
+
+      \stopitemize
+    
+      \noindent {\bf Computing the minimal cost.} We may iteratively generate
+      all possible selections and keep the selection that minimizes cost while
+      guaranteeing that the RSRs are met. The complexity of this naïve approach
+      is $O(2^n)$ where is $n$ the number of countermeasures.
+    
+      \noindent {\bf Computing the cost-optimal selection.} We may then
+      generate all possible selections, compute their cost, and keep the
+      selection with a minimal cost and the largest satisfaction rate for the
+      high-level goals. The complexity of this naïve computation is $O(2^n)$
+      for $n$ countermeasures.
+    
+      In our example, the minimal cost for guaranteeing the RSR of 95\% for the
+      goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]} is 1.
+      With 6 possible resolutions, there are 63 possible selections. Among them
+      24 are safe selections that guarantee the RSR with costs ranging from 1
+      to 6 (we used unitary costs for the countermeasure goals). A single
+      selection of two countermeasure goals maximize the satisfaction rate of
+      \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}:
+      \goal{Achieve [Cooling System Repaired]} and \goal{Achieve [Power
+      Supplied When Primary Power Supply Failure]}. On this running example,
+      the best satisfaction rate that can be achieve is 97.18\%.
+    
+      Our naïve approach to selecting the most appropriate countermeasures
+      could be improved by exploring different directions:
+    
+      \startitemize
+    
+        \item The problem of finding the cost-optimal selection shares
+        similarities with the NP-hard Knapsack optimization problem
+        \cite[Cor09a]. The latter is concerned with filling a bag with valued
+        items without exceeding a maximal weight while maximizing value. The
+        problem here differs in that {\it (i)} the value and weight of items do
+        not simply sum; and {\it (ii)} adding a new countermeasure goal does
+        not necessarily increase the satisfaction rate of a high-level goal.
+        Improvements of our naïve algorithms are however expected as a
+        pseudo-polynomial algorithm exists for the Knapsack problem
+        \cite[Cor09a].
+  
+        \item Other techniques such as \cite[Men03a] might also improve
+        selections. Incremental control learning is a technique that present,
+        at each iteration, a set of key variables (in our case, countermeasure
+        goals) that have the most impact on the system. This technique has
+        already been applied to select risk mitigations in the DDP
+        framework showing promising results. (See \in{Chapter}[chap:relatedwork]
+        for a detailed discussion about DDP.)
+    
+        \item Lastly, Cross-Entropy method is an optimization technique for
+        solving combinatorial problems \cite[De-05a]. Applied to our problem,
+        the method can be broken in two steps: {\it (1)} an initial selection
+        is generated; {\it (2)} the parameters of the random generation are
+        updated according the score of the generated selection. The steps are
+        run a large number of times. Such technique has been successfully
+        applied for selecting software adaptations at runtime \cite[Mor17a].
+    
+      \stopitemize
+
+  
+  \startsection
+    [reference=sec:integrating,
+     title={Integrating Countermeasures in the Goal Model}]
+	
+    Selected countermeasures shall be integrated in the ideal goal model.
+    Integrating a countermeasure goal to an obstacle in a goal model means:
+    {\it (a)} connecting this goal to a parent node in the model; {\it (b)}
+    adding other sibling subgoals in the refinement if necessary; {\it (c)}
+    propagating the corresponding changes along refinement trees in which the
+    countermeasure goal is involved; and {\it (d)} refining this goal if
+    necessary.
+
+    More precisely, an integration $Int_{CG,O}(M)$ of a countermeasure $CG$ to
+    an obstacle $O$ in goal model $M$ maps $M$ to a new model $M'$ so as to
+    satisfy the following desired properties.
+      
+    \startitemize[n]
+
+      \item {\bf Progress.} The application of the integration operator
+      $Int_{CG,O}$ should increase the probability of satisfaction of some root
+      goal $G$ at least, that is, there must be at least one root goal $G'$ in
+      $M'$ corresponding to $G$ in $M$ such that $P_{M'} (G') > P_M (G)$, where
+      $P_M(G)$ refers to the satisfaction rate of $G$ in model $M$. As seen in
+      \in{Section}[sec:identifying_cm], this is enforced by valid
+      countermeasures.
+
+      \item {\bf Minimal change.} The application of $Int_{CG,O}$ should
+      preserve prescribed behaviors in $M$ that are not affected by $O$, that
+      is, for any goal $G$ in $M$ such that $\{O, Dom\} \models\not \neg G$ and
+      corresponding goal $G'$ in $M'$, we should have: $G' \models G$.
+
+      \item {\bf Correctness preservation.} The correctness of goal refinements
+      in $M$ should be preserved in $M'$, that is, if all refinements in $M$
+      are complete, consistent, and minimal then those in $M'$ are complete,
+      consistent, and minimal as well.
+    
+    \stopitemize
+
+    \in{Section}[sec:integration_schema] shows how the minimal change property
+    is guaranteed by the integration of a countermeasure.
+    \in{Section}[sec:propagation] details how correctness is preserved through
+    the integration. These two sections introduces the countermeasure goals in
+    the ideal goal model by modifying the refinement structure.
+    \in{Section}[sec:exception_handling] details how explicit modeling of
+    exceptions improves the documentation of these exceptional cases.
+	
+    \startsubsection
+      [reference=sec:integration_schema,
+       title={Ensuring Minimal Changes: Integration Schemas}]
+        
+      A single valid countermeasure goal ensures progress towards a complete
+      model; its integration in the model should ensure that the minimal change
+      property is met, i.e. nothing more than necessary is modified.
+
+      Two alternative integration schemas may be used for this, dependent on
+      the obstacle resolution tactic being selected \cite[Lam09a,Lam00a]. The
+      first schema removes the obstructed goal; it should be applied when the
+      {\it substitute goal} or {\it weaken goal} tactic is used for resolving
+      the obstacle. The second integration schema keeps the obstructed goal in
+      the model; it should be applied when the {\it avoid obstacle}, {\it
+      reduce obstacle likelihood}, or {\it mitigate obstacle} tactic is used.
+
+      \noindent {\bf Removing the obstructed goal.}
+      \in{Figure}[fig:integration_remove] shows a first integration schema
+      expressed as a model rewriting rule. In this first schema, the refinement
+      of anchor goal $AG$, containing at least one obstructed goal, is replaced
+      with a new refinement. The latter contains the countermeasure goal $CG$
+      to leaf obstacle $LO$ together with all non-obstructed children. (An
+      anchor's obstructed children are those being directly or indirectly
+      obstructed by $LO$.) The anchor $AG$ may need to be deidealized; in this
+      case, $AG'$ replaces $AG$ in the new goal model.
+
+      \placefigure[here]
+      	[fig:integration_remove]
+      	{Integration schema with obstructed goal being removed.}
+        {\externalfigure[../images/chap5/integration_remove.pdf][scale=1000]}
+
+      This first integration schema has a precondition for use, namely, the
+      countermeasure goal $CG$ and the non-obstructed children are sufficient for
+      satisfying the anchor goal:
+      
+      \startformula
+        \{CG, Children(AG) \setminus ObstructedChildren\} \models AG'
+      \stopformula
+
+      Otherwise, the new refinement would not be complete. 
+
+      For example, the goal \goal{Achieve [Make Up Water Requested When Alarm
+      Raised]} assigned to the agent \agent{Controlling Software} is a
+      countermeasure produced through the {\it agent substitution} tactic
+      \cite[Lam09a,Lam00a]. Its anchor goal is \goal{Achieve [Make Up Water
+      Requested When Loss Of Cooling]}. The following refinement is complete,
+      consistent, and minimal for this anchor goal:
+
+      \startkaosspec
+        Achieve [Make Up Water Requested When Loss Of Cooling]\blank[none]
+        \rightarrow\hskip.5em Achieve [Make Up Water Requested When Alarm Raised]\blank[none]
+        \rightarrow\hskip.5em Achieve [Alarm Raised When Low Water]
+      \stopkaosspec
+
+      \noindent We may therefore replace the old refinement with this one.
+
+      It is easy to see that this first integration schema meets our minimal
+      change property. Non-obstructed goals are composed from non-obstructed
+      goals in the refinements of $AG$ and its descendants, and in the siblings
+      of $AG$ and its ancestors. The former are kept as is whereas the latter
+      might need to be deidealized through change propagation (see
+      \in{Section}[sec:propagation]). All these goals thus satisfy $G' \models
+      G$.
+
+      \noindent {\bf Keeping the obstructed goal.}
+      \in{Figure}[fig:integration_keep] shows a second integration schema. In
+      this schema, a new refinement is introduced; it includes a modified
+      version of the obstructed anchor and the countermeasure goal. The
+      obstructed anchor is deidealized for removing the obstruction. The
+      negation of the leaf obstacle is added to form a decomposition by cases.
+
+      \placefigure[here]
+      	[fig:integration_keep]
+      	{Integration schema with obstructed goal being kept.}
+        {\externalfigure[../images/chap5/integration_keep.pdf][scale=1000]}
+
+      This second integration schema has a precondition for use as well; the
+      countermeasure goal must be sufficient for satisfying the anchor goal
+      when the obstacle occurs:
+
+      \startformula
+        \{LO, CG, Dom\} \models AG'
+      \stopformula
+      
+      For example, the countermeasure goal \goal{Achieve [Cooling System
+      Repaired]} entails its anchor \goal{Achieve [Make Up Water Provided When
+      Loss Of Cooling]} when the obstacle \obstacle{Valve Mechanical Failure}
+      occurs. This second rule then produces the following refinement:
+
+      \startkaosspec
+        Achieve [Make Up Water Provided When Loss Of Cooling]\blank[none]
+        \rightarrow\hskip.5em Achieve [Make Up Water Provided When Loss Of Cooling\blank[none]
+        \hskip4em And No Valve Mechanical Failure]\blank[none]
+        \rightarrow\hskip.5em Achieve [Cooling System Repaired]
+      \stopkaosspec
+
+      Note that the anchor goal is not deidealized in this example. The new
+      goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling And No
+      Valve Mechanical Failure]} is a de-idealization of the anchor goal. The
+      negation of the obstacle is added to the goal antecedent:
+
+      \startformula
+        LossOfCooling \hskip.7ex\graymath{\wedge\hskip.5ex \neg MakeUpValveFailure}\hskip.7ex 
+        \Rightarrow \ltlF_{\leq 55h} MakeUpWaterProvided
+      \stopformula
+
+      This second integration schema can be seen to meet our minimal change
+      property as well; the reasoning is similar to the first schema. Only
+      siblings of the anchor goal and its ancestor may need to be deidealized.
+      The other goals were obstructed by the resolved obstacle and are
+      therefore not concerned with the minimal change property.
+    
+    \stopsubsection
+    
+    \startsubsection
+      [reference=sec:propagation,
+       title={Preserving Refinement Correctness: Change Propagation}]
+      
+      Goal deidealizations and countermeasure integrations may require
+      corresponding changes to be propagated along refinement trees in which
+      the countermeasure goal is involved. Such propagations are intended to
+      ensure our third property on integrations, that is, the resulting model
+      must remain complete, consistent, and minimal. This section discusses how
+      deidealizations and change propagations are performed.
+
+      \noindent {\bf Deidealization by strengthening the goal's antecedent.} A
+      first way of deidealizing a goal of form $C\Rightarrow\Theta T$ is to add
+      an adequate conjunct to its antecedent:
+
+      \startformula
+        AddConjunct (C \Rightarrow \Theta T, \Theta EC) 
+          = \[C \wedge \Theta EC\] \Rightarrow \Theta T
+      \stopformula
+
+      For example, the goal \goal{Achieve [Make Up Pump Motor On When Water
+      Requested]} may be deidealized so as to exclude pump failure from pump
+      actuation:
+
+      \startformula
+        WaterRequested \wedge \neg PumpFailure \Rightarrow \ltlF_{\leq 5m} PumpMotorOn
+      \stopformula
+
+      \noindent {\bf Deidealization by weakening the goal's consequent.} A
+      second way of deidealizing the goal $C\Rightarrow\Theta T$ is to add an
+      adequate disjunct to its consequent:
+
+      \startformula
+        AddDisjunct (C \Rightarrow \Theta T, \Theta EC) 
+          = C \Rightarrow \[\Theta T \vee \Theta EC\]
+      \stopformula
+
+      For example, the goal \goal{Achieve [Make Up Pump Motor On When Water
+      Requested]} might be deidealized so as to require the pump or the
+      redundant pump to be actuated:
+
+      \startformula
+        WaterRequested \Rightarrow \ltlF_{\leq 5m} PumpMotorOn 
+          \vee \ltlF_{\leq 10m} RedundantPumpMotorOn
+      \stopformula
+
+      \noindent {\bf Change propagation.} When a goal is deidealized, the
+      change must be propagated along the refinement trees in which this goal
+      is involved\emdash{}both up and down such trees. When applying the {\it AddConjunct}
+      or {\it AddDisjunct} operators the corresponding syntaxic changes
+      are applied recursively
+      to the other goals up and down refinement links. 
+
+      \placefigure[here]
+      	[fig:cooling_repaired]
+      	{A countermeasure goal to the obstacle \obstacle{Valve Mechanical 
+         Failure}.}
+        {\externalfigure[../images/chap5/cooling_repaired.pdf][scale=1000]}
+
+      For example, the integration of the countermeasure goal \goal{Achieve
+      [Cooling System Repaired]} for the obstacle \obstacle{Valve Mechanical
+      Failure}, as shown in \in{Figure}[fig:cooling_repaired] requires change
+      propagation to the descendants of the goal \goal{Achieve [Make Up Water
+      Provided When Loss Of Cooling]}. First, this goal is modified as
+      previously shown:
+        
+      \startformula
+        LossOfCooling \wedge \neg MakeUpValveFailure 
+          \Rightarrow \ltlF_{\leq 55h} MakeUpWaterProvided
+      \stopformula
+      
+      Next, the change is down-propagated, leading to an application of {\it
+      AddConjunct} to the goal \goal{Achieve [Make Up Water Provided When
+      Requested]}:
+        
+      \startformula\startalign[n=1,align={left}]
+        \NC MakeUpWaterRequested \wedge \neg MakeUpValveFailure \NR\noalign{\vskip-.5em}
+        \NC \hskip1em\Rightarrow \ltlF_{\leq 24h} MakeUpWaterProvided \NR
+      \stopalign\stopformula
+      
+      The next refinement instantiates the divide-and-conquer-driven refinement
+      pattern. The {\it AddConjunct} operator is applied to the goal
+      \goal{Achieve [Valve Opened When Water Requested]}. The operator could
+      have been applied to the goal \goal{Achieve [Make Up Pump Motor On When
+      Water Requested]} but this was assumed irrelevant. We obtain:
+
+      \startformula\startalign[n=1,align={left}]
+        \NC MakeUpWaterRequested \wedge \neg MakeUpValveFailure  \NR\noalign{\vskip-.5em}
+        \NC \hskip1em\Rightarrow \ltlF_{\leq 15m} MakeUpValveOpen \NR
+      \stopalign\stopformula
+
+      Since this goal is a leaf goal, the propagation ends.
+
+      Change propagation in the general case proceeds as follows. When {\it
+      AddConjunct} is applied to a goal for deidealization, the specification
+      pattern followed by the formal specification of the goal is identified
+      and used to extract the antecedant. The de-idealized antecedant is
+      obtained by adding the conjunction. The ideal antecedant is then replaced
+      by the de-idealized one. The process is applied recursively to the
+      subgoals (resp. parents) until leaf goals (resp. root goals) are reached.
+      The procedure is similar when applying {\it AddDisjunct}.
+
+      Such propagation technique produces formal specification that can often
+      be simplified. Moreover, other mechanisms are required for change
+      propagation to goals not matching a known specification pattern. Even
+      though pattern-based propagation can be performed semi-automatically
+      interacting with the user when no specification pattern can be matched.
+      The general problem of automatic change propagation through arbitrary
+      refinement structures remains open.
+    
+    \stopsubsection
+    
+		\startsubsection[reference=sec:exception_handling,title={Obstacle Resolution as Exception Handling}]
+
+      The integration of countermeasure goals through new, explicit refinements
+      in the original model raises several issues.
+      
+      \startitemize
+        
+        \item The goal graph might undergo significant changes each time a new
+        obstacle is identified.
+        
+        \item Normal situations would be mixed with exceptional ones; it might
+        be hard to distinguish the former from the latter without domain
+        expertise.
+        
+        \item Goal specifications become increasingly more complex.
+        
+        \item As new countermeasures are introduced, the ordered nesting of
+        exceptional cases along refinements may lead to a combinatorial blow-up
+        of special cases.
+
+      \stopitemize
+      
+      \noindent This section shows how dedicated constructs helps solving these issues.
+      
+      \noindent {\bf Extending the Goal Specification Language.} Dedicated
+      constructs are provided for encapsulating the required modifications
+      while documenting each exceptional case separately.
+    	  
+        \noindent {\it Except.} A first construct links a countermeasure goal to its anchor
+        goal:
+      
+        \startkaosspec
+          \GoalName {$AG$}
+          \KaosAttribute {FormalSpec} {$C\Rightarrow\Theta T$}
+          \KaosAttribute {Except} {$O$ {\cronos\bf Then} $CG$}
+        \stopkaosspec
+        
+        \noindent where $AG$ denotes the anchor goal $C \Rightarrow \Theta T$
+        of a countermeasure goal $CG$ to an obstacle $O$. Semantically, this
+        implicit specification is fully equivalent to the refinement in
+        \in{Figure}[fig:except_semantic]. This construct may be used under the
+        following precondition:
+
+        \startformula
+          \{O, CG, Dom\} \models AG
+        \stopformula
+
+        \placefigure[top]
+        	[fig:except_semantic]
+        	{Semantic equivalent of {\it Except}.}
+          {\externalfigure[../images/chap5/except_semantic.pdf][scale=1000]}
+
+        For example, consider the goal \goal{Achieve [Make Up Water Provided When Loss Of
+        Cooling]}.
+        Under the exceptional condition of a mechanical failure of the make up
+        valve, the goal is guaranteed through repairing the cooling system. We
+        may therefore specify the following:
+     
+        \startkaosspec
+          \GoalName {Achieve [Make Up Water Provided When Loss Of Cooling]}
+          \KaosAttribute {FormalSpec} {$C\Rightarrow\Theta T$}
+          \KaosAttribute {Except} {Valve Mechanical Failure {\cronos\bf Then} Achieve [Cooling System Repaired]}
+        \stopkaosspec
+       
+        This specification is logically equivalent to the refinement illustrating
+        the second integration schema in \in{Section}[sec:integrating].
+
+        Multiple {\it Except} annotations may be attached to a single goal to
+        cope with different obstacles; the latter may therefore be introduced
+        incrementally. Compared with the complexity of an equivalent explicit
+        specification, the complexity of an implicit goal specification with
+        multiple {\it Except} annotations remains linear in the number of
+        exceptions. The specification of the ideal goal remains unchanged.
+        Moreover, multiple annotations sharing the same countermeasure goal may
+        be factored out to simplify the model.
+
+        \noindent {\it Provided.} A second construct specifies an extra conjunct
+        on the antecedent of an ideal goal $G$ to produce a countermeasure:
+     
+        \startkaosspec
+          \GoalName {$AG$}
+          \KaosAttribute {FormalSpec} {$C\Rightarrow\Theta T$}
+          \KaosAttribute {Provided} {$EC$}
+        \stopkaosspec
+        
+        \noindent where $EC$ denotes an extra conjunct to be added to the goal
+        antecedent for resolving the considered obstacle. Semantically, this
+        implicit specification is equivalent to:
+     
+        \startkaosspec
+          \GoalName {$AG$}
+          \KaosAttribute {FormalSpec} {$C \wedge EC \Rightarrow \Theta T$}
+        \stopkaosspec
+
+        The {\it Provided} construct is typically used for deidealizing goals.
+        For example, the deidealization of the goal \goal{Achieve [Make Up Pump
+        Motor On When Water Requested]} may be specified by highlighting the
+        normal situation as follows:
+     
+        \startkaosspec
+          \GoalName {Achieve [Make Up Pump Motor On When Water Requested]}
+          \KaosAttribute {Provided} {$\neg PumpMechanicalFailure$}
+        \stopkaosspec
+            
+        \noindent It often proves convenient to write {\it ProvidedNot $EC$} instead of
+        {\it Provided $EC$}.
+        
+        \noindent {\it RelaxedTo.} Symmetrically to {\it Provided}, this
+        construct specifies an extra disjunct on the consequent of an ideal goal
+        G to produce a countermeasure:
+        
+        \startkaosspec
+          \GoalName {$AG$}
+          \KaosAttribute {FormalSpec} {$C\Rightarrow\Theta T$}
+          \KaosAttribute {RelaxedTo} {$ED$}
+        \stopkaosspec
+
+        \noindent where $ED$ denotes an extra disjunct to be added to the goal consequent
+        for resolving the considered obstacle. Semantically, this goal is
+        equivalent to:
+        
+        \startkaosspec
+          \GoalName {$AG$}
+          \KaosAttribute {FormalSpec} {$C \Rightarrow \Theta T \vee ED$}
+        \stopkaosspec
+
+        This construct is useful for deidealizing goals as well. For example,
+        another deidealization of the same goal \goal{Achieve [Make Up Pump Motor
+        On When Water Requested]} might be specified by highlighting the normal
+        situation as follows:
+        
+        \startkaosspec
+          \GoalName {Achieve [Make Up Pump Motor On When Water Requested]}
+          \KaosAttribute {RelaxedTo} {$RedundantPumpMotorOn$}
+        \stopkaosspec
+        
+        Multiple {\it Provided} and {\it RelaxedTo} annotations may be attached
+        to a single goal to introduce multiple countermeasures.
+        
+        \noindent {\it Replaces.} This construct appears useful for tracing
+        previous versions of a goal:
+        
+        \startkaosspec
+          \GoalName {$AG$}
+          \KaosAttribute {Replaces} {$AG'$}
+        \stopkaosspec
+        
+        \noindent Such traceability helps readers understand the rationale behind
+        the final goal.
+      
+      \noindent {\bf Model Refactoring for Goal Exceptions.} In practice, the
+      analyst should decide at some point whether a countermeasure goal refers
+      to an exceptional situation or to a normal one to be considered in the
+      ideal model. Such a decision might depend on various factors such as the
+      satisfaction rate of the resolved obstacle, the criticality of the
+      obstructed goal, domain-specific culture, stakeholders wishes, and so
+      forth. To make the decision flexible and easily reversible, we presents
+      here model refactoring operators for attaching or detaching the
+      annotations introduced in the previous section to/from a goal model.
+      Three operators are available for transforming an annotated model portion
+      into a standard one.
+
+        \placefigure[bottom]
+        	[fig:refactoring_except]
+        	{Implicit and explicit countermeasure integration.}
+          {\startcombination[2*1]
+            {\externalfigure[../images/chap5/refactoring_except_a.pdf]}{\tfx(a)}
+            {\externalfigure[../images/chap5/refactoring_except_b.pdf]}{\tfx(b)}
+           \stopcombination
+          }
+        
+        \noindent {\it Detach-Except}, applied to an annotated goal, produces a
+        new model where the goal is no longer annotated with a specific {\it
+        Except} clause. The operator introduces a new refinement with two
+        children: the countermeasure goal and a deidealization of the original
+        goal (see \in{Figure}[fig:except_semantic] from left to right). The
+        children of the original goal are then children of the deidealized
+        goal. Back to an earlier example, the operator takes the model fragment
+        in \in{Figure}{a}[fig:refactoring_except] to produce the model fragment
+        in \in{Figure}{b}[fig:refactoring_except].
+
+        \noindent {\it Detach-Provided}, applied to an annotated goal, produces
+        a new model where a specific {\it Provided} annotation is
+        \quote{compiled} into its equivalent formal specification. For example,
+        after application of this operator the goal \goal{Achieve [Make Up Pump Motor On When Water Requested]}
+         is specified without its {\it Provided} annotation as follows:
+       
+       \startkaosspec
+         \GoalName {Achieve [Make Up Pump Motor On When Water Requested]}
+         \KaosAttribute {FormalSpec} {
+           $WaterRequested \wedge \neg PumpMechanicalFailure$\blank[none]
+           \hskip2.5cm$\Rightarrow \ltlF_{\leq 5m} PumpMotorOn$
+         }
+       \stopkaosspec
+       
+        \noindent {\it Detach-RelaxedTo}, applied to an annotated goal,
+        produces a new model where a specific {\it RelaxedTo} annotation is
+        removed. Back to an earlier example, the application of this operator
+        to the goal \goal{Achieve [Make Up Pump Motor On When Water Requested]}
+        yields the following goal specification:
+       
+       \startkaosspec
+         \GoalName {Achieve [Make Up Pump Motor On When Water Requested]}
+         \KaosAttribute {FormalSpec} {$WaterRequested \Rightarrow [ \ltlF_{\leq 5m} PumpMotorOn $\blank[none]
+           \hskip2.5cm$\vee\hskip.5em\ltlF_{\leq 10m} RedundantPumpMotorOn ]$}
+       \stopkaosspec
+         
+        Similarily, three operators are available for transforming a standard
+        model portion into an annotated one\emdash{}namely, {\it
+        Attach-Except}, {\it Attach-Provided} and {\it Attach-RelaxedTo}. These
+        operators are the reverse of the {\it Detach} ones.
+            
+      \noindent {\bf Exception Diagrams.} Textual goal specifications with {\it
+      Except} and {\it Replaces} annotations may be graphically represented in
+      an exception diagram. \in{Figure}[fig:exception_diagram] shows a two
+      portions of such a diagram for the goals \goal{Achieve [Make Up Water
+      Requested When Alarm Raised]} and \goal{Achieve [Make Up Pump Motor On
+      When Water Requested]}. This diagram captures that {\it (a)} this goal replaces
+      the similar goal assigned to the agent \agent{Operator}; and {\it (b)} when the
+      obstacle \obstacle{Pump Mechanical Failure} or \obstacle{Pump Electrical
+      Failure} occurs the countermeasure goal \goal{Achieve [Redundant Pump
+      Motor On When Primary Pump Failure]} will guarantee this goal.
+
+        \placefigure[page]
+        	[fig:exception_diagram]
+        	{Exception diagrams.}
+          {\startcombination[1*2]
+            {\externalfigure[../images/chap5/exception_diagram_a.pdf]}{\tfx(a) Exception diagram with a {\it replace} annotation.}
+            {\externalfigure[../images/chap5/exception_diagram_b.pdf]}{\tfx(b) Exception diagram with two {\it except} annotations.}
+           \stopcombination
+          }
+      
+      \stopsubsubsection
+      
+    \stopsubsection
+  
+  \stopsection
+  
+	\section{Summary}
+  
+    This chapter presented techniques for controlling critical and likely
+    obstacles resolved by valid countermeasures in order to produce more
+    complete requirements. Countermeasures are selected to maximize the
+    satisfaction rate of high-level goals while minimizing the resolution cost.
+    The integration operator guarantee three properties: {\it progress} towards
+    more complete requirements, {\it minimal changes}, and {\it correctness
+    preservation}. A valid countermeasure goals guarantee {\it progress}, i.e.,
+    once the countermeasure is integrated, the satisfaction rate of a
+    high-level goal increase. Such increase quantifies the impact of a
+    countermeasure and drives the selection of appropriate countermeasures. The
+    chapter proposed two integration schemas, picked according the resolution
+    tactic, guaranteeing {\it minimal change} to the ideal model. Propagating
+    the changes guarantee the correctness of the new model. However, such
+    integrations mixes ideal and exceptional cases. To mitigate this,
+    extensions to the goal specification language are proposed to specify
+    exceptions and de-idealization to goals together with refactoring
+    operators. Exceptions might then be visualized in exception diagrams.
+    
+    The techniques presented so far always assume a single-value for the
+    satisfaction rate. The next chapter introduce uncertainty about the
+    satisfaction rates and details how such uncertainty impacts the assessment
+    of the most critical obstacles.
+      
+    % TODO 
+      % BDD with all possible resolutions
+      % Draft the BDD with partial-entailement refinements + explain in the text
+    
 \stopcomponent

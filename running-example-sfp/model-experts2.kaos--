@@ -1,0 +1,271 @@
+# Goals
+
+declare goal [ make_up_water_provided ]
+  name "Achieve [Make Up Water Provided When Loss Of Cooling]"
+  rsr .8
+  refinedby response_to_loss_of_cooling, pump_on_when_activated
+end
+
+declare goal [ response_to_loss_of_cooling ]
+  name "Achieve [Make Up Water Requested When Loss Of Cooling]"
+  refinedby alarm_raised, pump_activated
+end
+
+declare goal [ pump_on_when_activated ]
+  name "Achieve [Make Up Water Provided When Requested]"
+  refinedby valve_open, pump_motor_on
+end
+
+declare goal [ alarm_raised ]
+  name "Achieve [Alarm Raised When Low Water]"
+  assignedto software
+  obstructedby alarm_not_raised
+end
+
+declare goal [ pump_activated ]
+  name "Achieve [Make Up Water Requested When Alarm Raised]"
+  assignedto operator
+  obstructedby no_response
+end
+
+declare goal [ valve_open ]
+  name "Achieve [Valve Opened When Water Requested]"
+  assignedto software
+  obstructedby valve_not_open
+end
+
+declare goal [ pump_motor_on ]
+  name "Achieve [Make Up Pump Motor On When Water Requested]"
+  assignedto pump
+  obstructedby motor_not_on
+end
+
+# Obstacles
+
+declare obstacle [ alarm_not_raised ]
+  name "Alarm Not Raised And Low Water"
+  resolvedby [restoration:response_to_loss_of_cooling] walkdown
+  probability[expert1] quantile[0.001,0.002,0.003]
+  probability[expert2] quantile[0.001,0.002,0.003]
+end
+
+declare obstacle [ no_response ]
+  name "Make Up Water Not Requested And Alarm Raised"
+  resolvedby [substitution:response_to_loss_of_cooling] automated_request
+  probability[expert1] quantile[0.0002,0.0003,0.003]
+  probability[expert2] quantile[0.001,0.002,0.003]
+end
+
+declare obstacle [ valve_not_open ]
+  name "Valve Not Opened And Requested"
+  refinedby valve_failure
+  refinedby no_power_available
+  refinedby unavailable_due_to_maintenance
+  refinedby valve_electronic_failure
+end
+
+declare obstacle [ valve_failure ]
+  name "Valve Mechanical Failure"
+  resolvedby [restoration:make_up_water_provided] cooling_system_repaired
+  probability[expert1] quantile[0.001,0.002,0.003]
+  probability[expert2] quantile[0.001,0.002,0.003]
+end
+
+declare obstacle [ unavailable_due_to_maintenance ]
+  name "Unavailable Due To Maintenance"
+  resolvedby [restoration:pump_on_when_activated] manual_opening_of_valve
+  probability[expert1] quantile[0.0001,0.0008,0.0015]
+  probability[expert2] quantile[0.0001,0.0002,0.0003]
+end
+
+declare obstacle [ valve_electronic_failure ]
+  name "Valve Electrical Failure"
+  resolvedby [restoration:make_up_water_provided] cooling_system_repaired
+  probability[expert1] quantile[0.001,0.002,0.01]
+  probability[expert2] quantile[0.001,0.002,0.003]
+end
+
+declare obstacle [ motor_not_on ]
+  name "Pump Motor Not On And Requested"
+  refinedby pump_failure
+  refinedby no_power_available
+  refinedby electronic_failure
+end
+
+declare obstacle [ pump_failure ]
+  name "Pump Mechanical Failure"
+  resolvedby [restoration:make_up_water_provided] cooling_system_repaired
+  resolvedby [restoration:pump_on_when_activated] redundant_pump_started
+  probability[expert1] quantile[0.10,0.15,0.3]
+  probability[expert2] quantile[0.20,0.35,0.45]
+end
+
+declare obstacle [ no_power_available ]
+  name "No Power Available"
+  refinedby power_supply_down
+  refinedby power_cable_failure
+end
+
+declare obstacle [ power_supply_down ]
+  name "Power Supply Failure"
+  resolvedby [restoration:pump_on_when_activated] start_generator
+  probability[expert1] quantile[0.04,0.0438,0.05]
+  probability[expert2] quantile[0.04,0.0438,0.05]
+end
+
+declare obstacle [ power_cable_failure ]
+  name "Power Cabling Failure"
+  probability[expert1] quantile[0.015,0.01752,0.02]
+  probability[expert2] quantile[0.001,0.002,0.003]
+end
+
+declare obstacle [ electronic_failure ]
+  name "Pump Electrical Failure"
+  resolvedby [restoration:make_up_water_provided] cooling_system_repaired
+  resolvedby [restoration:pump_on_when_activated] redundant_pump_started
+  probability[expert1] quantile[0.005,0.00876,0.03]
+  probability[expert2] quantile[0.001,0.002,0.003]
+end
+
+# Countermeasures
+
+declare goal [ automated_request ]
+  name "Achieve [Make Up Water Automatically Requested When Alarm Raised]"
+  assignedto software
+end
+
+declare goal [ walkdown ]
+  name "Achieve [Make Up Water Requested When Walkdown]"
+  assignedto operator
+end
+
+declare goal [ cooling_system_repaired ]
+  name "Achieve [Cooling System Repaired]"
+  refinedby cooling_system_diagnosed, parts_ordered, repaired_when_parts_ordered
+end
+
+  declare goal [ cooling_system_diagnosed ]
+    name "Achieve [Cooling System Failure Diagnosed]"
+    assignedto operator
+  end
+
+  declare goal [ parts_ordered ]
+    name "Achieve [Required Parts Available When Diagnosed]"
+    assignedto operator
+  end
+
+  declare goal [ repaired_when_parts_ordered ]
+    name "Achieve [Cooling System Repaired When Parts Available]"
+    assignedto operator
+  end
+  
+declare goal [ redundant_pump_started ]
+  name "Achieve [Redundant Pump Motor On When Primary Pump Failure]"
+  refinedby failure_detected, started_when_detected
+end
+
+  declare goal [ failure_detected ]
+    name "Achieve [Primary Pump Failure Detected]"
+    assignedto operator
+  end
+  
+  declare goal [ started_when_detected ]
+    name "Achieve [Redundant Pump Motor On When Failure Detected]"
+    refinedby operator_request, redundant_motor_activated
+  end
+  
+  declare goal [ operator_request ]
+    name "Achieve [Redundant Pump Requested When Failure Detected]"
+    assignedto operator
+  end
+  
+  declare goal [ redundant_motor_activated ] 
+    name "Achieve [Redundant Pump Motor On When Requested]"
+    assignedto software
+  end
+
+declare goal [ start_generator ]
+  name "Achieve [Power Supplied When Primary Power Supply Failure]"
+  obstructedby no_power_supplied
+end
+
+declare goal [ manual_opening_of_valve ]
+  name "Achieve [Valve Opened When Unavailable Due To Maintenance]"
+  obstructedby manual_opening_valve_failure
+  assignedto operator
+end
+
+# Second Generation Obstacle
+
+declare obstacle [ no_power_supplied ]
+  name "Diesel Generator Not Started"
+  refinedby diesel_generator_not_started
+  refinedby switch_to_diesel
+end
+
+declare obstacle [ diesel_generator_not_started ]
+  name "Diesel Generator Not Started"
+  probability[expert1] quantile[0.001,0.002,0.004]
+  probability[expert2] quantile[0.001,0.002,0.003]
+end
+
+declare obstacle [ switch_to_diesel ]
+  name "Switch Failure"
+  probability[expert1] quantile[0.001,0.00876,0.012]
+  probability[expert2] quantile[0.001,0.002,0.003]
+end
+
+declare obstacle [ manual_opening_valve_failure ]
+  name "Valve Not Opened When Valve Control Not Unavailable"
+  probability[expert1] quantile[0.0001,0.0002,0.0004]
+  probability[expert2] quantile[0.001,0.002,0.003]
+end
+
+# Agents
+
+declare agent [ software ]
+  name "Controlling Software"
+end
+
+declare agent [ operator ]
+  name "Operator"
+end
+
+declare agent [ pump ]
+  name "Pump"
+end
+
+# Experts
+
+declare expert [ expert1 ]
+	name "Expert 1"
+end
+
+declare expert [ expert2 ]
+	name "Expert 2"
+end
+
+# Calibrations
+
+declare calibration [ calibration1 ]
+	name "Push Button Broken"
+	probability 4.37%
+	probability[expert1] quantile[3.812%, 4.285%, 4.759%]
+  probability[expert2] quantile[3.961%, 4.453%, 4.945%]
+end
+
+declare calibration [ calibration2 ]
+	name "Temperature Sensor Broken"
+	probability 4.37%
+	probability[expert1] quantile[2.307%, 2.594%, 2.881%]
+	probability[expert2] quantile[4.184%, 4.704%, 5.224%]
+end
+
+declare calibration [ calibration3 ]
+	name "Fire Sprinkler Broken"
+	probability 0.02%
+	probability[expert1] quantile[0.023%, 0.026%, 0.029%]
+	probability[expert2] quantile[0.019%, 0.022%, 0.024%]
+end
+
+@experts.quantiles "(.1, .5, .9)"

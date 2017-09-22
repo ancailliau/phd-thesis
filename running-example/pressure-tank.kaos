@@ -1,0 +1,176 @@
+declare goal
+  name "Avoid [Tank Rupture When Pumping]"
+  obstructedby g001
+end
+
+declare obstacle
+  id g001
+  name "RUPTURE OF PRESSURE TANK AFTER THE START OF PUMPING"
+  refinedby g002
+  refinedby b001
+  refinedby b002
+end
+
+declare obstacle
+  id g002
+  name "TANK RUPTURE (SECONDARY FAILURE)"
+  refinedby g003
+  refinedby b004
+end
+
+declare obstacle
+  id b001
+  name "TANK RUPTURE"
+end
+
+declare obstacle
+  id b002
+  name "TANK RUPTURE DUE TO IM PROPER SELECTION OR INSTALLATION (WRONG TANK)"
+end
+
+declare obstacle
+  id g003
+  name "TANK RUPTURES DUE TO INTERNAL OVER-PRESSURE CAUSED BY CONTINUOUS PUMP OPERATION FOR t > 60 SEC "
+  refinedby g004, b003
+end
+
+declare obstacle
+  id b004
+  name "SECONDARY TANK FAILURE FROM OTHER OUT-OF-TOLERANCE CONDITIONS (e.g., MECHANICAL, THERMAL)"
+end
+
+declare domprop
+  id b003
+  name "IF PUMP RUNS FOR t > 60 SEC, TANK WILL RUPTURE WITH PROBABILITY = 1"
+end
+
+declare obstacle 
+  id g004
+  name "PUMP OPERATES CONTINUOUSLY FOR t > 60 SEC"
+  refinedby g005
+end
+
+declare obstacle
+  id g005
+  name "K2 RELAY CONTACTS REMAIN CLOSED FOR t > 60 SEC"
+  refinedby b006
+  refinedby b007
+  refinedby g006
+end
+
+declare obstacle
+  id b006
+  name "K2 RELAY (SECONDARY FAILURE)"
+end
+
+declare obstacle
+  id b007
+  name "K2 RELAY CONTACTS FAIL TO OPEN"
+end
+
+declare obstacle
+  id g006
+  name "EMF APPLIED TO K2 RELAY COIL FOR t > 60 SEC"
+  refinedby g007
+  refinedby g008
+end
+
+declare obstacle
+  id g007
+  name "PRESSURE SWITCH CONTACTS CLOSED FOR t > 60 SEC"
+  refinedby b008
+  refinedby b009
+  refinedby b010
+end
+
+declare obstacle
+  id g008
+  name "EMF REMAINS ON PRESSURE SWITCH CONTACTS WHEN PRESSURE SWITCH CONTACTS CLOSED FOR t > 60 SEC"
+  refinedby g009
+  refinedby g010
+end
+
+declare obstacle
+  id b008
+  name "EXCESS PRESSURE NOT SENSED BY PRESSURE ACTUATED SWITCH"
+end
+
+declare obstacle
+  id b009
+  name "PRESSURE SWITCH (SECONDARY FAILURE)"
+end
+
+declare obstacle
+  id b010
+  name "PRESSURE SWITCH CONTACTS FAIL TO OPEN (PRIMARY FAILURE)"
+end
+
+declare obstacle
+  id g009
+  name "EMF THRU K1 RELAY CONTACTS WHEN PRESSURE SWITCH CONTACTS CLOSED FOR t > 60 SEC"
+  refinedby g011
+  refinedby b011
+  refinedby b012
+end
+
+declare obstacle
+  id g010
+  name "EMF THRU S1 SWITCH CONTACTS WHEN PRESSURE SWITCH CONTACTS CLOSED FOR t > 60 SEC "
+  refinedby b013
+  refinedby b014
+  refinedby b015
+end
+
+declare obstacle
+  id g011
+  name "EMF NOT REMOVED FROM K1 RELAY COIL WHEN PRESSURE SWITCH CONTACTS CLOSED FOR t > 60 SEC"
+  refinedby g012
+end
+
+declare obstacle
+  id b011
+  name "K1 RELAY CONTACTS FAIL TO OPEN"
+end
+
+declare obstacle
+  id b012
+  name "K1 RELAY (SECONDARY FAILURE)"
+end
+
+declare obstacle
+  id b013
+  name "EXTERNAL RESET ACTUATION FORCE REMAINS ON SWITCH S1"
+end
+
+declare obstacle
+  id b014
+  name "S1 SWITCH (SECONDARY FAILURE)"
+end
+
+declare obstacle
+  id b015
+  name "S1 SWITCH CONTACTS FAIL TO OPEN (PRIMARY FAILURE)"
+end
+
+declare obstacle
+  id g012
+  name "TIMER RELAY CONTACTS FAIL TO OPEN WHEN PRESSURE SWITCH CONTACTS CLOSED FOR t > 60 SEC"
+  refinedby b016
+  refinedby b017
+  refinedby b018
+end
+
+declare obstacle
+  id b016
+  name "TIMER DOES NOT 'TIME OUT' DUE TO IMPROPER INSTALLATION OR SETTING"
+end
+
+declare obstacle
+  id b017
+  name "TIMER RELAY (SECONDARY FAILURE)"
+end
+
+declare obstacle
+  id b018
+  name "TIMER RELAY CONTACTS FAIL TO OPEN"
+end

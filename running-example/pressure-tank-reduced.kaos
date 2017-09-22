@@ -1,0 +1,70 @@
+declare goal
+  name "Avoid [Tank Rupture When Pumping]"
+  obstructedby e1
+end
+
+declare obstacle
+  id e1
+  name "Pressure tank rupture"
+  refinedby T
+  refinedby e2
+end
+
+declare obstacle
+  id T
+  name "Primary Failure Of Pressure Tank"
+end
+
+declare obstacle
+  id e2
+  name "Pressure Tank Rupture Due To Internal Overpressure"
+  definition "Pressure tank rupture due to internal overpressure from pump operation for t > 60 seconds which is equivalent to K2 relay contacts closed for t > 60 seconds."
+  refinedby e3
+  refinedby k2
+end
+
+declare obstacle
+  id e3
+  name "EMF on K2 relay coil for t > 60 seconds"
+  refinedby s, e4
+end
+
+declare obstacle
+  id k2
+  name "Primary Failure Of Relay K2"
+end
+
+declare obstacle
+  id s
+  name "Primary Failure of Pressure Switch"
+end
+
+declare obstacle
+  id e4
+  name "EMF Remains When Pressure Switch Closed"
+  definition "EMF remains on pressure switch contacts when pressure switch contacts have been closed for t > 60 seconds."
+  refinedby s1, e5
+end
+
+declare obstacle
+  id s1
+  name "Primary Failure Of Switch S1"
+end
+
+declare obstacle 
+  id e5
+  name "EMF through KI relay contacts When Pressure Switch Closed"
+  definition "EMF through KI relay contacts when pressure switch contacts have been closed for t > 60 seconds, which is equivalent to timer relay contacts failing to open when pressure switch contacts have been closed for t > 60 seconds."
+  refinedby k1
+  refinedby r
+end
+
+declare obstacle
+  id k1
+  name "Primary Failure of Relay K1"
+end
+
+declare obstacle
+  id r
+  name "Primary Failure of Timer Relay"
+end

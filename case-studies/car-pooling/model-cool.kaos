@@ -1,0 +1,1332 @@
+declare goal [ ride_need_served ]
+  name "Achieve [Ride Need Eventually Served]"
+  definition 
+    "Passengers that want to go to a destination shall arrive at that
+    destination within the specified time constraints"
+  rsr .95
+  refinedby ride_request_encoded, 
+    pair_found_when_request_encoded, 
+    passenger_at_destination_when_pair_found
+end
+
+declare goal [ ride_proposal_served ]
+  name "Achieve [Ride Proposal Eventually Served]"
+  definition 
+    "Rides proposed by drivers shall be fulfilled within time constraints. By
+    fulfilled, we mean that the driver did not travel alone."
+  rsr .95
+  refinedby ride_offer_encoded_for_ride_proposal,
+    pair_found_when_ride_offer_encoded
+end
+
+# Refinee for Achieve [Ride Need Eventually Served]
+
+declare goal [ ride_request_encoded ]
+  name "Achieve [Ride Request Encoded For Ride Need]"
+  definition
+    "For any needed request, the request shall eventually be encoded in the
+    system."
+  assignedto passenger
+end
+
+declare goal [ pair_found_when_request_encoded ]
+  name "Achieve [Adequate Pair Found When Ride Request Encoded]"
+  definition
+    "A compatible pair containing a request and an offer shall eventually be
+    found for any encoded request."
+  refinedby ride_offer_accurate, pair_found_based_on_accurate_offer
+end
+
+declare goal [ passenger_at_destination_when_pair_found ]
+  name "Achieve [Passenger At Destination When Adequate Pair Found]"
+  definition
+    "Passengers shall eventually arrive at destination when a compatible pair
+    of request and offer has been found."
+  refinedby ride_planned_when_pair_found,
+    passenger_at_destination_when_ride_planned
+end
+
+# Refinee for Achieve [Adequate Pair Eventually Found When Ride Request Encoded]
+
+declare goal [ ride_offer_accurate ]
+  name "Maintain [Ride Offer Accurate]"
+  definition
+    "Ride offers, proposed by the drivers, shall always be as accurate as possible."
+  assignedto driver
+  obstructedby ride_offer_not_accurate
+end
+
+declare goal [ pair_found_based_on_accurate_offer ]
+  name "Achieve [Adequate Pair Found Based On Accurate Offer]"
+  definition
+    "Based on accurate offers known by the system, an offer compatible with the
+    request shall eventually be found when the request has been encoded."
+  refinedby matching_suggestion_selected,
+    suggestion_elected,
+    pair_found_if_elected
+end
+
+# Refinee for Achieve [Adequate Pair Found Based On Accurate Offer]
+
+declare goal [ matching_suggestion_selected ]
+  name "Achieve [Matching Suggestion Selected]"
+  definition
+    "The passenger and a driver shall eventually select at least one suggestion
+    matching the request when this request has been encoded."
+  refinedby suggestion_selected, suggestion_matching
+end
+
+declare goal [ suggestion_elected ]
+  name "Achieve [Suggestion Elected Based On Selection]"
+  definition
+    "For any encoded need, when at least one suggestion has been selected, one
+    among them shall be elected."
+  assignedto software
+end
+
+declare domprop [ pair_found_if_elected ]
+  name "Pair Found IIf Pair Elected"
+  definition
+    "A pair request/offer is considered as found when a suggestion serving both
+    the request and the offer has been elected."
+end
+
+# Refinee for Achieve [Matching Suggestion Selected]
+
+declare goal [ suggestion_selected ]
+  name "Achieve [Suggestion Selected]"
+  definition
+    "For any encoded need, a proposition shall eventually be selected."
+  refinedby suggestion_proposed, suggestion_selected_when_proposed
+end
+
+declare goal [ suggestion_matching ]
+  name "Maintain [Suggestion Matching]"
+  definition
+    "For any selected suggestion, the request and offer from the suggestion
+    matches."
+  assignedto software
+  obstructedby suggestion_not_matching
+end
+
+# Refinee for Achieve [Suggestion Selected]
+
+declare goal [ suggestion_proposed ]
+  name "Achieve [Suggestion Proposed]"
+  definition
+    "For any encoded request, a set of proposition shall eventually be
+    suggested."
+  assignedto software
+  obstructedby no_suggestion_proposed
+end
+
+declare goal [ suggestion_selected_when_proposed ]
+  name "Achieve [Suggestions Selected When Proposed]"
+  definition
+    "For any encoded request, a suggested proposition shall eventually be
+    selected."
+  refinedby suggestion_selected_when_proposed_driver, 
+    suggestion_selected_when_proposed_passenger
+end
+
+# Refinee for Achieve [Suggestions Selected When Proposed]
+
+declare goal [ suggestion_selected_when_proposed_driver ]
+  name "Achieve [Suggestions Selected When Proposed by Driver]"
+  definition
+    "For any encoded request, a suggested proposition shall eventually be
+    selected by the driver."
+  assignedto driver
+  obstructedby no_passenger_selected
+end
+
+declare goal [ suggestion_selected_when_proposed_passenger ]
+  name "Achieve [Suggestions Selected When Proposed by Passenger]"
+  definition
+    "For any encoded request, a suggested proposition shall eventually be
+    selected by the passenger."
+  assignedto passenger
+  obstructedby no_driver_selected
+end
+
+# Refinee for Achieve [Passenger At Destination When Adequate Pair Found]
+
+declare goal [ ride_planned_when_pair_found ]
+  name "Achieve [Ride Planned When Adequate Pair Found]"
+  definition
+    "For any ride for which a pair was found, the ride shall eventually be
+    planned."
+  refinedby ride_planned_when_pair_elected,
+    pair_found_if_elected
+end
+
+declare goal [ passenger_at_destination_when_ride_planned ]
+  name "Achieve [Passenger At Destination When Ride Planned]"
+  definition
+    "For any planned ride, the corresponding passenger is eventually at the
+    destination specified in her request."
+  refinedby ride_instructions_known,
+    passenger_at_destination_when_instructions_known
+end
+
+# Refinee for Achieve [Ride Planned When Adequate Pair Found]
+
+declare goal [ ride_planned_when_pair_elected ]
+  name "Achieve [Ride Planned When Pair Elected]"
+  definition
+    "For any ride for which a pair has been elected, the ride shall eventually
+    be planned."
+  assignedto software
+  obstructedby ride_not_planned
+end
+
+# Refinee for Achieve [Passenger At Destination When Ride Planned]
+
+declare goal [ ride_instructions_known ]
+  name "Achieve [Ride Instructions Known By Riders When Ride Planned]"
+  definition
+    "For any planned ride, the instructions are known by both riders
+    when the ride is planned."
+  refinedby ride_instructions_sent_when_planned,
+    ride_instructions_read_when_sent,
+    instructions_known_if_read
+end
+
+declare goal [ passenger_at_destination_when_instructions_known ]
+  name "Achieve [Passenger At Destination When Instructions Known]"
+  definition
+    "For any ride for which instructions are known by both driver and
+    passenger, the passenger shall eventually arrive at the destination
+    specified in her request."
+  refinedby passenger_in_driver_car, 
+    passenger_at_destination_when_in_car
+end
+
+# Refinee for Achieve [Ride Instructions Known By Riders When Ride Planned]
+
+declare goal [ ride_instructions_sent_when_planned ]
+  name "Achieve [Ride Instructions Sent When Ride Planned]"
+  definition
+    "For any planned ride, instructions are sent to corresponding passenger and
+    driver."
+  assignedto software
+  obstructedby ride_instructions_not_sent
+end
+
+declare goal [ ride_instructions_read_when_sent ]
+  name "Achieve [Ride Instructions Read When Sent]"
+  definition
+    "For any sent instructions about a ride involving the recipient of the
+    instructions, the recipient shall eventually read these."
+  refinedby ride_instructions_read_by_passenger,
+    ride_instructions_read_by_driver
+end
+
+declare goal [ instructions_known_if_read ]
+  name "Maintain [Instructions Known If Read]"
+  definition
+    "For any read instructions about a ride involving the recipient of the
+    instructions, these shall remain known forever by the rider."
+  refinedby instructions_known_by_passenger,
+    instructions_known_by_driver
+end
+
+# Refinee for Achieve [Ride Instructions Read When Sent]
+
+declare goal [ ride_instructions_read_by_passenger ]
+  name "Achieve [Ride Instructions Read By Passenger]"
+  definition
+    "For any sent instructions, the recipient shall eventually read the
+    instructions."
+  assignedto passenger
+  obstructedby ride_instructions_not_read_by_passenger
+end
+
+declare goal [ ride_instructions_read_by_driver ]
+  name "Achieve [Ride Instructions Read By Driver]"
+  definition
+    "For any sent instructions, the recipient shall eventually read the
+    instructions."
+  assignedto driver
+  obstructedby ride_instructions_not_read_by_driver
+end
+
+# Refinee for Maintain [Instructions Known If Read]
+
+declare goal [ instructions_known_by_passenger ]
+  name "Maintain [Instructions Known By Passenger]"
+  definition
+    "For any read instructions about a ride involving the passenger,
+    instructions shall remain known forever by the passenger."
+  assignedto passenger
+end
+
+declare goal [ instructions_known_by_driver ]
+  name "Maintain [Instructions Known By Driver]"
+  definition
+    "For any read instructions about a ride involving the driver, these shall
+    remain known forever by the driver."
+  assignedto driver
+end
+
+# Refinee for Achieve [Passenger At Destination When Instructions Known]
+
+declare goal [ passenger_in_driver_car ]
+  name "Achieve [Passenger in Driver's Car When Instructions Known]"
+  definition
+    "For any ride for which instructions are known by both passenger and
+    driver, the passenger shall eventually take a seat in driver's car."
+  refinedby riders_at_pickup_point, passenger_in_driver_car_at_pickup_point
+end
+
+declare goal [ passenger_at_destination_when_in_car ]
+  name "Achieve [Passenger At Destination When In Car]"
+  definition
+    "For any ride for which the passenger is in driver's car, that passenger
+    shall eventually arrive at destination specified in the corresponding
+    request."
+  refinedby drop_point_reached_when_passenger_in_car,
+    passenger_at_destination_when_drop_point_reached
+end
+
+# Refinee for Achieve [Passenger in Driver's Car When Instructions Known]
+
+declare goal [ riders_at_pickup_point ]
+  name "Achieve [Riders At Pickup Point When Instructions Known]"
+  definition
+    "Riders shall eventually be at pickup point when instructions are known."
+  refinedby passenger_at_pickup_point_when_instructions_known,
+    driver_at_pickup_point_when_instructions_known,
+    riders_waiting
+end
+
+declare goal [ passenger_in_driver_car_at_pickup_point ]
+  name "Achieve [Passenger In Driver's Car If Riders At Pickup Point]"
+  definition
+    "For any ride of which passenger and driver are at pickup point, the
+    passenger shall eventually take a seat in driver's car."
+  assignedto passenger
+  obstructedby passenger_not_in_car
+end
+
+# Refinee for Achieve [Riders At Pickup Point When Instructions Known]
+
+declare goal [ passenger_at_pickup_point_when_instructions_known ]
+  name "Achieve [Passenger At Pickup Point When Instructions Known]"
+  definition
+    "Passenger shall eventually be at pickup point when instructions are known."
+  assignedto passenger
+  obstructedby passenger_not_at_pickup_point
+end
+
+declare goal [ driver_at_pickup_point_when_instructions_known ]
+  name "Achieve [Driver At Pickup Point When Instructions Known]"
+  definition
+    "Driver shall eventually be at pickup point when instructions are known."
+  assignedto driver
+  obstructedby driver_not_at_pickup_point
+end
+
+declare goal [ riders_waiting ]
+  name "Maintain [Rider Waiting For Other Rider]"
+  definition
+    "For any planned ride, the rider at pickup point shall wait for the other
+    rider to arrive at specified pickup point."
+  refinedby passenger_waiting, driver_waiting
+end
+
+# Refinee for Maintain [Rider Waiting For Other Rider]
+
+declare goal [ passenger_waiting ]
+  name "Maintain [Passenger Waiting For Driver]"
+  definition
+    "For any planned ride, the rider at pickup point shall wait for the other
+    rider to arrive at specified pickup point."
+  assignedto passenger
+end
+
+declare goal [ driver_waiting ]
+  name "Maintain [Driver Waiting For Passenger]"
+  definition
+    "For any planned ride, the passenger at pickup point shall wait for the
+    driver to arrive at specified pickup point."
+  assignedto driver
+end
+
+# Refinee for Achieve [Passenger At Destination When In Car]
+
+declare goal [ drop_point_reached_when_passenger_in_car ]
+  name "Achieve [Drop Point Reached When Passenger In Car]"
+  definition
+    "For any planned ride with a passenger and a driver, if the passenger is in
+    driver's car then both shall eventually be at specified drop point."
+  refinedby instructions_accurate, 
+    instructions_known_when_passenger_in_car, 
+    drop_point_from_instructions
+end
+
+declare goal [ passenger_at_destination_when_drop_point_reached ]
+  name "Achieve [Passenger At Destination When Drop Point Reached]"
+  definition
+    "For any planned ride with a passenger at specified drop location, she
+    shall eventually be at specified destination in her corresponding request."
+  assignedto passenger
+end
+
+# Refinee for Achieve [Drop Point Reached When Passenger In Car]
+
+declare goal [ instructions_accurate ]
+  name "Maintain [Instructions Accurate]"
+  definition
+    "For any ride, the drop point specified in instructions equals the drop
+    point computed for the ride."
+  assignedto software
+end
+
+declare goal [ instructions_known_when_passenger_in_car ]
+  name "Maintain [Instructions Known When Passenger In Car]"
+  definition
+    "For any ride, instructions are known if the passenger is in driver's car."
+  assignedto software
+end
+
+declare goal [ drop_point_from_instructions ]
+  name "Achieve [Drop Point From Instructions Reached When Passenger In Car]"
+  definition
+    "For any ride, driver and passenger shall eventually arrive at drop point
+    specified in corresponding instructions."
+  assignedto driver
+  obstructedby drop_point_not_reached
+end
+
+# Refinee for Achieve [Ride Proposal Eventually Served]
+
+declare goal [ ride_offer_encoded_for_ride_proposal ]
+  name "Achieve [Ride Offer Encoded For Ride Proposal]"
+  definition
+    "For any needed request, the request shall eventually be encoded in the
+    system."
+  assignedto driver
+end
+
+declare goal [ pair_found_when_ride_offer_encoded ]
+  name "Achieve [Adequate Pair Found When Ride Offer Encoded]"
+  definition
+    "A compatible pair containing a request and an offer shall eventually be
+    found for any encoded offer."
+  refinedby ride_request_accurate,
+    pair_found_based_on_accurate_offer
+end
+
+# Refinee for Achieve [Adequate Pair Found When Ride Offer Encoded]
+
+declare goal [ ride_request_accurate ]
+  name "Maintain [Ride Request Accurate]"
+  definition
+    "Ride request shall always be accurate and known by the system."
+  assignedto passenger
+  obstructedby ride_request_not_accurate
+end
+
+# Agents
+
+declare agent [ passenger ]
+  name "Passenger"
+end
+
+declare agent [ driver ]
+  name "Driver"
+end
+
+declare agent [ software ]
+  name "Software"
+end
+
+# Obstacles for Maintain [Ride Offer Accurate] and Maintain [Ride Request Accurate]
+
+declare obstacle [ ride_offer_not_accurate ]
+  name "Ride Offer Not Accurate"
+  definition 
+    "Ride offer encoded in the system does not correspond accurately to a ride
+    proposal in the real world."
+  refinedby fake_ride_offer
+  refinedby ride_offer_outdated
+  refinedby ride_offer_misencoded
+end
+
+declare obstacle [ ride_request_not_accurate ]
+  name "Ride Request Not Accurate"
+  definition 
+    "Ride request encoded in the system does not correspond accurately to a
+    ride need in the real world."
+  refinedby fake_ride_request
+  refinedby ride_request_outdated
+  refinedby ride_request_misencoded
+end
+
+declare obstacle [ fake_ride_offer ]
+  name "Fake Ride Offer"
+  definition 
+    "Ride offer encoded in the system does not correspond to any ride proposal
+    in the real world."
+  probability .1%
+end
+
+declare obstacle [ ride_offer_outdated ]
+  name "Ride Offer Outdated"
+  definition 
+    "Ride offer is out-dated; the author of the offer did not update
+    information yet."
+  probability 1% 
+end
+
+declare obstacle [ ride_offer_misencoded ]
+  name "Ride Offer Miscoded"
+  definition 
+    "Ride offer was miscoded; some information may be missing or inaccurate."
+  refinedby departure_time_misencoded
+  refinedby departure_point_misencoded
+  refinedby arrival_time_misencoded
+  refinedby arrival_point_misencoded
+end
+
+declare obstacle [ fake_ride_request ]
+  name "Fake Ride Request"
+  definition 
+    "Ride request encoded in the system does not correspond to any ride need in
+    the real world."
+  probability .1%
+end
+
+declare obstacle [ ride_request_outdated ]
+  name "Ride Request Out-dated"
+  definition 
+    "Ride request is out-dated; the author of the request did not update
+    information yet."
+  probability 1% 
+end
+
+declare obstacle [ ride_request_misencoded ]
+  name "Ride Request Miscoded"
+  definition 
+    "Ride request origin or destination information is miscoded."
+  refinedby departure_time_misencoded
+  refinedby departure_point_misencoded
+  refinedby arrival_time_misencoded
+  refinedby arrival_point_misencoded
+end
+
+declare obstacle [ departure_time_misencoded ]
+  name "Departure Date/Time Miscoded"
+  definition 
+    "The departure date or time for a ride offer or request encoded in the
+    system does not correspond to the expected date or time in the real world."
+  probability .9%
+end
+
+declare obstacle [ departure_point_misencoded ]
+  name "Departure Point Miscoded"
+  definition 
+    "The departure address for a ride offer or request encoded in the system
+    does not correspond to the expect arrival point in the real world."
+  probability 1.5%
+end
+
+declare obstacle [ arrival_time_misencoded ]
+  name "Arrival Date/Time Miscoded"
+  definition 
+    "The arrival date or time for a ride offer or request encoded in the system
+    does not correspond to the expected date or time in the real world."
+  probability .9%
+end
+
+declare obstacle [ arrival_point_misencoded ]
+  name "Arrival Point Miscoded"
+  definition 
+    "The arrival address for a ride offer or request encoded in the system does
+    not correspond to the expect arrival point in the real world."
+  probability 1.5%
+end
+
+# Obstacles Achieve [Suggestion Proposed]
+
+declare obstacle [ no_suggestion_proposed ]
+  name "No Pair Suggestion Proposed"
+  definition 
+    "The software do not suggest compatible pairs."
+  refinedby no_request_matching
+  refinedby no_offer_matching
+end
+
+declare obstacle [ no_request_matching ]
+  name "No Request Matching Offer"
+  definition 
+    "No request matches the encoded offer."
+  refinedby no_request_matching_time
+  refinedby no_request_matching_position
+end
+
+declare obstacle [ no_offer_matching ]
+  name "No Offer Matching Request"
+  definition 
+    "No offer matches the encoded request."
+  refinedby no_offer_matching_time
+  refinedby no_offer_matching_position
+end
+
+declare obstacle [ no_request_matching_time ]
+  name "No Request Matching For That Time"
+  definition 
+    "No request satisfies the time constraints for the encoded offer."
+  probability 2%
+end
+
+declare obstacle [ no_request_matching_position ]
+  name "No Request Matching For That Position"
+  definition 
+    "No request satisfies the geographic constraints for the encoded offer."
+  probability 1%
+end
+
+declare obstacle [ no_offer_matching_time ]
+  name "No Offer Matching For That Time"
+  definition 
+    "No offer satisfies the time constraints for the encoded request."
+  probability 2%
+end
+
+declare obstacle [ no_offer_matching_position ]
+  name "No Offer Matching For That Position"
+  definition 
+    "No offer satisfies the geographic constraints for the encoded request."
+  probability 1%
+end
+
+# Obstacles for Achieve [Suggestions Selected When Proposed by Passenger] and Achieve [Suggestions Selected When Proposed by Driver]
+
+declare obstacle [ no_driver_selected ]
+  name "No Driver Selected"
+  definition 
+    "No drivers are selected among the suggestions."
+  refinedby no_convenient_suggestion
+  refinedby ride_offer_cancelled_and_ride_list_proposed
+  refinedby ride_request_cancelled_and_ride_list_proposed
+end
+
+declare obstacle [ no_passenger_selected ]
+  name "No Passenger Selected"
+  definition 
+    "No passengers are selected among the suggestions."
+  refinedby no_convenient_suggestion
+  refinedby ride_offer_cancelled_and_ride_list_proposed
+  refinedby ride_request_cancelled_and_ride_list_proposed
+end
+
+declare obstacle [ ride_offer_cancelled_and_ride_list_proposed ]
+  name "Ride Offer Cancelled And Ride List Proposed"
+  definition 
+    "Ride offer is cancelled and the ride list is proposed."
+  probability 2%
+end
+
+declare obstacle [ ride_request_cancelled_and_ride_list_proposed ]
+  name "Ride Request Cancelled And Ride List Proposed"
+  definition 
+    "Ride request is cancelled and the ride list is proposed."
+  probability 2%
+end
+
+declare obstacle [ no_convenient_suggestion ]
+  name "Ride List Not Convenient"
+  definition 
+    "The ride list is not convenient for the driver or the passenger."
+  probability 1%
+end
+
+# Obstacles for Maintain [Suggestion Matching]
+
+declare obstacle [ suggestion_not_matching ]
+  name "Proposition Not Matching When Selected"
+  definition 
+    "When a proposal has been selected, the proposal does not remain matching."
+  refinedby ride_offer_cancelled_when_selected
+  refinedby ride_request_cancelled_when_selected
+  refinedby ride_offer_modified
+  refinedby ride_request_modified
+end
+
+declare obstacle [ ride_offer_modified ]
+  name "Ride Offer Modified"
+  definition 
+    "The ride offer has been selected and is modified such that the
+    modification make the ride offer no longer matching the corresponding
+    request."
+  probability 1%
+end
+
+declare obstacle [ ride_request_modified ]
+  name "Ride Request Modified"
+  definition 
+    "The ride request has been selected and is modified such that the
+    modification make the ride request no longer matching the corresponding
+    offer."
+  probability 1%
+end
+
+declare obstacle [ ride_offer_cancelled_when_selected ]
+  name "Ride Offer Cancelled And Selected"
+  definition 
+    "Ride offer is cancelled and selected."
+  probability 1%
+end
+
+declare obstacle [ ride_request_cancelled_when_selected ]
+  name "Ride Request Cancelled And Selected"
+  definition 
+    "Ride request is cancelled and selected."
+  probability 1%
+end
+
+# Obstacles for Achieve [Ride Planned When Pair Elected]
+
+declare obstacle [ ride_not_planned ]
+  name "Ride Not Planned And Pair Elected"
+  definition 
+    "Ride is not planned but an adequate pair has been elected."
+  refinedby no_compatible_point
+  refinedby no_compatible_time
+  refinedby ride_cancelled
+end
+
+declare obstacle [ no_compatible_point ]
+  name "No Compatible Point"
+  definition 
+    "No pickup or drop point can be computed for the elected pair."
+  refinedby no_compatible_pickup_point
+  refinedby no_compatible_drop_point
+end
+
+declare obstacle [ no_compatible_time ]
+  name "No Compatible Time"
+  definition 
+    "No pickup or drop time can be computed for the elected pair."
+  refinedby no_compatible_pickup_time
+  refinedby no_compatible_drop_time
+end
+
+declare obstacle [ ride_cancelled ]
+  name "Ride Cancelled And Elected"
+  definition 
+    "Ride offer or request is cancelled."
+  refinedby ride_offer_cancelled_and_elected
+  refinedby ride_request_cancelled_and_elected
+end
+
+declare obstacle [ ride_offer_cancelled_and_elected ]
+  name "Ride Offer Cancelled And Elected"
+  definition 
+    "Ride offer is cancelled and selected."
+  probability 1%
+end
+
+declare obstacle [ ride_request_cancelled_and_elected ]
+  name "Ride Request Cancelled And Elected"
+  definition 
+    "Ride request is cancelled and selected."
+  probability 1%
+end
+
+declare obstacle [ no_compatible_pickup_point ]
+  name "No Compatible Pickup Point Found"
+  definition 
+    "No pickup point can be computed for the elected pair."
+  refinedby no_pickup_point_accessible
+  refinedby no_pickup_point_near_origin
+  refinedby detour_for_pickup_point
+end
+
+declare obstacle [ no_compatible_drop_point ]
+  name "No Compatible Drop Point Found"
+  definition 
+    "No drop point can be computed for the elected pair."
+  refinedby no_drop_point_accessible
+  refinedby no_drop_point_near_origin
+  refinedby detour_for_drop_point
+end
+
+declare obstacle [ no_pickup_point_near_origin ]
+  name "No Pickup Point Near Departure Point"
+  definition 
+    "Given a compatible pair of request / offer, no pickup point is located
+    within 1km from the departure point of the passenger."
+  probability .5%
+end
+
+declare obstacle [ detour_for_pickup_point ]
+  name "Detour Too Important For Reaching Pickup Point"
+  definition 
+    "Detour made by driver to reach the pickup point from her route exceeds 3
+    km."
+  probability 1%
+end
+
+declare obstacle [ no_pickup_point_accessible ]
+  name "No Pickup Point Accessible To Driver And Passenger"
+  definition 
+    "No pickup point is accessible to both driver and passenger."
+  refinedby no_pickup_point_driver
+  refinedby no_pickup_point_passenger
+end
+
+declare obstacle [ no_pickup_point_driver ]
+  name "No Pickup Point Accessible To Driver"
+  definition 
+    "No pickup point is accessible to driver."
+  probability .5%
+end
+
+declare obstacle [ no_pickup_point_passenger ]
+  name "No Pickup Point Accessible To Passenger"
+  definition 
+    "No pickup point is accessible to passenger."
+  probability .5%
+end
+
+declare obstacle [ no_drop_point_near_origin ]
+  name "No Drop Point Near Destination"
+  definition 
+    "Given a compatible pair of request / offer, no drop point is located
+    within 1km from the destination of the passenger."
+  probability 1%
+end
+
+declare obstacle [ detour_for_drop_point ]
+  name "Detour Too Important For Reaching Drop Point"
+  definition 
+    "Detour made by driver to reach the drop point from her route exceeds 3
+    km."
+  probability .5%
+end
+
+declare obstacle [ no_drop_point_accessible ]
+  name "No Drop Point Accessible To Driver And Passenger"
+  definition 
+    "No drop point is accessible to both driver and passenger."
+  refinedby no_drop_point_driver
+  refinedby no_drop_point_passenger
+end
+
+declare obstacle [ no_drop_point_driver ]
+  name "No Drop Point Accessible To Driver"
+  definition 
+    "No drop point is accessible to driver."
+  probability .5%
+end
+
+declare obstacle [ no_drop_point_passenger ]
+  name "No Drop Point Accessible To Passenger"
+  definition 
+    "No drop point is accessible to passenger."
+  probability .5%
+end
+
+declare obstacle [ no_compatible_pickup_time ]
+  name "No Compatible Pickup Time Found"
+  definition 
+    "No pickup time can be computed for the elected pair."
+  refinedby pickup_time_incompatible_with_point
+  refinedby pickup_time_incompatible_with_pickups
+  refinedby journey_longer_than_expected
+end
+
+declare obstacle [ no_compatible_drop_time ]
+  name "No Compatible Drop Time Found"
+  definition 
+    "No drop time can be computed for the elected pair."
+  refinedby drop_time_incompatible_with_drop
+  refinedby drop_time_incompatible_with_pickups
+  refinedby journey_longer_than_expected
+end
+
+declare obstacle [ pickup_time_incompatible_with_point ]
+  name "Pickup Time Incompatible With Road And Pickup Point"
+  definition 
+    "No compatible pickup time can be computed to reach the computed pickup
+    point at that time."
+  probability 0.5%
+end
+
+declare obstacle [ pickup_time_incompatible_with_pickups ]
+  name "Pickup Time Incompatible With Other Pickups"
+  definition 
+    "No compatible pickup time can be computed to reach the computed pickup
+    point at that time due to other pickups."
+  probability 0.5%
+end
+
+declare obstacle [ journey_longer_than_expected ]
+  name "Journey Longer Than Proposed Time"
+  definition 
+    "Journey is too long to pickup and drops the passenger within time
+    constraints."
+  probability 0.5%
+end
+
+declare obstacle [ drop_time_incompatible_with_drop ]
+  name "Drop Time Incompatible With Road And Drop Point"
+  definition 
+    "No compatible drop time can be computed to reach the computed drop point
+    at that time."
+  probability 0.5%
+end
+
+declare obstacle [ drop_time_incompatible_with_pickups ]
+  name "Drop Time Incompatible With Other Pickups"
+  definition 
+    "No compatible drop time can be computed to reach the computed drop point
+    at that time due to other pickups."
+  probability 0.5%
+end
+
+# Obstacles for Achieve [Ride Instructions Sent When Ride Planned]
+
+declare obstacle [ ride_instructions_not_sent ]
+  name "Ride Instructions Not Sent When Ride Planned"
+  definition 
+    "Ride instructions are not sent but the ride is planned"
+  refinedby wrong_contact_info
+  refinedby failed_communication
+end
+
+declare obstacle [ wrong_contact_info ]
+  name "Wrong Contact Information"
+  definition 
+    "The contact information about the ride are not accurate."
+  probability 7.0%
+end
+
+declare obstacle [ failed_communication ]
+  name "Failed Communication"
+  definition 
+    "The communication with the ride fail."
+  probability 3%
+end
+
+# Obstacles for Achieve [Ride Instructions Read By Passenger] and Achieve [Ride Instructions Read By Driver]
+
+declare obstacle [ ride_instructions_not_read_by_driver ]
+  name "Ride Instructions Not Read By Driver And Sent"
+  definition 
+    "The sent instructions are not read by the driver."
+  refinedby unreadable_instructions
+  refinedby readable_instruction_not_read_by_driver
+end
+
+declare obstacle [ ride_instructions_not_read_by_passenger ]
+  name "Ride Instructions Not Read By Passenger And Sent"
+  definition 
+    "The sent instructions are not read by the passenger."
+  refinedby unreadable_instructions
+  refinedby readable_instruction_not_read_by_passenger
+end
+
+declare obstacle [ unreadable_instructions ]
+  name "Ride Instruction Not Readable"
+  definition 
+    "The ride instructions are not readable by the rider."
+  refinedby instructions_language
+  refinedby printing_failed
+end
+
+declare obstacle [ readable_instruction_not_read_by_passenger ]
+  name "Readable Instruction Not Read By Passenger"
+  definition 
+    "The instructions are readable but not read by passenger."
+  refinedby ride_request_cancelled_and_instructions_sent
+end
+
+declare obstacle [ readable_instruction_not_read_by_driver ]
+  name "Readable Instruction Not Read By Driver"
+  definition 
+    "The instructions are readable but not read by driver."
+  refinedby ride_offer_cancelled_and_instructions_sent
+end
+
+declare obstacle [ ride_offer_cancelled_and_instructions_sent ]
+  name "Ride Offer Cancelled And Instructions Sent"
+  definition 
+    "Ride offer is cancelled and instructions are sent."
+  probability 1.5%
+end
+
+declare obstacle [ ride_request_cancelled_and_instructions_sent ]
+  name "Ride Request Cancelled And Instructions Sent"
+  definition 
+    "Ride request is cancelled and instructions are sent."
+  probability 1.5%
+end
+
+declare obstacle [ instructions_language ]
+  name "Instruction In Wrong Language"
+  definition 
+    "Language of the ride instructions is not understood by the rider."
+  probability .5%
+end
+
+declare obstacle [ printing_failed ]
+  name "Printing Failed"
+  definition 
+    "Printing the ride instructions failed."
+  probability 1%
+end
+
+## PROBLEM
+
+# Obstacles for Achieve [Passenger In Driver's Car If Riders At Pickup Point]
+
+declare obstacle [ passenger_not_in_car ]
+  name "Passenger Never In Driver's Car And Riders At Pickup Point"
+  definition 
+    "The passenger is never in the driver's car but both riders are at the
+    specified pickup point."
+  refinedby not_enough_place
+  refinedby riders_do_not_find
+  refinedby last_minute_disagreement
+end
+
+declare obstacle [ not_enough_place ]
+  name "Not Enough Place In Car"
+  definition 
+    "There is not enough places in the driver's car."
+  refinedby too_many_luggage
+  refinedby too_many_riders
+  refinedby not_enough_seats
+end
+
+declare obstacle [ riders_do_not_find ]
+  name "Riders Do Not Find Each Other"
+  definition 
+    "The riders do not find each other."
+  refinedby riders_do_not_recognize
+  refinedby imprecise_location
+end
+
+declare obstacle [ last_minute_disagreement ]
+  name "Last Minutes Disagreement"
+  definition 
+    "Passenger and driver disagree at the last minutes."
+  refinedby ride_request_cancelled_last_minute
+  refinedby ride_offer_cancelled_last_minute
+end
+
+declare obstacle [ ride_offer_cancelled_last_minute ]
+  name "Ride Offer Cancelled Last Minute"
+  definition 
+    "Ride offer is cancelled within the last minutes."
+  probability 3%
+end
+
+declare obstacle [ ride_request_cancelled_last_minute ]
+  name "Ride Request Cancelled Last Minute"
+  definition 
+    "Ride request is cancelled within the last minutes."
+  probability 2%
+end
+
+declare obstacle [ too_many_luggage ]
+  name "Too Many Luggage"
+  definition 
+    "There is too many luggages in the driver's car, precluding the passenger
+    to take a seat."
+  probability .5%
+end
+
+## END
+
+declare obstacle [ too_many_riders ]
+  name "Too Many Riders"
+  definition 
+    "There is too many riders in the driver's car, precluding the passenger to
+    take a seat."
+  probability .5%
+end
+
+declare obstacle [ not_enough_seats ]
+  name "Not Enough Seats"
+  definition 
+    "There is not enough available seats in the driver's car, precluding the
+    passenger to take a seat."
+  probability .5%
+end
+
+declare obstacle [ riders_do_not_recognize ]
+  name "Riders Do Not Recognize"
+  definition 
+    "Riders do not recognize each other."
+  probability 1%
+end
+
+declare obstacle [ imprecise_location ]
+  name "Location Imprecise"
+  definition 
+    "Location is sufficiently imprecise so that the passenger and driver do not
+    find each other."
+  probability 2%
+end
+
+# Obstacles for Achieve [Passenger At Pickup Point When Instructions Known] and Achieve [Driver At Pickup Point When Instructions Known]
+
+declare obstacle [ passenger_not_at_pickup_point ]
+  name "Instructions Known And Passenger Not At Pickup Point"
+  definition 
+    "Instructions are known by the passenger but the passenger is not at pickup
+    point within time constraints."
+  refinedby passenger_late
+  refinedby passenger_never_at_pickup_point
+end
+
+declare obstacle [ driver_not_at_pickup_point ]
+  name "Instructions Known And Driver Not At Pickup Point"
+  definition 
+    "Instructions are known by the driver but the driver is not at pickup
+    point."
+  refinedby driver_late
+  refinedby driver_never_at_pickup_point
+end
+
+declare obstacle [ passenger_late ]
+  name "Passenger Late At Pickup Point"
+  definition 
+    "Passenger eventually reach the pickup point but not within time
+    constraints."
+  probability 6%
+end
+
+declare obstacle [ driver_late ]
+  name "Driver Late At Pickup Point"
+  definition 
+    "Driver eventually reach the pickup point but not within time
+    constraints."
+  probability 2%
+end
+
+declare obstacle [ passenger_never_at_pickup_point ]
+  name "Passenger Never At Pickup Point"
+  definition 
+    "Passenger never reaches the pickup point."
+  refinedby passenger_forgot
+  refinedby passenger_lost
+  refinedby instructions_not_received_in_time
+  refinedby pickup_point_unreachable_by_passenger
+  refinedby ride_request_cancelled_driver_at_pickup
+  refinedby passenger_at_wrong_pickup_point
+end
+
+declare obstacle [ driver_never_at_pickup_point ]
+  name "Driver Never At Pickup Point"
+  definition 
+    "Driver never reaches the pickup point."
+  refinedby driver_forgot
+  refinedby driver_lost_to_pickup_point, driver_gps_broken
+  refinedby instructions_not_received_in_time
+  refinedby pickup_point_unreachable_by_driver
+  refinedby ride_offer_cancelled_passenger_at_pickup
+  refinedby driver_at_wrong_pickup_point, driver_gps_broken
+end
+
+declare obstacle [ ride_request_cancelled_driver_at_pickup ]
+  name "Ride Request Cancelled And Driver At Pickup Point"
+  definition 
+    "The ride request is cancelled and the driver is at pickup point."
+  probability 1%
+end
+
+declare obstacle [ ride_offer_cancelled_passenger_at_pickup ]
+  name "Ride Offer Cancelled And Passenger At Pickup Point"
+  definition 
+    "The ride offer is cancelled and the passenger is at pickup point."
+  probability 1%
+end
+
+declare obstacle [ passenger_forgot ]
+  name "Passenger Forgot"
+  definition 
+    "Passenger forgot to go the specified pickup point"
+  probability 1%
+end
+
+declare obstacle [ driver_forgot ]
+  name "Driver Forgot"
+  definition 
+    "Driver forgot to go the specified pickup point"
+  probability 2%
+end
+
+declare obstacle [ passenger_lost ]
+  name "Passenger Get Lost"
+  definition 
+    "Passenger gets lost."
+  probability 2%
+end
+
+declare obstacle [ driver_gps_broken ]
+  name "Driver GPS Broken Down"
+  definition 
+    "The driver GPS is not working."
+  probability 20%
+end
+
+declare obstacle [ driver_lost_to_pickup_point ]
+  name "Driver Get Lost To Pickup Point When GPS Broken"
+  definition 
+    "Driver gets lost on its way to the pickup point when its GPS is broken."
+  probability 30%
+end
+
+declare obstacle [ instructions_not_received_in_time ]
+  name "Instructions Not Received In Time"
+  definition 
+    "Instructions for reaching the pickup point arrives too late."
+  probability 2%
+end
+
+declare obstacle [ pickup_point_unreachable_by_passenger ]
+  name "Pickup Point Not Reachable To Passenger"
+  definition 
+    "Pickup point is not reachable to passenger."
+  probability .5%
+end
+
+declare obstacle [ pickup_point_unreachable_by_driver ]
+  name "Pickup Point Not Reachable To Driver"
+  definition 
+    "Pickup point is not reachable to driver."
+  probability .5%
+end
+
+declare obstacle [ passenger_at_wrong_pickup_point ]
+  name "Passenger At Wrong Pickup Point"
+  definition 
+    "Passenger reaches an other, wrong, pickup point."
+  refinedby pickup_point_confused
+  refinedby unclear_instructions
+end
+
+declare obstacle [ driver_at_wrong_pickup_point ]
+  name "Driver At Wrong Pickup Point"
+  definition 
+    "Driver reaches an other, wrong, pickup point."
+  refinedby pickup_point_confused
+  refinedby unclear_instructions
+end
+
+declare obstacle [ pickup_point_confused ]
+  name "Pickup Point Confused"
+  definition 
+    "Tow pickup points are confused."
+  probability 1%
+end
+
+declare obstacle [ unclear_instructions ]
+  name "Instructions Not Clear"
+  definition 
+    "Instructions are not clear."
+  probability .5%
+end
+
+# Obstacles for Achieve [Drop Point From Instructions Reached When Passenger In Car]
+
+declare obstacle [ drop_point_not_reached ]
+  name "Drop Point Not Reached When Passenger In Car"
+  definition 
+    "Drop point is not reached within time constraints when the passenger is in car."
+  refinedby drop_point_not_reached_in_time
+  refinedby drop_point_never_reached
+end
+
+declare obstacle [ drop_point_not_reached_in_time ]
+  name "Drop Point Not Reached In Time"
+  definition 
+    "Drop point is reached late when the passenger is in car."
+  refinedby other_passenger_late
+  refinedby detour_on_planned_road
+  refinedby stuck_in_traffic_jam
+  refinedby wrong_instructions_sent
+end
+
+declare obstacle [ drop_point_never_reached ]
+  name "Drop Point Never Reached"
+  definition 
+    "Drop point is never reached when the passenger is in car."
+  refinedby wrong_instructions_sent
+  refinedby car_broke_down
+  refinedby driver_lost, driver_gps_broken
+  refinedby drop_point_innaccessible
+  refinedby driver_at_other_drop_point
+end
+
+declare obstacle [ other_passenger_late ]
+  name "Other Passenger Late"
+  definition 
+    "Drop point for a given passenger is reached late due to other passengers pickuped late."
+  probability .5%
+end
+
+declare obstacle [ detour_on_planned_road ]
+  name "Detour On Planned Road"
+  definition 
+    "Unexpected and unplanned detour is required to reach the drop point."
+  probability 1.5%
+end
+
+declare obstacle [ stuck_in_traffic_jam ]
+  name "Stuck In Traffic Jams"
+  definition 
+    "Driver's car is stuck, with passenger, in traffic jams."
+  probability 10%
+end
+
+declare obstacle [ wrong_instructions_sent ]
+  name "Wrong instructions Sent"
+  definition 
+    "Sent instructions are inaccurate."
+  probability .1%
+end
+
+declare obstacle [ car_broke_down ]
+  name "Car Broken Down"
+  definition 
+    "Driver's car broke down, when passenger is in car."
+  probability .5%
+end
+
+declare obstacle [ driver_lost ]
+  name "Driver Get Lost To Drop Point When GPS Broken Down"
+  definition 
+    "Driver gets lost on its way to the drop point."
+  probability 20%
+end
+
+declare obstacle [ drop_point_innaccessible ]
+  name "Drop Point Inaccessible By Car"
+  definition 
+    "The planned drop point is inaccessible by car."
+  probability .5%
+end
+
+declare obstacle [ driver_at_other_drop_point ]
+  name "Driver At Other Drop Point"
+  definition 
+    "Driver reach another drop point than the specified one."
+  refinedby drop_point_confused
+  refinedby unclear_instructions
+end
+
+declare obstacle [ drop_point_confused ]
+  name "Drop Point Confused"
+  definition 
+    "Two plausible drop points are confused by both the driver and the
+    passenger."
+  probability 1%
+end
+

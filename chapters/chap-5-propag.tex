@@ -1,0 +1,75 @@
+% !TEX root = thesis.tex
+
+\placetable[top][tab:propag_1]{Propagation for Common Refinement Patterns.}
+{
+\setupTABLE[r][1][style=bold,align=middle]
+\setupTABLE[c][1][align={middle,lohi}]
+\setupTABLE[c][each][loffset=1pt,roffset=1pt]
+\bTABLE															
+\bTABLEhead																								
+\bTR	\bTD	Refinement Pattern	\eTD	\bTD[nc=2]		Applied operator		\eTD						\bTD[nc=2]		Operator(s) to apply		\eTD						\eTR
+\eTABLEhead																								
+\bTABLEbody																					
+\bTR	\bTD[nr=6]	\dontleavehmode\externalfigure[../images/chap5/milestone.pdf][scale=1000] Milestone-Driven 	\eTD	\bTD[nr=2]	$	PG	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	G_2	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR				\bTD[nr=2]	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR				\bTD[nr=2]	$	G_2	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	G_2	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR	\bTD[nr=8] \dontleavehmode\externalfigure[../images/chap5/by_case.pdf][scale=1000]	Case-Driven 		\eTD	\bTD[nr=4]	$	PG	$	\eTD	\bTD[nr=2]	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR														\bTD	$	G_2	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD[nr=2]	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	G_1	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR														\bTD	$	G_2	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR				\bTD[nr=2]	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR				\bTD[nr=2]	$	G_2	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR	\bTD[nr=13] \dontleavehmode\externalfigure[../images/chap5/guard_introduction.pdf][scale=1000]	Guard-Introduction 	\eTD	\bTD[nr=4]	$	PG	$	\eTD	\bTD[nr=2]	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR														\bTD	$	G_2	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD[nr=2]	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	G_1	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR														\bTD	$	G_3	$	\eTD	\bTD	$	AddDisjunct(P W E)	$	\eTD	\eTR
+\bTR				\bTD[nr=2]	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR				\bTD[nr=3]	$	G_2	$	\eTD	\bTD[nr=2]	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR													\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR				\bTD[nr=4]	$	G_3	$	\eTD	\bTD[nr=3]	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR														\bTD	$	G_2	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR														\bTD	$	PG	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\eTABLEbody
+\eTABLE
+}
+
+\placetable[top][tab:propag_2]{Propagation for Common Refinement Patterns (cont.).}
+{
+\setupTABLE[r][1][style=bold,align=middle]
+\setupTABLE[c][1][align={middle,lohi}]
+\setupTABLE[c][each][loffset=1pt,roffset=1pt]
+\bTABLE															
+\bTABLEhead																								
+\bTR	\bTD	Refinement Pattern	\eTD	\bTD[nc=2]		Applied operator		\eTD						\bTD[nc=2]		Operator(s) to apply		\eTD						\eTR
+\eTABLEhead																								
+\bTABLEbody																					
+\bTR	\bTD[nr=8] \dontleavehmode\externalfigure[../images/chap5/divide_and_conquer.pdf][scale=1000]  Divide-and-conquer \eTD	\bTD[nr=4]	$	PG	$	\eTD	\bTD[nr=2]	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR														\bTD	$	G_2	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD[nr=2]	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	G_1	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR														\bTD	$	G_2	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR				\bTD[nr=2]	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR				\bTD[nr=2]	$	G_2	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR	\bTD[nr=6]	\dontleavehmode\externalfigure[../images/chap5/unrealizability.pdf][scale=1000]	Unrealizability-driven \eTD	\bTD[nr=2]	$	PG	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	G_1	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR				\bTD[nr=2]	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR				\bTD[nr=2]	$	G_2	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\bTD[nr=2,nc=2,align={middle,lohi}]		Ad-hoc							\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD											\eTR
+\bTR	\bTD[nr=5]	\dontleavehmode\externalfigure[../images/chap5/unmonitorability.pdf][scale=1000]	Unmonitorability-driven \eTD	\bTD[nr=2]	$	PG	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	G_1	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR				\bTD[nr=2]	$	G_1	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\eTR
+\bTR									\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\bTD	$	PG	$	\eTD	\bTD	$	AddDisjunct(\Theta E)	$	\eTD	\eTR
+\bTR				\bTD	$	G_2	$	\eTD	\bTD	$	AddConjunct(\Theta E)	$	\eTD	\bTD[nc=2,align={middle,lohi}]		Ad-hoc							\eTD	\eTR
+\eTABLEbody
+\eTABLE
+}

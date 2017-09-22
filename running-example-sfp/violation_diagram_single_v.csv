@@ -1,0 +1,15 @@
+combination,combination_probability,violation_severity
+Alarm Not Raised And Low Water,0.002,-0.00800000000000001
+Make Up Water Not Requested And Alarm Raised,0.0003,-0.00970000000000004
+Valve Mechanical Failure,0.002,-0.00800000000000001
+Unavailable Due To Maintenance,0.0008,-0.00919999999999999
+Valve Electrical Failure,0.002,-0.00800000000000001
+Pump Mechanical Failure,0.1314,0.1214
+UPS Battery Failure,0.021,0.011
+Primary Power Supply Down,0.0438,-0.01
+Diesel Generator Failure,0.0096,-0.01
+Power Cabling Failure,0.01752,0.00751999999999997
+Pump Electrical Failure,0.00876,-0.00124000000000002
+Diesel Generator Not Started,0.002,-0.01
+Switch Failure,0.00876,-0.01
+Valve Not Opened When Valve Control Not Unavailable,0.0001,-0.01

@@ -1,0 +1,32 @@
+% !TEX root = thesis.tex
+
+\startcomponent chap-13
+\environment common
+\product thesis
+
+\chapter {Random Notes and Thoughts}
+
+  \section {Generalizing the aggregation of state probabilities}
+
+    The current technique aggregate the state probabilities by taking
+    the smallest probability (for goals), and the largest probability (for obstacles).
+    
+    This gives a pessimistic view of the system, i.e. in the worst case, our system 
+    provides a satisfaction rate of XXX.
+    
+    An other approach might be interrested in an optimistic view of the system, i.e.
+    in the best case, our system provides a satisfaction rate of XXX (which, interestingly might not be 1.)
+    In the context of anti-goal, this might make more sense.
+    
+    We might be interested in averaging the probabilities (possibly by weighting
+    the states according the frequency we are likely to visit these). 
+    
+    More generaly, we might aggregate the state probabilities using a {\it r-norm}:
+    
+    \startformula
+      P(G) = \left(\sum_{s \in States} w_s\cdot p_s^r\right)^{1/r}
+    \stopformula
+    
+    Somes combinations are likely to preserve somes properties while violating others.
+
+\stopcomponent

@@ -1,0 +1,43 @@
+@using UCLouvain.KAOSTools.Core
+@using UCLouvain.KAOSTools.Core.SatisfactionRates
+@model KAOSModel
+
+\bTABLE
+\bTR\bTD Obstacle \eTD\bTD SatRate \eTD\bTD Obstacle \eTD\bTD SatRate \eTD\eTR
+@{
+  var leafs = Model.LeafObstacles().ToArray();
+  for(int i = 0; i < leafs.Count(); i = i + 2)
+	{
+    var item = leafs[i];
+		var satrate = (DoubleSatisfactionRate) Model.satisfactionRateRepository.GetObstacleSatisfactionRate(item.Identifier);
+    @Raw("\\bTR\\bTD ")
+    @Raw(item.FriendlyName)
+    @Raw("\\eTD\\bTD ")
+    if (satrate == null) {
+      @Raw("N.A.")
+    } else { 
+      @Raw(string.Format("{0:P1}", satrate.SatisfactionRate).Replace(" %","\\%"))
+    }
+    @Raw(" \\eTD\n")
+    
+    if (i+1 < leafs.Count()) {
+      var item2 = leafs[i+1];
+		  var satrate2 = (DoubleSatisfactionRate) Model.satisfactionRateRepository.GetObstacleSatisfactionRate(item2.Identifier);
+      
+      @Raw("\\bTD ")
+      @Raw(item2.FriendlyName)
+      @Raw("\\eTD\\bTD ")
+
+      if (satrate2 == null) { 
+        @Raw("N.A.")
+      } else { 
+        @Raw(string.Format("{0:P1}", satrate2.SatisfactionRate).Replace(" %","\\%"))
+      }
+      @Raw(" \\eTD\\eTR\n")
+      
+    } else {
+      @Raw(" \\bTD\\eTD\\bTD\\eTD\\eTR\n")
+    }    
+	}
+}
+\eTABLE

@@ -1,0 +1,210 @@
+
+\usebtxdataset[../bib-thesis.bib]
+\usebtxdefinitions[aps]
+
+\setupbtx
+  [alternative=tag,
+   authorconversion=normalshort,
+   interaction=start]
+\setupbtx
+  [aps:cite]
+  [alternative=tag]
+
+\setupbtxlist
+  [aps]
+  [alternative=b,		
+   distance=0\emwidth,			% distance between key and text?
+   width=5\emwidth,   
+   margin=0\emwidth, 			% hanging margin
+   numbering=tag,
+   sorttype=tag
+  ]
+
+\definebtxrendering
+  [mystyle]
+  [aps] % inherits from "aps"
+  [sorttype=tag,
+   numbering=tag]
+   
+   
+\startbtxrenderingdefinitions[aps]
+
+\definebtx
+  [aps:\s!list:editor-in]
+  [aps:\s!list]
+  [\c!style=\v!italic]
+
+\starttexdefinition unexpanded btx:aps:title:quoted
+    \btxdoif {title} {
+        % we make the title active, opening file
+        \btxdoifelse {file} {
+            \texdefinition{btx:format:inject}
+                {url(file:\btxflush{file})}
+                {
+                    \texdefinition{btx:aps:composed-title}{title}
+                }
+        } {
+            "\texdefinition{btx:aps:composed-title}{title}"
+        }
+        \btxcomma
+    }
+\stoptexdefinition
+
+\starttexdefinition unexpanded btx:aps:optional-title:quoted
+    \doif{\btxparameter{\c!title}}\v!yes {
+        \texdefinition {btx:aps:title:quoted}
+    }
+\stoptexdefinition
+
+\starttexdefinition unexpanded btx:aps:editor-in
+    \btxdoif {booktitle} {
+        \btxlabeltext{aps:In}
+        \btxstartstyleandcolor [aps:\s!list:editor-in]
+        \doifnot {\btxfoundname{author}} {editor} {
+            \btxspace
+            \texdefinition{btx:aps:author-or-editor} {editor}
+        }
+        \btxspace
+        \texdefinition{btx:aps:composed-title}{booktitle}
+        \btxstopstyleandcolor
+        \btxcomma
+    }
+\stoptexdefinition
+
+\startsetups btx:aps:list:inproceedings
+    \texdefinition{btx:aps:author}
+    \texdefinition{btx:aps:title:quoted}
+    \texdefinition{btx:aps:editor-in}
+    \texdefinition{btx:aps:editionset}
+    \btxdoif {organization} {
+        \btxspace
+        \btxflush{organization}
+        \btxcomma
+    }
+    \texdefinition{btx:aps:doi-url} {\texdefinition{btx:aps:publisher-wherefrom-year}}
+    \texdefinition{btx:aps:note}
+\stopsetups
+
+\startsetups btx:aps:list:article
+    \texdefinition{btx:aps:author}
+    \texdefinition{btx:aps:optional-title:quoted}
+    \texdefinition{btx:aps:doi-url} {\texdefinition{btx:aps:journal-volume-year}}
+    \texdefinition{btx:aps:note}
+\stopsetups
+
+\startsetups btx:aps:list:webpage
+    \texdefinition{btx:aps:author}
+    \texdefinition{btx:aps:optional-title:quoted}
+    \texdefinition{btx:aps:url}
+    \btxcomma
+    \texdefinition{btx:aps:year}
+\stopsetups
+
+\starttexdefinition btx:aps:url
+    \ifconditional\btxinteractive
+        \goto {\hyphenatedurl{\btxflush{url}}} [url(\btxflush{url})]
+    \else
+        \hyphenatedurl{\btxflush{url}}
+    \fi
+\stoptexdefinition
+
+\startsetups btx:aps:list:misc
+    \texdefinition{btx:aps:author}
+    \texdefinition{btx:aps:title}
+    \btxdoif {organization} {
+        \btxspace
+        \btxflush{organization}
+        \btxperiod
+    }
+    \btxdoif {howpublished} {
+        \btxspace
+        \btxflush{howpublished}
+    }
+    \texdefinition{btx:aps:year}
+\stopsetups
+
+\starttexdefinition btx:aps:journal-volume-year
+    \btxdoif {journal} {
+        \btxstartstyleandcolor [aps:list:journal]
+            % expandedjournal abbreviatedjournal
+            \btxflush{expandedjournal -> journal}
+        \btxstopstyleandcolor
+        \btxdoifelse {volume} {
+            \btxspace
+            \btxstartstyleandcolor [aps:list:volume]
+                \btxflush{volume}
+            \btxstopstyleandcolor
+            \btxdoif {number} {
+                \removeunwantedspaces(
+                \btxflush{number}
+                \btxrightparenthesiscomma
+            }
+        } {
+            \btxdoif {number} {
+                \btxspace
+                \btxflush{number}
+                \btxcomma
+            }
+        }
+        \btxdoif {pages} {
+            \btxspace
+            \btxflush{pages}
+        }
+    }
+    \btxcomma
+    \texdefinition{btx:aps:year}
+\stoptexdefinition
+
+\starttexdefinition unexpanded btx:aps:publisher-wherefrom-year
+    \removeunwantedspaces
+    \removepunctuation
+    \btxcomma
+    \btxflush{publisher}
+    \btxdoifelse {address} {
+        \btxdoif {publisher} {
+            \btxcomma
+        }
+        \btxflush{address}
+        \btxdoif {country} {
+            \btxcomma
+            \btxflush{country}
+        }
+        \btxcomma
+    } {
+        \btxdoif {publisher} {
+            \btxcomma
+        }
+    }
+    \texdefinition{btx:aps:year}
+\stoptexdefinition
+
+\stopbtxrenderingdefinitions
+
+\starttext
+\startbodymatter
+  
+    \startitemize
+    \item \cite[num][Cai12a]
+    \item \cite[textnum][Cai12a]
+    \item \cite[authornum][Cai12a]
+    \item \cite[authoryear][Cai12a]
+    \item \cite[authoryears][Cai12a]
+    \item \cite[short][Cai12a]
+    \item \cite[tag][Cai12a]
+    \item \cite[index][Cai12a]
+    \item \cite[category][Cai12a]
+    \item \cite[author][Cai12a]
+    \item \cite[year][Cai12a]
+    \item \cite[title][Cai12a]
+    \item \cite[keywords][Cai12a]
+    \item \cite[none][Cai12a]
+    \item \cite[entry][Cai12a]
+    \stopitemize
+
+\stopbodymatter
+\startbackmatter
+\startchapter[title=Bibliography]
+\placelistofpublications
+\stopchapter
+\stopbackmatter
+\stoptext
