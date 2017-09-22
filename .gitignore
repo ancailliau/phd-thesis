@@ -21,3 +21,4 @@ test-context
 *.mpo
 *.mpx
 *.synctex
+case-studies/car-pooling/violation_diagram2.csv
