@@ -9,17 +9,17 @@
 	 title={From Certain Values to Uncertain Values}]
   
   Requirements engineers faces uncertainties in a variety of facets of the
-  system-to-be \cite[Che09c,Esf13a,Let14a,Wel10a,Per14a]. In particular, the
+  system-to-be \cite[Che09c,Esf13,Let14,Wel10,Per14]. In particular, the
   extend to which the requirements are satisfied is uncertain. This type of
   uncertainty is the physical uncertainty, referring to the system phenomena
-  \cite[OHa06a,Vos08a,Per14a]. For example, the chance of a sensor breaking
+  \cite[OHa06a,Vos08,Per14]. For example, the chance of a sensor breaking
   down might be defined by a probability. This is domain-level form of
   uncertainty can be reduced by changing the system under
   consideration\emdash{}e.g., by introduction of appropriate countermeasures as
   seen in the previous chapter. However, the extend to which these
   probabilities are accurate is uncertain as well. This uncertainty is the
   knowledge uncertainty, referring to the assessment of physical uncertainty by
-  experts \cite[OHa06a,Vos08a,Per14a]. Our imperfect knowledge of what the
+  experts \cite[OHa06a,Vos08,Per14]. Our imperfect knowledge of what the
   exact probability value is, might lead us to estimate it with some uncertainty
   margin. Such meta-level form of uncertainty can be reduced through further
   studies, consultation of more experts, increased experience, run-time
@@ -64,7 +64,7 @@
   
     Probability distributions are commonly used in risk analysis for
     representing the uncertainty about single-point values of random variables
-    \cite[Vos08a]. A probability distribution is a function assigning a
+    \cite[Vos08]. A probability distribution is a function assigning a
     specific probability to each possible single-point value in some domain.
     The domain considered here is the set of possible probability values, that
     is, the interval $[0, 1]$. This section extends the probabilistic
@@ -185,7 +185,7 @@
     	the semi-standard deviation of its probability distribution with respect
     	to this RSR. The semi-standard deviation of the distribution is used here
     	for measuring spread; It differs from standard deviation as only values
-    	below a threshold are taken into account \cite[Roh11a]\emdash{}here, below
+    	below a threshold are taken into account \cite[Roh11]\emdash{}here, below
     	the RSR.
 
       \startformula
@@ -208,7 +208,7 @@
     	Uncertainty spread values need to be interpreted according to the shape
     	of the curve. Whatever the shape, however, Chebyshev's inequality states
     	that at least 75\% of the data are at most at 2 spread values from $RSR(G)$
-    	\cite[Wac07a]. If the goal's satisfaction uncertainty fits a specific
+    	\cite[Wac07]. If the goal's satisfaction uncertainty fits a specific
     	probability distribution, tighter bounds can be obtained.
 
     	Back to our example, the goal \goal{Achieve [Make Up Water Provided When
@@ -222,18 +222,18 @@
       To facilitate the elicitation of distribution functions for leaf
       obstacles from domain experts, discrete points may be used that can be
       fitted to specific probability distributions\emdash{}such as Beta,
-      PERT, Triangular, etc. \cite[Vos08a]. A quantile is a single
+      PERT, Triangular, etc. \cite[Vos08]. A quantile is a single
       probability value attached to a cumulative probability. It indicates
       the cumulative probability to observe a single value of probability of
-      satisfaction \cite[Bed01a]. The 50\high{th} quantile, called mode, is the most
+      satisfaction \cite[Bed01]. The 50\high{th} quantile, called mode, is the most
       likely probability of satisfaction.
  
    	  To further support such elicitation from domain experts, databases
    	  providing estimates for quantiles can be used; they are available in a
    	  wide range of domains\emdash{}e.g., aerospace, health, bank, nuclear,
-   	  chemical, gas, water pollution, and so forth \cite[Coo08a]. For example,
+   	  chemical, gas, water pollution, and so forth \cite[Coo08]. For example,
    	  our estimates were based on reliability databases and published
-   	  historical data in various industries \cite[Ayy14a,Mil92a,Cen92a].
+   	  historical data in various industries \cite[Ayy14,Mil92,Cen92].
    	  Reliable techniques are also available for obtaining accurate single
    	  values or distribution estimates from trained experts \cite[OHa06a].
  
@@ -320,7 +320,7 @@
       As discussed in \in{Chapter}[chap:assessing], the use of multiple sources
       or multiple experts is generally recognized to increase the accuracy of
       estimates and more mathematical approaches are recognized to produce
-      accurate results \cite[Coo91a, Cle99a]. Among available approaches, some
+      accurate results \cite[Coo91, Cle99]. Among available approaches, some
       mathematical approaches are aimed at characterizing expert judgements by
       comparative assessment between their estimates and known quantities. The
       derived characteristics are then used for combining estimates from
@@ -341,7 +341,7 @@
       narrow estimates; provide estimate ranges that are accurate or not; and
       so forth. To get more accurate estimates, we may compare those provided
       by multiple experts with known values in order to characterize each
-      expert. This is known as calibration \cite[Bed01a].
+      expert. This is known as calibration \cite[Bed01].
     
       A {\it calibration variable} is a quantity whose exact single-point value
       is known. In our context, a calibration variable should be closely
@@ -391,7 +391,7 @@
       satisfaction uncertainty.
       
       \noindent {\it Cooke's technique} characterizes each expert through a single weight
-      \cite[Coo91a]. This weight combines a calibration score and an
+      \cite[Coo91]. This weight combines a calibration score and an
       information score. The {\it calibration score} measures how close the
       expert's estimate is to the known value of the calibration variable; the
       closer the probability estimated for this value, the higher the score.
@@ -408,7 +408,7 @@
       satisfaction uncertainty.
       
       \noindent {\it Mendel-Sheridan's technique} combines the quantiles of the experts
-      by use of a Bayesian calibrator/estimator \cite[Men89a]. It first
+      by use of a Bayesian calibrator/estimator \cite[Men89]. It first
       computes a minimally informative distribution for the expert's
       characteristics. This a priori distribution considers each expert to be
       unbiased; it does not weight any probability more than others. This a
@@ -421,7 +421,7 @@
       
       Which technique performs best remains an open question; it may depend on
       the application domain, the experts, and the number of calibration
-      variables \cite[Coo91a].
+      variables \cite[Coo91].
   
       \placefigure[top]
      	  [fig:obstacle_combination]
@@ -454,7 +454,7 @@
       a set of probabilities of satisfaction for this top goal. The obtained
       set of probabilities can then be aggregated into a distribution by using
       their frequency (This is known as {\it Kernel Density Estimation}
-      \cite[Fri01a].) For example, by repetitive sampling for the leaf
+      \cite[Fri01].) For example, by repetitive sampling for the leaf
       obstacles, the following probabilities of satisfaction for the top goal
       \goal{Achieve [Make Up Water Provided When Loss Of Cooling]} might be
       obtained:
@@ -618,7 +618,7 @@
     integrate similar metrics for problematic uncertainties together with means
     for reasoning about risk consequences and combinations of multiple expert
     estimates. Other software engineering areas are faced with the problem of
-    handling uncertainties about estimated quantities \cite[Fen00a]. The
+    handling uncertainties about estimated quantities \cite[Fen00]. The
     application of similar techniques appears worth considering in other
     contexts beyond RE as well.
     

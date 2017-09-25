@@ -20,9 +20,9 @@
     Goal-oriented requirements engineering is recognized as a major modeling
     technique for engineering requirements of complex, mission-critical,
     software systems emphasizing on the {\it why} of resulting software
-    specifications \cite[Lam09a]. Among the goal-oriented frameworks, the KAOS
+    specifications \cite[Lam09]. Among the goal-oriented frameworks, the KAOS
     framework proposes a formal approach where objectives of a system are
-    defined in a precise, clear-cut sense \cite[Lam09a], on the contrary of
+    defined in a precise, clear-cut sense \cite[Lam09], on the contrary of
     other approaches such as i* where the system satisfies the goals at various
     degrees \cite[Yu97a].
     
@@ -30,7 +30,7 @@
     thesis. In particular, the KAOS framework is a multi-view modeling approach
     including a goal, an object, an agent responsibility, an operations and a
     behavior model. We focus here on goal modeling only, a detailed
-    presentation of the framework can be found in \cite[Lam09a].
+    presentation of the framework can be found in \cite[Lam09].
     
     \subsection{Defining Goals, Software Requirements, and Domain Assumptions}
     
@@ -61,7 +61,7 @@
       A behavioral goal captures a maximal set of intended behaviors
       declaratively and implicitly; a {\it behavior} is a sequence of system
       states. A behavior thus violates a goal if it is not among those
-      prescribed by the formal specification of the goal \cite[Lam09a]. The
+      prescribed by the formal specification of the goal \cite[Lam09]. The
       notation $\pi \vDash G$ expresses that the behavior $\pi$ satisfies the
       goal $G$.
       
@@ -113,7 +113,7 @@
         
     \subsection {Specifying Formal Assertions}
     
-      (Metric) Linear temporal logic (LTL) \cite[Koy92a,Man92a] may be used for
+      (Metric) Linear temporal logic (LTL) \cite[Koy92,Man92] may be used for
       formalizing behavioral goals to enable their analysis. The goals then
       take the general form
     
@@ -132,7 +132,7 @@
       (equivalent).
       
       A behavioral goal can be of type {\it Achieve} or {\it Maintain/Avoid}
-      \cite[Lam09a]. The specification pattern for an {\it Achieve} goal is:
+      \cite[Lam09]. The specification pattern for an {\it Achieve} goal is:
       
       \startformula
         \text{{\ss {\bf if} C {\bf then sooner-or-later} T},}\hskip1em\text{that is,}\hskip1emC \Rightarrow \ltlF T,
@@ -141,7 +141,7 @@
       where $C$ denotes a current condition and $T$ a target condition, with
       obvious particularizations to {\it Immediate Achieve} ($C \Rightarrow
       \ltlX T$) and {\it Bounded Achieve} ($C \Rightarrow \ltlF_{\leq d} T$)
-      \cite[Lam09a].
+      \cite[Lam09].
     
       \noindent The specification pattern for a {\it Maintain} goal is:
       
@@ -162,7 +162,7 @@
     \subsection {Modelling Goals as AND/OR Graphs}
     
       A goal model is an AND/OR graph showing how goals contribute positively
-      or negatively to each other \cite[Gio03a,Lam09a]. Parent goals are
+      or negatively to each other \cite[Gio03,Lam09]. Parent goals are
       obtained by abstraction, e.g., through {\it why} questions, whereas child
       goals are obtained by refinement, e.g., through {\it how} questions.
       Refinement paths connect goal nodes in this graph to their ancestor
@@ -181,7 +181,7 @@
       Refinement patterns are available to help building goal models, e.g., the
       {\it Milestone-Driven}, {\it Case-Driven}, {\it Guard-Introduction}, {\it
       Unmonitorability-Driven}, {\it Uncontrollability-Driven}, or {\it
-      Divide-and-Conquer} patterns \cite[Dar96a,Lam09a].
+      Divide-and-Conquer} patterns \cite[Dar96,Lam09].
     
       In \in{Figure}[fig:background_make_up_water_provided], the two top
       refinements are {\it Milestone-Driven} (with {\ss Make Up Water
@@ -205,7 +205,7 @@
       \stopalign\stopformula
     
       AND-refinements in a goal model should be correct, that is, complete,
-      consistent and ideally minimal \cite[Lam09a].
+      consistent and ideally minimal \cite[Lam09].
  
       \startitemize
     
@@ -236,7 +236,7 @@
     
       A goal refinement obtained by instantiation of a refinement pattern is
       formally guaranteed to be complete, consistent and minimal
-      \cite[Dar95a,Lam09a]; the correctness proof is done once for all on the
+      \cite[Dar95,Lam09]; the correctness proof is done once for all on the
       temporal logic formalization of the pattern. The partial goal model in
       \in{Figure}[fig:background_make_up_water_provided] shows three complete,
       consistent and minimal AND-refinements.
@@ -247,7 +247,7 @@
       are potentially conflicting. Goals are potentially conflicting (or
       divergent) if there exists a satisfiable and non-trivial boundary
       condition $B$ making them logically inconsistent in the domain
-      \cite[Lam09a], that is:
+      \cite[Lam09], that is:
 
       \startformula\startalign[n=1,align={left}]
           \NC \{ B, SG_1, SG_2, ..., SG_n, Dom \} \vDash false,\hskip2cm\text{(conflict)}\NR
@@ -256,18 +256,18 @@
     
       The condition $B \wedge Dom$ has to be realizable by the environment.
       Such environment monitors all the variables constrained by the goals and
-      controls all the other ones \cite[De-07a].
+      controls all the other ones \cite[De-07].
         
     \subsection{Soft Goals as Optimisation Criteria}
     
       In addition to behavioral goals, soft goals are goals that are not
-      satisfied in a clear-cut sense \cite[Myl92a,Myl99a]\emdash{}e.g., \goal{User
+      satisfied in a clear-cut sense \cite[Myl92,Myl99]\emdash{}e.g., \goal{User
       interface usable} or \goal{Fast computation}. Soft goal are more or less
       satisfied depending on the behavioral goals contributing positively or
       negatively to the soft goal.
       
       Soft goals are used as optimisation criteria to enable alternative
-      designs comparison \cite[Let02a,Lam09a,Hea11a]. Typically, soft goals are
+      designs comparison \cite[Let02,Lam09,Hea11]. Typically, soft goals are
       used in minimization/maximization function to be optimized by the
       system-to-be such as \goal{Maximize[Computation Speed]} or
       \goal{Minimize[Energy consumption]}. These {\it Maximize/Minimize} goals
@@ -278,7 +278,7 @@
     \startsection[reference=sec:background_obstacle,title={Anticipating What Could Go Wrong: Obstacle Analysis}]
   
     In goal-oriented modeling frameworks, obstacles were introduced as a
-    natural abstraction for risk analysis \cite[Pot95a,Ant98a,Lam00a]. This
+    natural abstraction for risk analysis \cite[Pot95,Ant98,Lam00]. This
     section defines obstacles, how they relate to goals and other obstacles,
     and presents techniques to identify, assess and control obstacles
     preventing the software to meet its goals.
@@ -286,7 +286,7 @@
     \subsection {What are Obstacles?}
 
       An {\it obstacle} to a goal is a domain-satisfiable precondition for the
-      non-satisfaction of this goal \cite[Lam00a,Lam09a]:
+      non-satisfaction of this goal \cite[Lam00,Lam09]:
       
       \startformula\startalign[n=2,align={left,left}]
         \NC \{O, Dom\} \vDash \neg G \hskip2cm \NC \text{(obstruction)}\NR
@@ -315,7 +315,7 @@
     \subsection {Specifying Formal Assertions}
     
       As goals, obstacles might be formalized using (Metric) Linear temporal
-      logic (LTL) \cite[Koy92a,Man92a]. An obstacle to
+      logic (LTL) \cite[Koy92,Man92]. An obstacle to
       a goal $C \Rightarrow \Theta T$ then takes the general form
     
       \startformula
@@ -331,7 +331,7 @@
       \stopformula
       
       where $C$ denotes a current condition and $T$ a target condition
-      \cite[Lam09a]. An obstacle to a {\it Maintain} goal is:
+      \cite[Lam09]. An obstacle to a {\it Maintain} goal is:
       
       \startformula
         \text{{\ss [{\bf sooner-or-later} C {\bf and}] {\bf sooner-or-later not} G},}\hskip1em\text{that is,}\hskip1em\ltlF(C \wedge \ltlF\neg G)
@@ -392,7 +392,7 @@
     \subsection {Obstacle Analysis}
     
     Obstacle analysis consists of identifying missing or inadequate goals. It
-    includes three steps \cite[Lam00a]:
+    includes three steps \cite[Lam00]:
     
     \startitemize[a]
     
@@ -414,7 +414,7 @@
     
     \noindent {\bf Obstacle Identification.} Formal and heuristic techniques
     are available for the identification of obstacles
-    \cite[Ant98a,Sut98b,Lam00a,Lam09a,Alr12].
+    \cite[Ant98,Sut98b,Lam00,Lam09,Alr12].
     
     In particular, for the {\it Achieve} and {\it Maintain/Avoid} goal
     specification patterns introduced in \in{Section}[sec:background_goal],
@@ -485,7 +485,7 @@
     identified countermeasure goals shall be refined until assigned to single
     agents. Most appropriate countermeasures are then selected according to a
     variety of criteria such as the number of obstacles resolved or the
-    likelihood and criticality of resolved obstacles \cite[Lam09a]. The
+    likelihood and criticality of resolved obstacles \cite[Lam09]. The
     selected countermeasures are then deployed at RE time, or at runtime. Very
     little work is available on countermeasure selection and integration;
     \in{Chapter}[chap:controlling_obstacle] and \in{Chapter}[runtime] will discuss
@@ -493,7 +493,7 @@
          
     As for obstacle identification, formal and heuristic techniques are
     available for the generation of alternative countermeasure goals
-    \cite[Lam00a,Alr16]. A variety of tactics are available for exploring
+    \cite[Lam00,Alr16]. A variety of tactics are available for exploring
     alternative ways of resolving obstacles to a goal\emdash{}such as {\it
     avoid obstacle} (adds a new goal requiring the obstacle to be avoided),
     {\it reduce obstacle likelihood} (adds a new goal that reduces the
@@ -506,7 +506,7 @@
     (adds a new goal to ensure the obstructed goal is satisfied in a reasonable
     future), or {\it substitute agent} (replace the agent responsible for the
     obstructed goal so that the obstacle is no longer feasible)
-    \cite[Lam00a,Lam09a]. For example, the obstacle mitigation tactic applied
+    \cite[Lam00,Lam09]. For example, the obstacle mitigation tactic applied
     to the preceding obstacle \obstacle{Pump Electrical Failure} generates the
     following countermeasure goal:
     

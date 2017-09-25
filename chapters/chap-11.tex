@@ -122,7 +122,7 @@
       \item The thesis proposed an obstacle-driven adaptation mechanism to
       drive runtime adaptation using the satisfaction of high-level
       probabilistic goals. The proposed monitoring technique extends the
-      non-probabilistic $LTL_3$ approach \cite[Bau11a] to support monitoring of
+      non-probabilistic $LTL_3$ approach \cite[Bau11] to support monitoring of
       probabilistic assertions. Countermeasure selection and integration is
       performed on-the-fly.
       
@@ -156,16 +156,16 @@
   promising approach to highlight behavior traces exposing unknown obstacles
   or countermeasures. This could be integrated with learning obstacles and
   countermeasures from observed traces \cite[Alr12,Alr16] or from an
-  executable specification \cite[Ram12a].
+  executable specification \cite[Ram12].
   
   Related to identification, it is common for risk analysis to be performed
   once and not maintained as software evolve. The risk analysis quickly becomes
   obsolete, incomplete and inadequate. Missing requirements might be detected
-  during testing \cite[Lut03a]. Integrating testing and risk analysis could
+  during testing \cite[Lut03]. Integrating testing and risk analysis could
   continuously check whether the software system covers the identified risks,
   and whether the risk analysis is adequate, precise, complete, and consistent
   with regard to the evolving software. Requirements-Driven
-  \cite[Raj08a,Wha06a] and Risk-Driven testing \cite[Erd14a,Red05a,Klo11a]
+  \cite[Raj08,Wha06] and Risk-Driven testing \cite[Erd14,Red05,Klo11]
   approaches appears to be a promising direction.
   
   \noindent {\bf Dynamic risk analysis.} To date, our approach and most of the
@@ -187,8 +187,8 @@
   \noindent {\bf Change detection.} Over time, \quote{real} satisfaction rates
   could abruptly change, the monitored satisfaction rate however then tends to
   slowly reflect this changes. Algorithms are available for detecting such
-  abrupt changes such as \cite[Epi10a,Liu13a,Fil14a] and the filtering approach
-  proposed in \cite[Fil15a] could improve the accuracy of the monitored
+  abrupt changes such as \cite[Epi10,Liu13,Fil14] and the filtering approach
+  proposed in \cite[Fil15] could improve the accuracy of the monitored
   satisfaction rates.
   
   \noindent {\bf When to adapt?} The question of \quote{when} to adapt is still
@@ -196,8 +196,8 @@
   violation, it might be preferable to adapt before the violation occurs.
   However, some adaptations are costly and should not be performed unless the
   violation last. In addition, software adaptations exhibit latencies that
-  should be taken into account at RE time \cite[Cam14a,Cam16a]. Prediction
-  approaches, such as \cite[Pol07a,Mor16a], appears to be a promising direction
+  should be taken into account at RE time \cite[Cam14,Cam16]. Prediction
+  approaches, such as \cite[Pol07,Mor16], appears to be a promising direction
   for more cost-effective adaptation.
   
   \noindent {\bf Obstacle dependence.} Little support is available to model the
@@ -245,13 +245,13 @@
   
     \item The proposed approach selects countermeasures in order to minimize a
     cost. However, design decisions often result from fine-grained tradeoff
-    analysis with multiple competing criteria \cite[Che06a]. Refined criteria
+    analysis with multiple competing criteria \cite[Che06]. Refined criteria
     taking soft goals or domain-specific variables into account could lead to
     better countermeasure selections.
     
     \item A drawback of Monte Carlo simulations is that the number of
     simulations required to obtain accurate estimations grows in the presence
-    of rare events \cite[Jeg13a,Rui17a]. Specific propagation procedure could
+    of rare events \cite[Jeg13,Rui17]. Specific propagation procedure could
     be developped to better support rare obstacles.    
   
   \stopitemize
@@ -259,9 +259,9 @@
   \noindent {\bf Security risk analysis.} How the proposed approach transpose
   to security risk analysis is an open question to us. In particular, an
   in-depth comparision with existing security-based approaches such as {\it
-  attack trees} and {\it threat trees} \cite[Sch99a,Hel02a,Sch11a], {\it
-  UMLSec} \cite[Jur01a,Jur02a], {\it SecureUML} \cite[Lod02a], {\it Abuse Case}
-  \cite[McD99a], or {\it Misuse Case} \cite[Sin05a] could exhibit interesting
+  attack trees} and {\it threat trees} \cite[Sch99,Hel02,Sch11], {\it
+  UMLSec} \cite[Jur01,Jur02], {\it SecureUML} \cite[Lod02], {\it Abuse Case}
+  \cite[McD99a], or {\it Misuse Case} \cite[Sin05] could exhibit interesting
   transfer from one community to the other.
   
   While these limitations might limit the applicability of our techniques to

@@ -38,7 +38,7 @@
     of Software Engineering whose focus is precisely on elicitating,
     evaluating, specifying, and analyzing of the objectives, functionalities,
     qualities, and constraints to be achieved by a software system
-    \cite[Lam09a].
+    \cite[Lam09].
 
     \startnarrower
     \noindent\quote{\it Simple improvements in these methodologies [reliability, fault
@@ -50,13 +50,13 @@
     as proofs and testing, depend upon the correct specification of the program
     for their results to have any meaning. So, even if it were possible to prove
     correctness, or to test all permutations of a critical program, this would
-    not serve to demonstrate the safety of the software.} \emdash{}\cite[Lev83a]
+    not serve to demonstrate the safety of the software.} \emdash{}\cite[Lev83]
     \stopnarrower
 
     To mitigate our inability to flawlessly describes complex systems, today's
     engineers rely on models. Models are increasingly recognized to be an
     effective way to identify what software systems shall do and shall not
-    \cite[Lam09a]. A model is an abstract representation of the software system
+    \cite[Lam09]. A model is an abstract representation of the software system
     where key elements are highlighted, specified and connected to others.
     Using models for Requirements Engineering has multiple benefits: models
     allow to abstract from details and focus on essential aspects of the
@@ -85,14 +85,14 @@
     \stopitemize
     
     In particular, incompleteness is reported as one of the major causes of
-    software failure \cite[Lam09a]. Missing requirements and assumptions often
+    software failure \cite[Lam09]. Missing requirements and assumptions often
     results from unanticipated conditions under which the software should
     behave adequately. Our natural inclination to conceive systems that are too
     ideal prevents adverse conditions from being properly identified and, when
     likely and critical, resolved through appropriate countermeasures.
     
     Risk analysis should be at the heart of the requirements engineering
-    process \cite[Lam00a, Fea03a, Lam09a, Ant98a, Lun10a]. A {\it risk} is
+    process \cite[Lam00, Fea03, Lam09, Ant98, Lun10]. A {\it risk} is
     commonly defined as an uncertain factor whose occurrence may result in some
     loss of satisfaction of some corresponding objective. A risk has a {\it
     likelihood of occurrence}, and one or several undesirable {\it
@@ -102,60 +102,60 @@
     objective. 
         
     Depending on the category of objective being obstructed, risks may
-    correspond to {\it safety hazards} \cite[Lev01a,Lev11a], {\it security
-    threats} \cite[Lam04a,Sch11a,Pie13a], {\it inaccuracy conditions} on
+    correspond to {\it safety hazards} \cite[Lev01,Lev11], {\it security
+    threats} \cite[Lam04,Sch11,Pie13], {\it inaccuracy conditions} on
     software input/output variables with respect to their environment
-    counterpart \cite[Lam00a], and so forth.
+    counterpart \cite[Lam00], and so forth.
     
     Risks must be identified, assessed against likelihood and severity, and
-    controlled through countermeasures \cite[Boe91a,Jon94a,Lam09a,Lun10a].
+    controlled through countermeasures \cite[Boe91,Jon94,Lam09,Lun10].
     
     \startitemize
     
       \item At requirements engineering time, risks can be systematically
       identified from prescriptive requirements and descriptive domain
-      properties \cite[Lam09a].
+      properties \cite[Lam09].
     
       \item For risk assessment, qualitative scales can be used for quick but
-      rough estimation of likelihood and severity \cite[Kle99a,Lev01a,Lun10a],
+      rough estimation of likelihood and severity \cite[Kle99,Lev01,Lun10],
       possibly in relation with a requirements model
-      \cite[Asn11a]\emdash{}e.g., from \quote{\it unlikely} to \quote{\it very
+      \cite[Asn11]\emdash{}e.g., from \quote{\it unlikely} to \quote{\it very
       likely} and from \quote{\it low} to \quote{\it highly critical},
       respectively. Alternatively, quantitative scales can be used to capture
-      such estimates more precisely \cite[Bed01a,Fea03a], possibly in relation
-      with a requirements model \cite[Asn07c,Sab11a,Sie14a].
+      such estimates more precisely \cite[Bed01,Fea03], possibly in relation
+      with a requirements model \cite[Asn07c,Sab11,Sie14].
     
       \item For risk resolution we may explore alternative countermeasures
-      \cite[Sut98b,Lam00a,Asn06b] and select the most effective ones
-      \cite[Fea03a,Asn06a]. Such exploration may be driven by risk-reduction
+      \cite[Sut98b,Lam00,Asn06b] and select the most effective ones
+      \cite[Fea03,Asn06]. Such exploration may be driven by risk-reduction
       tactics such as {\it reduce risk likelihood}, {\it avoid risk}, {\it
       reduce consequence likelihood}, {\it avoid risk consequence}, or {\it
-      mitigate risk consequence} \cite[Lam09a].
+      mitigate risk consequence} \cite[Lam09].
     
     \stopitemize
     
     In goal-oriented modeling frameworks, obstacles were introduced as a
-    natural abstraction for risk analysis \cite[Ant98a,Lam09a]. An {\it obstacle} to
+    natural abstraction for risk analysis \cite[Ant98,Lam09]. An {\it obstacle} to
     a goal is a precondition for the non-satisfaction of this goal. Obstacle
-    analysis, like risk analysis, includes three steps \cite[Lam00a]:
+    analysis, like risk analysis, includes three steps \cite[Lam00]:
     
     \startitemize[n]
     
       \item {\it Identification.} As many obstacles as possible to every leaf
       goal in the goal refinement graph should be identified from relevant
       domain properties. Techniques are available for identifying obstacles
-      systematically from goals and domain properties \cite[Alr12,Lam00a].
+      systematically from goals and domain properties \cite[Alr12,Lam00].
     
       \item {\it Assesment.} The likelihood and severity of each obstacle
       should be determined. Likelihoods and criticalities may be determined
       quantitatively by calculations over obstacle refinement trees and goal
-      refinement trees \cite[Sab11a].
+      refinement trees \cite[Sab11].
     
       \item {\it Resolution.} Likely and critical obstacles should be resolved
       by systematic model transformations in order to integrate appropriate
       countermeasures in the goal model. For obstacle resolution, operators
       encoding risk resolution tactics were proposed to explore alternative
-      resolutions \cite[Lam00a], as well as a learning-based approach
+      resolutions \cite[Lam00], as well as a learning-based approach
       generating alternative countermeasures from observed behaviors traces
       \cite[Alr16].
     
@@ -163,7 +163,7 @@
     
     Obstacle analysis has been successfully used in a variety of
     mission-critical systems, see, e.g.,
-    \cite[Lut07a,Pon07a,Dar07a,Lam09a,Let02a].
+    \cite[Lut07,Pon07,Dar07,Lam09,Let02].
     
     The {\it obstacle assessment} step is crucial for focusing the {\it
     resolution} step on those risks that are determined to be likely and have
@@ -183,15 +183,15 @@
     Furthermore, requirements engineers are at the forefront of uncertainty
     problems. The adequacy and \quote{sufficient} completeness of the
     identified software requirements, environment assumptions and relevant
-    domain properties is generally uncertain \cite[Lam09a]. The satisfaction
+    domain properties is generally uncertain \cite[Lam09]. The satisfaction
     rate of those requirements and assumptions when the system-to-be will be
-    running is uncertain as well \cite[Bar10a, Fea03a,Let04a]; this is
+    running is uncertain as well \cite[Bar10, Fea03,Let04]; this is
     generally due to unexpected events and conditions that may occur in the
-    environment \cite[Lam00a]. Moreover, the likelihood of such events and
+    environment \cite[Lam00]. Moreover, the likelihood of such events and
     conditions occurring is uncertain.
     
     In traditional risk analysis, uncertainty during risk assessment arises
-    under two forms \cite[OHa06a,Vos08a].
+    under two forms \cite[OHa06a,Vos08].
     
     \startitemize
 
@@ -209,12 +209,12 @@
     \stopitemize
 
     Risk analysis techniques for RE so far addressed physical uncertainty only
-    \cite[Asn11a, Fea03a, Lam00a, Lun10a, Sie14a]. However, they rely on expert
+    \cite[Asn11, Fea03, Lam00, Lun10, Sie14]. However, they rely on expert
     judgement at some point or another to estimate the likelihood of
     fine-grained events or conditions emerging from their analysis. Such
     estimates are typically based on experience or historical data
-    \cite[Asn11a, Fea03a, Lam00a, Lun10a, Sie14a], sometimes refined through
-    runtime event monitoring \cite[Fea98a, Epi09a]. The extent to which those
+    \cite[Asn11, Fea03, Lam00, Lun10, Sie14], sometimes refined through
+    runtime event monitoring \cite[Fea98, Epi09]. The extent to which those
     estimates are accurate remains uncertain. Expert's judgements might be
     subjective or biased; relevant data might not be available; accurate data
     might be too expensive to obtain; collected data might no longer be
@@ -224,12 +224,12 @@
     
     Lastly, today's software systems are increasingly deployed in unpredictably
     varying environments such as autonomous vehicle control \cite[Che09b,
-    DeV17a], disaster management \cite[Gol08a], or adaptive security
-    \cite[Pas14a,Pas16a]. In these domains, the system must adapt to changing
+    DeV17a], disaster management \cite[Gol08], or adaptive security
+    \cite[Pas14,Pas16]. In these domains, the system must adapt to changing
     environments to guarantee its goals.
     
     For runtime system adaptation, Monitor-Analyse-Plan-Execute (MAPE) cycles
-    are often followed \cite[Che09a,Kep03a,Lem10a]. The {\it Monitor} step
+    are often followed \cite[Che09,Kep03,Lem10]. The {\it Monitor} step
     collects, filters and aggregates data from the running system such as
     performance metrics and configuration characteristics. The {\it Analyze}
     step determines whether a change is required or not based on data analysis
@@ -267,22 +267,22 @@
     \startitemize
     
       \item {\it Formal semantics for statements to be assessed.} Unlike
-      \cite[Fea03a, Asn11a, Lun10a], the specification of goals and risks
+      \cite[Fea03, Asn11, Lun10], the specification of goals and risks
       should have a clear, precise semantics in terms of desirable/undesirable
       system behaviors. Such semantics enables their precise interpretation and
-      the integration with other techniques for risk generation \cite[Lam00a,
-      Alr12], countermeasure derivation \cite[Lam00a] and goal model analysis,
+      the integration with other techniques for risk generation \cite[Lam00,
+      Alr12], countermeasure derivation \cite[Lam00] and goal model analysis,
       including goal refinement checking, operationalization checking and
-      behavior model synthesis \cite[Lam09a].
+      behavior model synthesis \cite[Lam09].
     
-      \item {\it Measurable statements.} Unlike \cite[Fea03a, Asn11a], the
+      \item {\it Measurable statements.} Unlike \cite[Fea03, Asn11], the
       specification of goals and risks should be grounded on
       application-specific phenomena that are measurable in the environment of
       the software-to-be. This attenuates the common problems with subjective
       estimations. For the importance of making requirements measurable, see
-      \cite[Rob12a].
+      \cite[Rob12].
     
-      \item {\it Model-based assessment.} Unlike \cite[Fea03a], the assessment
+      \item {\it Model-based assessment.} Unlike \cite[Fea03], the assessment
       process should take advantage of the refinement structure provided by the
       goal/obstacle model to allow for more accurate estimation of the
       satisfaction rate of coarser-grained statements from finer-grained ones.
@@ -375,7 +375,7 @@
     \startitemize
     
       \item {\it Traceability of monitored indicators and deployed
-      countermeasures.} Unlike \cite[Gia01a], the monitored indicators and
+      countermeasures.} Unlike \cite[Gia01], the monitored indicators and
       decision criteria for system adaptation should be traceable to system
       objectives; why such or such monitored information is required shall
       thereby be documented.
@@ -385,7 +385,7 @@
       the probabilistic assertions from this model should be made. Model-based
       adaptation also reduces the need for application-specific manipulations.
     
-      \item {\it No explicit behavior modeling.} Unlike \cite[Ghe09a,Ghe13a],
+      \item {\it No explicit behavior modeling.} Unlike \cite[Ghe09,Ghe13],
       the model used should be declarative; system behaviors need not be
       explicitly modeled. Building a consistent and complete behavior model for
       large distributed systems with many complex states and parallelism is
@@ -497,7 +497,7 @@
     \startitemize
     
       \item Probabilistic obstacles are monitored at system runtime. Our
-      approach extends the monitoring technique introduced in \cite[Bau11a] for
+      approach extends the monitoring technique introduced in \cite[Bau11] for
       non-probabilistic linear temporal logic (LTL) to monitor probabilistic
       LTL assertions at system runtime. From such monitoring of leaf obstacles,
       the satisfaction rate of high-level goals is obtained by up-propagation
@@ -520,12 +520,12 @@
     the Requirement Engineering journal.
   
     \startitemize
-      \item \cite[entry][Cai12a] (Acceptance rate: 24\%, Nominated for the best paper award)
-      \item \cite[entry][Cai13a] (Invited to submit)
+      \item \cite[entry][Cai12] (Acceptance rate: 24\%, Nominated for the best paper award)
+      \item \cite[entry][Cai13] (Invited to submit)
       \item \cite[entry][Cai13b] (Acceptance rate: 54\%)
-      \item \cite[entry][Cai14a] (Acceptance rate: 27\%)
-      \item \cite[entry][Cai15a] (Acceptance rate: 29\%)
-      \item \cite[entry][Cai17a] (Acceptance rate: 21\%, Best paper award)
+      \item \cite[entry][Cai14] (Acceptance rate: 27\%)
+      \item \cite[entry][Cai15] (Acceptance rate: 29\%)
+      \item \cite[entry][Cai17] (Acceptance rate: 21\%, Best paper award)
     \stopitemize
   
   \stopsection
@@ -611,7 +611,7 @@
   		first years, typically 5 years. The spent fuel is then moved to dry cask
   		storage, providing passive cooling and shielding, for the following years.
 
-      According standards \cite[INT12a] and recommendations \cite[Cou06a], these
+      According standards \cite[INT12a] and recommendations \cite[Cou06], these
       pools and their operation must satisfy a large set of safety and security
       requirements. The three main objectives for such systems are:
 
@@ -629,15 +629,15 @@
     
     Our running example was inspired by a spent fuel pool system during
     decomissionning, i.e. not during full power operations, as described in
-    document \cite[Col01a]. Examples used throught the thesis were extracted
+    document \cite[Col01]. Examples used throught the thesis were extracted
     from the safety guide provided by IAEA \cite[INT12a], from the public
     report by committee on the Safety and Security of Commercial Spent Nuclear
-    Fuel Storage and the National Research Council \cite[Cou06a], from the
+    Fuel Storage and the National Research Council \cite[Cou06], from the
     technical study published by the U.S. Nuclear Regulatory Commision
-    \cite[Col01a], as well as from various media-related sources relating the
+    \cite[Col01], as well as from various media-related sources relating the
     incidents and responses at the Fukushima Daiichi nuclear power plant. The
     goal and obstacle models are directly inspired from the event and fault
-    trees presented in \cite[Col01a].
+    trees presented in \cite[Col01].
     
   \stopsection
 	

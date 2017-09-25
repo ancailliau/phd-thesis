@@ -260,10 +260,10 @@ end
   \switchtobodyfont[small]
   \bTABLE[option=stretch]
   \bTR \bTD Value                       \eTD \bTD Definition               \eTD \bTD Example \eTD \eTR
-  \bTR \bTD \typeKAOSTool{beta}         \eTD \bTD Beta Distribution        \eTD \bTD \typeKAOSTool{beta[2,4]}. A beta distribution with $\alpha = 2$ and $\beta = 4$. See \cite[Vos08a] for details on the parameters $\alpha$ and $\beta$. \eTD \eTR
+  \bTR \bTD \typeKAOSTool{beta}         \eTD \bTD Beta Distribution        \eTD \bTD \typeKAOSTool{beta[2,4]}. A beta distribution with $\alpha = 2$ and $\beta = 4$. See \cite[Vos08] for details on the parameters $\alpha$ and $\beta$. \eTD \eTR
   \bTR \bTD \typeKAOSTool{uniform}      \eTD \bTD Uniform Distribution     \eTD \bTD \typeKAOSTool{uniform[.1,.3]}. A uniform distribution between $.1$ and $.3$. \eTD \eTR
   \bTR \bTD \typeKAOSTool{triangular}   \eTD \bTD Triangular Distribution  \eTD \bTD \typeKAOSTool{triangular[.1,.4,.6]}. A triangular distribution with a $.1$ min-value, $.6$ max-value and a $.4$ mode. \eTD \eTR
-  \bTR \bTD \typeKAOSTool{pert}         \eTD \bTD PERT Distribution        \eTD \bTD \typeKAOSTool{pert[.1,.4,.6]}. A PERT distribution with a $.1$ min-value, $.6$ max-value and a $.4$ mode. See \cite[Vos08a] for details about the PERT distribution. \eTD \eTR
+  \bTR \bTD \typeKAOSTool{pert}         \eTD \bTD PERT Distribution        \eTD \bTD \typeKAOSTool{pert[.1,.4,.6]}. A PERT distribution with a $.1$ min-value, $.6$ max-value and a $.4$ mode. See \cite[Vos08] for details about the PERT distribution. \eTD \eTR
   \bTR \bTD \typeKAOSTool{quantiles}    \eTD \bTD Quantiles                \eTD \bTD \typeKAOSTool{quantiles[.1,.4,.6]}. A list of quantiles. \eTD \eTR
   \eTABLE
   }
@@ -520,7 +520,7 @@ end
   \noindent {\bf Linking associations and entities.} Entities connect to other
   entities by associations. The attribute \typeKAOSTool{link} specify the
   association connecting entities, optionally with the corresponding
-  multiplicities \cite[Lam09a]. \in{Code}[code:object_2] provides an example
+  multiplicities \cite[Lam09]. \in{Code}[code:object_2] provides an example
   with an association linking the entities \entity{DieselGenerator} and
   \entity{ElectroValve}. In the association, there is at most one diesel
   generator, but there might have more than one corresponding valve.
@@ -712,9 +712,9 @@ end
   \tool{OmnigraffleExport} generates several goal and obstacle diagrams
   corresponding to the graphical syntax of the model provided in textual
   format. The analyst might edit the generated diagrams with OmniGraffle
-  \cite[Ols10a]. This tool was used to produce all goal and obstacles diagrams
+  \cite[Ols10]. This tool was used to produce all goal and obstacles diagrams
   presented in the thesis. Last, a bundle is available for the TextMate text
-  editor \cite[Gra07a] to provide syntax highlighting.
+  editor \cite[Gra07] to provide syntax highlighting.
   
   \stopsection
 
@@ -723,7 +723,7 @@ end
     \in{Figure}[fig:kt_architecture] shows the architecture of the KAOSTools
     tool suite: Boxes shows libraries, dashed boxes are external libraries.
     External libraries were developed to support KAOSTools and might be used
-    outside the framework. Arrows indicates {\it USE} links \cite[Med10a].
+    outside the framework. Arrows indicates {\it USE} links \cite[Med10].
     Brief descriptions of the modules are provided below.
   
     \placefigure[]
@@ -819,7 +819,7 @@ end
   
     \noindent {\bf Utils.ViolationDiagram.} This tool generates the data
     corresponding to the violation uncertainty diagrams. The violation diagram
-    can then be generated using R \cite[Tea00a].
+    can then be generated using R \cite[Tea00].
   
     \noindent {\bf Utils.CMIntegrator.} This tool provides an interactive
     console to integrate countermeasures into an ideal goal model. The ideal
@@ -870,7 +870,7 @@ end
     \noindent {\bf Utils.Monitor.} This tool runs the monitoring of
     probabilistic obstacles, select the most appropriate countermeasures and
     pushes the activation/deactivation procedure that should be applied into a
-    RabbitMQ queue \cite[Vid12a]. \in{Section}[sec:bads] provides more details
+    RabbitMQ queue \cite[Vid12]. \in{Section}[sec:bads] provides more details
     about the monitoring infrastructure.
     
   \stopsection

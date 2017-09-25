@@ -79,7 +79,7 @@
       refinement pattern. \in{Figure}[fig:goal_cool1] and
       \in{Figure}[fig:goal_cool2] show the corresponding goal model fragments.
       The non-assigned goals are in-turn refined, using a variety of refinement
-      patterns \cite[Lam09a], until all goals are assigned to agents. The
+      patterns \cite[Lam09], until all goals are assigned to agents. The
       system includes 3 agents: \agent{Driver}, \agent{Passenger} and
       \agent{Software}.
       
@@ -110,7 +110,7 @@
 
       These obstacles are recursively refined until the satisfaction rate of
       the leaf obstacles can be estimated by experts using the available
-      techniques \cite[Lam09a]. \in{Figure}[fig:cool_obstacle_1] shows a
+      techniques \cite[Lam09]. \in{Figure}[fig:cool_obstacle_1] shows a
       fragment of the obstacle model.
       
       \placefigure[]
@@ -298,7 +298,7 @@
       domain. IBA is a medical technology company based in Louvain-la-Neuve
       (BE) founded in 1986 and active in the field of proton therapy. IBA is
       currently the world leader in proton therapy solutions for cancer
-      treatment \cite[Lin11a]. Among their products, cyclotrons accelerate
+      treatment \cite[Lin11]. Among their products, cyclotrons accelerate
       particles using a high-frequency alternating voltage applied between
       electrodes inside a vacuum chamber. A two-part yoke encloses the
       necessary equipment. The upper part of the yoke can be lifted to access
@@ -329,7 +329,7 @@
       
       \noindent {\bf Goal and Obstacle model.} We built a generic goal model
       for human safety requirements based on {\it Occupational Injury and
-      Illness Classification Manual} \cite[Sta92a]. Our model contains 220
+      Illness Classification Manual} \cite[Sta92]. Our model contains 220
       goals with 47 refinements and 173 leaf goals. The model provides a set of
       detailed safety requirements. Most of the goals in the model are {\it
       Avoid} goals such as \goal{Avoid [Contact with hot objects or
@@ -401,9 +401,9 @@
       risk assessment was performed by IBA engineers based on the FMECA tables.
       The risk assessment was introduced back into the goal/obstacle model
       afterward. Risk likelihoods were assessed using a standard
-      semi-quantitative scale ranging from A to F \cite[Ayy14a]. To apply our
+      semi-quantitative scale ranging from A to F \cite[Ayy14]. To apply our
       techniques, we converted this scale to quantitative values using
-      reference values provided in \cite[Ayy14a]; \in{Table}[tab:iba_scale]
+      reference values provided in \cite[Ayy14]; \in{Table}[tab:iba_scale]
       shows the correspondence between the two scales. The RSR for the
       top-level goal was defined to $99.99\%$. Interestingly, during the risk
       assessment process engineers split some leaf obstacles into subobstacles to
@@ -495,7 +495,7 @@
       By separating the identification from the assessment of the
       countermeasures, our approach might improve the cost-effectiveness of the
       selected mitigations. This separation is discussed in the context of
-      conflict resolutions in \cite[Eas94a]. Such separation enables the
+      conflict resolutions in \cite[Eas94]. Such separation enables the
       selection of most appropriates countermeasures at a system-level but
       requires an extra assessment from the experts. It appeared that some
       selected mitigations might be redundant and that more global mitigations
@@ -526,15 +526,15 @@
       \in{Chapter}[chap:controlling_obstacle],
       \in{Chapter}[chap:knowledge-uncertainty] and \in{Chapter}[runtime], to a
       benchmark commonly used for evaluating obstacle analysis techniques
-      \cite[Fin96a,Lam00a,Let02a,Alr12,Alr16] and other techniques such as
-      self-adaptation \cite[Sou12a]. The model used for the evaluation is
+      \cite[Fin96,Lam00,Let02,Alr12,Alr16] and other techniques such as
+      self-adaptation \cite[Sou12]. The model used for the evaluation is
       inspired by the one used for evaluating obstacle analysis techniques
-      presented in \cite[Lam00a,Let02a] while building upon the author's
+      presented in \cite[Lam00,Let02] while building upon the author's
       experience as a volunteer Emergency Medical Technician (EMT) in this type
       of system. When appropriate, the system was tailored to match the
-      regulations and practice applicable in the Brussels area (Belgium). The
-      following description briefly explains the Ambulance Dispatch System
-      (ADS).
+      regulations and practice applicable in the Brussels area (Belgium)
+      \cite[Pub13]. The following description briefly explains the Ambulance
+      Dispatch System (ADS).
       
       {\vskip.8\baselineskip}
       \framed[width=local,align={width},offset=10pt,after={\vskip-\baselineskip}
@@ -900,7 +900,7 @@
         Medical Technicians were asked to estimate a lower bound, the most
         probable value, and an upper bound for all leaf obstacles. To mitigate
         the common difficulty of estimating strict and accurate lower and upper
-        bounds \cite[Vos08a], the ones we collected were used as 10th and 90th
+        bounds \cite[Vos08], the ones we collected were used as 10th and 90th
         quantiles, with a 10\% overshoot being integrated. Eliciting
         probability distributions would have been impossible in practice as the
         required statistical background is far too important.
@@ -954,7 +954,7 @@
         the user can manually encode incidents using the \tool{ADS Console} tool.
         The simulator runs in a separate process (and might run on a different
         machine) and communicates with the dispatching software through RabbitMQ
-        queues \cite[Vid12a].
+        queues \cite[Vid12].
       
         \in{Figure}[fig:ads_architecture] shows the global architecture with the
         communication queues. The {\it ADS Monitoring Client} takes snapshots of
@@ -1087,7 +1087,7 @@
         accuracy of the monitored satisfaction rates in case only a few data
         are available. The monitored satisfaction rates should also be filtered
         to smooth out the noise caused by a low number of observations. The
-        technique in \cite[Fil15a] might be used to improve the quality of
+        technique in \cite[Fil15] might be used to improve the quality of
         monitoring.
 
         As in many monitoring-based self-adapting systems, the monitoring task
@@ -1103,7 +1103,7 @@
   
     This section evaluates the techniques according to five hierarchical
     criteria; Each criteria being a prerequisite for the next
-    \cite[Dam14a,Let14a]. The criteria are the following: {\it Correctness}
+    \cite[Dam14,Let14]. The criteria are the following: {\it Correctness}
     (Are the proposed techniques correct regarding their specifications?), {\it
     Performance and Scalability} (Are the techniques efficient for
     realistically-sized problems?), {\it Applicability} (Are the techniques
@@ -1278,8 +1278,8 @@
       ITE-operations where $r_g$ is the number of goal refinements, $o_b$ is
       the number of obstructions and $r_o$ is the number of obstacle
       refinements. The complexity of an ITE-operation is linear regarding the
-      size of the combined BDDs \cite[Mei12a]. However, the size of the BDDs
-      might be exponential regarding the number of variables \cite[Mei12a]. The
+      size of the combined BDDs \cite[Mei12]. However, the size of the BDDs
+      might be exponential regarding the number of variables \cite[Mei12]. The
       size of our BDDs is $\cal O(2^o)$ where $o$ is the number of obstacles.
       Computing the satisfaction rate of an obstruction superset is linear in
       the number of nodes of the BDD. So, the complexity of the BDD-based
@@ -1345,7 +1345,7 @@
           
       \noindent {\bf Runtime monitoring of probabilistic obstacles.} As
       discussed in \in{Section}[sec:monitoring_based], building the monitors is
-      $\cal O(2^{2^n})$ where $n$ is the size of the formula \cite[Bau11a]. The
+      $\cal O(2^{2^n})$ where $n$ is the size of the formula \cite[Bau11]. The
       complexity of updating all monitors at runtime is $\cal O(n)$ where $n$
       is the number of virtual monitors.
       
@@ -1366,13 +1366,13 @@
       
       Goal and obstacles models have been applied to a wide variety of
       application domains; for example
-      \cite[Lut07a,Pon07a,Dar07a,Lam09a,Let02a,Cai13b]. We see no critical
+      \cite[Lut07,Pon07,Dar07,Lam09,Let02,Cai13b]. We see no critical
       difficulty to the technical applicability of building goal and obstacle
       models. The other required inputs are the estimated satisfaction rates
       and estimated probability distributions. Tools and methodologies are
       available to elicit such inputs as discussed in
-      \cite[Otw92a,Coo91a,Vos08a]. Other approaches also rely on estimated
-      values, such as \cite[Lam00a,Let04a,Hea11a,Let14a], providing additional
+      \cite[Otw92,Coo91,Vos08]. Other approaches also rely on estimated
+      values, such as \cite[Lam00,Let04,Hea11,Let14], providing additional
       examples of the applicability of eliciting the required inputs.
       
       More specifically, our techniques were applied to different case-studies
@@ -1398,9 +1398,9 @@
       discussed in the introduction of \in{Chapter}[chap:proba-framework], such
       incompleteness arise from our tendency to conceive over-ideal systems and
       integrating risk analysis into the requirement process helps to produce
-      more complete and accurate requirements \cite[Lam09a]. Also, today, more
+      more complete and accurate requirements \cite[Lam09]. Also, today, more
       and more software systems are built according to models
-      \cite[Sta06a,Bra12a] and are driven, at runtime, by models \cite[Ben07a].
+      \cite[Sta06,Bra12] and are driven, at runtime, by models \cite[Ben07].
       These models shall thereby be as complete as possible to provide robust
       software systems. Our techniques complement the obstacle analysis process
       to support quantitative reasoning on the satisfaction rate of obstacles
@@ -1415,7 +1415,7 @@
       \in{Chapter}[chap:knowledge-uncertainty], knowledge uncertainty impedes
       the application of the standard risk prioritization techniques. The
       problem of managing uncertainties is recognized to be a major issue
-      \cite[Coo91a,Men03a,Che09b,Let14a]. Our techniques felt significantly
+      \cite[Coo91,Men03,Che09b,Let14]. Our techniques felt significantly
       helpful to identify and control these uncertainty margins, as seen in the
       ADS case-study.
       
@@ -1423,7 +1423,7 @@
       flexible, robust, efficient and adapt to changing operational contexts
       and environments. The problem of software adaptation at runtime is
       recognized to be a challenge for modern software engineering practice
-      \cite[Che09a,De-13a,Gie13a]. Our techniques proposed to drive the
+      \cite[Che09,De-13,Gie13]. Our techniques proposed to drive the
       software adaptation by the satisfaction of high-level goals, relying on
       the identified obstacles to highlight the most appropriate adaptation to
       deploy.
@@ -1435,18 +1435,18 @@
       This section discusses the usability of the proposed techniques.
       
       The goal/obstacle language is used in industrial settings, as seen in
-      \cite[Lut07a,Pon07a,Dar07a,Lam09a,Let02a,Cai13b]. In addition, other
-      techniques such as CORAS \cite[Lun10a], or Fault Tree Analysis
-      \cite[Rui15a,Ves81a] requires a similar level of expertise for building
+      \cite[Lut07,Pon07,Dar07,Lam09,Let02,Cai13b]. In addition, other
+      techniques such as CORAS \cite[Lun10], or Fault Tree Analysis
+      \cite[Rui15,Ves81] requires a similar level of expertise for building
       the models. As seen in the ADS or in the IBA C230-YSL case-studies,
       domain experts are, in practice, able to estimate the satisfaction rates
       for the leaf obstacles.
       
       For the runtime adaptation, our techniques rely on the formal
       specifications of the probabilistic obstacles. While formal specification
-      remains a challenge \cite[Fra91a], elicitations techniques and
-      specification patterns \cite[Dwy98a,Dar95a] ease the production of formal
-      specifications \cite[Lam09a]. Future research shall more precisely
+      remains a challenge \cite[Fra91], elicitations techniques and
+      specification patterns \cite[Dwy98,Dar95] ease the production of formal
+      specifications \cite[Lam09]. Future research shall more precisely
       evaluate the impact of formal specifications to the usability of our
       monitoring techniques.
       

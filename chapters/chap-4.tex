@@ -68,7 +68,7 @@
     \startsubsection
       [title={General Approach for Estimating Satisfaction Rate}]
 
-      We propose the following approach, inspired from \cite[OHa06a, Otw92a],
+      We propose the following approach, inspired from \cite[OHa06a, Otw92],
       for estimating the satisfaction rate of leaf obstacles:
     
       \startitemize[n]
@@ -79,13 +79,13 @@
         \item Identify, select, and train the experts. The selected experts
         shall expose a diversity of opinions and methods and be independent in
         their knowledge and shall be trained to make sure they understand the
-        models and the techniques. \cite[Vos08a,OHa06a,Otw92a] discusse in
-        details how to select experts. \cite[Coo91a,Vos08a] provides a detailed
+        models and the techniques. \cite[Vos08,OHa06a,Otw92] discusse in
+        details how to select experts. \cite[Coo91,Vos08] provides a detailed
         discussion on the elicitation techniques, biais identification, and
         de-biasing techniques.
 
         \item Elicit the satisfaction rate for the selected leaf obstacles.
-        \cite[OHa06a,Vos08a] detail techniques and pitfalls for such
+        \cite[OHa06a,Vos08] detail techniques and pitfalls for such
         elicitation sessions. The structure of the goal and obstacle model
         might be modified by the experts during this assessement step.
 
@@ -106,14 +106,14 @@
        reference=sec:combining_sat_rate]
       
       The use of multiple sources or multiple experts is generally recognized
-      to increase the accuracy of estimates \cite[Coo91a]. The problem is then
+      to increase the accuracy of estimates \cite[Coo91]. The problem is then
       to combine the satisfaction rates provided by multiple experts into a
       single satisfaction rate. This single satisfaction rate will be
       up-propagated in the next step. Informal techniques are often used in
       practice to reach a consensus on a single value agreed by all experts
-      \cite[OHa06a, Vos08a]. More mathematical approaches are however
+      \cite[OHa06a, Vos08]. More mathematical approaches are however
       recognized to produce more accurate results than informal ones
-      \cite[Bed01a].
+      \cite[Bed01].
       
       Among mathematical approaches, we mainly distinguish two combination
       schemas: bayesian combinations and non-bayesian combination.
@@ -128,7 +128,7 @@
       distributions. These include standard combination such as taking the
       smallest satisfaction rate, the largest satisfaction rate or average the
       satisfaction rates. These combination might be generalised by a {\it
-      r-norm} \cite[Bed01a,Coo91a]. We present here $r$-norm based combinations
+      r-norm} \cite[Bed01,Coo91]. We present here $r$-norm based combinations
       specialized to our probabilistic obstacle framework. The {\it r-norm
       satisfaction rate}, denoted $P_r(O)$, for an obstacle $O$ is given by
       
@@ -139,7 +139,7 @@
       where $w_e$ is the weight assigned to the expert $e$ and $P_e(O)$ is the
       probability estimated by the expert $e$ for the obstacle $O$. Depending
       on the value given to the parameter $r$, the norm corresponds to
-      different combinations \cite[Bed01a,Coo91a]. For example, consider the
+      different combinations \cite[Bed01,Coo91]. For example, consider the
       obstacle \obstacle{Power Cabling Failure} in
       \in{Figure}[fig:or_and_obstacle_refinement] estimated by two experts $e,
       e'$:
@@ -251,7 +251,7 @@
       
       In the $r$-norm, experts are assigned a weight. Picking the weight for
       the experts is an important step. In the example above, we used equal
-      weight for all experts. \cite[OHa06a, Bed01a, Coo91a] discuss how to
+      weight for all experts. \cite[OHa06a, Bed01, Coo91] discuss how to
       assign weight to experts. The
       \in{Section}[sec:eliciting_more_accurate_estimates] shows how weight can
       be systematically determined when estimates are uncertain.
@@ -438,7 +438,7 @@
           {\externalfigure[../images/chap4/make_up_water_provided.pdf]}
 
         An obstruction superset somewhat corresponds to the cut set of a Fault
-        Tree \cite[Bed01a,Lam09a]. A first difference is that a cut set yields
+        Tree \cite[Bed01,Lam09]. A first difference is that a cut set yields
         all combinations of leaf events causing the root event to occur whereas
         an obstruction superset yields all combinations of leaf obstacles
         causing the corresponding goal in the goal model to be obstructed. The
@@ -496,9 +496,9 @@
         \stopalign\stopformula
 
         Efficient algorithms are available for building compact BDDs
-        \cite[Ebe05a,Mei12a]. Such BDDs enable fast computation of single-point
+        \cite[Ebe05,Mei12]. Such BDDs enable fast computation of single-point
         probability values from single-point probability values for the
-        variables \cite[Bed01a]. \in{Figure}[fig:bdd] shows a BDD corresponding
+        variables \cite[Bed01]. \in{Figure}[fig:bdd] shows a BDD corresponding
         to the preceding formula. Each node represents a leaf obstacle. By
         following the solid edges if the leaf obstacle is satisfied or the
         dotted edges otherwise, we can determine whether the corresponding
@@ -702,7 +702,7 @@
       of refinement and goal, this propagation rule can be made further
       specific. \in{Table}[tab:propagation-rules] gives propagation rules for a
       sample of common refinement patterns known to be complete, consistent and
-      minimal \cite[Dar95a]; the subgoals there are therefore independent.
+      minimal \cite[Dar95]; the subgoals there are therefore independent.
       
       \placetable[top][tab:propagation-rules]
         {Propagation rules for common goal refinement patterns.}
@@ -741,7 +741,7 @@
       
       The specific simplification of the generic propagation rule thus depends on the goal refinement
       pattern used. This information is available in the annotation of the
-      refinement node \cite[Lam09a].
+      refinement node \cite[Lam09].
       
     \subsection[sec:compare_propagations]{Discussion}
       
@@ -958,7 +958,7 @@
 
     The set of combinations that maximizes the severity defines a Pareto front;
     efficient algorithms for generating them are available
-    \cite[Bor01a,Kun75a]. These algorithms and the specific structure of our
+    \cite[Bor01,Kun75]. These algorithms and the specific structure of our
     problem indicates that our generation of leaf obstacle combinations and
     their ranking by severity could thereby be optimized in order to scale up
     for larger systems.

@@ -17,9 +17,9 @@
     innaccurate and inadequate requirements. Risk analysis process helps
     identifying these incomplete, inaccurate or inadequate requirements and
     should therefore be at the core of the requirements engineering process
-    \cite[De-95a,De-95b,Ant98a,Lev02a,Lam09a]. Risk management is recognized to
+    \cite[De-95,De-95b,Ant98,Lev02,Lam09]. Risk management is recognized to
     decrease the number of potential defect and increase the number of remove
-    defect \cite[Jon08a]. The risk analysis process aims at identifying,
+    defect \cite[Jon08]. The risk analysis process aims at identifying,
     assessing and resolving the risks preventing the correct execution of the
     software-to-be. For the assessment step, risks might be assessed
     qualitatively or quantitatively. However, a common weakness comes from the
@@ -88,7 +88,7 @@
       The reader familiar with $\sigma$-algebra, probability spaces,
       Markov-chains and PCTL/PCTL* logic might skip directly to the
       \in{Section}[sec:probabilistic-goals]. This background section is largely
-      inspired from \cite[Bai08a], details and proofs can be found in that
+      inspired from \cite[Bai08], details and proofs can be found in that
       manuscript.
       
       \startsubsection
@@ -290,7 +290,7 @@
         analytically compute the value resulting from the infinite sum.
         However, efficient algorithms exists for computing the probability that
         behaviors starting from a state $s$ satisfy an LTL assertion.
-        \cite[Bai08a] provides more details about the measurability of the set
+        \cite[Bai08] provides more details about the measurability of the set
         of behaviors and dedicated algorithms. For the rest of the manuscript,
         we uses the following notation to denotes the probability that
         behaviors starting in $s$ satisfy the assertion $\phi$:
@@ -334,7 +334,7 @@
         $\ltlW$, $\ltlU$) over state formulas. Boolean combinations of behavior
         formulas are not allowed in PCTL, but are allowed in PCTL*. PCTL* is
         strictly more expressive than PCTL. All formulas expressed in LTL can
-        be expressed in PCTL* but not in PCTL \cite[Bai08a].
+        be expressed in PCTL* but not in PCTL \cite[Bai08].
         
         For convenience, intervals for the probabilistic operators are often
         abbreviated, e.g. ${\blackboard{}P}_{\geq .5}(\psi)$ denotes
@@ -356,7 +356,7 @@
         
         In our framework, PCTL formulas are interpreted over states and
         behaviors of a Markov chain. The set of behaviors specified by a PCTL
-        or a PCTL* formula is also measurable (see \cite[Bai08a] for a proof),
+        or a PCTL* formula is also measurable (see \cite[Bai08] for a proof),
         we can then compute the probability to satisfy a probabilistic
         assertion. \in{Section}[sec:formal-spec-probabilistic] will show how
         probabilistic goals and obstacles are specified formally using PCTL and
@@ -526,7 +526,7 @@
         \startdefinition[dfn:rds]{Required Satisfaction Rate}
     	  
           The r{\it equired satisfaction rate}\footnote{Previous papers
-          \cite[Cai12a,Cai13a,Cai14a,Cai15a] refers to the required
+          \cite[Cai12,Cai13,Cai14,Cai15] refers to the required
           satisfaction rate as {\it required degree of satisfaction}.
           Terminology was changed to avoid confusion with degree of
           satisfaction in fuzzy logic frameworks.} (RSR) of a goal is the
@@ -1203,7 +1203,7 @@
       by a behavior $\pi$ if all states $s$ along this behavior satisfy
       $\mathbb{P}^s_{\geq rsr}(\phi)$. To ease the specification of such
       probabilistic goals, we introduce the following notation similar to the
-      operator \quote{leads to} introduced in \cite[Han94a]
+      operator \quote{leads to} introduced in \cite[Han94]
     
       \startformula
         C \Rightarrow_{\geq p} \Theta T \hskip.5cm \equiv\hskip.5cm  \mathbb{P}_1 [ \ltlG \mathbb{P}_{\geq p} [ C \rightarrow \Theta T ] ]
@@ -1239,7 +1239,7 @@
       patterns encodes common formalization to ease the specification of
       probabilistic goals. We present here some probabilistic specification
       patterns generalizing common specification patterns presented in
-      \cite[Dar95a].
+      \cite[Dar95].
       
       \noindent\bold{Probabilistic Achieve/Cease}. An \italic{achieve} goal,
       respectively a \italic{cease} goal, states that a target condition is
@@ -1256,7 +1256,7 @@
       state that a target condition is achieved, respectively not achieved,
       from a current condition, with a probability above a specified threshold
       $p$. Such specification patterns is also sometimes referred as
-      Probabilistic Response \cite[Gru08a]. In PCTL*, this may be formalized as:
+      Probabilistic Response \cite[Gru08]. In PCTL*, this may be formalized as:
       
       \startformula
         C \Rightarrow_{\geq p} \ltlF_{\bowtie t} T \text{ (Achieve)}\text{\hskip1cm or \hskip1cm} C \Rightarrow_{\geq p} \ltlF_{\bowtie t} \neg T \text{ (Cease)}

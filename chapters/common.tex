@@ -457,19 +457,28 @@
 
 \startsetups btx:aps:list:inbook
     \texdefinition{btx:aps:author}
-    \texdefinition{btx:aps:optional-title:quoted}
-    \btxflush{booktitle}
+    "\btxflush{title}"
+    \btxcomma
+    \btxstartstyleandcolor [aps:list:journal]
+      \btxflush{booktitle}
+    \btxstopstyleandcolor
     \btxcomma
     \btxflush{publisher}
     \btxcomma
     \texdefinition{btx:aps:year}
+    \btxdoif {pages} {
+        \btxcomma
+        \btxflush{pages}
+    }
     \btxperiod
 \stopsetups
 
 \startsetups btx:aps:list:inproceedings
     \texdefinition{btx:aps:author}
     \texdefinition{btx:aps:title:quoted}
-    \btxflush{booktitle}
+    \btxstartstyleandcolor [aps:list:journal]
+      Proc.~of \btxflush{booktitle}
+    \btxstopstyleandcolor
     \btxcomma
     \btxdoif {organization} {
         \btxflush{organization}
@@ -479,21 +488,83 @@
     \btxperiod
 \stopsetups
 
+\startsetups btx:aps:list:incollection
+    \texdefinition{btx:aps:author}
+    \texdefinition{btx:aps:title:quoted}
+    \btxstartstyleandcolor [aps:list:journal]
+    \btxflush{booktitle}
+    \btxstopstyleandcolor
+    \btxcomma
+    \btxdoif {publisher} {
+        \btxflush{publisher}
+        \btxcomma
+    }
+    \texdefinition{btx:aps:year}
+    \btxdoif {pages} {
+        \btxcomma
+        \btxflush{pages}
+    }
+    \btxperiod
+\stopsetups
+
 \startsetups btx:aps:list:article
     \texdefinition{btx:aps:author}
     \texdefinition{btx:aps:optional-title:quoted}
-    \texdefinition{btx:aps:journal-volume-year}
+    \btxdoif {journal} {
+        \btxstartstyleandcolor [aps:list:journal]
+            \btxflush{journal}
+        \btxstopstyleandcolor
+        \btxdoifelse {volume} {
+            \btxcomma
+            Vol. \btxflush{volume}
+            \btxdoif {number} {
+              \btxcomma
+              No. \btxflush{number}
+            }
+        } {
+            \btxdoif {number} {
+                \btxcomma
+                No. \btxflush{number}
+            }
+        }
+    }
+    \btxdoif{publisher} {
+      \btxcomma
+      \btxflush{publisher}
+    }
+    \btxcomma
+    \texdefinition{btx:aps:year}
+    \btxdoif {pages} {
+      \btxcomma
+      \btxflush{pages}
+    }
+    \btxperiod
+\stopsetups
+
+\startsetups btx:aps:list:phdthesis
+    \texdefinition{btx:aps:author}
+    \btxstartstyleandcolor [aps:list:journal]
+      \texdefinition{btx:aps:title}
+    \btxstopstyleandcolor
+    PhD Thesis
+    \btxcomma
+    \btxdoif {school} {
+        \btxflush{school}
+        \btxcomma
+    }
+    \texdefinition{btx:aps:year}
     \btxperiod
 \stopsetups
 
 \startsetups btx:aps:list:webpage
+    \btxdoif{author}{
     \texdefinition{btx:aps:author}
+    }
     \texdefinition{btx:aps:optional-title:quoted}
     {
     \goto {\hyphenatedurl{\btxflush{url}}} [url(\btxflush{url})]%
     }
-    \btxcomma
-    \texdefinition{btx:aps:year}
+    \btxperiod
 \stopsetups
 
 \starttexdefinition btx:aps:url

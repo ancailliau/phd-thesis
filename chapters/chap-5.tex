@@ -42,8 +42,8 @@
   \startsection[reference=sec:identifying_cm,title={Identifying Valid Countermeasures}]
   
     The critical and likely obstacles shall be controlled by appropriate
-    countermeasures \cite[Lam09a]. Countermeasures are typically identified
-    using heuristics \cite[Lam00a], or by automatically generating goal
+    countermeasures \cite[Lam09]. Countermeasures are typically identified
+    using heuristics \cite[Lam00], or by automatically generating goal
     revisions \cite[Alr16].
     
     A {\it valid countermeasures} ensures that its integration will increase
@@ -76,7 +76,7 @@
     \stopformula
     
     The non-feasibility condition is derived from the realizability condition
-    described in \cite[Lam09a,De-07a]. The environment mentionned in the
+    described in \cite[Lam09,De-07]. The environment mentionned in the
     condition monitors all the variables constrained by the countermeasure goal
     and the obstructed goal and controls all the others. This non-feasibility
     condition is critical the correctness of the {\it obstacle avoidance}
@@ -96,7 +96,7 @@
     obstacle} tactic therefore satisfy the non-feasibility condition.
     
     Other obstacle resolution tactics such as {\it mitigate obstacle}, {\it
-    weaken goal}, or {\it substitute goal} \cite[Lam09a] can be shown to
+    weaken goal}, or {\it substitute goal} \cite[Lam09] can be shown to
     produce valid countermeasures modulo propagations of their effect through
     the refinement trees in which they are involved (such propagation will be
     explained in \in{Section}[sec:integrating]).
@@ -482,16 +482,16 @@
     
         \item The problem of finding the cost-optimal selection shares
         similarities with the NP-hard Knapsack optimization problem
-        \cite[Cor09a]. The latter is concerned with filling a bag with valued
+        \cite[Cor09]. The latter is concerned with filling a bag with valued
         items without exceeding a maximal weight while maximizing value. The
         problem here differs in that {\it (i)} the value and weight of items do
         not simply sum; and {\it (ii)} adding a new countermeasure goal does
         not necessarily increase the satisfaction rate of a high-level goal.
         Improvements of our naïve algorithms are however expected as a
         pseudo-polynomial algorithm exists for the Knapsack problem
-        \cite[Cor09a].
+        \cite[Cor09].
   
-        \item Other techniques such as \cite[Men03a] might also improve
+        \item Other techniques such as \cite[Men03] might also improve
         selections. Incremental control learning is a technique that present,
         at each iteration, a set of key variables (in our case, countermeasure
         goals) that have the most impact on the system. This technique has
@@ -500,12 +500,13 @@
         for a detailed discussion about DDP.)
     
         \item Lastly, Cross-Entropy method is an optimization technique for
-        solving combinatorial problems \cite[De-05a]. Applied to our problem,
-        the method can be broken in two steps: {\it (1)} an initial selection
-        is generated; {\it (2)} the parameters of the random generation are
-        updated according the score of the generated selection. The steps are
-        run a large number of times. Such technique has been successfully
-        applied for selecting software adaptations at runtime \cite[Mor17a].
+        solving combinatorial problems \cite[De-05,Jeg12]. Applied to our
+        problem, the method can be broken in two steps: {\it (1)} an initial
+        selection is generated; {\it (2)} the parameters of the random
+        generation are updated according the score of the generated selection.
+        The steps are run a large number of times. Such technique has been
+        successfully applied for selecting software adaptations at runtime
+        \cite[Mor17].
     
       \stopitemize
 
@@ -565,7 +566,7 @@
       property is met, i.e. nothing more than necessary is modified.
 
       Two alternative integration schemas may be used for this, dependent on
-      the obstacle resolution tactic being selected \cite[Lam09a,Lam00a]. The
+      the obstacle resolution tactic being selected \cite[Lam09,Lam00]. The
       first schema removes the obstructed goal; it should be applied when the
       {\it substitute goal} or {\it weaken goal} tactic is used for resolving
       the obstacle. The second integration schema keeps the obstructed goal in
@@ -600,7 +601,7 @@
       For example, the goal \goal{Achieve [Make Up Water Requested When Alarm
       Raised]} assigned to the agent \agent{Controlling Software} is a
       countermeasure produced through the {\it agent substitution} tactic
-      \cite[Lam09a,Lam00a]. Its anchor goal is \goal{Achieve [Make Up Water
+      \cite[Lam09,Lam00]. Its anchor goal is \goal{Achieve [Make Up Water
       Requested When Loss Of Cooling]}. The following refinement is complete,
       consistent, and minimal for this anchor goal:
 
