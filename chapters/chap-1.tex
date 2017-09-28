@@ -6,39 +6,29 @@
 
 \chapter{Introduction}
 
-  This chapter introduces the context, the motivation, the objectives and the
-  main contributions of the thesis.
+  This chapter introduces the context, motivation, objectives, main
+  contributions and organization of the thesis. The running example used
+  throughout the thesis is also introduced.
 
-  This chapter is structured as follows. \in{Section}[sec:motivation] details
-  the context and the motivation of the thesis. \in{Section}[sec:objectives]
-  describes the specific objectives of the thesis.
-  \in{Section}[sec:contributions] presents the main contributions of the
-  thesis. \in{Section}[sec:publications] provides the publications sharing the
-  research results with the research community. \in{Section}[sec:structure]
-  provides the structure of the thesis. \in{Section}[sec:running-example]
-  introduces the running example used throughout the thesis.
-
-	\startsection[reference=sec:motivation,title={Context and Motivation}]
+	\startsection[reference=sec:motivation,title={Context and motivation}]
   
-    Society relies more and more on complex, technological systems. The
-    computer drastically changed how such systems are designed, and how these
-    systems operates. Computers take off and land planes, track the heart rate
-    of patients to deliver appropriate electrical shocks, control the dosage of
-    drugs and gamma rays to cure tumors, adjust the speed and the driving wheel
-    of cars and trucks, control nuclear power plants, regulate energy supply
-    and demand, etc. More and more, the public relies on these services and is
-    less inclined to accept failures of these systems. With such increased
-    usage of software systems, their failures are more and more critical with
-    regard to health, economy, and environment. A key problem is to identify
-    what a software system should do, and what it should not; and thereby what
-    is a failure.
+    The wold increasingly relies more and more on complex technological
+    systems. Computers drastically changed how such systems are designed, and
+    operate. Computing systems are responsible for co-piloting aircrafts,
+    tracking the heart rate of patients to deliver appropriate electrical
+    shocks, controlling the dosage of drugs and gamma rays to cure tumors,
+    adjusting the speed and driving wheel of cars and trucks, controlling
+    nuclear power plants, regulating energy supply and demand, and so forth.
+    People increasingly rely on these services and are less inclined to accept
+    failures of those systems. The increased usage of software systems results
+    in increasingly critical failures with regard to health, economy, and
+    environment. A key problem is to identify what a software system should do,
+    and what it should not; and thereby what is a failure.
 
-    Understanding what a software system should do, and what it should not is
-    the core of Requirements Engineering. Requirements Engineering is a branch
-    of Software Engineering whose focus is precisely on elicitating,
-    evaluating, specifying, and analyzing of the objectives, functionalities,
-    qualities, and constraints to be achieved by a software system
-    \cite[Lam09].
+    This problem is at the core of Requirements Engineering. {\it Requirements
+    Engineering} is a branch of System Engineering concerned with eliciting,
+    evaluating, specifying, and analyzing the objectives, functionalities,
+    qualities, and constraints to be achieved by a software system \cite[Lam09].
 
     \startnarrower
     \noindent\quote{\it Simple improvements in these methodologies [reliability, fault
@@ -53,40 +43,40 @@
     not serve to demonstrate the safety of the software.} \emdash{}\cite[Lev83]
     \stopnarrower
 
-    To mitigate our inability to flawlessly describes complex systems, today's
+    To mitigate our inability to flawlessly describe complex systems, today's
     engineers rely on models. Models are increasingly recognized to be an
-    effective way to identify what software systems shall do and shall not
-    \cite[Lam09]. A model is an abstract representation of the software system
-    where key elements are highlighted, specified and connected to others.
-    Using models for Requirements Engineering has multiple benefits: models
-    allow to abstract from details and focus on essential aspects of the
-    software systems; it forces stakeholders to be precise about their
-    expectations for the software; it provides a structure to detect, early in
-    the process, errors and inconsistencies; and so forth. However, building a
-    \quote{good} model is hard. Good models are:
+    effective way of identifying what software systems shall do and shall not
+    and why \cite[Lam09]. A {\it model} is an abstract representation of the
+    software system where key elements are highlighted, specified and connected
+    to others. Using models for Requirements Engineering has multiple benefits:
+    models allow analysts to abstract from details and focus on essential
+    aspects of the software systems; they force stakeholders to be more precise
+    about their expectations; it provide a structure for detecting errors,
+    early in the process; and so forth.
+    
+    Building a \quote{good} model is hard. A good model shoud be:
     
     \startitemize
     
-      \item {\it Adequate}, i.e., the model corresponds to what is expected by
-      the stakeholders while taking into account the specific constraints for
+      \item {\it Adequate}: the model should capture what is really desired by
+      the stakeholders while taking into account specific constraints from
       the domain.
     
-      \item {\it Precise}, i.e., the ambiguity in the interpretation of the
-      model is reduced as reasonably possible so that it does not impede what
-      stakeholders foresee for the software.
+      \item {\it Complete}: the model may not overlook important objectives,
+      functionalities, qualities or constraints the system should meet.
     
-      \item {\it Complete}, i.e., the model does not overlook important
-      objectives, functionalities, qualities or constraints the system should
-      satisfy.
-    
-      \item {\it Consistent}, i.e., the model does contain not conflicting
+      \item {\it Consistent}: the model does not contain conflicting
       objectives, functionalities, qualities or constraints.
+    
+      \item {\it Precise}: ambiguities in interpreting the model should be
+      reduced as much as possible so that everyone understands the model the
+      same way.
 
     \stopitemize
     
-    In particular, incompleteness is reported as one of the major causes of
+    In particular, incompleteness is recognized among the major causes of
     software failure \cite[Lam09]. Missing requirements and assumptions often
-    results from unanticipated conditions under which the software should
+    result from unanticipated conditions under which the software should
     behave adequately. Our natural inclination to conceive systems that are too
     ideal prevents adverse conditions from being properly identified and, when
     likely and critical, resolved through appropriate countermeasures.
@@ -125,7 +115,7 @@
       such estimates more precisely \cite[Bed01,Fea03], possibly in relation
       with a requirements model \cite[Asn07c,Sab11,Sie14].
     
-      \item For risk resolution we may explore alternative countermeasures
+      \item For risk control analysts may explore alternative countermeasures
       \cite[Sut98b,Lam00,Asn06b] and select the most effective ones
       \cite[Fea03,Asn06]. Such exploration may be driven by risk-reduction
       tactics such as {\it reduce risk likelihood}, {\it avoid risk}, {\it
@@ -135,27 +125,28 @@
     \stopitemize
     
     In goal-oriented modeling frameworks, obstacles were introduced as a
-    natural abstraction for risk analysis \cite[Ant98,Lam09]. An {\it obstacle} to
-    a goal is a precondition for the non-satisfaction of this goal. Obstacle
-    analysis, like risk analysis, includes three steps \cite[Lam00]:
+    natural abstraction for risk analysis \cite[Ant98,Lam09]. An {\it obstacle}
+    to a goal is a precondition for the non-satisfaction of this goal.
+    Similarly to risk analysis, obstacle analysis includes three steps
+    \cite[Lam00]:
     
     \startitemize[n]
     
-      \item {\it Identification.} As many obstacles as possible to every leaf
-      goal in the goal refinement graph should be identified from relevant
-      domain properties. Techniques are available for identifying obstacles
-      systematically from goals and domain properties \cite[Alr12,Lam00].
+      \item {\it Identification.} Obstacles to every leaf goal in the goal
+      refinement graph should be identified from relevant domain properties.
+      Techniques are available for identifying obstacles systematically from
+      goals and domain properties \cite[Alr12,Lam00]. Such identification
+      should be as exhaustive as possible.
     
       \item {\it Assesment.} The likelihood and severity of each obstacle
-      should be determined. Likelihoods and criticalities may be determined
-      quantitatively by calculations over obstacle refinement trees and goal
-      refinement trees \cite[Sab11].
+      should be determined. This may be achieved quantitatively by calculations
+      over obstacle refinement trees and goal refinement trees \cite[Sab11].
     
-      \item {\it Resolution.} Likely and critical obstacles should be resolved
-      by systematic model transformations in order to integrate appropriate
+      \item {\it Control.} Likely and critical obstacles should be resolved by
+      systematic model transformations in order to integrate appropriate
       countermeasures in the goal model. For obstacle resolution, operators
       encoding risk resolution tactics were proposed to explore alternative
-      resolutions \cite[Lam00], as well as a learning-based approach
+      resolutions \cite[Lam00]. A learning-based approach may also be used for
       generating alternative countermeasures from observed behaviors traces
       \cite[Alr16].
     
@@ -166,29 +157,35 @@
     \cite[Lut07,Pon07,Dar07,Lam09,Let02].
     
     The {\it obstacle assessment} step is crucial for focusing the {\it
-    resolution} step on those risks that are determined to be likely and have
-    likely and severe consequences. No systematic techniques are available to
-    date to support this step. In particular, it is unclear how the likelihood
-    of obstacles should be estimated and how their criticality is assessed
-    against the high-level objectives. The {\it obstacle resolution} step is
-    also crucial; it directly impacts the adequacy, completeness and robustness
-    of the goal model. However, little support is currently available for the
-    resolution step beyond resolution operators for countermeasure exploration. In
-    particular, it is totally unclear what are the most appropriate
-    countermeasures, how such countermeasures are selected from the
-    countermeasures produced by the resolution operators, and where the
-    selected countermeasures should be integrated in the goal model to increase
-    its completeness and robustness.
+    control} step on those risks that are determined to be likely, and have
+    likely and severe consequences. No systematic techniques are however
+    available to date to support this step. In particular, it is unclear how
+    the likelihood of obstacles should be precisely estimated and how their
+    criticality should be assessed against the system's high-level objectives.
     
-    Furthermore, requirements engineers are at the forefront of uncertainty
-    problems. The adequacy and \quote{sufficient} completeness of the
-    identified software requirements, environment assumptions and relevant
-    domain properties is generally uncertain \cite[Lam09]. The satisfaction
-    rate of those requirements and assumptions when the system-to-be will be
-    running is uncertain as well \cite[Bar10, Fea03,Let04]; this is
-    generally due to unexpected events and conditions that may occur in the
-    environment \cite[Lam00]. Moreover, the likelihood of such events and
-    conditions occurring is uncertain.
+    The {\it obstacle control} step is also crucial; it directly impacts the
+    adequacy, completeness and robustness of the goal model. However, little
+    support is currently available for the control step beyond resolution
+    operators for countermeasure exploration. In particular, it is totally
+    unclear what most appropriate countermeasures are, how such countermeasures
+    are selected from the countermeasures produced by the resolution operators,
+    and where the selected countermeasures should be integrated in the goal
+    model to increase its completeness and robustness.
+    
+    Beyonds those two types of limitations of the current state of the art,
+    uncertainty needs to be properly managed.
+    
+    A first type of uncertainty concerns the adequacy and \quote{sufficient}
+    completeness of the identified software requirements, environment
+    assumptions and relevant domain properties \cite[Lam09].
+    
+    Besides, the satisfaction rate of those requirements and assumptions in the
+    running system is uncertain as well \cite[Bar10, Fea03,Let04]; satisfaction
+    rates may vary due to unexpected events and conditions that may occur in
+    the environment \cite[Lam00]. The likelihood of such events and conditions
+    occurring is also uncertain. This gives rise to the notion of {\it
+    probabilistic requirements}, that is requirements that need to be satisfied
+    in at least X\% of cases.
     
     In traditional risk analysis, uncertainty during risk assessment arises
     under two forms \cite[OHa06a,Vos08].
@@ -197,36 +194,37 @@
 
       \item {\it Physical uncertainty} refers to system phenomena. This
       domain-level form of uncertainty, such as the chance of a sensor breaking
-      down, can be reduced by modifying the system\emdash{}typically by changing the
-      design or adding new requirements during the {\it resolution} step.
+      down, can be reduced by modifying the system\emdash{}typically by
+      changing the design or adding new requirements during the {\it risk
+      control} step.
 
       \item {\it Knowledge uncertainty} refers to the assessment of physical
-      uncertainty by experts. Our imperfect knowledge of what the exact
-      probability of a sensor breaking might lead us to estimate it with some
-      uncertainty margin. This form of uncertainty is reduced through further
-      data collection, consultation of more experts, runtime monitoring, etc.
+      uncertainty by experts. Our imperfect knowledge of the exact probability
+      of a sensor breaking might lead us to estimate it with some uncertainty
+      margin. This form of uncertainty is reduced through further data
+      collection, consultation of more experts, runtime monitoring, etc.
 
     \stopitemize
 
-    Risk analysis techniques for RE so far addressed physical uncertainty only
-    \cite[Asn11, Fea03, Lam00, Lun10, Sie14]. However, they rely on expert
-    judgement at some point or another to estimate the likelihood of
+    Risk analysis techniques for RE have so far addressed physical uncertainty
+    only \cite[Asn11, Fea03, Lam00, Lun10, Sie14]. They rely on expert
+    judgement at some point or another, however, to estimate the likelihood of
     fine-grained events or conditions emerging from their analysis. Such
-    estimates are typically based on experience or historical data
-    \cite[Asn11, Fea03, Lam00, Lun10, Sie14], sometimes refined through
-    runtime event monitoring \cite[Fea98, Epi09]. The extent to which those
-    estimates are accurate remains uncertain. Expert's judgements might be
-    subjective or biased; relevant data might not be available; accurate data
-    might be too expensive to obtain; collected data might no longer be
-    relevant in view of technology changes; data might be too sparse; and so
-    on. Handling knowledge uncertainty is therefore critical for accurate
-    obstacle analysis.
+    estimates are typically based on experience or on historical data \cite[Asn11,
+    Fea03, Lam00, Lun10, Sie14], sometimes refined through runtime event
+    monitoring \cite[Fea98, Epi09]. The extent to which those estimates are
+    accurate remains uncertain. Expert's judgements might be subjective or
+    biased; relevant data might not be available; accurate data might be too
+    expensive to obtain; collected data might no longer be relevant in view of
+    technology changes; data might be too sparse; and so on. Handling knowledge
+    uncertainty is therefore critical for accurate obstacle analysis.
     
-    Lastly, today's software systems are increasingly deployed in unpredictably
-    varying environments such as autonomous vehicle control \cite[Che09b,
-    DeV17a], disaster management \cite[Gol08], or adaptive security
-    \cite[Pas14,Pas16]. In these domains, the system must adapt to changing
-    environments to guarantee its goals.
+    A last source of uncertainty concerns changes that may occur in the
+    software environment and system runtime. Today's software systems are
+    increasingly deployed in unpredictably varying environments, e.g., for
+    autonomous vehicle control \cite[Che09b, DeV17a], disaster management
+    \cite[Gol08], or adaptive security \cite[Pas14,Pas16]. In these domains,
+    the system must adapt to changing environments to guarantee its goals.
     
     For runtime system adaptation, Monitor-Analyse-Plan-Execute (MAPE) cycles
     are often followed \cite[Che09,Kep03,Lem10]. The {\it Monitor} step
@@ -238,39 +236,49 @@
     meet its objectives. During the {\it Execute} step, the system is updated
     with the planned actions.
     
-    At system runtime, the probabilistic requirements may not be satisfied due
-    to adverse conditions; MAPE cycles are therefore required to ensure that
-    these requirements remains satisfied. The selection of the most appropriate
-    countermeasures is based on environment assumptions and obstacle
+    At system runtime, probabilistic requirements may not be satisfied due to
+    adverse conditions; MAPE cycles are therefore required to ensure that these
+    requirements remains satisfied. The selection of most appropriate
+    countermeasures is normally based on environment assumptions and obstacle
     satisfaction rates determined at RE time. However, these influencing
     factors may turn to be different at system runtime. Some assumptions might
-    no longer hold, thereby changing the software system characteristic; or the
-    estimates provided by the experts at RE time might prove inaccurate at
-    system runtime. In addition, other estimates might not be available at RE
-    time, preventing the selection of the the most appropriate countermeasures
-    before runtime. For better fit to the system's goals under changing or
-    originally unknown conditions, it might thus be better to defer decisions
-    on selecting appropriate countermeasures to system runtime by monitoring
-    adverse conditions, analyzing whether adaptations are required, selecting
-    the appropriate countermeasures and integrating these, modifying the
-    running system.
+    no longer hold, or the estimates provided by the experts at RE time might
+    prove inaccurate at system runtime. In addition, other estimates might not
+    be available at RE time, preventing the selection of most appropriate
+    countermeasures before runtime. For better fit to the system's goals under
+    changing or originally unknown conditions, it might prove better to defer
+    decisions on selecting appropriate countermeasures to system runtime by
+    monitoring adverse conditions, analyzing whether adaptations are required,
+    selecting the appropriate countermeasures and integrating these; the
+    running system is thus dynamically adapted accordingly.
     
   \stopsection
 
-	\startsection[reference=sec:objectives,title={Objectives of the Thesis}]
+	\startsection[reference=sec:objectives,title={Objectives of the thesis}]
   
-    \noindent {\bf Obstacle Assessment.} To fill the gap in obstacle
-    assessment, the thesis presents a simple yet effective technique for
-    quantitative risk assessment. The quantitative framework is intended to
-    meet the following objectives:
+    \noindent {\bf Obstacle Assessment.} A simple yet effective technique
+    should be available for quantitative assessment of probabilistic obstacles.
+    The proposed quantitative technique is intended to meet the following
+    objectives.
     
     \startitemize
     
+      \item {\it Probabilistic goals and obstacles for risk analysis.} Goals
+      should be extended to prescribe properties to hold in at least X\% of
+      cases. Such goals should be integrated within the obstacle analysis
+      framework together with probabilistic obstructions. (In the currently
+      supported framework, X = 100 for all goals.)
+    
+      \item {\it Model-based assessment.} Unlike \cite[Fea03], the assessment
+      process should take advantage of the refinement structure provided by the
+      goal/obstacle model in order to allow for more accurate estimation of the
+      satisfaction rate of coarser-grained statements from finer-grained ones.
+    
       \item {\it Formal semantics for statements to be assessed.} Unlike
-      \cite[Fea03, Asn11, Lun10], the specification of goals and risks
-      should have a clear, precise semantics in terms of desirable/undesirable
-      system behaviors. Such semantics enables their precise interpretation and
-      the integration with other techniques for risk generation \cite[Lam00,
+      \cite[Fea03, Asn11, Lun10], the specification of goals and risks should
+      have a clear, precise semantics in terms of desirable/undesirable system
+      behaviors. Such semantics enables their precise interpretation and the
+      integration with other techniques for risk generation \cite[Lam00,
       Alr12], countermeasure derivation \cite[Lam00] and goal model analysis,
       including goal refinement checking, operationalization checking and
       behavior model synthesis \cite[Lam09].
@@ -281,58 +289,53 @@
       the software-to-be. This attenuates the common problems with subjective
       estimations. For the importance of making requirements measurable, see
       \cite[Rob12].
-    
-      \item {\it Model-based assessment.} Unlike \cite[Fea03], the assessment
-      process should take advantage of the refinement structure provided by the
-      goal/obstacle model to allow for more accurate estimation of the
-      satisfaction rate of coarser-grained statements from finer-grained ones.
-    
-      \item {\it Probabilistic requirements.} Unlike the existing techniques,
-      requirements that prescribe some property to hold in at least $X$\% of
-      the cases should be supported and integrated within the assessment
-      framework.
+      
+      \item {\it Separation between likelihood of occurence and criticality.}
+      The likelihood of occurences of an obstacle should be explicitely
+      separated from the criticality of its consequences. Critical obstacles
+      should be highlighted with regard to the importance and the likelihood of
+      the obstructed high-level objectives, independently from the likelihood
+      of occurences of the obstacles.
 
- \stopitemize
+    \stopitemize
   
-    \noindent {\bf Obstacle Resolution.} To address the problem of obstacle
-    control, the thesis proposes a set of techniques for selecting and
-    integrating appropriate countermeasures. These techniques are intented to
-    satisfy the folllowing objectives:
+    \noindent {\bf Obstacle Control.} To address the problem of obstacle
+    resolution, systematic techniques for selecting and integrating appropriate
+    countermeasures should be available. These techniques are intented to
+    satisfy the folllowing objectives.
     
     \startitemize
     
       \item {\it Cost-effective countermeasure selection.} The techniques for
-      selecting countermeasures shall guarantee that the target satisfaction
+      selecting countermeasures should guarantee that the target satisfaction
       rate of high-level objectives is satisfied while not costing more than
       necessary.
     
       \item {\it Convergence towards more complete models.} The techniques for
-      integrating countermeasures shall guarantee that the model is
+      integrating countermeasures should guarantee that the model is
       increasingly robust and complete as resolutions are being integrated.
     
-      \item {\it Behavior and correctness preservation.} The normal system
-      behaviors and those not affected by the obstacles should be preserved,
-      and that the correctness of goal refinements in the model should be
-      preserved too.
+      \item {\it Normal behavior} The system behaviors not affected by the
+      obstacles should be preserved.
+      
+      \item {\it Correctness preservation.} The correctness of goal refinements
+      in the model should be preserved too.
     
-      \item {\it Separation of concerns.} A goal model integrating
-      countermeasures to obstacles may need to be restructured so as to keep
-      the goals refering to normal situations separate from the countermeasure
-      goals refering to exceptional situations. For higher readability and
-      better visibility, the ideal model containing all functional and
-      non-functional goals in normal situations should be kept visible. The
-      specification of these goals should not be cluttered with items refering
-      to exceptional situations. 
+      \item {\it Separation of concerns.} For higher readability and better
+      visibility, the ideal model containing all functional and non-functional
+      goals in normal situations should be kept visible. The specification of
+      these goals should not be cluttered with items refering to exceptional
+      situations.
       
       \item {\it Incremental integration.} Exceptional situations should be
       identifiable and integrated incrementally. The handling of each single
       situation should be isolated from the others.
     
-      \item {\it Combinatorial mitigation.} The model structuring and
-      specification should not exhibit any combinatorial blow-up of exceptional
-      cases. Without any structuring mechanism, the integration of multiple
-      countermeasures to multiple risks considered in combination might produce
-      a large number of cases.
+      \item {\it Combinatorial mitigation.} Without any restructuring
+      mechanism, the integration of multiple countermeasures to multiple risks
+      considered in combination might produce a large number of cases. The
+      model restructuring and specification should not exhibit any
+      combinatorial blow-up of exceptional cases.
     
       \item {\it Traceability.} The traceability of exceptional cases should be
       supported from requirements to architecture. Keeping exceptions separate
@@ -342,91 +345,96 @@
     
     \stopitemize
         
-    \noindent {\bf Handling Uncertainty.} The quantitative framework for
-    risk-driven requirement engineering is extended to explicitly capture and
-    reason about uncertainties on estimated likelihoods. The resulting
-    framework is intended to meet the following objectives:
+    \noindent {\bf Handling Uncertainty of Estimates.} The quantitative
+    obstacle analysis framework should be extended to explicitly capture and
+    reason about uncertainties on estimated likelihoods.
     
     \startitemize
     
       \item {\it Obstacle assessment and resolution under uncertainty.} The
-      techniques for highlighting critical and likely obstacles shall be
-      extended to be applicable in presence of knowledge uncertainty. In
-      alignment with new-generation reliability databases providing ranges of
-      estimates \cite[Akh01], single-value and multi-value estimates of the
-      likelihood of fine-grained obstacles shall be supported.
+      techniques for highlighting likely and critical obstacles should cope
+      with knowledge uncertainty. In alignment with new-generation reliability
+      databases that provide ranges of estimates \cite[Akh01], single-value and
+      multi-value estimates of the likelihood of fine-grained obstacles should
+      be supported.
       
-      \item {\it Highlighting of problematic uncertainty margins.} Techniques
-      shall allows analysts to highlight critical obstacles (in terms of
+      \item {\it Highlighting of problematic uncertainty margins.} The techniques
+      should allow analysts to highlight critical obstacles (in terms of
       severity of their consequences) whose knowledge uncertainty must be
-      reduced in order to determine whether they are sufficiently likely or not.
+      reduced for deciding whether they are sufficiently likely or not.
     
       \item {\it Knowledge uncertainty reduction.} Problematic uncertainty
-      margins of critical obstacles shall be reduced for finer-grained obstacle
-      assessment.
+      margins for critical obstacles should be reduced to enable finer-grained
+      obstacle assessment.
     
     \stopitemize
     
-    \noindent {\bf Runtime Adaptation.} The thesis presents an obstacle-driven
-    runtime adaptation technique for increased satisfaction of probabilistic
-    system goals. These techniques are intended to address the following more
-    specific objectives:
+    \noindent {\bf Obstacle-Driven Runtime System Adaptation.} For increased
+    satisfaction of probabilistic system goals at system runtime, techniques
+    should be available for dynamically deploying most appropriate
+    countermeasures under varying conditions.
     
     \startitemize
+    
+      \item {\it Monitoring of satisfaction rates.} The satisfaction rate of
+      probabilistic goals and obstacles should be monitored at runtime.
+      Monitoring helps determining whether goals are currently satisfied, and
+      what are the current likely and critical obstacles.
+    
+      \item {\it No need for explicit behavior model.} Building a consistent
+      and complete behavior model for large distributed systems with many
+      complex states and parallelism is often quite challenging. Unlike
+      \cite[Ghe09,Ghe13], the model used should therefore be declarative;
+      system behaviors need not be explicitly modeled.
+    
+      \item {\it Model-based adaptation.} The adaptation process should be
+      driven by a goal/obstacle model; only those adaptations which are
+      required to meet the probabilistic assertions from this model should be
+      made.
     
       \item {\it Traceability of monitored indicators and deployed
       countermeasures.} Unlike \cite[Gia01], the monitored indicators and
       decision criteria for system adaptation should be traceable to system
-      objectives; why such or such monitored information is required shall
+      objectives; why such or such monitored information is required should
       thereby be documented.
-    
-      \item {\it Model-based adaptation.} The adaptation process is driven by a
-      goal/obstacle model; only those adaptations which are required to meet
-      the probabilistic assertions from this model should be made. Model-based
-      adaptation also reduces the need for application-specific manipulations.
-    
-      \item {\it No explicit behavior modeling.} Unlike \cite[Ghe09,Ghe13],
-      the model used should be declarative; system behaviors need not be
-      explicitly modeled. Building a consistent and complete behavior model for
-      large distributed systems with many complex states and parallelism is
-      often quite challenging.
     
     \stopitemize
   
   \stopsection
 
-	\startsection[reference=sec:contributions,title={Overview of the Contributions}]
+	\startsection[reference=sec:contributions,title={Overview of the contributions}]
 	
-		\noindent {\bf A Probabilistic Framework for Goal Oriented Risk-Analysis}
-		The quantitative risk assessment technique presented in the thesis is
-		model-based and anchored on an existing goal-oriented framework for
+		\noindent {\bf A Probabilistic Framework for Goal Oriented Risk Analysis}
+		The thesis presents a quantitative risk assessment technique. This technique
+		is model-based and anchored on an existing goal-oriented framework for
 		requirements engineering.
     
     \startitemize
     
-      \item Probabilistic goals and obstacles are introduced. Probabilistic
-      goals enables the specification of goals that prescribe some property to
-      hold in $X$\% of the cases. Probabilistic obstacles provides more
+      \item Probabilistic goals and obstacles are introduced. Goals
+      may be specified to prescribe some property to
+      hold in $X$\% of the cases. Probabilistic obstacles provide more
       evidence-based answers to questions such as, e.g., what are the most
-      critical obstacles to be resolved in view of the high-level,
+      critical obstacles to be resolved in view of higher-level,
       safety-critical goals?
     
       \item A formal characterization of satisfaction rates of probabilistic
       goals and obstacles is provided in terms of observed states and
-      behaviors, enabling their integration with other techniques such as
-      runtime monitoring.
+      behaviors. Beyond obstacle assessment and control, this characterization
+      enables other techniques such as goal/obstacle monitoring at system
+      runtime.
     
-      \item The formal semantics in terms of system behaviors for specification
-      of probabilistic goals and their obstacles allow probabilities to be
-      grounded on measurable, application-specific phenomena. This reduces
-      subjective assessment by experts.
+      \item A formal behavioral semantics for specification of probabilistic
+      goals and their obstacles allows probabilities to be grounded on
+      measurable, application-specific phenomena. This reduces subjective
+      assessments by experts.
     
     \stopitemize
     
-		\noindent {\bf Assessing Likelihood and Criticality of Obstacles} The
-		technique presented in the thesis for determining the satisfaction rate of
-		obstacles and the severity of their consequences exploits the goal/obstacle
-		refinement structure.
+		\noindent {\bf Assessing the Likelihood and Criticality of Obstacles.} The
+		thesis presents a technique for propagating the satisfaction rate of leaf
+		obstacles and for computing the severity of their consequences. This
+		technique exploits the goal/obstacle refinement structure.
     
     \startitemize
     
@@ -434,45 +442,44 @@
       violation is determined quantitatively and systematically by probability
       propagations through the obstacle and goal models.
       
-      \item The most critical obstacle combinations are determined in order to
-      prioritize obstacles and guide the exploration of appropriate
-      countermeasures against the more critical obstacles to increase
-      requirements completeness.
+      \item The most critical obstacle combinations are determined for obstacle
+      prioritization. As a consequence, appropriate countermeasures may be
+      selected to increase requirements completeness.
     
     \stopitemize    
     
 		\noindent {\bf Controlling Obstacles.} The thesis presents systematic
-		techniques for selecting the most appropriate countermeasures and integrating
-		these selected countermeasures into ideal goal models.
+		techniques for selecting most appropriate countermeasures to the assessed
+		obstacles and for integrating these countermeasures into ideal goal models.
     
     \startitemize
     
-      \item A cost-benefit tradeoff analysis guides the selection to maximize
-      satisfaction rates of high-level goals under cost constraints.
+      \item A cost-benefit tradeoff analysis guides the selection so as to
+      maximize satisfaction rates of high-level goals under cost constraints.
       
-      \item An integration operator is introduced as a model transformation
-      ensuring {\it progress} towards a more complete model, {\it minimal
-      change} of the original model, and {\it refinement correctness
+      \item An integration mechanism is introduced as a model transformation
+      operator to ensure {\it progress} towards a more complete model, {\it
+      minimal change} of the original model, and {\it refinement correctness
       preservation}. Anchor goals are introduced to define where countermeasure
       goals should be integrated together with appropriate refinement schemas.
     
-      \item To support the separation between normal and exceptional
-      situations, the thesis extends the goal language with
-      semantics-preserving constructs for specifying exceptions and their
-      \quote{handlers}\emdash{}that is, the countermeasures associated with them.
-      Model transformation operators are then provided for attaching and
-      detaching exceptions to/from associated goals in the goal model.
+      \item To support separation between normal and exceptional situations,
+      the thesis extends the goal language with semantics-preserving constructs
+      for specifying exceptions and their \quote{handlers}\emdash{}that is, the
+      countermeasures associated with them. Model transformation operators are
+      then provided for attaching and detaching exceptions to/from associated
+      goals in the goal model.
     
     \stopitemize
     
-		\noindent {\bf From Certain Values to Uncertain Values.} The thesis
-		introduce knowledge uncertainty as a first-class citizen for the {\it obstacle
-		    assessment} and {\it resolution} steps.
+		\noindent {\bf From Certain Probability Values to Uncertain Values.} The
+		thesis introduces knowledge uncertainty as a first-class citizen for the {\it
+		obstacle assessment} and {\it control} steps.
     
     \startitemize
     
-      \item Uncertainties about risk estimates and goal satisfaction rates are
-      integrated in the specification of probabilistic goals and obstacles. The
+      \item Uncertainties about obstacle estimates and goal satisfaction rates are
+      explicitely captured in the specification of probabilistic goals and obstacles. The
       extended framework supports both single-point and multi-point value
       estimates.
     
@@ -480,146 +487,161 @@
       uncertainties about goal satisfaction: the goal violation uncertainty and
       the uncertainty spread.
     
-      \item A quantitative technique is provided for highlighting the obstacles
-      with most severe consequences on the goal model and most problematic
+      \item A quantitative technique is provided for highlighting those obstacles
+      with most severe consequences on the goal model and with most problematic
       knowledge uncertainties.
     
-      \item Uncertainty margins on estimates are reduced for increased accuracy
-      by methodical integration of estimates from multiple sources or multiple
-      experts.
+      \item For increased accuracy, uncertainty margins about estimates are
+      reduced by methodical integration of estimates from multiple sources or
+      multiple experts.
     
     \stopitemize
     
-		\noindent {\bf Handling Obstacles At System Runtime.} The thesis proposes
-		to drive the runtime adapation of software systems by the probabilistic
-		satisfaction of high-level goals.
+		\noindent {\bf Handling Obstacles At System Runtime.} The thesis presents a
+		technique for drivung system runtime adapations at runtime by the
+		satisfaction rates of high-level goals.
     
     \startitemize
     
-      \item Probabilistic obstacles are monitored at system runtime. Our
-      approach extends the monitoring technique introduced in \cite[Bau11] for
-      non-probabilistic linear temporal logic (LTL) to monitor probabilistic
-      LTL assertions at system runtime. From such monitoring of leaf obstacles,
-      the satisfaction rate of high-level goals is obtained by up-propagation
+      \item Probabilistic obstacles are monitored at system runtime. The
+      technique extends an existing monitoring technique, introduced in
+      \cite[Bau11] for non-probabilistic linear temporal logic (LTL), to
+      monitor probabilistic LTL assertions at system runtime. From such
+      monitoring of leaf obstacles in obstacle refinement trees, the
+      satisfaction rate of high-level goals is obtained by up-propagation
       through obstacle/goal refinement trees.
     
       \item Alternative countermeasures are selected on the fly, among those
       identified at RE time, when the satisfaction rate obtained for high-level
       goals is below their required threshold. 
     
-      \item The selected countermeasures are integrated, at runtime, into the
-      goal model and deployed in the running software system.
+      \item The selected countermeasures are integrated into the goal model at
+      runtime and deployed in the running software system.
     
     \stopitemize
 
   \stopsection
     
-  \startsection[reference=sec:publications,title={Publications}]
+  \startsection[reference=sec:publications,title={Dissemination of results}]
   
+    
     The presented techniques were published in pair-reviewed conferences and in
     the Requirement Engineering journal.
   
     \startitemize
-      \item \cite[entry][Cai12] (Acceptance rate: 24\%, Nominated for the best paper award)
-      \item \cite[entry][Cai13] (Invited to submit)
-      \item \cite[entry][Cai13b] (Acceptance rate: 54\%)
-      \item \cite[entry][Cai14] (Acceptance rate: 27\%)
-      \item \cite[entry][Cai15] (Acceptance rate: 29\%)
-      \item \cite[entry][Cai17] (Acceptance rate: 21\%, Best paper award)
+      \item \in{Chapter}[chap:proba-framework], \in{Chapter}[chap:assessing]: \cite[entry][Cai12] (Best Paper Award.) % Acceptance rate: 24\%
+      \item \in{Chapter}[chap:proba-framework], \in{Chapter}[chap:assessing]: \cite[entry][Cai13]
+      \item \in{Chapter}[chap:proba-framework], \in{Chapter}[chap:assessing]: \cite[entry][Cai13b] % Acceptance rate: 54\%
+      \item \in{Chapter}[chap:controlling_obstacle]: \cite[entry][Cai14] % Acceptance rate: 27\%
+      \item \in{Chapter}[chap:knowledge-uncertainty]: \cite[entry][Cai15] % Acceptance rate: 29\%
+      \item \in{Chapter}[runtime]: \cite[entry][Cai17] (Best Paper Award.) % Acceptance rate: 21\% 
     \stopitemize
   
   \stopsection
 
-	\startsection[reference=sec:structure,title={Organisation of the Thesis}]
+	\startsection[reference=sec:structure,title={Organisation of the thesis}]
   
     The thesis is structured as follows.
     
     \startitemize
     
-      \item \in{Chapter}[chap-background] presents the necessary background
-      about goal-oriented requirements engineering and obstacle analysis. It
-      provides a description of the framework KAOS extended in the next
-      chapters.
+      \item \in{Chapter}[chap-background] presents the necessary background on
+      goal-oriented requirements engineering and obstacle analysis. It provides
+      a description of the KAOS framework extended in the next chapters.
       
       \item \in{Chapter}[chap:proba-framework] describes the probabilistic
-      framework for goal-oriented requirements engineering. The chapter
-      provides the precise definitions for probabilistic goals and obstacles,
-      how they relate to each other and how they can be formally specified.
+      approach for goal-oriented requirements engineering. It provides precise
+      definitions for probabilistic goals and obstacles, and shows how these
+      relate to each other and how they can be formally specified.
       
-      \item \in{Chapter}[chap:assessing] discusses the assessment of obstacles.
-      The chapter describes how leaf obstacles are estimated and how the
-      satisfaction rate for high-level goal is obtained by up-propagation
-      through the obstacle and the goal model. It discusses how critical and
-      likely obstacles are highlighted.
+      \item \in{Chapter}[chap:assessing] discusses the assessment of
+      probabilistic obstacles. It describes how leaf obstacles are estimated
+      and how the satisfaction rate for higher-level goals is obtained by
+      up-propagation through the obstacle and the goal models. This chapter
+      also shows how likely and critical obstacles are highlighted.
       
-      \item \in{Chapter}[chap:controlling_obstacle] describes the tools and
-      techniques for controlling critical and likely obstacles through
-      appropriate countermeasures. The chapter discusses what are appropriate
-      countermeasures, how they are selected and how they are integrated in the
-      ideal goal model.
+      \item \in{Chapter}[chap:controlling_obstacle] describes the techniques
+      and tools for controlling likely and critical obstacles through
+      appropriate countermeasures. It discusses what appropriate
+      countermeasures are, how these are selected and how they are integrated
+      in the original, ideal goal model.
       
       \item \in{Chapter}[chap:knowledge-uncertainty] describes how knowledge
-      uncertainty is integrated within the {\it obstacle assessment} and {\it
-      resolution} step.
+      uncertainties about probabilistic values are is integrated within the
+      {\it obstacle assessment} and {\it control} step.
             
-      \item \in{Chapter}[runtime] details how the proposed techniques can be
-      used to drive the adaptation of software systems at runtime. The
-      adaptations guarantee the required satisfication rate for high-level
-      goals while monitoring low-level obstacles.
+      \item \in{Chapter}[runtime] extends the proposed techniques for runtime use  
+      to drive the adaptation of software systems at runtime. The
+      technique guarantees the required satisfication rate for high-level
+      goals based on the monitoring low-level obstacles.
       
       \item \in{Chapter}[chap:tool_support] presents the tools supporting the
-      techniques. It also describes the text-based specification language used
-      to describe goal and obstacle models.
+      various techniques presented in the thesis. It also describes the
+      text-based specification language used to represent goal and obstacle
+      models.
       
-      \item \in{Chapter}[chap:evaluation] reports the evaluation of the
-      proposed techniques on three non\-trivial case-studies. The chapter also
-      discusses the correctness, performance and scalability, applicability,
-      utility and usability of the proposed techniques.
+      \item \in{Chapter}[chap:evaluation] reports on the evaluation of the
+      proposed techniques on three non\-trivial case-studies. It also
+      discusses their correctness, performance and scalability, applicability,
+      utility, and usability.
       
-      \item \in{Chapter}[chap:relatedwork] presents the models and methods
-      related to the techniques presented in the thesis. It focuses on
-      quantitative Requirements Engineering and Risk-Driven Requirements
-      Engineering. The chapter also discusses the approaches for managing
-      uncertainty at the RE level, and the approaches for requirements-driven
-      runtime adaptation.
+      \item \in{Chapter}[chap:relatedwork] comparatively reviews related work
+      relevant to the techniques presented in the thesis. It focuses on
+      quantitative RE and risk-driven RE. The chapter also discusses other
+      approaches for managing uncertainty at RE level, together with approaches
+      for requirements-driven runtime adaptation.
       
-      \item \in{Chapter}[chap:conlusion] concludes the thesis and discusses
-      open issues and perspectives.
+      \item \in{Chapter}[chap:conlusion] summarizes our results, their
+      strenghts and limitations, and discusses open issues and perspectives.
     
     \stopitemize
   
-	\startsection[reference=sec:running-example,title={Running Example}]
+	\startsection[reference=sec:running-example,title={Running example}]
 	
-    This section briefly introduce the running example used in the thesis.
+    This section briefly introduces a simple case study used as running example
+    throughout the thesis. This specific case study was selected for the
+    availability of documented probability estimates by experts that will be
+    used as input to our techniques.
+    
+    This case study was inspired by a spent fuel pool system during
+    decomissionning, that is, not during full power operations, as described in
+    \cite[Col01]. The examples used throught the thesis were extracted from the
+    safety guide provided by IAEA \cite[INT12a], from a public report produced
+    by the committee on the Safety and Security of Commercial Spent Nuclear
+    Fuel Storage and the National Research Council \cite[Cou06], from a
+    technical study published by the U.S. Nuclear Regulatory Commision
+    \cite[Col01], and from various media-related sources relating the incidents
+    and responses at the Fukushima Daiichi nuclear power plant.
     
     \startnarrower\it
       
-      \noindent Most of the nuclear power plant in the US uses a reactor fuel
-      in the form of small uranium dioxide pellets. These pellets are arranged
-      in fuel rods, which are protected by a zirconium metal alloy. The rods
-      are bundled to form square arrangements measuring approximately 15 to 25
-      centimeters on a side and 3.5 et 4.5 meters high.
+      \noindent Most nuclear power plants use reactor fuel under the form of
+      small uranium dioxide pellets. These pellets are arranged in fuel rods,
+      which are protected by a zirconium metal alloy. The rods are bundled to
+      form square arrangements measuring approximately 15 to 25 centimeters on
+      the side and 3.5 et 4.5 meters high.
     
-      Once in the reactors, the fuel undergoes nuclear fission and generates both
-      heat and radioactive products that requires both cooling and shielding.
-      When the fuel has been consumed (usually after 4 to 6 years), the rods are
-      removed from the core and stored.
+      Once in the reactors, the fuel undergoes nuclear fission and generates
+      both heat and radioactive products that require both cooling and
+      shielding. When the fuel has been consumed (usually after 4 to 6 years),
+      the rods are removed from the core and stored.
   
-  		Spent nuclear fuel is often stored first at nuclear power plants in
-  		water-filled pools, called {\it spent fuel pools}. Water in these pools
+  		The consumed nuclear fuel is often stored first at nuclear power plants
+  		in water-filled pools, called {\it spent fuel pools}. Water in these pools
   		provides cooling of the spent fuel and shielding against radiation for the
-  		first years, typically 5 years. The spent fuel is then moved to dry cask
-  		storage, providing passive cooling and shielding, for the following years.
+  		first years\emdash{}typically, 5 years. The spent fuel is then moved to dry
+  		cask storage, providing passive cooling and shielding, for the following
+  		years.
 
-      According standards \cite[INT12a] and recommendations \cite[Cou06], these
-      pools and their operation must satisfy a large set of safety and security
-      requirements. The three main objectives for such systems are:
+      According to standards \cite[INT12a] and recommendations \cite[Cou06],
+      these pools and their operation must satisfy a large set of safety and
+      security requirements. The three main objectives for such systems are:
 
       \startitemize[packed]
     
         \item Cooling the fuel in order to prevent over-heating. 
       
-        \item Shielding workers and the public from the radioactive emmissions.
+        \item Shielding workers and the public from radioactive emmissions.
       
         \item Preventing critical accidents.      
     
@@ -627,17 +649,8 @@
     
     \stopnarrower
     
-    Our running example was inspired by a spent fuel pool system during
-    decomissionning, i.e. not during full power operations, as described in
-    document \cite[Col01]. Examples used throught the thesis were extracted
-    from the safety guide provided by IAEA \cite[INT12a], from the public
-    report by committee on the Safety and Security of Commercial Spent Nuclear
-    Fuel Storage and the National Research Council \cite[Cou06], from the
-    technical study published by the U.S. Nuclear Regulatory Commision
-    \cite[Col01], as well as from various media-related sources relating the
-    incidents and responses at the Fukushima Daiichi nuclear power plant. The
-    goal and obstacle models are directly inspired from the event and fault
-    trees presented in \cite[Col01].
+    \noindent The goal and obstacle model fragments provided in the thesis are
+    directly inspired from the event and fault trees presented in \cite[Col01].
     
   \stopsection
 	
