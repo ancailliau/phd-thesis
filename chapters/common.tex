@@ -391,11 +391,13 @@
 \setupbtxlist
   [aps]
   [alternative=b,		
-   distance=0\emwidth,			% distance between key and text?
-   width=5\emwidth,   
-   margin=0\emwidth, 			% hanging margin
+   distance=0pt,			% distance between key and text?
+   width=5em,   
+   margin=0pt, 			% hanging margin
    numbering=tag,
    sorttype=tag,
+   before={\blank[none]},
+   after={\blank[quarterline]}
   ]
 
 \definebtxrendering
