@@ -50,7 +50,7 @@
   \in{Section}[sec:update_k_uncertainty] discusses how knowledge uncertainty
   affects the monitoring and the adaptations.
 
-  \startsection[reference=sec:overview, title={Overview of the Approach}]
+  \startsection[reference=sec:overview, title={Overview of the approach}]
   
     The objective in this chapter is to let the system dynamically switch to more
     appropriate countermeasures to leaf obstacles in view of evolving environment
@@ -84,13 +84,11 @@
       obstacles. The list of predicates to observe at runtime is thereby
       provided. (See \in{Section}[sec:building_monitor])
 
-      \item {\bf Observing States.} At runtime, the states of the monitored
-      system are observed at a regular pace. (The pace may be chosen to fit a
-      specific domain.)
-      
-      \item {\bf Updating Obstacle Monitors.} At every observation, a new
-      virtual monitor for each leaf obstacle is started while existing monitors
-      are updated. (See \in{Section}[sec:monitoring_based])
+      \item {\bf Updating Obstacle Monitors.} At runtime, the states of the
+      monitored system are observed at a regular pace. (The pace may be chosen
+      to fit a specific domain.) At every observation, a new virtual monitor
+      for each leaf obstacle is started while existing monitors are updated.
+      (See \in{Section}[sec:monitoring_based].)
 
       \item {\bf Computing High Level Satisfaction Rates.} The monitored
       satisfaction rate of leaf obstacles is up-propagated through
@@ -119,7 +117,7 @@
   
   \startsection
     [reference=sec:runtime_running_example,
-     title={Running Example for Runtime Adaptation}]
+     title={Running example for runtime adaptation}]
      
     The running example for this section was inspired from a flood detection
     system \cite[Hug06,Hug06b]. This running example illustrates or evaluates
@@ -161,7 +159,7 @@
   
   \startsection
     [reference=sec:monitoring,
-     title={Monitoring Probabilistic Obstacles}]
+     title={Monitoring probabilistic obstacles}]
   
     At RE time, domain experts estimate the satisfaction rates of the leaf
     obstacles based on their knowledge of the system or their experience with
@@ -177,7 +175,7 @@
   
     \startsubsection
       [reference=sec:building_monitor,
-       title={Background: Monitoring Non-Probabilistic LTL Assertions}]
+       title={Background: Monitoring non-probabilistic LTL assertions}]
   
       This section introduces the necessary background for monitoring
       non-probabilistic LTL assertions. Monitoring the runtime satisfaction of
@@ -244,13 +242,15 @@
   
     \startsubsection
       [reference=sec:monitoring_based,
-       title={Monitoring-Based Estimation of Satisfaction Rates}]
+       title={Monitoring-based estimation of satisfaction rates}]
   
       As recall, the satisfaction rate of an obstacle $\ltlF(C \wedge \Theta
       OC)$ is the upper bound among the state probabilities of $C \wedge \Theta
       OC$. We may at runtime count the number of observed behaviors satisfying
-      $C \wedge \Theta OC$ from states $s$; this estimates the corresponding
-      state probability. The automata-based monitoring procedure for $LTL_3$
+      and not satisfying $C \wedge \Theta OC$ from states $s$; the ratio
+      between the number of observed behaviors satisfying the formula and the
+      number of observed behaviors estimates the corresponding state
+      probability. The automata-based monitoring procedure for $LTL_3$
       determines at runtime whether $C \wedge \Theta OC$ is satisfied from $s$.
 
       \startdefinition[def:monitored_satrate]{Monitored Satisfaction Rate}
@@ -259,15 +259,32 @@
         satisfaction rate as observed in the running system.
     
       \stopdefinition
-
-      Consider the obstacle \obstacle{Dusty Environment} shown in
-      \in{Figure}[fig:obstacle_model]. \in{Figure}[fig:monitor_execution] shows
-      the process of monitoring the satisfaction rate of that obstacle,
-      formalized as $\ltlF(\ltlG_{>2s} dustyEnvironment)$, during 8
-      observations. The squares represent states of the observed system. Three
-      states $A$, $B$, $C$ are observed; $A$ and $B$ satisfy the predicate
-      $dustyEnvironment$ while $C$ does not. The circles show the label of the
-      current state of the $LTL_3$ monitors.
+      
+      \noindent The process for obtaining the monitored satisfaction rate can
+      be summarized as follows:
+      
+      \startitemize[a]
+      
+        \item Observed states are collected;
+        
+        \item (Optional) Observed states are filtered;
+        
+        \item Monitors are created and updated according the observed states;
+        
+        \item Monitors labeled with $T$ (true) and $F$ (false) are counted; The
+        ratio between the number of $T$ (true) and $F$ (false) monitors
+        provides the monitored satisfaction rate.
+      
+      \stopitemize
+      
+      \noindent {\bf Observing states.} Consider the obstacle \obstacle{Dusty
+      Environment} shown in \in{Figure}[fig:obstacle_model].
+      \in{Figure}[fig:monitor_execution] shows the process of monitoring the
+      satisfaction rate of that obstacle, formalized as $\ltlF(\ltlG_{>2s}
+      dustyEnvironment)$, during 8 observations. The squares represent states
+      of the observed system. Three states $A$, $B$, $C$ are observed; $A$ and
+      $B$ satisfy the predicate $dustyEnvironment$ while $C$ does not. The
+      circles show the label of the current state of the $LTL_3$ monitors.
       
       \placefigure[bottom]
      	  [fig:monitor_execution]
@@ -285,6 +302,37 @@
       \stopformula
       
       (In the following, $\phi$ denotes the above formula.)
+      
+      \noindent {\bf Filtering observed states.} As the time goes by, the
+      number of monitors increases and the monitored state probability will
+      then vary less and less. This problem is acknowledged in other approaches
+      such as \cite[Epi09]. Indeed, at the begining, 10 new positive monitors
+      might strongly impact the state probability, e.g., from $\vfrac{5}{10} =
+      .5$ to $\vfrac{15}{20} = .75$ whereas when 1000 observations have been
+      made, the state probability would only chage from $\vfrac{5}{1000} =
+      .005$ to $\vfrac{15}{1010} = 0.014$.
+      
+      If the \quote{exact} satisfaction rate does not vary a lot, this is not a
+      problem. On the contrary, if the \quote{real} satisfaction rate does
+      change over time, this will smooth out the variations.
+      
+      To circumvent that effet, the process for obtaining the monitored
+      satisfaction rate is modified to forget old information \cite[Cal11].
+      This filtering step keeps only recent monitors, for example the last 100
+      monitors. 
+      
+      The appropriate number of monitors to be kept needs to be determined
+      adequatly depending on the domain, how fast states are observed, and the
+      desired innaccuracy margins (see \in{Section}[sec:innaccuracy_margins]).
+      Such appropriate number might also be automatically set to an optimal
+      aging factor \cite[Cal14].
+      
+      \noindent {\bf Creating and updating monitors.} For a monitored leaf
+      obstacle, at each observation of the running system, an $LTL_3$ monitor
+      is started to check whether the behavior from the current state satisfies
+      $\phi$. As seen below, virtual copies are used in practice to avoid
+      creating new monitors at runtime.
+      
       \in{Figure}[fig:ltl3_monitor] shows the corresponding $LTL_3$ monitor.
       The top left monitor state labeled with $?$ is the initial state. Each
       transition is labeled with a state formula. The label on states are: $T$
@@ -294,11 +342,6 @@
      	  [fig:ltl3_monitor]
      	  {$LTL_3$ monitor for \obstacle{Dusty Environment}.}
         {\externalfigure[../images/chap7/ltl3_monitor.pdf][scale=1000]}
-
-      For a monitored leaf obstacle, at each observation of the running system,
-      an $LTL_3$ monitor is started to check whether the behavior from the
-      current state satisfies $\phi$. As seen below, virtual copies are used in
-      practice to avoid creating new monitors at runtime.
 
       \noindent Let us have a closer look at the example in
       \in{Figure}[fig:monitor_execution].
@@ -328,12 +371,40 @@
         The three observed behaviors from $C$ also violate the formula.
 
       \stopitemize
+      
+      In practice, creating a new $LTL_3$ monitor at each observation is
+      clearly unrealistic as the complexity is $\cal O(2^{2^n})$ where $n$ is
+      the size of the formula \cite[Bau11]. To avoid creating multiple
+      instances of the same monitor, one $LTL_3$ monitor is built at RE time;
+      the monitors being started at runtime are virtual copies of the former. A
+      {\it virtual copy} only contains a pointer to the current state of the
+      $LTL_3$ monitor. The complexity of starting a "new" virtual monitor is
+      thus $\cal O(1)$.
 
-      In this setting, the {\it monitored state probability} of state $s$ is
-      the ratio between {\it (a)} the number of monitors started in $s$ whose
-      current state is labeled as $T$ (true), and {\it (b)} the number of
-      monitors started in $s$ whose current state is labeled as $T$ (true) or
-      $F$ (false).
+      The complexity of updating all monitors is $\cal O(n)$ where $n$ is the
+      number of virtual monitors. This number depends on the number of
+      observations. The worst-case situation corresponds to a system where all
+      observed states are unique and all monitors remain inconclusive forever.
+      Such system is unlikely. Our running example and the evaluation case
+      study in \in{Chapter}[chap:evaluation] suggest that monitors have a short
+      life which reduces the cost of updating monitors.
+
+      Other monitoring techniques such as \cite[dAm05a, Gia01, Hav04, Tha05]
+      might be used to determine the satisfaction of $C\wedge\Theta OC$.
+      $LTL_3$, however, reports both violation and satisfaction of the formula
+      as early as possible. Its three-value semantics distinguishes cases where
+      a formula is satisfied, not satisfied, or none applies. Techniques such
+      as \cite[dAm05a] amalgamate the last two cases. Other monitoring
+      techniques, such as \cite[Bas11], support richer logics such as metric
+      temporal logic and first-order logic. These techniques might be used in
+      place of $LTL_3$; this might improve the applicability or the technique
+      to industrial settings.
+
+      \noindent {\bf Obtaining satisfaction rate.} In this setting, the {\it
+      monitored state probability} of state $s$ is the ratio between the number
+      of monitors started in $s$ whose current state is labeled as $T$ (true),
+      and the number of monitors started in $s$ whose current state is labeled
+      as $T$ (true) or $F$ (false).
 
       In our example, the monitored state probability of state $A$ is not
       available for the two first observations; it is equal to $1$ for the five
@@ -353,73 +424,19 @@
      	  [fig:satrate-dusty_environment]
      	  {Monitored satisfaction rate for \obstacle{Dusty Environment}.}
         {\externalfigure[../images/chap7/satrate-dusty_environment.pdf][scale=1000]}
-      
-      So, the process for obtaining the monitored satisfaction rate can be
-      summarized as follows: {\it (a)} observed states are collected; {\it (b)}
-      monitors are created and updated according the observed states; {\it (c)}
-      monitors labeled with $T$ (true) and $F$ (false) are counted; {\it (d)}
-      the ratio between these number of monitors provides the monitored
-      satisfaction rate.
-      
-      However, as the time goes by, the number of monitors increases and the
-      monitored state probability will then vary less and less. This problem is
-      acknowledge in other approaches such as \cite[Epi09]. Indeed, at the
-      begining, 10 new positive monitors might strongly impact the state
-      probability, e.g., from $\vfrac{5}{10} = .5$ to $\vfrac{15}{20} = .75$
-      whereas when 1000 observations have been made, the state probability
-      would only chage from $\vfrac{5}{1000} = .005$ to $\vfrac{15}{1010} =
-      0.014$. If the \quote{real} satisfaction rate does not vary a lot, this
-      is not a problem. On the contrary, if the \quote{real} satisfaction rate
-      does change over time, this will smooth out the variations. To circumvent
-      that effet, the process for obtaining the monitored satisfaction rate is
-      modified to forget old information \cite[Cal11]. This filtering step
-      (between step {\it (b)} and {\it (c)}) keeps only recent monitors, for
-      example the last 100 monitors. The appropriate number of monitors to be
-      kept needs to be determined adequatly depending on the domain, how fast
-      states are observed, and the desired innaccuracy margins (see
-      \in{Section}[sec:innaccuracy_margins]). Such appropriate number might
-      also be automatically set to an optimal aging factor \cite[Cal14].
 
-      In practice, creating a new $LTL_3$ monitor at each observation is
-      clearly unrealistic as the complexity is $\cal O(2^{2^n})$ where $n$ is
-      the size of the formula \cite[Bau11]. To avoid creating multiple
-      instances of the same monitor, one $LTL_3$ monitor is built at RE time;
-      the monitors being started at runtime are virtual copies of the former. A
-      {\it virtual copy} only contains a pointer to the current state of the
-      $LTL_3$ monitor. The complexity of starting a "new" virtual monitor is
-      thus $\cal O(1)$.
-
-      The complexity of updating all monitors is $\cal O(n)$ where $n$ is the
-      number of virtual monitors. This number depends on the number of
-      observations. The worst-case situation corresponds to a system where all
-      observed states are unique and all monitors remain inconclusive forever.
-      Such system is unlikely. Our running example and the evaluation case
-      study in \in{Chapter}[chap:evaluation] suggest that monitors have a short
-      life which reduces the cost of updating monitors.
-
-      To implement the monitoring of leaf obstacles, a list of monitors is kept
-      in memory for each observed state. To increase efficiency, the number of
+      To efficiently obtain the satisfaction rate of leaf obstacles, a list of
+      monitors is kept in memory for each observed state, and the number of
       behaviors satisfying the formula $C\wedge\Theta OC$ and the number of
       behaviors violating it are kept in registers. Once a monitor reaches a
       monitor state labeled as {\it T} (true) or {\it F} (false), it can be
       removed from the list and the corresponding register updated. Computing
       the state probability is then reduced to arithmetic operations on these
       registers.
-
-      Note that other monitoring techniques such as \cite[dAm05a, Gia01,
-      Hav04, Tha05] might be used to determine the satisfaction of
-      $C\wedge\Theta OC$. $LTL_3$, however, reports both violation and
-      satisfaction of the formula as early as possible. Its three-value
-      semantics distinguishes cases where a formula is satisfied, not
-      satisfied, or none applies. Techniques such as \cite[dAm05a] amalgamate
-      the last two cases. Other monitoring techniques, such as \cite[Bas11],
-      support richer logics such as metric temporal logic and first-order
-      logic. These techniques might be used in place of $LTL_3$; this might
-      improve the applicability or the technique to industrial settings.
       
     \stopsubsection
 
-    \startsubsection[reference=sec:innaccuracy_margins,title={Bounding the Inaccuracy Margins}]
+    \startsubsection[reference=sec:innaccuracy_margins,title={Bounding inaccuracy margins}]
     
       To mitigate the risk of unnecessary system adaptations, \quote{enough}
       observations should be made before deciding whether or not an adaptation
@@ -506,7 +523,7 @@
 
   \stopsection
   
-  \startsection[reference=sec:obstaclebased_adaptation, title={Obstacle-based System Adaptation}]
+  \startsection[reference=sec:obstaclebased_adaptation, title={Obstacle-driven system adaptation}]
   
     We propose to drive the runtime adaptation process using the probabilistic
     goals and obstacles. A system adaptation is required at runtime when the
@@ -569,7 +586,7 @@
     
   \stopsection
   
-  \startsection[reference=sec:sw_update,title={Runtime Deployment of Most Appropriate Countermeasures}]
+  \startsection[reference=sec:sw_update,title={Runtime deployment of most appropriate countermeasures}]
     
     When most appropriate countermeasures are selected and integrated in the
     goal model, the running software system must be adapted to match the
@@ -615,7 +632,7 @@
   
   \stopsection
   
-	\startsection[reference=sec:update_k_uncertainty,title={Updating Expert Estimates At Run-Time}]
+	\startsection[reference=sec:update_k_uncertainty,title={Updating uncertain probability values at runtime}]
   
     Managing uncertainty at run-time is a critical challenge \cite[Ben10].
     \in{Chapter}[chap:knowledge-uncertainty] presented how knowledge
@@ -628,24 +645,39 @@
     is no longer modeled as a single-value satisfaction rate but as a multi-value
     satisfaction rate, typically a Normal probability distribution.
     
-    The process for obtaining the monitored satisfaction rate is updated as
-    follows: {\it (a)} observed states are collected; {\it (b)} monitors are
-    created and updated according the observed states; (if required, monitors
-    are filtered to keep recent monitors only.) {\it (c)} monitors labeled
-    with $T$ (true) and $F$ (false) are counted; {\it (d)} a Beta probability
-    distribution is fitted to the number of monitors; {\it (e)} The Beta
-    distribution updates the current monitored satisfaction rate using Bayesian
-    inference; {\it (f)} The updated satisfaction rate becomes the new current
-    satisfaction rate.
+    \noindent The process for obtaining the monitored satisfaction rate is
+    updated as follows.
     
-    The step {\it (d)} is straightforward as the parameters of the Beta
+    \startitemize[a]
+    
+      \item Observed states are collected;
+      
+      \item (Optional) Observed states are filtered;
+      
+      \item Monitors are created and updated according the observed states;
+      
+      \item Monitors labeled with $T$ (true) and $F$ (false) are counted; The
+      ratio between the number of $T$ (true) and $F$ (false) monitors
+      provides the monitored satisfaction rate.
+      
+      \sym{\it(e*)} A Beta probability distribution is fitted to the number of
+      monitors;
+    
+      \sym{\it(f*)} The Beta distribution updates the current monitored
+      satisfaction rate using Bayesian inference; The updated satisfaction rate
+      becomes the new current satisfaction rate.
+    
+    \stopitemize
+    
+    The step {\it (e)} is straightforward as the parameters of the Beta
     distribution are, $\alpha$, the number of positive monitors and, $\beta$,
-    the number of negative monitors \cite[Vos08]. The computation in step {\it
-    (e)} relies on Bayesian Inference. Bayesian Inference is a statistical
-    computation in which the Bayes' theorem is used to update a probability
-    distribution as more information becomes available \cite[Wac07]. The
-    updated satisfaction rate $P(O\mid M)$ ($M$ represents what has has been
-    observed last) is given by
+    the number of negative monitors \cite[Vos08].
+    
+    The computation in step {\it (f)} relies on Bayesian Inference. Bayesian
+    Inference is a statistical computation in which the Bayes' theorem is used
+    to update a probability distribution as more information becomes available
+    \cite[Wac07]. The updated satisfaction rate $P(O\mid M)$ ($M$ represents
+    what has has been observed last) is given by
     
     \startformula
       P(O\mid M) = \frac{P(M\mid O)\times P(O)}{P(M)}
