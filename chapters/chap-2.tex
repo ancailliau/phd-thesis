@@ -8,48 +8,46 @@
     [reference=chap-background,
      title={Background: Goal-Oriented Requirements Engineering}]
    
-  This chapter introduces the necessary background in goal-oriented
-  requirements engineering and introduces the KAOS framework extended by the
+  This chapter introduces some necessary background in goal-oriented
+  requirements engineering. It introduces the KAOS framework extended in the
   following chapters. \in{Section}[sec:background_goal] presents how system
   objectives are modeled as goals in the KAOS framework.
-  \in{Section}[sec:background_obstacle] describes how to anticipate what could
-  go wrong through obstacle analysis.
+  \in{Section}[sec:background_obstacle] introduces obstacle analysis as a mean
+  for anticipating what could go wrong.
 
     \startsection[reference=sec:background_goal,title={Modelling System Objectives with KAOS}]
   
-    Goal-oriented requirements engineering is recognized as a major modeling
-    technique for engineering requirements of complex, mission-critical,
-    software systems emphasizing on the {\it why} of resulting software
-    specifications \cite[Lam09]. Among the goal-oriented frameworks, the KAOS
-    framework proposes a formal approach where objectives of a system are
-    defined in a precise, clear-cut sense \cite[Lam09], on the contrary of
-    other approaches such as i* where the system satisfies the goals at various
-    degrees \cite[Yu97a].
+    Goal-oriented requirements engineering is now recognized as a major
+    modeling technique for engineering requirements of complex,
+    mission-critical software systems. Unlike other approaches, it also capture
+    the {\it why} behind the resulting software specifications \cite[Lam09].
+    Among the available goal-oriented frameworks, KAOS supports a formal
+    approach where the objectives of a system can be specified in a precise,
+    clear-cut sense \cite[Lam09].
     
-    This section presents the fragments of the KAOS framework used in this
-    thesis. In particular, the KAOS framework is a multi-view modeling approach
-    including a goal, an object, an agent responsibility, an operations and a
-    behavior model. We focus here on goal modeling only, a detailed
+    KAOS also supports a multi-view modeling approach where objects,
+    agent responsibilities, operations, and behaviors are represented in
+    connection with goals. We focus here on goal modeling only; a detailed
     presentation of the framework can be found in \cite[Lam09].
     
-    \subsection{Defining Goals, Software Requirements, and Domain Assumptions}
+    \subsection{Goals, requirements, and environment expectations}
     
       A {\it goal} is a prescriptive statement of intent to be satisfied by the
       agents forming the system. An {\it agent} is an active system component
-      having responsibilities in goal satisfaction. An agent has capabilities
-      regarding conditions the agent can monitor or control. The word {\it
+      having responsibilities in goal satisfaction. An agent has capabilities;
+      these are conditions the agent can monitor or control. The word {\it
       system} refers to the software-to-be together with its environment,
       including pre-existing software, devices such as sensors and actuators,
       people, etc.
       
-      For example, a goal in a nuclear spent fuel pool would be that makeup
-      water is provided when there is a loss of cooling in the pool. The
-      following specification captures this goal
+      For example, a goal in a nuclear spent fuel pool may express that makeup
+      water is provided when there is a loss of cooling in the pool:
 
       \startkaosspec
-          \GoalName {Achieve [Make Up Water Provided When Loss Of Cooling]}
+          \GoalName {Make Up Water Provided When Loss Of Cooling}
           \KaosAttribute {Definition} {
-            When the pool is not cooled appropriately, cold makeup water is provided.
+            Cold makeup water shall be provided when the pool is not cooled
+            appropriately.
         }
       \stopkaosspec
     
@@ -65,43 +63,44 @@
       notation $\pi \vDash G$ expresses that the behavior $\pi$ satisfies the
       goal $G$.
       
-      As seen later, a goal AND/OR graph organizes the goals through refinement
-      links. In such goal model, leaf goals assigned to a software agent are
-      {\it requirements} whereas leaf goals assigned to an environment agent
-      are {\it expectations}.
+      Goals should be refined until they are assignable as responsibilities of
+      single agents. In such refinements, leaf goals assigned to a software
+      agent are {\it requirements} whereas leaf goals assigned to an
+      environment agent are {\it expectations}.
       
       Each goal has a {\it name}, a natural language {\it definition} and an
       optional {\it formal definition} (we present formal definitions later in
-      this section). The above goal's name is \goal{Achieve [MakeUp Water
-      Provided When Loss Of Cooling]}.
+      this section). The above goal is named \goal{MakeUp Water Provided When
+      Loss Of Cooling}.
     
-    \subsection {Defining Domain Properties and Domain Hypotheses}
+    \subsection {Domain properties and domain hypotheses}
     
       Unlike goals, {\it domain properties} are descriptive statements about
-      the problem world (such as physical laws). A domain property is naturally
-      true in the system-to-be. Domain properties play a critical role when
-      refining goals and obstacles. An example of domain property in our
-      running example is the fact that an electrical pump cannot operate
+      the problem world (such as physical laws). A domain property is
+      considered valid in the system-to-be. As seen later, domain properties are often 
+      involved in refinements of goals and obstacles. An example of domain property in
+      our running example is the fact that an electrical pump cannot operate
       without electrical power.
 
       \startkaosspec
-          \DomPropName {Power Required For Motor Pump On}
+          \DomPropName {Power Needed For Motor Pump On}
           \KaosAttribute {Definition} {
-            Electrical power is required to turn the motor on.
+            Electrical power is needed to turn the motor on.
         }
       \stopkaosspec
       
       Expectations, as seen in the previous section, are prescriptive
       assumptions on the environment. Descriptive assumptions, called {\it
       domain hypotheses}, may be needed as well. Domain hypotheses differ from
-      domain properties as they are not necessarily true in the system but are
+      domain properties as they are not necessarily always valid in the system\emdash{}but are
       assumed, by the analyst, to be true. For example, the fact that a pump
-      might not be turned on when its internal electrical relay is broken.
+      might not be turned on when its internal electrical relay is broken is capture
+      as a domain hypothesis:
 
       \startkaosspec
           \DomHypName {No Electrical Failure For Motor Pump On}
           \KaosAttribute {Definition} {
-            An electrical failure prevents the pump motor to be on.
+            The pump motor being on assumes no electrical failure.
         }
       \stopkaosspec
     
@@ -111,9 +110,9 @@
       \{G, Dom\} \vDash\not false    \hskip1.5cm\text{(domain-consistency)}
       \stopformula
         
-    \subsection {Specifying Formal Assertions}
+    \subsection {Specifying goals in Metric Linear Temporal Logic}
     
-      (Metric) Linear temporal logic (LTL) \cite[Koy92,Man92] may be used for
+      Metric Linear temporal logic (M-LTL) \cite[Koy92,Man92] may be used for
       formalizing behavioral goals to enable their analysis. The goals then
       take the general form
     
@@ -124,7 +123,7 @@
       where $\Theta$ represents a LTL operator such as: $\ltlX$ (in the next
       state), $\ltlF$ (sometimes in the future), $\ltlF_{\leq d}$ (sometimes in
       the future before deadline $d$), $\ltlG$ (always in the future),
-      $\ltlG_{\geq d}$ (always in the future up to deadline $d$), $\ltlW$
+      $\ltlG_{\leq d}$ (always in the future up to deadline $d$), $\ltlW$
       (always in the future unless), $\ltlU$ (always in the future until), and
       where $C \Rightarrow \Theta T$ means $\ltlG(C \rightarrow \Theta T)$. The
       following standard logical connectives are used: $\wedge$ (and), $\vee$
@@ -139,14 +138,14 @@
       \stopformula
         
       where $C$ denotes a current condition and $T$ a target condition, with
-      obvious particularizations to {\it Immediate Achieve} ($C \Rightarrow
-      \ltlX T$) and {\it Bounded Achieve} ($C \Rightarrow \ltlF_{\leq d} T$)
-      \cite[Lam09].
+      obvious particularizations to {\it Immediate Achieve} goals ($C
+      \Rightarrow \ltlX T$) and {\it Bounded Achieve} goals ($C \Rightarrow
+      \ltlF_{\leq d} T$) \cite[Lam09].
     
       \noindent The specification pattern for a {\it Maintain} goal is:
       
       \startformula
-        \text{{\ss [{\bf if} C {\bf then}] {\bf always} G},}\hskip1em\text{that is,}\hskip1em[C \Rightarrow] \ltlG G,
+        \text{{\ss [{\bf if} C {\bf then}] {\bf always} G},}\hskip1em\text{that is,}\hskip1em[C \Rightarrow] \ltlG G;
       \stopformula
         
       the specification pattern for an {\it Avoid} goal is:
@@ -159,18 +158,18 @@
       respectively. (Brackets are used here to delimit optional parts in those
       patterns.)
     
-    \subsection {Modelling Goals as AND/OR Graphs}
+    \subsection {Modelling goals as AND/OR graphs}
     
       A goal model is an AND/OR graph showing how goals contribute positively
-      or negatively to each other \cite[Gio03,Lam09]. Parent goals are
-      obtained by abstraction, e.g., through {\it why} questions, whereas child
-      goals are obtained by refinement, e.g., through {\it how} questions.
-      Refinement paths connect goal nodes in this graph to their ancestor
-      nodes. Leaf goals are assignable to single system agents. (As a recall, a
-      leaf goal is a {\it requirement} if assigned to a single software agent,
-      whereas it is an {\it expectation} if assigned to an environment agent.)
-      Graphically, goals are represented by parallelograms, domain properties
-      by \quote{home} shapes and agents by hexagons, see
+      or negatively to each other \cite[Gio03,Lam09]. Parent goals are obtained
+      by abstraction, e.g., through {\it why} questions, whereas child goals
+      are obtained by refinement, e.g., through {\it how} questions. Refinement
+      paths connect parent goal nodes in this graph to their descendant goal
+      nodes, possibly together with domain properties and hypotheses. Leaf
+      goals are assigned to single system agents as {\it software requirement}
+      or {\it environment expectation}. Graphically, goals are represented by
+      parallelograms, domain properties by \quote{home} shapes and agents by
+      hexagons, see the goal model fragment in
       \in{Figure}[fig:background_make_up_water_provided].
 
       \placefigure[]
@@ -178,31 +177,35 @@
           {Refinement of \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.}
         {\externalfigure[../images/chap4/make_up_water_provided.pdf]}
 
-      Refinement patterns are available to help building goal models, e.g., the
-      {\it Milestone-Driven}, {\it Case-Driven}, {\it Guard-Introduction}, {\it
+      Refinement patterns are available to help building goal models. They
+      encode different refinement tactics, e.g., the {\it Milestone-Driven},
+      {\it Case-Driven}, {\it Guard-Introduction}, {\it
       Unmonitorability-Driven}, {\it Uncontrollability-Driven}, or {\it
-      Divide-and-Conquer} patterns \cite[Dar96,Lam09].
+      Divide-and-Conquer} refinement patterns \cite[Dar96,Lam09].
     
-      In \in{Figure}[fig:background_make_up_water_provided], the two top
-      refinements are {\it Milestone-Driven} (with {\ss Make Up Water
-      Requested} as the milestone condition). The left refinement follows the
-      {\it Milestone-Driven} refinement pattern (with {\ss Alarm Raised} as the
+      In \in{Figure}[fig:background_make_up_water_provided], the top refinement
+      is {\it Milestone-Driven} (with {\ss Make Up Water Requested} as the
+      milestone condition). The next left refinement follows the {\it
+      Milestone-Driven} refinement pattern (with {\ss Alarm Raised} as the
       milestone condition). The right refinement follows the {\it
-      Divide-and-Conquer} refinement pattern. For example, the top goal is more
-      precisely specified as follows:
+      Divide-and-Conquer} refinement pattern.
+      
+      The top goal is more precisely specified as follows:
     
       \startformula
         LossOfCooling \Rightarrow \ltlF_{\leq 55h} MakeUpWaterProvided
       \stopformula    
     
-      Its two subgoals are obtained by application of the {\it
-      Milestone-Driven} refinement pattern with $MakeUpWaterRequested$ as
-      milestone condition:
+      Its two subgoals are obtained by application of a formalized version of
+      the {\it Milestone-Driven} refinement pattern with $MakeUpWaterRequested$
+      as milestone condition:
     
       \startformula\startalign[n=1]
         \NC LossOfCooling \Rightarrow \ltlF_{\leq 5h} MakeUpWaterRequested \NR 
-        \NC MakeUpWaterRequested \Rightarrow \ltlF_{\leq 50h} MakeUpWaterProvided \NR 
+        \NC MakeUpWaterRequested \Rightarrow \ltlF_{\leq 50h} MakeUpWaterProvided, \NR 
       \stopalign\stopformula
+      
+      \noindent where $h$ denotes the \quote{hour} time unit.
     
       AND-refinements in a goal model should be correct, that is, complete,
       consistent and ideally minimal \cite[Lam09].
@@ -210,7 +213,7 @@
       \startitemize
     
         \item A refinement is {\it complete} if the satisfaction of all
-        subgoals is sufficient for the satisfaction of the parent goal given
+        subgoals is sufficient for the satisfaction of the parent goal in view of 
         known domain properties:
     
         \startformula
@@ -229,7 +232,7 @@
 
         \startformula
             \{\bigwedge_{j\neq i}SG_j, Dom\} \vDash\not G \hskip1em 
-            \text{for all } i \text{ s.t. } 1 \leq i \leq n  \hskip1cm\text{(minimal refinement)}
+            (1 \leq i \leq n)  \hskip1cm\text{(minimal refinement)}
         \stopformula
     
       \stopitemize
@@ -238,50 +241,56 @@
       formally guaranteed to be complete, consistent and minimal
       \cite[Dar95,Lam09]; the correctness proof is done once for all on the
       temporal logic formalization of the pattern. The partial goal model in
-      \in{Figure}[fig:background_make_up_water_provided] shows three complete,
-      consistent and minimal AND-refinements.
-    
+      \in{Figure}[fig:background_make_up_water_provided] shows three
+      AND-refinements that are complete, consistent, and minimal.
+        
     \subsection{Goal conflicts}
     
-      In a goal model, goals may be connected by conflict links if the goals
-      are potentially conflicting. Goals are potentially conflicting (or
-      divergent) if there exists a satisfiable and non-trivial boundary
-      condition $B$ making them logically inconsistent in the domain
-      \cite[Lam09], that is:
+      The techniques for assessing and controlling probabilistic obstacles in
+      \in{Chapter}[chap:assessing] and \in{}[chap:controlling_obstacle] are
+      easily extendable for assessing and resolving probabilistic conflicts.
+  
+      Goals are potentially conflicting (or divergent) if there exists a
+      satisfiable and non-trivial boundary condition $B$ making them logically
+      inconsistent in the domain \cite[Lam09], that is:
 
       \startformula\startalign[n=1,align={left}]
           \NC \{ B, SG_1, SG_2, ..., SG_n, Dom \} \vDash false,\hskip2cm\text{(conflict)}\NR
         \NC \{ B, Dom \} \vDash\not false         \NR
       \stopalign\stopformula
-    
-      The condition $B \wedge Dom$ has to be realizable by the environment.
-      Such environment monitors all the variables constrained by the goals and
-      controls all the other ones \cite[De-07].
+  
+      The condition $B \wedge Dom$ has to be realizable by the environment. The
+      latter has to monitor all the variables constrained by the goals and
+      control all the other ones \cite[DeL07].
         
-    \subsection{Soft Goals as Optimisation Criteria}
+    \subsection{Soft goals as optimisation criteria}
     
-      In addition to behavioral goals, soft goals are goals that are not
-      satisfied in a clear-cut sense \cite[Myl92,Myl99]\emdash{}e.g., \goal{User
-      interface usable} or \goal{Fast computation}. Soft goal are more or less
-      satisfied depending on the behavioral goals contributing positively or
-      negatively to the soft goal.
+      The selection of most appropriate countermeasures requires to
+      comparatively evaluate alternative designs. Soft goals document the
+      criteria for such comparison.
+    
+      In constrast with behavioral goals, soft goals are goals that are not
+      satisfied in a clear-cut sense \cite[Myl92,Myl99]\emdash{}e.g.,
+      \goal{User interface usable} or \goal{Fast computation}. Soft goal are
+      more or less satisfied depending on alternative subgoal combinations
+      contributing positively or negatively to the soft goal.
       
-      Soft goals are used as optimisation criteria to enable alternative
-      designs comparison \cite[Let02,Lam09,Hea11]. Typically, soft goals are
-      used in minimization/maximization function to be optimized by the
-      system-to-be such as \goal{Maximize[Computation Speed]} or
+      Soft goals are used as optimisation criteria to enable the comparison and
+      selection alternative system designs \cite[Let02,Lam09,Hea11]. Typically,
+      they are used in minimization/maximization functions to be optimized by
+      the system-to-be, e.g., \goal{Maximize[Computation Speed]} or
       \goal{Minimize[Energy consumption]}. These {\it Maximize/Minimize} goals
-      are refered as {\it optimization goals}.
+      are referred as {\it optimization goals}.
     
   \stopsection
   
-    \startsection[reference=sec:background_obstacle,title={Anticipating What Could Go Wrong: Obstacle Analysis}]
+    \startsection[reference=sec:background_obstacle,title={Anticipating what could go wrong}]
   
     In goal-oriented modeling frameworks, obstacles were introduced as a
     natural abstraction for risk analysis \cite[Pot95,Ant98,Lam00]. This
-    section defines obstacles, how they relate to goals and other obstacles,
-    and presents techniques to identify, assess and control obstacles
-    preventing the software to meet its goals.
+    section defines obstacles, how they relate to goals and other obstacles. It
+    also briefly reviews techniques for identifying, assessing and controling
+    obstacles preventing the system from meeting its goals.
     
     \subsection {What are Obstacles?}
 
@@ -290,12 +299,12 @@
       
       \startformula\startalign[n=2,align={left,left}]
         \NC \{O, Dom\} \vDash \neg G \hskip2cm \NC \text{(obstruction)}\NR
-        \NC \{O, Dom\} \vDash\not false \NC \text{(domain-consistency)}\NR
+        \NC \{O, Dom\} \vDash\not false \NC \text{(domain-feasibility)}\NR
       \stopalign\stopformula
       
-      For example, for our spent fuel pool system, an obstacle to the goal
+      For our spent fuel pool system, an obstacle to the goal
       \goal{Achieve [Make Up Pump Motor On When Water Requested]} is
-      \obstacle{No Power Available}.
+      \obstacle{No Power Available}:
       
       \startkaosspec
           \ObstacleName {No Power Available}
@@ -304,40 +313,49 @@
         }
       \stopkaosspec
       
-      \noindent This obstacle satisfies both the (obstruction) condition, if
-      there is no power, the motor pump cannot be on; and the
-      (domain-consistency) condition, it is possible that no power is available.
+      \noindent This obstacle satisfies both the obstruction condition (if
+      there is no power, the motor pump cannot be on) and the
+      domain-feasibility condition (it might be possible that no power is
+      available.)
+      
+      As a {\it consequence} of an obtacle occuring, some goals and ancestor
+      goals are obstructed. As in risk analysis, an obstacle is more or less
+      {\it likely} and its consequences or more or less {\it severe}. A likely
+      obstacle with severe consequence is said to be {\it critical}.
       
       Each obstacle has a {\it name}, a natural language {\it definition} and
-      an optionnal {\it formal definition}. The above obstacle's name is
+      an optional {\it formal specification}. The above obstacle's name is
       \obstacle{No Power Available}.
         
-    \subsection {Specifying Formal Assertions}
+    \subsection {Specifying obstacles in Metric Linear Temporal Logic}
     
-      As goals, obstacles might be formalized using (Metric) Linear temporal
-      logic (LTL) \cite[Koy92,Man92]. An obstacle to
-      a goal $C \Rightarrow \Theta T$ then takes the general form
+      Similarly to goals, obstacles may be formalized using Metric Linear
+      temporal logic (M-LTL) \cite[Koy92,Man92]. An obstacle to a goal of form
+      $C \Rightarrow \Theta T$ takes the general form
     
       \startformula
         \ltlF (C \wedge \neg \Theta T)
       \stopformula
     
-      where $\Theta$ represents a LTL operator. We often used the general form
-      $\ltlF(C \wedge \Theta OC)$ where $OC$ is the obstacle condition. An
-      obstacle to an {\it Achieve} goal is:
+      where $\Theta$ represents a LTL operator. The general form $\ltlF(C
+      \wedge \Theta OC)$ is often used where $OC$ is the {\it obstacle
+      condition}.
+      
+      An obstacle to an {\it Achieve} goal has the specification pattern:
       
       \startformula
         \text{{\ss {\bf sooner-or-later} C {\bf and never} T},}\hskip1em\text{that is,}\hskip1em\ltlF(C \wedge \ltlG \neg T),
       \stopformula
       
       where $C$ denotes a current condition and $T$ a target condition
-      \cite[Lam09]. An obstacle to a {\it Maintain} goal is:
+      \cite[Lam09]. An obstacle to a {\it Maintain} goal has the specification
+      pattern:
       
       \startformula
         \text{{\ss [{\bf sooner-or-later} C {\bf and}] {\bf sooner-or-later not} G},}\hskip1em\text{that is,}\hskip1em\ltlF(C \wedge \ltlF\neg G)
       \stopformula
        
-      and an obstacle to an {\it Avoid} goal is:
+      whereas an obstacle to an {\it Avoid} goal has the specification pattern:
       
       \startformula
         \text{{\ss [{\bf sooner-or-later} C {\bf and}] {\bf sooner-or-later} B},}\hskip1em\text{that is,}\hskip1em\ltlF(C \wedge \ltlF B)
@@ -348,13 +366,14 @@
     
     \startsubsection[title={Modelling Obstacles as AND/OR Graph}]
     
-      Similar to goals, obstacles can be AND/OR refined into subobstacles,
-      resulting in a goal-anchored form of risk tree. In an obstacle tree,
+      Similarly to goals, obstacles can be AND/OR refined into subobstacles,
+      resulting in a goal-anchored form of a risk refinement tree \cite[Lam09].
+      In such obstacle tree,
     
       \startitemize[packed]
     
         \item the root obstacle is the negation of the associated leaf goal in
-        the goal model, that is for a root obstacle $RO$ to a leaf goal $LG$:
+        the goal model; for a root obstacle $RO$ to a leaf goal $LG$, we have:
         
         \startformula
           \{RO, Dom\} \vDash \neg LG\hskip2cm\text{(obstruction)}
@@ -365,24 +384,29 @@
     
         \item an OR-refinement captures alternative ways of entailing the
         parent obstacle—and, recursively, of obstructing the corresponding leaf
-        goal; These refinements are ideally disjoint.
+        goal;
     
-        \item the leaf subobstacles are single, fine-grained obstacles whose
+        \item the {\it leaf obstacles} are single, fine-grained obstacles whose
         likelihood can be easily estimated.
     
       \stopitemize
     
-      \noindent Considering $n$ OR-Refinements to a parent obstacle $PO$, each
-      with a single subobstacle $SO_i$ (for $1 \leq i \leq n$), the
-      conditions above can formaly specified as follows. (The generalization to
-      more subobstacles in a given OR-Refinement is straightforward.) The
-      subobstacle $SO_i$ in an OR-refinement must entail the parent obstacle:
+      AND-refinements are ideally disjoint. This condition is usefull for
+      exploring specific resolutions to distinct non-overlapping causes.
+    
+      Considering $n$ OR-Refinements to a parent obstacle $PO$, each with a
+      single subobstacle $SO_i$ (for $1 \leq i \leq n$), the conditions above
+      can be formally stated as follows \cite[Lam09]. (The generalization to
+      more subobstacles in a given OR-Refinement is straightforward.)
+      
+      The subobstacle $SO_i$ in an OR-refinement must entail the parent
+      obstacle:
     
       \startformula
         \{ SO_i, Dom \} \vDash PO \hskip2cm\text{(entailment)}
       \stopformula
         
-      OR-refinements should ideally be domain complete and disjoint, i.e.
+      OR-refinements should ideally be domain complete and disjoint:
       
       \startformula\startalign[n=2,align={left,left}]
         \NC \{\neg SO_1, ..., \neg SO_n, Dom\} \vDash \neg PO \hskip2cm \NC \text{(domain-completeness)}\NR
@@ -391,8 +415,10 @@
     
     \subsection {Obstacle Analysis}
     
-    Obstacle analysis consists of identifying missing or inadequate goals. It
-    includes three steps \cite[Lam00]:
+    Obstacle analysis consists of anticipating the conditions under which goals
+    from the goal model might not be satisfied. Its main objective is to
+    increase requirements completeness through countemeasure goals enriching
+    the goal model. It consists of three steps \cite[Lam00]:
     
     \startitemize[a]
     
@@ -404,13 +430,13 @@
       obstacle should be determined.
     
       \item {\it Obstacle Resolution:} likely and critical obstacles should be
-      resolved through appropriate countermeasures to integrate next in the
-      ideal goal model.
+      resolved through appropriate countermeasures to be integrated into the
+      goal model.
     
     \stopitemize
     
-    \noindent A new cycle of obstacle analysis might then be performed on the
-    countermeasure goals. The following briefly details the above steps.
+    \noindent A new cycle of obstacle analysis may then be performed on the
+    countermeasure goals. Let us briefly detail the obstacle analysis steps.
     
     \noindent {\bf Obstacle Identification.} Formal and heuristic techniques
     are available for the identification of obstacles
@@ -418,29 +444,31 @@
     
     In particular, for the {\it Achieve} and {\it Maintain/Avoid} goal
     specification patterns introduced in \in{Section}[sec:background_goal],
-    specific domain properties are worth eliciting. They take the form:
+    we may look for specific domain properties taking the form:
       
     \startformula
       \text{{\ss {\bf always} {\bf if} Q {\bf then} N},}\hskip1em\text{that is,}\hskip1emQ\Rightarrow N,
     \stopformula
     
     where $N$ denotes a necessary condition for the consequent $Q$ of a leaf
-    goal $P\Rightarrow \Theta Q$. $Q$ is the target condition $T$ of an {\it
-    Achieve} goal $C\Rightarrow \ltlF T$ or the good condition $G$ of a {\it
-    Maintain} goal $C\Rightarrow G$. Such domain properties result in obstacles
-    taking the form:
+    goal $P\Rightarrow \Theta Q$; $Q$ is the target condition of an {\it
+    Achieve} goal $C\Rightarrow \ltlF Q$ or the good condition of a {\it
+    Maintain} goal $C\Rightarrow Q$. Such domain properties are equivalent to
+    $\neg N \Rightarrow \neg Q$ (by contraposition). A one-step regresion
+    through them of the goal negations $\ltlF (C\wedge \ltlG \neg Q)$
+    (respectively $\ltlF (C\wedge \neg Q)$) yields the obstacle:
     
     \startformula
-      \text{{\ss {\bf sooner-or-later} C {\bf and never} N},}\hskip1em\text{that is,}\hskip1em\ltlF(C \wedge \ltlG\neg N),
+      \text{{\ss {\bf sooner-or-later} (C {\bf and never} N)},}\hskip1em\text{that is,}\hskip1em\ltlF(C \wedge \ltlG\neg N),
     \stopformula
       
     for an {\it Achieve} goal, or 
     
     \startformula
-      \text{{\ss {\bf sooner-or-later} C {\bf and sooner-or-later not} N},}\hskip1em\text{that is,}\hskip1em\ltlF(C \wedge \ltlF\neg N),
+      \text{{\ss {\bf sooner-or-later} (C {\bf and not} N)},}\hskip1em\text{that is,}\hskip1em\ltlF(C \wedge \neg N),
     \stopformula
       
-    for a {\it Maintain} goal.
+    for a {\it Maintain} goal. See \cite[Lam09] for details.
   
     Consider the goal \goal{Achieve [Make Up Pump Motor On When Water
     Requested]} in \in{Figure}[fig:background_make_up_water_provided] whose
@@ -456,7 +484,7 @@
       \ltlF (WaterRequested \wedge \ltlG_{\geq 5m} \neg PumpMotorOn)
     \stopformula
         
-    The necessary conditions for the target include the following:
+    A necessary condition for the target is the following:
     
     \startformula
       PumpMotorOn \Rightarrow \neg PumpElectricalFailure
@@ -471,44 +499,62 @@
         
     \placefigure[]
         [fig:background_make_up_water_pump_on]
-        {Obstacles for \goal{Achieve [Make Up Pump Motor On When Water Requested]}.}
+        {Obstacles to \goal{Achieve [Make Up Pump Motor On When Water Requested]}.}
       {\externalfigure[../images/chap4/make_up_water_pump_on.pdf]}
 
-    \noindent {\bf Obstacle Assessment.} Obstacle assessment is concerned about
-    identifying the critical and likely obstacles to be resolved during the
-    next phase, obstacle control. Very little work is available regarding
-    obstacle assessment; \in{Chapter}[chap:assessing] will detail our
-    contribution to obstacle assessment.
+    \noindent {\bf Obstacle Assessment.} This step is aimed at identifying the
+    likely and critical obstacles to be resolved during the next step of
+    obstacle control. Very little work is available regarding obstacle
+    assessment; \in{Chapter}[chap:assessing] will detail our contribution to
+    this step.
     
     \noindent {\bf Obstacle Control.} The identified obstacles, if likely and
-    critical shall be resolved through appropriate countermeasures. The
-    identified countermeasure goals shall be refined until assigned to single
-    agents. Most appropriate countermeasures are then selected according to a
-    variety of criteria such as the number of obstacles resolved or the
-    likelihood and criticality of resolved obstacles \cite[Lam09]. The
-    selected countermeasures are then deployed at RE time, or at runtime. Very
-    little work is available on countermeasure selection and integration;
-    \in{Chapter}[chap:controlling_obstacle] and \in{Chapter}[runtime] will discuss
-    these techniques both at RE time and runtime.
+    critical, shall be resolved through appropriate countermeasures to be
+    integrated in the goal model. The countermeasure goals needs to be refined
+    in turn until their descendants are assignable to single agents.
+    Alternative countermeasures are to be identified; \quote{Most appropriate}
+    ones need then to be selected according to a variety of criteria such as
+    the number of obstacles resolved, the likelihood and criticality of
+    resolved obstacles, the countermeasure cost, etc. \cite[Lam09]. The
+    selected countermeasures are then deployed at RE time deferred until
+    runtime.
          
-    As for obstacle identification, formal and heuristic techniques are
-    available for the generation of alternative countermeasure goals
-    \cite[Lam00,Alr16]. A variety of tactics are available for exploring
-    alternative ways of resolving obstacles to a goal\emdash{}such as {\it
-    avoid obstacle} (adds a new goal requiring the obstacle to be avoided),
-    {\it reduce obstacle likelihood} (adds a new goal that reduces the
-    likelihood of occurence for the obstacle), {\it mitigate obstacle} (adds a
-    new goal to mitigate the consequence of the obstacle, ensuring a weakened
-    version of the obstructed goal or of one of its ancestor), {\it weaken
-    goal} (weakens the obstructed goal so that the obstruction no longer
-    occurs), {\it substitute goal} (replace the obstructed goal by a new goal,
-    not obstructed by the obstacle under consideration), {\it restore goal}
-    (adds a new goal to ensure the obstructed goal is satisfied in a reasonable
-    future), or {\it substitute agent} (replace the agent responsible for the
-    obstructed goal so that the obstacle is no longer feasible)
-    \cite[Lam00,Lam09]. For example, the obstacle mitigation tactic applied
-    to the preceding obstacle \obstacle{Pump Electrical Failure} generates the
-    following countermeasure goal:
+    Formal and heuristic techniques are
+    available for the identification of alternative countermeasure goals
+    \cite[Lam00,Alr16]. In particular, a variety of tactics are available for exploring
+    alternative ways of resolving obstacles to a goal such as:
+    
+    \startitemize
+    
+      \item {\it Avoid obstacle} (adds a new goal requiring the obstacle to be
+      avoided),
+    
+      \item {\it Reduce obstacle likelihood} (adds a new goal that reduces the
+      likelihood of occurence for the obstacle),
+    
+      \item {\it Mitigate obstacle} (adds a new goal to mitigate the
+      consequence of the obstacle, ensuring a weakened version of the
+      obstructed goal or of one of its ancestor),
+    
+      \item {\it Weaken goal} (weakens the obstructed goal so that the
+      obstruction no longer occurs),
+    
+      \item {\it Substitute goal} (replace the obstructed goal by a new goal,
+      not obstructed by the obstacle under consideration),
+    
+      \item {\it Restore goal} (adds a new goal to ensure that the obstructed
+      goal is satisfied in a reasonable future), or
+    
+      \item {\it Substitute agent} (replace the agent responsible for the
+      obstructed goal so that the obstacle is no longer feasible)
+    
+    \stopitemize
+    
+    \noindent See \cite[Lam00,Lam09] for details.
+    
+    For example, the obstacle mitigation tactic applied to the preceding
+    obstacle \obstacle{Pump Electrical Failure} generates the following
+    countermeasure goal:
     
     \startkaosspec
         \GoalName {Achieve [Redundant Pump Motor On When Primary Pump Failure]}
@@ -516,17 +562,26 @@
           $WaterRequested \wedge PumpElectricalFailure$\blank[none]
           \hskip2.5cm$\Rightarrow \ltlF_{\leq 5m} RedundantPumpMotorOn$
       }
-    \stopkaosspec
+    \stopkaosspec 
+    
+    \noindent This countermeasure goal ensures the ancestor goal \goal{Achieve
+    [Make Up Water Provided When Requested]} is guaranteed even when the
+    primary pump fails. In this specific case, the mitigation does not require
+    a weaking of the ancestor goal.
+    
+    Very little work is available on countermeasure selection and integration;
+    \in{Chapter}[chap:controlling_obstacle] and \in{Chapter}[runtime] will
+    propose obstacle resolution techniques both at RE time and runtime.
     
   \stopsection
   
   \startsection[title={Summary}]
   
-    This chapter introduced the goal-oriented requirement engineering framework
-    KAOS together with obstacle analysis. Next chapter will introduce the
-    probabilistic framework, extending the framework presented in this chapter,
-    with probabilistic goals and probabilistic obstacles, laying the
-    foundations for the techniques presented in the following chapters.
+    This chapter introduced the KAOS goal-oriented requirement engineering
+    framework together with its obstacle analysis component. Next chapter will
+    introduce a probabilistic extension of this framework on which the obstacle
+    assessment and control techniques presented in the following chapters will
+    rely.
   
   \stopsection
 
