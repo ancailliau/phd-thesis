@@ -869,6 +869,57 @@
     experts (see \in{Section}[sec:estimating_satrate]), and the satisfaction
     rate for the high-level goals, as computed by propagation (see
     \in{Section}[sec:computing_satrate]).
+    
+    ---
+    
+    An obstacle is said to be {\it critical} for a goal if it causes the
+    satisfaction rate of this goal to fall below the required satisfaction
+    rate.
+    
+    \startdefinition[def:critical_obstacle]{Critical obstacle}
+    
+      A probabilistic obstacle $O$ is {\it critical} for a goal $G$ if
+      obstacle $O$ results in a goal satisfaction rate such that $P(G) < RSR(G)$.
+    
+    \stopdefinition
+    
+    To identify whether an obstacle $O$ is critical, the severity of
+    violation is computed with the ESR of all obstacles but $O$ set to $0$
+    (as a recall, $SV(G) = RSR(G) - P(G)$); the obstacle is then critical
+    if $SV(G) < 0$. A set of obstacle is {\it critical} if the obstacles
+    together causes the violation severity to drop below $0$. 
+    
+    An obstacle is said {\it acceptable} for a goal if it results in a
+    satisfaction rate for this goal.
+    
+    \startdefinition{Acceptable obstacle}
+    
+      A probabilistic obstacle $O$ is {\it acceptable} for a goal $G$ if
+      obstacle $O$ does not result in a goal satisfaction rate such that
+      $P(G) < RSR(G)$.
+    
+    \stopdefinition
+    
+    For example, the obstacle \obstacle{UPS Battery Failure} causes the
+    satisfaction rate for the root goal \goal{Achieve [Make Up Water
+    Provided When Loss Of Cooling]} to fall to $.989$. With a required
+    satisfaction rate of $.99$, the obstacle \obstacle{UPS Battery Failure}
+    is critical for \goal{Achieve [Make Up Water Provided When Loss Of
+    Cooling]}.
+    
+    An obstacle is said to be {\it tolerable} if the goal's satisfaction
+    rate falls below some tolerable satisfaction rate but still above the
+    required satisfaction rate.
+    
+    \startdefinition{Tolerable obstacle}
+    
+      A probabilistic obstacle $O$ is {\it tolerable} for a goal $G$ if it
+      results in a satisfaction rate of the goal $G$ such that $TSR(G) <
+      P(G) < RSR(G)$.
+    
+    \stopdefinition
+    
+    ---
 
     The severity of an obstacle is defined as the loss in satisfaction rate of
     some root goal. In our running example, the obstacle \obstacle{UPS Battery
