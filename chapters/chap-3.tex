@@ -336,7 +336,7 @@
     
     	\startsubsection
   		  [reference=sec:pctl,
-         title={PCTL and PCTL*}]
+         title={The PCTL and PCTL* formalisms}]
          
         The previous sections introduced a precise definition enabling the
         computation of the probability of an LTL-like assertion. This section
@@ -416,7 +416,7 @@
       
     	\startsubsection
 			[reference=sec:defining-probabilistic-goals,
-			 title={Defining Probabilistic Goals}]
+			 title={Defining probabilistic goals}]
    
         An {\it Achieve} goal $\ltlG (C \rightarrow \ltlF T)$ requires
         behaviors where all possible system states satisfy $C\rightarrow\ltlF
@@ -773,7 +773,7 @@
         
       \startsubsection
         [reference=ref:independence-goals,
-         title={Independence among Probabilistic Goals}]
+         title={Independence among probabilistic goals}]
         	
         In our example, the set of behaviors satisfying the goal \goal{Maintain
         [Water Level Above LOW]} does not necessarily satisfy or deny the goal
@@ -914,7 +914,7 @@
     
     	\startsubsection
         [reference=sec:defining_obstacles,
-         title={Defining Probabilistic Obstacles}]
+         title={Defining probabilistic obstacles}]
       
         Consider the
         goal \goal{Achieve [Make Up Pump Motor On When Water Requested]} requiring the pump motor to be
@@ -1008,6 +1008,12 @@
         will show how their computation proceeds by up-propagation through the
         refinement trees.
         
+        Leaf obstacles are precise and ideally capture one single exceptionnal
+        situation that is easier for the domain experts to estimate. The domain
+        experts opinions and beliefs can be challenged with the precise
+        characterization in terms of behaviors and states. It helps to reduce
+        the subjective estimates provided by the domain experts.
+        
         Obstacles are related to goals through the {\it obstruction} relation.
         An obstacle has to obstruct some goal, i.e., prevent the full
         satisfaction of the goal; and has to be consistent with the domain,
@@ -1065,7 +1071,8 @@
               
 		  \stopsubsection
     
-    	\startsubsection[reference=sec:modeling_probabilistic_obstacles,title={Probabilistic obstacles models}]
+    	\startsubsection[reference=sec:modeling_probabilistic_obstacles,
+        title={Probabilistic obstacles models}]
 		  
         For an obstacle AND-refinement, the completeness, consistency and minimality
         conditions are similar to those introduced in
@@ -1164,7 +1171,7 @@
         
       \startsubsection
         [reference=ref:independence-obstacles,
-         title={Independence among Probabilistic Obstacles}]
+         title={Independence among probabilistic obstacles}]
         
         In our example, the probability for the relay of the water pump to fail
         does not depend on, e.g., the probability of a leak in the spent fuel
