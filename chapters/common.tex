@@ -710,6 +710,8 @@
 	
 \setupnumber[todo][]
 
+	
+%\setupnumber[definition][way=bychapter]
 \defineenumeration[definition]
 	[text={Definition},
 	style=slanted,
@@ -722,10 +724,13 @@
 	inbetween={},
 	right={. },
   prefix=yes,
-  prefixsegments=chapter]
-	
-\setupnumber[definition][way=bychapter]
-
+  prefixsegments=chapter,
+  way=bychapter,
+  list=definition]
+  
+\setuplist[definition]
+  [alternative=b]
+   
 %\defineframedtext[ExampleBox]
 %\setupframedtexts
 %  [ExampleBox]
