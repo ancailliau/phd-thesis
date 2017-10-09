@@ -594,7 +594,7 @@
         severity, allows us to measure how severe the goal violation is.
         \in{Figure}[fig:sv] shows how RSR and ESR relate.
 			
-        \startdefinition{Violation severity}
+        \startdefinition[dfn:vs]{Violation severity}
 				
           The severity of violation of a goal $G$ is defined by: 
           
@@ -1026,9 +1026,9 @@
           \item The {\it obstruction} condition now states that the obstacle
           prevents the satisfaction of the obstructed goal.
         
-  			  \startdefinition{Goal obstruction by probabilistic obstacle}
+  			  \startdefinition{Strong goal obstruction}
 			
-            A goal $G$ is obstructed by an obstacle $O$ iff        
+            A goal $G$ is {\it strongly obstructed} by an obstacle $O$ iff        
     			
             \startformula
               P (\neg G \mid O, Dom) = 1 
@@ -1059,15 +1059,17 @@
         partial obstruction. The relaxed condition states that there is a
         chance for the obstacle to violate the goal:
         
-			  \startdefinition[def:partial-obstruction]{Partial goal obstruction}		
+			  \startdefinition[def:partial-obstruction]{Weak goal obstruction}		
           
-          A goal $G$ is partially obstructed by an obstacle $O$ iff      	
+          A goal $G$ is {\it weakly obstructed} by an obstacle $O$ iff
     			
           \startformula
             P (\neg G \mid O, Dom) > 0
           \stopformula
         
         \stopdefinition
+        
+        Unless explicit, the thesis consider strong goal obstructions.
               
 		  \stopsubsection
     
@@ -1197,7 +1199,7 @@
         \in{Section}[sec:background_obstacle], is generalized into a {\it
         strong independence} condition.
         
-        \startdefinition[dfn:obstacleindependence]{Obstacle weak independence}
+        \startdefinition[dfn:obstacleindependence]{Obstacle strong independence}
       
         Two obstacles are {\it strongly dependent} if the set of behaviors that
         satisfies one of them impacts the satisfaction or falsification of the
