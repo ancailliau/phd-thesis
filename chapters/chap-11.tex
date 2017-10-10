@@ -16,54 +16,58 @@
     identified, assessed and controlled to produce more adequate, complete,
     consistent, and precise requirement goal models. The techniques presented
     in the thesis are intended to fill the gaps in the {\it obstacle
-    assessment} and {\it control} steps by proposing a quantitative
+    assessment} and {\it control} steps by proposing a quantitative extension to the KAOS
     framework for probabilistic goals and obstacles.
 
     For the {\it obstacle assessment} step, the thesis proposed a simple yet
-    effective quantitative model-based technique, anchored on the existing
-    goal-oriented KAOS framework for requirements engineering. The framework is
+    effective quantitative model-based technique. The KAOS framework is
     extended with a probabilistic layer allowing behavioral goals to be
-    specified, as a first-class citizen, in terms of their required and
-    estimated satisfaction rate. The thesis generalizes goals to probabilistic
-    goals, together with the corresponding refinement structure and
-    satisfaction arguments.
+    specified, as a first-class citizen, in terms of their {\it required} and
+    {\it estimated} satisfaction rate. The thesis introduces probabilistic
+    goals and probabilistic obstacles. The satisfaction rate of a probabilistic
+    goal and the satisfaction rate of a probabilistic obstacle is precisely
+    defined in terms of state probabilities; the latter caputre the probability
+    that the behaviors rooted in a system state satisfies an assertion. The
+    refinement structure and satisfaction arguments for non-probabilistic goals
+    and obstacles is generalized.
     
-    The satisfaction rate of non-leaf obstacles is determined by up-propagation
-    in the obstacle trees. The criticality of obstacles is systematically
+    Obstacles are assessed agains their lilkelihood and criticality. The
+    satisfaction rate of non-leaf obstacles is determined by up-propagation in
+    the obstacle trees. The criticality of obstacles is systematically
     determined by propagating the satisfaction rate of obstacles along the goal
     refinement trees. The thesis proposed two propagation algorithms for
     computing the satisfaction rate of high-level goals from the estimated
     satisfaction rate of leaf obstacles. The BDD-based propagation procedure is
     efficient when repeated propagations are required whereas the Pattern-based
     propagation procedure is finer-grained at an increased specification cost.
-    The most likely and critical obstacle combinations are then highlighted to
+    Most likely and critical obstacles and obstacle combinations are then highlighted to
     guide the exploration of countermeasures in the next {\it control} step.
     
-    Regarding the {\it obstacle control} step, the thesis proposed to select
-    appropriate countermeasures guaranteeing the satisfaction of the required
-    satisfaction rate of the high-level goals while minimizing the cost of
-    resolution. An integration mechanism was introduced as a model
+    Regarding the {\it obstacle control} step, the thesis proposed appropriate
+    countermeasures selection guaranteeing the satisfaction of the {\it
+    required} satisfaction rate of the high-level goals while minimizing the
+    cost of resolution. An integration mechanism was introduced as a model
     transformation guaranteeing progress towards more complete goal models,
     minimal changes to the ideal model and preservation of the correctness of
     the refinements. Anchor goals were introduced to define where the
     countermeasures goals shall be integrated. Countermeasures then document
-    the ideal goal model with dedicated constructs. Refactoring operators
-    allows the analyst to attach and detach exceptions.
+    the ideal goal model with dedicated exception constructs. Refactoring
+    operators allows the analyst to attach and detach those exceptions.
     
     The techniques for {\it obstacle assessment} and {\it obstacle control}
     were extended to cope with knowledge uncertainty about the satisfaction
     rate of probabilistic system goals and their obstructing obstacles. The
     uncertainty margins of satisfaction rate estimates are modeled as
     probability distributions. The impact of such uncertainty on the
-    criticality of obstacles is quantified via two metrics: goal violation
-    uncertainty and uncertainty spread. The satisfaction rate of non-leaf
-    obstacles and the satisfaction rate of goals, together with their
+    criticality of obstacles is quantified via two metrics: {\it goal violation
+    uncertainty} and {\it uncertainty spread}. The satisfaction rate of
+    non-leaf obstacles and the satisfaction rate of goals, together with their
     uncertainty margins, are computed by repeated propagation through the
     goal/obstacle models. As a result, the critical obstacles with problematic
-    uncertainty margins are highlighted. Problematic uncertainties may then
-    be reduced by combining multiple sources of estimates. Countermeasures may
-    be selected to guarantee the required satisfaction rate of high-level goals
-    up to an uncertainty threshold.
+    uncertainty margins are highlighted. Problematic uncertainties may then be
+    reduced by combining multiple sources of estimates. Countermeasures may be
+    selected to guarantee the {\it required} satisfaction rate of high-level
+    goals up to an uncertainty threshold.
   
     Lastly, the thesis proposed an obstacle-driven runtime adaptation approach
     aimed at increasing the actual satisfaction rate of probabilistic system
@@ -93,7 +97,7 @@
       such as \quote{\it an ambulance shall be on the incident scene within 14
       minutes in 95\% of cases?} cannot be expressed. Probabilistic goals
       enables such requirements to be included, as first-class citizen,
-      together with non-probabilistic ones in the same requirement engineering
+      together with non-probabilistic ones in the same RE
       framework.
     
       \item {\it Probabilistic goals and obstacles have a precise semantic
@@ -105,18 +109,18 @@
     
       \item {\it Probabilistic obstacle refinements provide a structure for the
       assessment of the likelihood of occurence.} The satisfaction rate of
-      non-leaf obstacles is systematically determined by up-propagation through
-      the obstacle refinement trees, from the estimated satisfaction rates for
-      leaf obstacles. Leaf obstacles only need to be estimated by domain
-      experts.
+      non-leaf obstacles is systematically determined from the estimated
+      satisfaction rates for leaf obstacles by up-propagation through the
+      obstacle refinement trees. Only leaf obstacles need to be estimated by
+      domain experts.
     
       \item {\it Probabilistic goal refinements provide a structure for the
       assessment of obstacle criticality.} The consequences of an obstacle are
       the goals whose satisfaction is prevented by this obstacle. The severity
       of the consequences is systematically determined by up-propagation of the
-      obstacle satisfaction rate throught the goal refinement trees. The
-      criticality of an obstacle is then determined as the loss in satisfaction
-      for these obstructed goals.
+      obstacle satisfaction rate throught the goal refinement trees. An
+      obstacle is critical if the satisfaction rate of the goal fall below its
+      RSR.
     
       \item {\it Control of probabilistic obstacles guarantee progress towards
       complete models.} Valid countermeasures, introduced in
@@ -128,7 +132,7 @@
       \item {\it Probabilistic goals and obstacles enables cost-effective
       selection of countermeasures.} Selecting most appropriate countermeasures
       amount to solve an optimization problem where the satisfaction rate of
-      high-level goals is maximized while minimizing the pertaining cost.
+      high-level goals is maximized while minimizing the resolution cost.
     
       \item {\it Integration of countermeasures to probabilistic obstacles
       preserve the normal behaviors.} The two integration schemas introduced in
@@ -136,14 +140,14 @@
       the resolved obstacle are not modified. The integration schema, picked
       according the resolution tactic of the countermeasure goal, either
       replace the anchor goals or refines the anchor goal, leaving the rest of
-      the goal model intact. Normal behaviors, i.e., not impacted by the
-      obstacle, are thereby preserved.
+      the goal model intact. Normal behaviors not impacted by the
+      obstacle are thereby preserved.
     
       \item {\it Integration of countermeasures to probabilistic obstacles
       preserve the correctness of the refinement structure.} Propagating
       required changes in the specification of goals though the obstacle/goal
-      models, as seen in \in{Section}[sec:propagation], guarantee that the
-      refinement structure remains complete, consistent and minimal.
+      models guarantee that the refinement structure remains complete,
+      consistent and minimal (as seen in \in{Section}[sec:propagation]).
     
       \item {\it Exception handling of probabilistic obstacles separates ideal
       from exceptional cases.} The dedicated constructs such as {\it Except},
@@ -164,62 +168,57 @@
       and its refinement structure. With such a brute-force integration, each
       countermeasure goal must be refined by taking other countermeasures into
       account. This might lead to a combinatorial blow-up of cases. Thanks to
-      the constructs introduced in \in{Section}[sec:exception_handling], the
-      original specification of the anchor goal and its refinement structure
-      are preserved. The {\it Except} and {\it Provided} constructs encapsulate
-      the modifications for a more robust system.
+      the {\it Except} and {\it Provided} constructs, the original
+      specification of the anchor goal and its refinement structure are
+      preserved.
 
       \item {\it Satisfaction uncertainty of probabilistic goals and obstacles
       allow to cope with knowledge uncertainty.} The satisfaction uncertainty
       of probabilistic goals and obstacles allows domain experts to represent
-      their uncertainty margin about estimates.
+      their uncertainty margin about estimates. Probability distribtions are a
+      natural abstraction to model uncertainty about estimates \cite[Vos08].
     
       \item {\it Probabilistic goals and obstacles enables the highlight of
       problematic uncertainty margins about estimates.} Two metrics are
-      introduced for measuring problematic uncertainties. When applied to the
-      probability distributions obtained by up-propagation to the top-level
-      goals, the metrics allow critical leaf obstacles with most problematic
-      uncertainty margins to be highlighted.
+      introduced for measuring problematic uncertainties of goal satisfaction
+      rates. When applied to the probability distributions obtained by
+      up-propagation to the top-level goals, the metrics allow critical leaf
+      obstacles with most problematic uncertainty margins to be highlighted.
     
       \item {\it Probabilistic goals and obstacles support multiple source of
       estimates for uncertainty reductions.} Multiple source of estimates are
-      generally recognized to produce more accurate estimates when combined.
-      Estimates are elicited from multiple sources and combined in order to
-      reduce their uncertainty margins.
+      generally recognized to produce more accurate estimates when combined
+      \cite[Bed01]. Problematic uncertainty margins are reduced by combining
+      multiple sources.
     
       \item {\it Satisfaction rate of probabilistic goals and obstacles may be
-      monitored at runtime.} Monitored satisfaction rates are defined precisely
-      in terms of observed states and behaviors. Our monitoring technique
-      extends the $LTL_3$ approach \cite[Bau11] to support monitoring of
-      probabilistic assertions. The monitors are built at RE time from the
-      formal specification of leaf obstacles; at runtime, virtual copies of
-      $LTL_3$ monitors keep track of obstacle satisfaction. State probabilities
-      for each observed state can thereby be obtained to yield satisfaction
-      rates for the monitored obstacles. The latter are propagated through the
-      obstacle/goal model up to the system’s high-level goals.
+      monitored at runtime.} Monitors, built at RE time from the formal
+      specification of leaf obstacles, computes the actual satisfaction rate of
+      leaf obstacles at runtime. The latter are propagated through the
+      obstacle/goal model up to the system’s high-level goals in order to
+      determine the actual criticality of those leaf obstacles.
+    
+      \item {\it Risk-driven runtime adaptation ensures that only required
+      adaptation are performed.} The risk-driven runtime adaptation selections,
+      at runtime, most appropriate countermeasures. Those maximize the
+      satisfaction rate of high-level goals while minimizing the resolution
+      cost. It guarantee the required satisfaction rate of high-level goals
+      remains satisfied when the obstacle satisfaction rates are changing.
     
       \item {\it The monitoring of probabilistic goals and obstacles do not
       requires explicit behavior models.} Building a consistent and complete
       behavior model for large distributed systems with many complex states and
-      parallelism is often quite challenging. Unlike \cite[Ghe09,Ghe13], our
-      monitoring technique does not requires the Buchï automaton to be combined
-      to a behavior model in order to obtain parametric expressions to be
-      monitored at runtime.
-    
-      \item {\it Probabilistic goals and obstacles ensures that only required
-      adaptation are performed.} The risk-driven runtime adaptation approach
-      ensures that the required satisfaction rate of high-level goals remains
-      satisfied when the obstacle satisfaction rates are changing; adaptation
-      is only required when the required satisfaction rate is not met.
+      parallelism is often quite challenging. Our monitoring technique does not
+      requires such model to be explicitely provided.
     
       \item {\it Probabilistic goals and obstacles support traceability
-      managment.} The predicates to be monitored are infered from the formal
-      specification of the leaf obstacles to be monitored; why such or such
-      monitored information is required is thereby documented. Decision
-      criteria for countermeasure selection, and therefore system adaptation,
-      are traceable to system objectives. Lastly, exception handling constructs
-      such as {\it Except}, {\it Provided}, and {\it RelaxedTo} document why
-      goal revisions were required.
+      managment.} Decision criteria for countermeasure selection, and therefore
+      system adaptation, are traceable to system objectives. Exception handling
+      constructs such as {\it Except}, {\it Provided}, and {\it RelaxedTo}
+      document why goal revisions were required. Lastly, why such or such
+      monitored information is required is thereby documented as the predicates
+      to be monitored are infered from the formal specification of the leaf
+      obstacles to be monitored.
     
     \stopitemize
     
@@ -227,6 +226,12 @@
     research.
   
     \startitemize
+    
+      \item {\it No technique support probabilistic goal elicitation and
+      refinement.} Unlike the approach presented in \cite[Let04], the thesis
+      proposes no support for building probabilistic goal models. In
+      \cite[Let04], domain-specific equations might guide the elicitation
+      process; the equations terms might correspond to different subgoals.
   
       \item {\it No technique support probabilistic obstacle identification.}
       The thesis proposes no specific support for identifying probabilistic
@@ -240,20 +245,15 @@
       countermeasures are identified using a variety of resolution tactics
       \cite[Lam09] or a learning-based approach based on observed behaviors
       \cite[Alr16].
-    
-      \item {\it No technique support probabilistic goal elicitation and
-      refinement.} Unlike the approach presented in \cite[Let04], the thesis
-      proposes no support for building probabilistic goal models. In
-      \cite[Let04], domain-specific equations might guide the elicitation
-      process; the equations terms might correspond to different subgoals.
       
       \item {\it No technique support agents responsible for probabilistic
       goals.} Intuitively, some agents might be more reliable than others, and
-      some instances of agents might exhibit different characteristics. In
-      addition, a resolution tactic transfer the responsibilities of an
-      unrealiable to a more reliable agent. How agent reliability can be
-      precisely defined at the requirements level, how it impacts the obstacle
-      assessment and control are overlooked in the thesis.
+      some instances of agents might exhibit different characteristics. A
+      resolution tactic transfer the responsibilities from a less reliable
+      agent to a more reliable one; such transfer cannot be formally expressed
+      using the techniques presented in the thesis. How agent reliability can
+      be precisely defined at the requirements level, how it impacts the
+      obstacle {\it assessment} and {\it control} are not discussed.
     
       \item {\it The obstacle control technique overlooks domain-specific
       variables and soft goals contributions.} As seen in the IBA case-study
@@ -269,15 +269,8 @@
       countermeasures might increase the satisfaction rate of a set of
       obstacles, satisfaction rates might increase or decrease overtime
       depending on whether a countemeasure is selected, and so forth. Unlike
-      Dynamic Fault Trees \cite[Rui15], the proposed techniques currently
-      overlook such system dynamic.
-        
-      \item {\it The risk-driven runtime adaptation technique makes simplistic
-      hypothesis.} The process of runtime adaptation should take into account,
-      among others, the timing issues such as the time to deploy a
-      countermeasure or when an adaptation shall be executed, or the transient
-      aspects of adaptation such as stability. The proposed technique for
-      risk-driven runtime adaptation ignores such complexity.
+      Dynamic Fault Trees \cite[Rui15], the proposed techniques do not
+      currently support such dynamic models.
   
     \stopitemize
     
@@ -286,13 +279,7 @@
   This section lists some open issues and discusses perspectives for future
   work.
   
-  \noindent {\bf Obstacle and countermeasure identification} The obstacle
-  assessment and control steps are as good as the initial obstacle
-  identification step. It is not possible to assess and resolve obstacles that
-  were not identified. In the same vein, it is not possible to select
-  countermeasures that were not identified. Unknown unknown is a critical
-  challenge in Requirements Engineering.
-  
+  \noindent {\bf Obstacle and countermeasure identification.} 
   Detecting incomplete goal and obstacle models at runtime could improve the
   obstacle identification step. Monitoring the high-level goals and obstacles
   may highlight missing obstacles by the comparing the estimated satisfaction
@@ -304,7 +291,8 @@
   
   Related to identification, it is common for risk analysis to be performed
   once and not maintained as software evolve. The risk analysis quickly becomes
-  obsolete, incomplete and inadequate. Missing requirements might be detected
+  obsolete, incomplete and inadequate. Previous research efforts shows that 
+  missing requirements might be detected
   during testing \cite[Lut03]. Integrating testing and risk analysis could
   continuously check whether the software system covers the identified risks,
   and whether the risk analysis is adequate, precise, complete, and consistent
@@ -312,48 +300,52 @@
   \cite[Raj08,Wha06] and Risk-Driven testing \cite[Erd14,Red05,Klo11]
   approaches appears to be a promising direction.
   
-  \noindent {\bf Dynamic risk analysis.} Most of the analyses are performed on
-  snapshots of the software system, where the dynamic of the system and its
-  evolution over time are barely taken into account. Techniques for Dynamic
-  Fault Trees \cite[Rui15] may improve the quality of the probabilistic goal
-  and obstacle models. How to model, elicit, and analyse a high level of
-  interdependency between probabilistic goals and obstacles is an open question
-  to us.
+  \noindent {\bf Dynamic obstacle models.} Techniques and model for Dynamic
+  Fault Trees \cite[Rui15] may improve the expressiveness and accuracy of the
+  probabilistic goal and obstacle models. How to model, elicit, and analyse
+  probabilistic goals and obstacles with a high-level of interdepency remains
+  an open question to us.
   
-  \noindent {\bf Risk-driven Adaptation without monitoring.} The risk-driven
-  adaptation technique relies on satisfaction rates monitoring. However,
-  monitoring is not always possible or desirable, for exemple, in ultra-low
-  power systems. On-the-fly adaptations are not necessarily desirable in
-  very-critical safety applications where these on-the-fly adaptation makes the
-  certification of theses systems hard. Explicit modeling of the evolution of
-  the satisfaction rates over the time would enable optimal countermeasure
-  selection to be computed at RE time for software systems where monitoring is
-  not possible or desirable.
+  \noindent {\bf Risk-driven adaptation at runtime.} 
+  The proposed approach for runtime adaptation might be improved in the following
+  directions.
   
-  \noindent {\bf Change detection.} Over time, \quote{real} satisfaction rates
-  could abruptly change, the monitored satisfaction rate however then tends to
-  slowly reflect this changes. Algorithms are available for detecting such
-  abrupt changes such as \cite[Epi10,Liu13,Fil14] and the filtering approach
-  proposed in \cite[Fil15] could improve the accuracy of the monitored
-  satisfaction rates.
+  \startitemize
   
-  \noindent {\bf When to adapt?} The question of \quote{when} to adapt is still
-  an open issue. If the cost of an adaptation is cheaper than the penalty of a
-  violation, it might be preferable to adapt before the violation occurs.
-  However, some adaptations are costly and should not be performed unless the
-  violation last. In addition, software adaptations exhibit latencies that
-  should be taken into account at RE time \cite[Cam14,Cam16]. Prediction
-  approaches, such as \cite[Pol07,Mor16], appears to be a promising direction
-  for more cost-effective adaptation.
+    \item The risk-driven adaptation technique relies on satisfaction rates
+    monitoring. However, monitoring is not always possible or desirable, for
+    exemple, in ultra-low power systems. On-the-fly adaptations are not
+    necessarily desirable in very-critical safety applications where these
+    adaptation may make the certification of such systems hard to be obtained.
+    Explicit modeling of the evolution of the satisfaction rates over the time
+    would enable optimal countermeasure selection to be computed at RE time for
+    software systems where monitoring is not possible or desirable.
+  
+    \item Over time, \quote{real} satisfaction rates could abruptly change, the
+    monitored satisfaction rate however then tends to slowly reflect this
+    changes. Algorithms are available for detecting such abrupt changes such as
+    \cite[Epi10,Liu13,Fil14] and the filtering approach proposed in
+    \cite[Fil15] could improve the accuracy of the monitored satisfaction rates.
+  
+    \item The question of \quote{when} to adapt is still an open issue. If
+    deploying an adaptation is cheaper than the penalty of a violation, it
+    might be preferable to adapt before the violation occurs. However, some
+    adaptations are costly and should not be performed unless the violation
+    last enough for the penalty to exceed the cost. In addition, software
+    adaptations exhibit latencies that should be taken into account at RE time
+    \cite[Cam14,Cam16]. Prediction approaches, such as \cite[Pol07,Mor16],
+    appears to be a promising direction for more cost-effective adaptation.
+  
+  \stopitemize
   
   \noindent {\bf Risk-driven design.} Our approach is focused on determining
   whether the required satisfaction rate of high-level goals are met, given the
   satisfaction rates of leaf obstacles. Another type of analysis would include
   the following reverse question: what are the satisfaction rates of low-level
   obstacles given a required degree of satisfaction? Parametric model checking
-  might be used to questions such as \quote{\it how many ambulances are
-  required to guarantee a 5\% satisfaction rate?} on the low-level obstacles.
-  Combining these with the proposed quantitative framework might answer
+  might be used to questions on the low-level obstacles such as \quote{\it how
+  many ambulances are required to guarantee a 5\% satisfaction rate?}.
+  Combining these with our proposed quantitative framework might answer
   questions on high-level goals, such as \quote{\it how many ambulances are
   required to guarantee a 95\% required satisfaction rate for the ambulance
   timely on scene?}.
@@ -364,8 +356,8 @@
   representative of the satisfaction rate. For example, such state might be
   transient and never met once the system has reach stability. The presented
   {\it obstacle assessmnt} technique provides coarse-grained assessment
-  ignoring the above situation. Two interesting directions might improve the
-  obstacle assessment and control step.
+  ignoring the above situation. The following directions might improve the
+  obstacle {\it assessment} and {\it control} step.
   
   \startitemize
   
@@ -378,7 +370,7 @@
     runtime\emdash{}for example, it might be worthless to trigger an adaptation if
     the state with the highest state probability is not visited often.
   
-    \item The proposed approach selects countermeasures in order to minimize a
+    \item Our proposed approach selects countermeasures in order to minimize a
     cost. However, design decisions often result from fine-grained tradeoff
     analysis with multiple competing criteria \cite[Che06]. Refined criteria
     taking soft goals or domain-specific variables into account could lead to
@@ -394,13 +386,9 @@
   \noindent {\bf Security risk analysis.} How the proposed approach transpose
   to security risk analysis is an open question to us. In particular, an
   in-depth comparision with existing security-based approaches such as {\it
-  attack trees} and {\it threat trees} \cite[Sch99,Hel02,Sch11], {\it
-  UMLSec} \cite[Jur01,Jur02], {\it SecureUML} \cite[Lod02], {\it Abuse Case}
-  \cite[McD99a], or {\it Misuse Case} \cite[Sin05] could exhibit interesting
-  transfer from one community to the other.
-  
-  While these limitations might limit the applicability of our techniques to
-  specific cases, it also paves the way to more research in the area of
-  risk-driven requirements engineering.
+  attack trees} and {\it threat trees} \cite[Sch99,Hel02,Sch11], {\it UMLSec}
+  \cite[Jur01,Jur02], {\it SecureUML} \cite[Lod02], {\it Abuse Case}
+  \cite[McD99], or {\it Misuse Case} \cite[Sin05] could exhibit interesting
+  technique transfer from one community to the other.
   
 \stopcomponent
