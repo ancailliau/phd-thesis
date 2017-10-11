@@ -710,7 +710,22 @@
 	
 \setupnumber[todo][]
 
-	
+
+\defineenumeration[property]
+	[text={Property},
+	style=slanted,
+	headstyle=\cronos\bf,
+	title=yes,
+	titleleft={\cronos\bf(},
+	titleright={)},
+	alternative=serried,
+	width=fit,
+	inbetween={},
+	right={. },
+  prefix=yes,
+  prefixsegments=chapter,
+  way=bychapter,]
+  	
 %\setupnumber[definition][way=bychapter]
 \defineenumeration[definition]
 	[text={Definition},
@@ -783,9 +798,10 @@
 	 inbetween={},
 	 right={. },
   prefix=yes,
-  prefixsegments=chapter
+  prefixsegments=chapter,
+  way=bychapter,
     ]
-\setupnumber[proposition][way=bychapter, numbersection=no]
+%\setupnumber[proposition][way=bychapter, numbersection=no]
 
 \defineenumeration[proof]
 	[text={Proof.},
