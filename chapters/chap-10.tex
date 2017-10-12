@@ -40,8 +40,8 @@
     \noindent {\bf Fault Tree Analysis.} Fault Tree Analysis (FTA) is a very
     widely used method to analyze risks related to safety
     \cite[Ves81,Bed01,Lev01,Lam09,Rui15]. Application domains range from
-    aeronautics to software systems \cite[Lev83]. \cite[Ves81] provides a
-    comprehensive introduction to FTA. We briefly discuss here classical fault
+    aeronautics to software systems \cite[Lev83]. A
+    comprehensive introduction to FTA is provided in \cite[Ves81]. We briefly discuss here classical fault
     trees and dynamic fault trees and refer the reader to \cite[Rui15] for a
     more detailed discussion about state-of-the-art techniques for FTA.
       
@@ -173,9 +173,9 @@
     might be used to check whether the estimate of the unwanted incident is
     coherent with the other estimates of threats and threats scenarios. Such
     technique might be useful to identify incomplete, inconsistent or ambiguous
-    risk analysis \cite[Ref15]. \cite[Ref09] suggests specifying likelihoods
+    risk analysis \cite[Ref15]. Likelihoods may be specified
     using equations combining key indicators whose value might change over
-    time. However, little support is provided to identify such key indicators,
+    time \cite[Ref09]. However, little support is provided to identify such key indicators,
     to combine these in likelihood and how these key indicators should be
     monitored.
         
@@ -392,8 +392,8 @@
       
       \item Our framework takes a probabilistic approach; goals and obstacles
       are estimated with a single value indicating both their satisfaction
-      ($sr$) and their non-satisfaction ($1-sr$). \cite[Gio02, Gio03, Gio05,
-      Amy10, Cha13] takes a different approach where goals are estimated with
+      ($sr$) and their non-satisfaction ($1-sr$). In \cite[Gio02, Gio03, Gio05,
+      Amy10, Cha13], goals are estimated with
       2 values indicating the satisfaction ($SAT$) and their non-satisfaction
       ($DEN$). This increases the number of elements to be elicited by experts.
       Also, such theory might not be as well understood as the probability
@@ -511,23 +511,22 @@
     rely on a learning framework to iteratively select the PACTs that mostly
     reduces the uncertainty and increases the requirements satisfaction.
       
-    \noindent {\bf Goal-Risk Framework.} \cite[Asn06,Asn11] extends the
-    Tropos framework with risks and countermeasures. In the framework, a {\it
-    risk} is an event having an adverse impact on goals whereas a {\it
-    countermeasure} is a treatment that can be adopted to mitigate the effect of the
-    risk. The framework is structured in three layers: a {\it asset
-    layer} (called {\it goal layer} in
-    \cite[Asn06,Asn06b,Asn06c,Asn07,Asn07b,Asn07c]), an {\it event layer} and
-    a {\it treatment layer} with {\it impact} links between events and goals,
-    and {\it effect} links between treatments and events. An event is annotated
-    with a (risk) likelihood, and the (risk) severity is modeled as a
-    contribution (positive or negative) from an event to goal. Events and
-    treatments can be AND-/OR-refined and can contribute to other goals,
-    events, or treatments. \cite[Asn06b] proposes strategies for identifying
-    possible treatments. \cite[Asn06] further extends the framework proposed
-    in \cite[Asn06] to support treatments mitigating the impact of an event.
-    \cite[Asn07] extends the framework to account for trust between the actors
-    of the system. \cite[Asn07c] adds support for quantitative reasoning.
+    \noindent {\bf Goal-Risk Framework.} \cite[Asn06,Asn11] extends the Tropos
+    framework with risks and countermeasures. In the framework, a {\it risk} is
+    an event having an adverse impact on goals whereas a {\it countermeasure}
+    is a treatment that can be adopted to mitigate the effect of the risk. The
+    framework is structured in three layers: a {\it asset layer} (called {\it
+    goal layer} in \cite[Asn06,Asn06b,Asn06c,Asn07,Asn07b,Asn07c]), an {\it
+    event layer} and a {\it treatment layer} with {\it impact} links between
+    events and goals, and {\it effect} links between treatments and events. An
+    event is annotated with a (risk) likelihood, and the (risk) severity is
+    modeled as a contribution (positive or negative) from an event to goal.
+    Events and treatments can be AND-/OR-refined and can contribute to other
+    goals, events, or treatments. Different strategies are available for
+    identifying possible treatments \cite[Asn06b]. The framework proposed in
+    \cite[Asn06] is extended to support treatments mitigating the impact of an
+    event \cite[Asn06], trust between the actors of the system
+    \cite[Asn07], and quantitative reasoning \cite[Asn07c].
       
     Events and treatments are annotated with {\it SAT} and {\it DEN} attributes
     that quantify the evidence that the event, respectively the treatment, is
@@ -540,14 +539,14 @@
     cost. A solution is a set of leaf goals and treatments. As an input, it
     takes the desired satisfaction values (i.e., minimal SAT-value that is
     accepted) and the acceptable risk values (i.e. maximal DEN-value that is
-    accepted) for the top goals. Using backward analysis \cite[Hor10,Seb04],
-    it identifies the leaf goals that are sufficient to satisfy the root goals.
-    It then assess, using forward analysis \cite[Gio05] (i.e. propagates the
+    accepted) for the top goals. Using backward analysis \cite[Hor10,Seb04], it
+    identifies the leaf goals that are sufficient to satisfy the root goals. It
+    then assess, using forward analysis \cite[Gio05] (i.e. propagates the
     estimated SAT/DEN-values of the events to the root goals), whether
     treatments shall be introduced. The algorithm identifies the admissible
     values for the events and then the possible countermeasures values that
-    guarantee these event values. \cite[Asn07c] adapts this qualitative
-    analysis to quantitative analysis.
+    guarantee these event values. Such analysis may also be performed on
+    quantitative inputs \cite[Asn07c].
     
     \cite[Sha12,Sha13] propose an extension to the Goal-Risk framework for
     prioritizing risks with a Risk/Cost analysis. It is, however, unclear how
@@ -574,9 +573,9 @@
     computes scores representing the exposure of the goals to the identified
     risks, using the estimated indicators. These scores are a relative measure
     for comparing alternatives but are not meant to be interpreted as a
-    probability or degree of belief. \cite[Cos15] extends the approach to
-    connect RiskML and i* models, enabling the degree of belief of higher-level
-    goals to be computed from the estimated indicators.
+    probability or degree of belief. Integrating RiskML and i* models enables
+    the degree of belief of higher-level goals to be be computed from the
+    estimated indicators \cite[Cos15].
     
     \noindent {\bf Comparing with our approach.} These approaches, like our,
     integrates both requirements and their related risks. However, some
@@ -661,10 +660,10 @@
     explicit capture environmental uncertainty \cite[Whi09,Whi10]. Operators,
     such as {\ss\it MAY}, {\ss\it AS EARLY AS POSSIBLE}, or {\ss\it AS MANY AS
     POSSIBLE}, constraints how the goal can be relaxed at runtime. The semantic
-    of RELAX is defined in terms of fuzzy logic. \cite[Che09c] introduces a
-    variation of threat modeling, based on obstacles, to identify the sources
-    of uncertainty in the satisfaction of the goals. The countermeasures either
-    changes the goal model either RELAXes the goal specifications. In
+    of RELAX is defined in terms of fuzzy logic. A variation of threat
+    modeling, based on obstacles, identify the sources of uncertainty in the
+    satisfaction of the goals \cite[Che09c]. The countermeasures either changes
+    the goal model either RELAXes the goal specifications. In
     \cite[Ram12,Fre14], RELAXed goals are automatically learned using an
     executable specification of the system. The approach can be summarised as
     follows: {\it (a)} A search process generates semi-randomly RELAXed goal
@@ -680,9 +679,9 @@
     necessary in systems where goals might not be measured or whose
     specification is not entirely known. Crisp goals are goals that must be
     fully satisfied, in oppositions to fuzzy goals where fuzzy membership
-    function quantifies the degree of goal satisfaction. \cite[Cha16,Cha16b]
-    presents a fuzzy logic-based approach combining both crisp and fuzzy goals.
-    A bottom-up propagation algorithm computes the degree of satisfaction for
+    function quantifies the degree of goal satisfaction. A fuzzy logic-based
+    approach combines both crisp and fuzzy goals \cite[Cha16,Cha16b]. A
+    bottom-up propagation algorithm computes the degree of satisfaction for
     both types of goals. The degree of satisfaction of a fuzzy goal depends on
     the degree of satisfaction of the children in the refinements, and on the
     degree of satisfaction of the goals that positively and negatively
@@ -785,12 +784,12 @@
     as goals or actors. A planner then produces a plan that, once applied to
     the initial model, corresponds to an alternative design satisfying the
     initial goals. Alternative designs might then be evaluated to identify the
-    most promising ones \cite[Bry07]. \cite[Bry06] further extends the
-    approach to generate alternative configuration at runtime, when
-    reconfiguration is required. \cite[Asn06d] combines the planning approach
-    proposed in \cite[Bry06b,Bry06c] with the quantitative Goal-Risk Framework
-    \cite[Asn11] to generate, automatically, alternative designs that minimize
-    the risk of some specified high-level goals.
+    most promising ones \cite[Bry07]. Alternative configurations may be
+    generated at runtime, when a reconfiguration is required \cite[Bry06].
+    Alternative designs that minimize the risk of some specified high-level
+    goals may be automatically generated by combining planning
+    \cite[Bry06b,Bry06c] with the quantitative Goal-Risk Framework
+    \cite[Asn06d].
   
     \noindent {\bf Integrating Countermeasures.} We are not aware of any work
     on the systematic integration of countermeasures in a requirement model
@@ -938,8 +937,8 @@
     the leaf goals. A parametric model checker computes a parametric expression
     representing the probability to satisfy the root goal to enable computation
     at runtime; the parameters are the values of the success and failure
-    probabilities for the leaf goals. \cite[Men14] briefly discusses the
-    impact of context on the failure probabilities.
+    probabilities for the leaf goals. The impact of context on the failure
+    probabilities is briefly discussed in \cite[Men14].
   
     \noindent {\bf Product-line based approach.} \cite[Epi09] proposes an
     approach to learn transition probabilities in a Discrete Time Markov Chain
@@ -957,14 +956,14 @@
     Efficient runtime verification technique then drives the selection of the
     most appropriate configuration at system runtime \cite[Fil16].
     
-    In \cite[Fil11,Fil14,Fil15b], a control-theoretical approach
-    automatically generates controllers for self-adaptive systems. The user
-    provides a running software, a parameter that impacts some non-functional
+    In \cite[Fil11,Fil14,Fil15b], a control-theoretical approach automatically
+    generates controllers for self-adaptive systems. The user provides a
+    running software, a parameter that impacts some non-functional
     requirements. The approach first learns a linear-model binding the
     parameter to the non-functional requirements; a controller is then
     generated to tune the parameter according to the non-functional
-    requirement. \cite[Fil15c] extends the approach to multiple non-functional
-    requirements and multiple parameters.
+    requirement. Multiple non-functional requirements and multiple parameters
+    may be integrated in the approach \cite[Fil15c].
     
     \cite[Fil15] discusses an approach for filtering the monitored
     probabilities to reduce the noise of the observations while maintaining an
@@ -974,16 +973,16 @@
     introduces {\it Awareness Requirements} ({\it AwReq}) to reason about
     requirement satisfaction. {\it Awareness Requirements} are
     meta-requirements about the system requirements that are monitored at
-    runtime, using {\it ReqMon}. \cite[Sou12] introduces {\it Evolution
-    Requirements} ({\it EvoReq}) to reason about the evolution of requirements.
-    {\it Evolution Requirements} are meta-requirements contraining how system
+    runtime, using {\it ReqMon}. {\it Evolution Requirements} ({\it EvoReq})
+    enables reasoning about the evolution of requirements \cite[Sou12]. {\it
+    Evolution Requirements} are meta-requirements contraining how system
     requirements shall be change when required. {\it AwReq} and {\it EvoReq}
     complements each other, in a framework called {\it Zanshin}, to specify a
-    feedback loop for self-adaptive systems \cite[Sou13]. {\it AwReq}
-    indicates the situations in which an adaptation is required whereas {\it
-    EvoReq} prescribes what adaptation shall be deployed. \cite[Sou11]
-    discusses how awareness requirements interacts in a control-theoritic
-    approach for self-adaptive systems.
+    feedback loop for self-adaptive systems \cite[Sou13]. {\it AwReq} indicates
+    the situations in which an adaptation is required whereas {\it EvoReq}
+    prescribes what adaptation shall be deployed. How awareness requirements
+    interacts in a control-theoritic approach for self-adaptive systems is
+    discussed in \cite[Sou11].
     
     \noindent {\bf Tropos for Adaptive Systems.} \cite[Mor08,Mor17b] extends
     the Tropos framework specifically for automated systems. It proposes three
@@ -1001,17 +1000,17 @@
     algorithm is available for selecting the most appropriate recovery actions.
     
     \noindent {\sc\bf Olympus.} \cite[Ram11] proposes a genetic algorithm to
-    choose the best configuration for an overlay network. \cite[Ram10]
-    describes an approach to generate sequences of actions to change a software
-    system from one configuration to another. In \cite[Ram11b] utility
-    functions are generated from a goal model with RELAXed requirements to
-    enable the monitoring of goals. Depending on the type of goal, the
-    technique automatically generates a state-based (invariant goal),
-    metric-based (real-valued goal) or fuzzy logic-based (RELAX goal) utility
-    function that, fed with monitored values, provides an estimate for the goal
-    satisfaction. Utility scores are then propagated in the goal model from the
-    monitored goals to the root goals. \cite[Che13] illustrates how these
-    techniques intertwine to enable self-adaptation of software systems.
+    choose the best configuration for an overlay network. Sequences of actions
+    to change a software system from one configuration to another may then be
+    generated \cite[Ram10]. In \cite[Ram11b] utility functions are generated
+    from a goal model with RELAXed requirements to enable the monitoring of
+    goals. Depending on the type of goal, the technique automatically generates
+    a state-based (invariant goal), metric-based (real-valued goal) or fuzzy
+    logic-based (RELAX goal) utility function that, fed with monitored values,
+    provides an estimate for the goal satisfaction. Utility scores are then
+    propagated in the goal model from the monitored goals to the root goals.
+    \cite[Che13] illustrates how these techniques intertwine to enable
+    self-adaptation of software systems.
     
     \noindent {\bf Self-adaptation for Service-based systems.} Approach in
     \cite[Ori12,Qur09,Qur10,Qur10b,Qur11,Qur11b] introduces a framework for
@@ -1111,15 +1110,16 @@
     the problem into account.
     
     Other approaches to runtime adaptation, such as Rainbow
-    \cite[Gar03,Gar04,Gar09], focuses on architectural models. These
-    approaches tend to focus on low-level requirements and do not benefit from
-    the refinement structure enabling more complex adaptations. \cite[Ang13]
-    compares the requirements-based approach Zanshin to the architecture-based
-    approach Rainbow \cite[Gar04]. Other approaches, such as
-    \cite[Che14,Kra07], mixes both requirements and architectural model to
-    propose better adaptations \cite[Saw10,Nus01]. \cite[Cas11] tackles a
-    different problem trying to localize faulty components by monitoring a
-    software system.
+    \cite[Gar03,Gar04,Gar09], focuses on architectural models. These approaches
+    tend to focus on low-level requirements and do not benefit from the
+    refinement structure enabling more complex adaptations; A detailed
+    comparison between the requirements-based approach Zanshin and the
+    architecture-based approach Rainbow \cite[Gar04] is available in
+    \cite[Ang13]. Other approaches, such as \cite[Che14,Kra07], mixes both
+    requirements and architectural model to propose better adaptations
+    \cite[Saw10,Nus01]. Other approaches such as \cite[Cas11] tackles the
+    different problem of localizing faulty components by monitoring a software
+    system.
     
     Last, crossing the related work presented in the previous sections,
     highlighted some interesting connections.
