@@ -828,12 +828,12 @@
 \setuplist[chapter]
   [alternative=b,
    style=bold,
-   before={\blank[5*big]}]
+   before={\blank[6*big]}]
    
 \setuplist[title]
   [alternative=b,
    style=bold,
-   before={\blank[5*big]}]
+   before={\blank[4*big]}]
    
 \setuplist[section]
   [alternative=b,
@@ -856,10 +856,29 @@
 %\setuphead[subsection][sectionsegments=section:subsection]   
 %\setuphead[subsection][sectionsegments=section:subsection]   
 
+% define an extra for breaking pages
+\definelistextra[page][before=\page]
+
 % Redefine the toc list to include titles
 \definecombinedlist[content][title,chapter,section,subsection]
+\setupcombinedlist[content][extras={3=page}]
 
-\setupinteraction[state=start,color=darkolivegreen,contrastcolor=darkolivegreen,style={}]
+\setupinteraction
+  [state=start,
+   title={Software Requirements Engineering: A Risk-Driven Approach},
+   author={Antoine Cailliau},
+   color=darkolivegreen,
+   contrastcolor=darkolivegreen,
+   style={}]
+   
+% PDF/X
+\setupbackend
+  [format=PDF/X-4p,
+   profile={default_cmyk.icc,default_rgb.icc,default_gray.icc},
+   intent={ISO Uncoated}]
+\setupbackend[export=yes]
+\setupstructure[state=start,method=auto]
+
 \placebookmarks[title,chapter,section,subsection][force=yes]
 
 \definestructureconversionset [frontpart:pagenumber] [] [romannumerals]
