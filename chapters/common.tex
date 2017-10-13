@@ -317,8 +317,8 @@
 \setupindenting[medium, yes]
 
 \definepapersize[ciaco-thesis][width=160mm,height=240mm]
-%\setuppapersize[ciaco-thesis][ciaco-thesis]
-\setuppapersize[ciaco-thesis][A4]
+\setuppapersize[ciaco-thesis][ciaco-thesis]
+%\setuppapersize[ciaco-thesis][A4]
 \setuplayout
    [backspace=20mm,
     width=120mm,
@@ -326,7 +326,13 @@
     height=200mm,
     location={middle,middle}]
     %marking=on]
-    
+
+% Draft mode
+%\enabletrackers[graphics.locating]
+%\enabletrackers[graphics.conversion]
+%\enabletrackers[visualizers.justification]
+%\enabletrackers[typesetters.suspects]
+
 \setuppagenumbering [alternative=doublesided]
 
 \setupheadertexts[]
@@ -346,7 +352,7 @@
 \setupfooter[style={\ssx\na}]
 	
 \define[2]\MyChapterCommand%
-  {\framed[frame=off,bottomframe=on,topframe=on,boffset=1em,toffset=1em]
+  {\framed[frame=off,width=\textwidth,bottomframe=on,topframe=on,boffset=1em,toffset=1em,loffset=0em,roffset=0em]
      {\vbox{{{\ss\dc\headtext{chapter}} {\ss#1}}\blank{\ss#2}}}}
 
 \setuphead[chapter][command=\MyChapterCommand,distance=0em,after={\blank[2em]},numbercommand=\dc,textcommand=\di]
@@ -816,10 +822,6 @@
     closecommand=\mathortext\eqno\wordright
     ]
 
-% Draft mode
-%\enabletrackers[graphics.locating]
-%\enabletrackers[graphics.conversion]
-
 \setupcaptions[minwidth=.85\textwidth, align=middle]
 
 \definecombinedlist[summary][section,subsection]
@@ -936,9 +938,6 @@
 \stopluacode
 
 \setuptabulate[bodyfont=small]
-
-%\enabletrackers[visualizers.justification] % overfull/underfull
-%\enabletrackers[typesetters.suspects] % suspicious spacing
 
 \usemodule[graph]
 
