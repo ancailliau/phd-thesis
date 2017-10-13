@@ -1029,201 +1029,192 @@
     procedures (see \in{Section}[sec:computing_satrate]). These likely and
     critical obstacles should be resolved in the next phase of risk control.
     
-    \startsubsection[title={What are most critical obstacles?}]
-    
-      The criticality of an obstacle is accordingly determined as the loss in
-      satisfaction rate of some important high-level goals from the goal model.
-      In our running example, the obstacle \obstacle{UPS Battery Failure}
-      causes, alone, a loss of $0.011$ for the high-level goal \goal{Achieve
-      [Make Up Water Provided When Loss Of Cooling]}.
-    
-      An obstacle is said to be {\it critical} for a goal if it causes the
-      satisfaction rate of this goal to fall below the required satisfaction
-      rate.
-    
-      \startdefinition[def:critical_obstacle]{Critical obstacle}
-    
-        A probabilistic obstacle $O$ is {\it critical} for a goal $G$ if
-        obstacle $O$ results in a goal satisfaction rate such that $P(G) <
-        RSR(G)$, i.e. $SV(G) > 0$. (As a recall, $SV(G) = RSR(G) - P(G)$, see
-        \in{Definition}[dfn:vs].)
-    
-      \stopdefinition
-    
-      An obstacle is said {\it acceptable} for a goal if it results in a
-      satisfaction rate for this goal.
-    
-      \startdefinition{Acceptable obstacle}
-    
-        A probabilistic obstacle $O$ is {\it acceptable} for a goal $G$ if
-        obstacle $O$ does not result in a goal satisfaction rate such that
-        $P(G) < RSR(G)$.
-    
-      \stopdefinition
-    
-      \noindent To evaluate obstacles criticality, we may proceed in two ways:
-    
-      \startitemize
+    The criticality of an obstacle is accordingly determined as the loss in
+    satisfaction rate of some important high-level goals from the goal model.
+    In our running example, the obstacle \obstacle{UPS Battery Failure} causes,
+    alone, a loss of $0.011$ for the high-level goal \goal{Achieve [Make Up
+    Water Provided When Loss Of Cooling]}.
+  
+    An obstacle is said to be {\it critical} for a goal if it causes the
+    satisfaction rate of this goal to fall below the required satisfaction rate.
+  
+    \startdefinition[def:critical_obstacle]{Critical obstacle}
+  
+      A probabilistic obstacle $O$ is {\it critical} for a goal $G$ if obstacle
+      $O$ results in a goal satisfaction rate such that $P(G) < RSR(G)$, i.e.
+      $SV(G) > 0$. (As a recall, $SV(G) = RSR(G) - P(G)$, see
+      \in{Definition}[dfn:vs].)
+  
+    \stopdefinition
+  
+    An obstacle is said {\it acceptable} for a goal if it results in a
+    satisfaction rate for this goal.
+  
+    \startdefinition{Acceptable obstacle}
+  
+      A probabilistic obstacle $O$ is {\it acceptable} for a goal $G$ if
+      obstacle $O$ does not result in a goal satisfaction rate such that $P(G)
+      < RSR(G)$.
+  
+    \stopdefinition
+  
+    \noindent To evaluate obstacles criticality, we may proceed in two ways:
+  
+    \startitemize
 
-        \item {\bf Global impact analysis:} the satisfaction rate for {\it all} leaf
-        obstacles are together propagated bottom-up in the goal graph to see how
-        much the resulting statisfaction rate of higher-level goals deviates from
-        their required satisfaction rate.
+      \item {\bf Global impact analysis:} the satisfaction rate for {\it all}
+      leaf obstacles are together propagated bottom-up in the goal graph to see
+      how much the resulting statisfaction rate of higher-level goals deviates
+      from their required satisfaction rate.
 
-        \item {\bf Local impact analysis:} the consequence of a {\it single} leaf obstacle is
-        evaluated by up-propagation of the satisfaction rate for this leaf
-        obstacles, all other leaf obstacles being assigned a probability of $0$
-        (meaning that they are all assumed to never happen).
+      \item {\bf Local impact analysis:} the consequence of a {\it single} leaf
+      obstacle is evaluated by up-propagation of the satisfaction rate for this
+      leaf obstacles, all other leaf obstacles being assigned a probability of
+      $0$ (meaning that they are all assumed to never happen).
+  
+    \stopitemize
+  
+    In-between, we can evaluate the consequences of a {\it combination} of leaf
+    obstacles. By iterating on the size of the combinations, we move from local
+    impact analysis to global impact analysis.
+  
+    For example, global impact analysis reveals that the root goal
+    \goal{Achieve [Make Up Water Provided When Loss Of Cooling]} is satisfied
+    in $80.31\%$ of cases when all obstacles are considered. Local impact
+    analysis reveals that the obstacle \obstacle{UPS Battery Failure} causes
+    the satisfaction rate for the root goal \goal{Achieve [Make Up Water
+    Provided When Loss Of Cooling]} to fall from $1$ to $.989$. With a required
+    satisfaction rate of $.99$, the obstacle \obstacle{UPS Battery Failure} is
+    critical for \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.
     
-      \stopitemize
+    The most critical obstacle for a goal is the obstacle that maximize the
+    violation severity for this goal.
+  
+    \startdefinition{Most critical obstacle}
+  
+      A probabilistic obstacle $O$ is the {\it most critical obstacle} for a
+      goal $G$ if obstacle $O$ is critical and no other obstacle results in a
+      higher violation severity $SV(G)$.
+  
+    \stopdefinition
     
-      In-between, we can evaluate the consequences of a {\it combination} of leaf
-      obstacles. By iterating on the size of the combinations, we move from local
-      impact analysis to global impact analysis.
+    A set of obstacle is {\it critical} if the obstacles together causes the
+    violation severity to drop below $0$. A set of obstacle is {\it the most
+    critical set of obstacles} if no other set of obstacles of the same size
+    causes a higher violation severity.
+  
+    An obstacle is said to be {\it tolerable} if the goal's satisfaction rate
+    falls below some tolerable satisfaction rate but still above the required
+    satisfaction rate.
+  
+    \startdefinition{Tolerable obstacle}
+  
+      A probabilistic obstacle $O$ is {\it tolerable} for a goal $G$ if it
+      results in a satisfaction rate of the goal $G$ such that $TSR(G) < P(G) <
+      RSR(G)$.
+  
+    \stopdefinition
     
-      For example, global impact analysis reveals that the root goal
-      \goal{Achieve [Make Up Water Provided When Loss Of Cooling]} is satisfied
-      in $80.31\%$ of cases when all obstacles are considered. Local impact
-      analysis reveals that the obstacle \obstacle{UPS Battery Failure} causes
-      the satisfaction rate for the root goal \goal{Achieve [Make Up Water
-      Provided When Loss Of Cooling]} to fall from $1$ to $.989$. With a
-      required satisfaction rate of $.99$, the obstacle \obstacle{UPS Battery
-      Failure} is critical for \goal{Achieve [Make Up Water Provided When Loss
-      Of Cooling]}.
-      
-      The most critical obstacle for a goal is the obstacle that maximize the
-      violation severity for this goal.
+  % \startdefinition{Severity of the consequences}
+  % 
+  %   The {\it severity of the consequences} for an obstacle $O$, denoted
+  %   $SC(O)$, is defined as the weighted sum of the resulting violation
+  %   severities for the root goals, that is,
+  %  
+  %   \startformula
+  %     SC(O) = \sum_{G \in Roots} SV(G) \times Weight(G)
+  %   \stopformula
+  %  
+  % \stopdefinition
+  % 
+  % where the obstacle $O$ results in a violation severity $SV(G)$ for the
+  % root goal $G$ and $Weight(G)$ corresponds to the relative priority
+  % assigned to the root goal $G$.
+  
+  
+    Risks assessment can be presented using a {\it violation diagram} for early
+    criticality assessment. A violation diagram somewhat correspond to a risk
+    matrix \cite[Ayy14]; A risk matrix groups risk likelihood and criticality
+    in discrete categories. In a violation diagram, the risks are represented
+    in a two-dimensional plot showing the violation severity for a high-level
+    goal and probability of occurence of a leaf obstacle combination.
+  
+    \in{Figure}[fig:violation_diagram_single_value] shows a violation diagram
+    for the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}
+    with the leaf obstacles from the obstacle model; here, the combinations
+    contains a single leaf obstacle.
+  
+    \placefigure[here]
+    	[fig:violation_diagram_single_value]
+    	{Violation Diagram for \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.}
+      {
+        \externalfigure[../images/chap4/violation_diagram_single_value.pdf]
+      }
+  
+    The $x$-axis represents the probability of leaf obstacle combination
+    occurence; it is the product of the estimated satisfaction rate for the
+    leaf obstacles in the combination. The $y$-axis captures the violation
+    severity for the goal considering the leaf obstacles in the combination.
     
-      \startdefinition{Most critical obstacle}
+    In \in{Figure}[fig:violation_diagram_single_value], we can see that most of
+    the obstacles taken alone have a zero violation severity; these are
+    therefore not critical for the system. Three obstacles are however
+    critical, namely \obstacle{Pump Mechanical Failure}, \obstacle{UPS Battery
+    Failure}, and \obstacle{Power Cabling Failure}. These critical obstacles
+    should be resolved in the next phase.
+  
+    Criticality assessment should be an iterative process. Once the most likely
+    and critical obstacle combinations of size $i$ are resolved, a new
+    violation diagram should be produced with obstacle combinations of size
+    $i+1$. The process ends when no obstacle combination is found critical and
+    likely.
+  
+    \in{Figure}[fig:violation_diagram_single_value2] shows a violation diagram
+    for the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}
+    considering pairs of obstacles, i.e. combinations of size $2$. Among the 91
+    pairs of leaf obstacles, 39 are critical; 36 contains a critical obstacle
+    identified with the previous violation diagram in
+    \in{Figure}[fig:violation_diagram_single_value]. 3 pairs of leaf obstacles
+    are critical and do not contain an obstacle critical alone, namely,
+    (\obstacle{Pump Electrical Failure} and \obstacle{Alarm Not Raised And Low
+    Water}), (\obstacle{Pump Electrical Failure}, \obstacle{Valve Mechanical
+    Failure}), and (\obstacle{Pump Electrical Failure}, \obstacle{Valve
+    Electrical Failure}). In our experience, we observed that likely and
+    critical obstacle combinations are often caused only by a subset of likely
+    and critical obstacle.
+  
+    \placefigure[bottom]
+    	[fig:violation_diagram_single_value2]
+    	{Violation Diagram for \goal{Achieve [Make Up Water Provided When Loss Of Cooling]} with pair of obstacles.}
+      {
+        \externalfigure[../images/chap4/violation_diagram_single_value2.pdf]
+      }
     
-        A probabilistic obstacle $O$ is the {\it most critical obstacle} for a
-        goal $G$ if obstacle $O$ is critical and no other obstacle results in a
-        higher violation severity $SV(G)$.
-    
-      \stopdefinition
-      
-      A set of obstacle is {\it critical} if the obstacles together causes the
-      violation severity to drop below $0$. A set of obstacle is {\it the most
-      critical set of obstacles} if no other set of obstacles of the same size
-      causes a higher violation severity.
-    
-      An obstacle is said to be {\it tolerable} if the goal's satisfaction
-      rate falls below some tolerable satisfaction rate but still above the
-      required satisfaction rate.
-    
-      \startdefinition{Tolerable obstacle}
-    
-        A probabilistic obstacle $O$ is {\it tolerable} for a goal $G$ if it
-        results in a satisfaction rate of the goal $G$ such that $TSR(G) <
-        P(G) < RSR(G)$.
-    
-      \stopdefinition
-      
-    % \startdefinition{Severity of the consequences}
-    % 
-    %   The {\it severity of the consequences} for an obstacle $O$, denoted
-    %   $SC(O)$, is defined as the weighted sum of the resulting violation
-    %   severities for the root goals, that is,
-    %  
-    %   \startformula
-    %     SC(O) = \sum_{G \in Roots} SV(G) \times Weight(G)
-    %   \stopformula
-    %  
-    % \stopdefinition
-    % 
-    % where the obstacle $O$ results in a violation severity $SV(G)$ for the
-    % root goal $G$ and $Weight(G)$ corresponds to the relative priority
-    % assigned to the root goal $G$.
-    
-    \stopsubsection
-    
-    \startsubsection[title={Violation diagrams for obstacle assessment}]
-    
-      Risks assessment can be presented using a {\it violation diagram} for
-      early criticality assessment. A violation diagram somewhat correspond to
-      a risk matrix \cite[Ayy14]; A risk matrix groups risk likelihood and
-      criticality in discrete categories. In a violation diagram, the risks are
-      represented in a two-dimensional plot showing the violation severity for
-      a high-level goal and probability of occurence of a leaf obstacle
-      combination.
-    
-      \in{Figure}[fig:violation_diagram_single_value] shows a violation diagram
-      for the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}
-      with the leaf obstacles from the obstacle model; here, the combinations
-      contains a single leaf obstacle.
-    
-      \placefigure[here]
-      	[fig:violation_diagram_single_value]
-      	{Violation Diagram for \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.}
-        {
-          \externalfigure[../images/chap4/violation_diagram_single_value.pdf]
-        }
-    
-      The $x$-axis represents the probability of leaf obstacle combination
-      occurence; it is the product of the estimated satisfaction rate for the
-      leaf obstacles in the combination. The $y$-axis captures the violation
-      severity for the goal considering the leaf obstacles in the combination.
-      
-      In \in{Figure}[fig:violation_diagram_single_value], we can see that most of
-      the obstacles taken alone have a zero violation severity; these are
-      therefore not critical for the system. Three obstacles are however
-      critical, namely \obstacle{Pump Mechanical Failure}, \obstacle{UPS Battery
-      Failure}, and \obstacle{Power Cabling Failure}. These critical obstacles
-      should be resolved in the next phase.
-    
-      Criticality assessment should be an iterative process. Once the most likely
-      and critical obstacle combinations of size $i$ are resolved, a new
-      violation diagram should be produced with obstacle combinations of size
-      $i+1$. The process ends when no obstacle combination is found critical and
-      likely.
-    
-      \in{Figure}[fig:violation_diagram_single_value2] shows a violation
-      diagram for the goal \goal{Achieve [Make Up Water Provided When Loss Of
-      Cooling]} considering pairs of obstacles, i.e. combinations of size $2$.
-      Among the 91 pairs of leaf obstacles, 39 are critical; 36 contains a
-      critical obstacle identified with the previous violation diagram in
-      \in{Figure}[fig:violation_diagram_single_value]. 3 pairs of leaf
-      obstacles are critical and do not contain an obstacle critical alone,
-      namely, (\obstacle{Pump Electrical Failure} and \obstacle{Alarm Not
-      Raised And Low Water}), (\obstacle{Pump Electrical Failure},
-      \obstacle{Valve Mechanical Failure}), and (\obstacle{Pump Electrical
-      Failure}, \obstacle{Valve Electrical Failure}). In our experience, we
-      observed that likely and critical obstacle combinations are often caused
-      only by a subset of likely and critical obstacle.
-    
-      \placefigure[bottom]
-      	[fig:violation_diagram_single_value2]
-      	{Violation Diagram for \goal{Achieve [Make Up Water Provided When Loss Of Cooling]} with pair of obstacles.}
-        {
-          \externalfigure[../images/chap4/violation_diagram_single_value2.pdf]
-        }
-      
-      There is a multi-criteria optimization problem here as we are looking for
-      minimal sets of leaf obstacles that maximize the severity of goal
-      violations. To solve the optimization problem, we can naïvely generate all
-      possible leaf obstacle combinations. The violation severity $SV (G)$ is
-      then computed for the root goal $G$. The most critical combinations are
-      identified by sorting the leaf obstacle combinations by violation severity.
+    There is a multi-criteria optimization problem here as we are looking for
+    minimal sets of leaf obstacles that maximize the severity of goal
+    violations. To solve the optimization problem, we can naïvely generate all
+    possible leaf obstacle combinations. The violation severity $SV (G)$ is
+    then computed for the root goal $G$. The most critical combinations are
+    identified by sorting the leaf obstacle combinations by violation severity.
 
-      A most critical obstacle combination is {\it Pareto efficient} for the
-      size of the combination; No other combination cause a higher violation
-      severity. The set of leaf obstacle combinations that maximizes the
-      severity defines a {\it Pareto front}; it is the set containing the most
-      critical obstacle combinations. Efficient algorithms for generating {\it
-      Pareto fronts} are available \cite[Bor01,Kun75]. These algorithms and the
-      specific structure of our problem suggests that our generation of leaf
-      obstacle combinations and their ranking by severity could thereby be
-      optimized in order to scale up for larger systems.
+    A most critical obstacle combination is {\it Pareto efficient} for the size
+    of the combination; No other combination cause a higher violation severity.
+    The set of leaf obstacle combinations that maximizes the severity defines a
+    {\it Pareto front}; it is the set containing the most critical obstacle
+    combinations. Efficient algorithms for generating {\it Pareto fronts} are
+    available \cite[Bor01,Kun75]. These algorithms and the specific structure
+    of our problem suggests that our generation of leaf obstacle combinations
+    and their ranking by severity could thereby be optimized in order to scale
+    up for larger systems.
+  
+    The techniques presented in this chapter consider a single high-level goal
+    only. In practice, several high-level goals might be competing. In such
+    situations, the satisfaction rate for these high-level goals are to be
+    combined using a normalized weighted sum in order to apply the techniques
+    as if there was only a single aggregated high-level goal. The weights in
+    this aggregation correspond to the relative priority of those high-level
+    goals.
     
-      The techniques presented in this chapter consider a single high-level
-      goal only. In practice, several high-level goals might be competing. In
-      such situations, the satisfaction rate for these high-level goals are to
-      be combined using a normalized weighted sum in order to apply the
-      techniques as if there was only a single aggregated high-level goal. The
-      weights in this aggregation correspond to the relative priority of those
-      high-level goals.
-    
-    \stopsubsection
 
   \stopsection
   
