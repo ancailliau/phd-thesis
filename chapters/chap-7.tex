@@ -6,68 +6,77 @@
 
 \chapter[runtime]{Handling Obstacles At System Runtime}
 
-  Software systems are deployed in changing environment. The selection of the
-  most appropriate countermeasures is based on environment assumptions and
-  obstacle satisfaction rates determined at RE time. These influencing factors
-  may however turn to be different at system runtime \cite[Fic95]. Some
-  assumptions might no longer hold; new characteristics might emerge; experts’
-  estimates at RE time for obstacle assessment might prove inaccurate at system
-  runtime; other estimates might not be available at RE time; and so forth. For
-  better fit to the system’s goals under changing or originally unknown
-  conditions, it might thus be better to defer decisions on selecting most
-  appropriate countermeasures to system runtime \cite[Fea98].
+  Software systems are deployed in changing environments. The identification,
+  assessment, and control of obstacles through countermeasures is based on
+  environment assumptions and obstacle satisfaction rates that are determined at RE
+  time. These influencing factors may however turn to be different at system
+  runtime \cite[Fic95]. Some assumptions might no longer hold; new
+  characteristics might emerge; experts’ estimates at RE time for obstacle
+  assessment might prove inaccurate at system runtime; other estimates might
+  not be available at RE time; and so forth. For better fit to the system’s
+  goals under changing or originally unknown conditions, it might thus be
+  better to defer decisions on selecting most appropriate countermeasures to
+  system runtime \cite[Fea98].
 
-  This chapter details how obstacles and goals might drive the adaptation of a
-  software system. The chapter introduces how probabilistic obstacles are
-  monitored at runtime and how monitored satisfaction rates drive the selection
-  of the most appropriate countermeasures.
+  This chapter discusses how obstacles and goals may drive the runtime
+  adaptation of a software system. In particular, it introduces how
+  probabilistic obstacles can be monitored at runtime and how the monitored
+  satisfaction rates can drive the dynamic selection of more appropriate
+  countermeasures in view of changing conditions.
 
-  The satisfaction rate of an obstacles is defined as the lowest state
-  probability to satisfy its specification. Such precise characterization in
-  terms of states and behaviors enables the monitoring of the state
-  probabilities. The satisfaction of the specification is monitored at runtime
-  using standard LTL-monitoring techniques and the satisfaction rate is
-  estimated by counting positive and negative occurences of the formula. The
-  monitored satisfaction rate of the leaf obstacles is then propagated up-to
-  the high-level goals (as seen in \in{Chapter}[chap:assessing]). If the
-  satisfaction rate of a high-level goal do not exceed its required
-  satisfaction rate, an adaptation of the software system is required. The most
-  appropriate countermeasures are then selected (as seen in
-  \in{Chapter}[chap:controlling_obstacle]), using the runtime information, and
-  deployed in the running system. As a result, the software adaptation process
-  can be driven by the satisfaction of the probabilistic goals. It provides
-  traceable criteria to decide when an adaptation is required and what are the
-  adaptation that should be performed to guarantee the satisfaction of the
-  probabilistic goals.
+  The satisfaction rate of an obstacle is defined as the lowest state
+  probability of satisfying its specification. Such precise characterization in
+  terms of states and behaviors enables the monitoring of state probabilities.
+  The satisfaction of a specification is monitored at runtime using
+  LTL-monitoring techniques; its satisfaction rate is estimated by counting
+  positive and negative occurences of the formula. The monitored satisfaction
+  rate of leaf obstacles is then up-propagated to high-level goals in the goal
+  model (as seen in \in{Chapter}[chap:assessing]). If the satisfaction rate of
+  a high-level goal does not exceed its required satisfaction rate, an
+  adaptation of the software system is required. The currently deployed
+  countermeasures are reconsidered; more appropriate ones are selected (as in
+  \in{Chapter}[chap:controlling_obstacle]) among those identified at RE time,
+  in view of runtime information about changing conditions; and the newly
+  selected countermeasures are deployed in the running system. The software
+  adaptation process thus can be driven by the satisfaction of probabilistic
+  goals. This provides traceable criteria for deciding when an adaptation is
+  required and what adaptations should be performed to guarantee the
+  satisfaction of the considered probabilistic goals.
 
   The chapter is structured as follows. \in{Section}[sec:overview] presents the
-  overall approach to switch to the most appropriate countermeasure at runtime.
-  \in{Section}[sec:runtime_running_example] introduces the running example.
-  \in{Section}[sec:monitoring] details how probabilistic obstacles are
-  monitored at run-time. \in{Section}[sec:obstaclebased_adaptation] details how
-  probabilistic obstacles drive the runtime adaptation process.
-  \in{Section}[sec:sw_update] explains how the running software is adapted.
+  overall approach for dynamically switching to most appropriate countermeasure
+  at runtime. \in{Section}[sec:runtime_running_example] introduces a specific
+  running example of runtime adaptation. \in{Section}[sec:monitoring] details
+  how probabilistic obstacles can be monitored at run-time.
+  \in{Section}[sec:obstaclebased_adaptation] details how probabilistic
+  obstacles may drive the runtime adaptation process.
+  \in{Section}[sec:sw_update] explains how the running software can be adapted
+  from the derived goal model adaptations.
   \in{Section}[sec:update_k_uncertainty] discusses how knowledge uncertainty
-  affects the monitoring and the adaptations.
+  may affect obstacle monitoring and model adaptation.
 
   \startsection[reference=sec:overview, title={Overview of the approach}]
   
-    The objective in this chapter is to let the system dynamically switch to more
-    appropriate countermeasures to leaf obstacles in view of evolving environment
-    conditions and obstacle satisfaction rates. The satisfaction rate of leaf
-    obstacles was estimated at RE time and is now being observed at system
-    runtime. The alternative countermeasure goals to those leaf obstacles were
-    identified and specified at RE time.
+    The objective in this chapter is to let the system dynamically switch to
+    more appropriate countermeasures to leaf obstacles in view of evolving
+    environment conditions and obstacle satisfaction rates. The satisfaction
+    rate of leaf obstacles was estimated at RE time; it can now be observed at
+    system runtime. A set of alternative countermeasure goals to those leaf
+    obstacles is assumed to be known; the countermeasures are identified and
+    specified at RE time.
 
-    A countermeasure should dynamically replace the current one when, unlike the
-    latter, it makes the satisfaction rate of high-level goals exceed their
-    required satisfaction rate. The satisfaction rate of high-level goals is
-    obtained from the monitored satisfaction rate of the leaf obstacles by
-    up-propagation through the goal/obstacle model. The monitored satisfaction
-    rate of a leaf obstacle is obtained by counting the observed behaviors.
+    A countermeasure to an obstacle should dynamically replace the current one
+    when, unlike the latter, it makes the satisfaction rate of high-level goals
+    exceed their required satisfaction rate. The satisfaction rate of
+    high-level goals is obtained from the monitored satisfaction rate of leaf
+    obstacles by up-propagation through the goal/obstacle model, using the
+    technique presented in \in{Chapter}[chap:assessing]. The monitored
+    satisfaction rate of a leaf obstacle is obtained by counting the observed
+    behaviors.
 
-    \noindent Our approach comprises 7 steps detailed in the next sections. How
-    steps relates to each other is show in \in{Figure}[fig:overview_approach].
+    \noindent More specifically, our approach comprises 7 steps detailed in the
+    next sections. The relation among steps is shown in
+    \in{Figure}[fig:overview_approach].
     
     \placefigure[bottom]
    	  [fig:overview_approach]
@@ -76,39 +85,40 @@
   
     \startitemize[n]
 
-      \item {\bf Building Monitors for Leaf Obstacles.} Probabilistic obstacles
-      are monitored at system runtime. Our approach extends the monitoring
-      technique introduced in \cite[Bau11] for non-probabilistic linear
-      temporal logic (LTL) to monitor probabilistic LTL assertions at system
-      runtime. This step builds, at RE time, the $LTL_3$ monitors for the leaf
-      obstacles. The list of predicates to observe at runtime is thereby
-      provided. (See \in{Section}[sec:building_monitor])
+      \item {\bf Build monitors for leaf obstacles.} The probabilistic leaf
+      obstacles in obstacle refinement trees need be monitored at system
+      runtime. Our approach extends the monitoring technique introduced in
+      \cite[Bau11] for non-probabilistic LTL assertions, in order to monitor
+      probabilistic LTL assertions at system runtime. This step builds, at RE
+      time,  $LTL_3$ monitors for the leaf obstacles. The list of predicates
+      to observe at runtime is thereby provided. (See
+      \in{Section}[sec:building_monitor])
 
-      \item {\bf Updating Obstacle Monitors.} At runtime, the states of the
-      monitored system are observed at a regular pace. (The pace may be chosen
+      \item {\bf Update obstacle monitors.} At runtime, the states of the
+      monitored system are observed at a regular pace. (This pace may be chosen
       to fit a specific domain.) At every observation, a new virtual monitor
       for each leaf obstacle is started while existing monitors are updated.
       (See \in{Section}[sec:monitoring_based].)
 
-      \item {\bf Computing High Level Satisfaction Rates.} The monitored
+      \item {\bf Compute high-level goal satisfaction rates.} The monitored
       satisfaction rate of leaf obstacles is up-propagated through
       obstacle/goal refinement trees up to high-level goals. (As explained in
-      \in{Chapter}[chap:assessing].)
+      \in{Chapter}[chap:assessing], however performed here at runtime.)
 
-      \item {\bf Selecting Countermeasures.} Comparing the monitored
-      satisfaction rates obtained for those goals with their RSR determines
-      whether the current countermeasures to the monitored obstacles are still
-      appropriate. If a monitored goal satisfaction rate falls below the goal’s
-      RSR, alternative more appropriate countermeasures are selected among
-      those available. (As explained in \in{Section}[sec:selecting_cm])
+      \item {\bf Selecte countermeasures.} The comparison between the monitored
+      satisfaction rates obtained for those goals and their required
+      satisfaction rate (RSR) determines whether the current countermeasures to
+      the monitored obstacles are still appropriate. If a monitored goal
+      satisfaction rate falls below the goal’s RSR, alternative more
+      appropriate countermeasures are selected among those available. (As
+      explained in \in{Section}[sec:selecting_cm])
 
-      \item {\bf Updating the RE Model.} The goal/obstacle model is updated
+      \item {\bf Update the RE model.} The goal/obstacle model is updated
       accordingly by integrating the new current countermeasures and updating
-      the propagation in Step 4. (As explained in
-      \in{Section}[sec:integrating])
+      the propagation in Step 4. (As explained in \in{Section}[sec:integrating])
 
-      \item {\bf Runtime Deployment.} The software is automatically adapted
-      according to the selected countermeasures. (See
+      \item {\bf Deploy at runtime.} The software is automatically adapted
+      according to the selected countermeasures in the new model. (See
       \in{Section}[sec:sw_update])
 
     \stopitemize
@@ -120,7 +130,7 @@
      title={Running example for runtime adaptation}]
      
     The running example for this section was inspired from a flood detection
-    system \cite[Hug06,Hug06b]. This running example illustrates or evaluates
+    system \cite[Hug06,Hug06b]. This running example is commonly used to illustrates or evaluates
     other runtime adaptation techniques \cite[Saw10,Ben08,Wel11,Gol08].
     
     {\vskip.8\baselineskip}
@@ -134,22 +144,22 @@
     computers and Grid technologies. This data is also used as the basis for
     much simpler single-point models that can run on simpler devices.}\emdash{}\cite[Hug06]}
    
-    Our running example system monitors the speed and depth of the river. If
+    The example system here monitors the speed and depth of the river. If
     the levels are criticals (approximated here as \quote{\it above a given
     threshold}), the locals are warned as soon as possible. The speed can be
-    measured either using an ultrasound sensor or a camera-based processing.
-    \in{Figure}[fig:goal_model] shows a fragment of the goal model whereas
-    \in{Figure}[fig:obstacle_model] shows the fragment of obstacle model.
+    measured either using an ultrasound sensor or a camera-based sensor.
+    \in{Figure}[fig:goal_model] shows a fragment of the goal model;
+    \in{Figure}[fig:obstacle_model] shows a fragment of a corresponding obstacle model.
     
     \placefigure[here][fig:goal_model]
-      {Goal model fragment for the Flood Detection System.}
+      {Goal model fragment for a Flood Detection System.}
       %{\startcombination[1*2]
         {\externalfigure[../images/chap7/goal_model_a.pdf]}{}
         %{\externalfigure[../images/chap7/goal_model_b.pdf]}{}
       %\stopcombination}
    
     \placefigure[bottom][fig:obstacle_model]
-      {Obstacle model fragment for the Flood Detection System.}
+      {Obstacle model fragment for a Flood Detection System.}
       {\startcombination[2*1]
         {\externalfigure[../images/chap7/obstacle_model_a.pdf]}{}
         {\externalfigure[../images/chap7/obstacle_model_b.pdf]}{}
@@ -162,15 +172,15 @@
      title={Monitoring probabilistic obstacles}]
   
     At RE time, domain experts estimate the satisfaction rates of the leaf
-    obstacles based on their knowledge of the system or their experience with
-    similar systems as detailed in \in{Section}[sec:estimating_satrate]. These
+    obstacles in obstacle refinement trees based on their knowledge of the system or their experience with
+    similar systems as discussed in \in{Section}[sec:estimating_satrate]. These
     estimates might prove inaccurate at system runtime\emdash{}they might be
     too rough or environment properties or assumptions might have changed in
     the meantime. Moreover, some variables might be hard to estimate at RE
     time\emdash{}prior data might not be available or might be too costly to
     acquire; too many parameters might be involved; etc. Monitoring the actual
     satisfaction rate of leaf obstacles at system runtime helps filling this
-    gap; former estimates may be made more accurate, and missing data may be
+    gap. Former estimates may be made more accurate; missing data may be
     made available.
   
     \startsubsection
@@ -178,20 +188,21 @@
        title={Background: Monitoring non-probabilistic LTL assertions}]
   
       This section introduces the necessary background for monitoring
-      non-probabilistic LTL assertions. Monitoring the runtime satisfaction of
-      an LTL formula relies on the finite trace observed so far, and on an
-      automata-based modeling the satisfaction of the formula. The approach
-      presented in \cite[Bau11] is chosen as it reports LTL formula
-      satisfaction or violation as early as possible.
+      non-probabilistic LTL assertions. 
+      
+      Monitoring the runtime satisfaction of an LTL formula relies on the
+      finite trace observed so far, and on an automata-based expression of
+      formula satisfaction. The approach presented in \cite[Bau11] is chosen as
+      it reports LTL formula satisfaction or violation as early as possible.
       
       $LTL_3$, the LTL considered in \cite[Bau11], uses {\it true}, {\it
-      false}, and {\it inconclusive} as truth values. A finite trace is
-      labeled as true if any continuation of it satisfies the formula; false
-      if any continuation falsifies the formula; and inconclusive otherwise. A
-      $LTL_3$ formula monitor is a finite state machine (FSM) that reads finite
-      traces and outputs the corresponding truth value. As suggested by
-      \in{Figure}[fig:ltl3_approach], this FSM is built from the formula and
-      its negation \cite[Bau11].
+      false}, and {\it inconclusive} as truth values. A finite trace is labeled
+      as {\it true} if any continuation of it satisfies the formula; {\it
+      false} if any continuation falsifies the formula; and {\it inconclusive}
+      otherwise. A $LTL_3$ formula monitor is a finite state machine (FSM) that
+      reads finite traces and outputs the corresponding truth value. As
+      suggested by \in{Figure}[fig:ltl3_approach], this FSM is built from the
+      formula and its negation \cite[Bau11].
       
       \startitemize
       
@@ -199,10 +210,10 @@
         generated using a standard algorithm \cite[Bai08].
       
         \item A non-deterministic finite automaton (NFA) is then generated by
-        performing an emptiness check for each NBA state. A state $s$ is labeled
-        with {\it true} if a continuation satisfying the formula exists (that is, if
-        the language corresponding to the NFA with initial state $s$ is not
-        empty); it is false otherwise.
+        performing an emptiness check for each NBA state. A state $s$ is
+        labeled with {\it true} if a continuation satisfying the formula exists
+        (that is, if the language corresponding to the NFA with initial state
+        $s$ is not empty); it is {\it false} otherwise.
       
         \item The NFA is determinized to produce a deterministic finite
         automaton (DFA) using powersets construction \cite[Bai08].
@@ -216,7 +227,7 @@
       
       The monitor FSM results from the product of both DFAs. Let $(s_1,s_2)$
       denote a state in this product, where $s_1$ is the DFA state
-      corresponding to the formula $\phi$ and $s_2$ the DFA state corresponding
+      corresponding to the formula $\phi$, and $s_2$ the DFA state corresponding
       to its negation $\neg\phi$. This monitor FSM state is labeled as:
       
       \startitemize
@@ -244,12 +255,13 @@
       [reference=sec:monitoring_based,
        title={Monitoring-based estimation of satisfaction rates}]
   
-      As recall, the satisfaction rate of an obstacle $\ltlF(C \wedge \Theta
-      OC)$ is the upper bound among the state probabilities of $C \wedge \Theta
-      OC$. We may at runtime count the number of observed behaviors satisfying
-      and not satisfying $C \wedge \Theta OC$ from states $s$; the ratio
-      between the number of observed behaviors satisfying the formula and the
-      number of observed behaviors estimates the corresponding state
+      As seen in \in{Section}[sec:defining_obstacles], the satisfaction rate of
+      an obstacle of form $\ltlF(C \wedge \Theta OC)$ is the upper bound among
+      the state probabilities of $C \wedge \Theta OC$. We may at runtime count
+      the number of observed behaviors satisfying and not satisfying the
+      formula $C \wedge \Theta OC$ from states $s$; the ratio between the
+      number of observed behaviors satisfying the formula and the number of
+      observed behaviors may be used as estimates for the corresponding state
       probability. The automata-based monitoring procedure for $LTL_3$
       determines at runtime whether $C \wedge \Theta OC$ is satisfied from $s$.
 
@@ -267,17 +279,17 @@
       
         \item Observed states are collected;
         
-        \item (Optional) Observed states are filtered;
+        \item (Optional step) Those observed states are filtered;
         
-        \item Monitors are created and updated according the observed states;
+        \item Monitors are created and updated according to the observed states;
         
         \item Monitors labeled with $T$ (true) and $F$ (false) are counted; The
-        ratio between the number of $T$ (true) and $F$ (false) monitors
+        ratio between the number of $T$- and $F$-monitors
         provides the monitored satisfaction rate.
       
       \stopitemize
       
-      \noindent {\bf Observing states.} Consider the obstacle \obstacle{Dusty
+      \noindent {\bf {\bi (a)} Observing states.} Consider the obstacle \obstacle{Dusty
       Environment} shown in \in{Figure}[fig:obstacle_model].
       \in{Figure}[fig:monitor_execution] shows the process of monitoring the
       satisfaction rate of that obstacle, formalized as $\ltlF(\ltlG_{>2s}
@@ -293,41 +305,53 @@
 
       As the semantics of our language is synchronous \cite[Let08],
       observations are made at a regular pace. If observations are performed
-      every second, the MTL formula $C \wedge \Theta OC$ inside the
-      $\ltlF$-operator can be transformed into an LTL conjunction. Back to our
-      example, if observations are performed every second:
+      every second, the Metric Linear temporal logic (M-LTL) formula $C \wedge
+      \Theta OC$ inside the $\ltlF$-operator can be transformed into an LTL
+      conjunction. Back to our example, if observations are performed every
+      second, we observe:
 
       \startformula
         \phi : dustyEnvironment \wedge \ltlX dustyEnvironment \wedge \ltlX \ltlX dustyEnvironment
       \stopformula
       
-      (In the following, $\phi$ denotes the above formula.)
-      
-      \noindent {\bf Filtering observed states.} As the time goes by, the
-      number of monitors increases and the monitored state probability will
+      \noindent {\bf {\bi (b)} Filtering observed states.} As time goes by, the
+      number of monitors will increases and the monitored state probability will
       then vary less and less. This problem is acknowledged in other approaches
       such as \cite[Epi09]. Indeed, at the begining, 10 new positive monitors
-      might strongly impact the state probability, e.g., from $\vfrac{5}{10} =
-      .5$ to $\vfrac{15}{20} = .75$ whereas when 1000 observations have been
-      made, the state probability would only chage from $\vfrac{5}{1000} =
-      .005$ to $\vfrac{15}{1010} = 0.014$.
+      might strongly impact the state probability, e.g., 
       
-      If the \quote{exact} satisfaction rate does not vary a lot, this is not a
-      problem. On the contrary, if the \quote{real} satisfaction rate does
-      change over time, this will smooth out the variations.
+      \startformula 
+      
+        \text{from } \vfrac{5}{10} = .5 \text{ to } \vfrac{15}{20} = .75
+        
+      \stopformula
+      
+      whereas when 1000 observations have been
+      made, the state probability would only change 
+      
+      \startformula
+      
+        \text{from } \vfrac{5}{1000} = .005 \text{ to } \vfrac{15}{1010} =
+        0.014.
+      
+      \stopformula
+      
+      This is not a problem if the \quote{actual} satisfaction rate does not
+      vary a lot. On the contrary, if the \quote{actual} satisfaction rate is
+      changing over time, this will smooth out variations.
       
       To circumvent that effet, the process for obtaining the monitored
-      satisfaction rate is modified to forget old information \cite[Cal11].
+      satisfaction rate may be modified to forget old information \cite[Cal11].
       This filtering step keeps only recent monitors, for example the last 100
       monitors. 
       
       The appropriate number of monitors to be kept needs to be determined
-      adequatly depending on the domain, how fast states are observed, and the
-      desired innaccuracy margins (see \in{Section}[sec:innaccuracy_margins]).
-      Such appropriate number might also be automatically set to an optimal
-      aging factor \cite[Cal14].
+      adequatly depending on the domain, how fast the states are observed, and
+      the desired innaccuracy margins (see
+      \in{Section}[sec:innaccuracy_margins]). Such appropriate number might
+      also be automatically set to an optimal aging factor \cite[Cal14].
       
-      \noindent {\bf Creating and updating monitors.} For a monitored leaf
+      \noindent {\bf {\bi (c)} Creating and updating monitors.} For a monitored leaf
       obstacle, at each observation of the running system, an $LTL_3$ monitor
       is started to check whether the behavior from the current state satisfies
       $\phi$. As seen below, virtual copies are used in practice to avoid
@@ -336,7 +360,7 @@
       \in{Figure}[fig:ltl3_monitor] shows the corresponding $LTL_3$ monitor.
       The top left monitor state labeled with $?$ is the initial state. Each
       transition is labeled with a state formula. The label on states are: $T$
-      for true, $F$ for false, $?$ for inconclusive.
+      for {\it true}, $F$ for {\it false}, $?$ for {\it inconclusive}.
       
       \placefigure[bottom]
      	  [fig:ltl3_monitor]
@@ -359,11 +383,11 @@
         satisfies $\phi$ (see \quote{\ss 1/1} at the bottom of
         \in{Figure}[fig:monitor_execution]). A new monitor $M_2$ is started.
     
-        \item At observation $3$, the current state of the monitors started at
-        observations 1 to 3 is labeled $F$ (false). For state $B$, two
-        behaviors were observed to not satisfy $\phi$ (see \quote{\ss 0/2} at
-        the bottom of \in{Figure}[fig:monitor_execution]). For state $C$, one
-        behavior is seen to not satisfy $\phi$ (\quote{\ss 0/1}).
+        \item At observation $3$, we get the label $F$ (false) for the current
+        state of the monitors started at observations 1 to 3. For state $B$,
+        two behaviors were observed to not satisfy $\phi$ (see \quote{\ss 0/2}
+        at the bottom of \in{Figure}[fig:monitor_execution]). For state $C$,
+        one behavior is seen to not satisfy $\phi$ (\quote{\ss 0/1}).
     
         \item At observation $7$, one observed behavior from state $A$ satisfies
         $\phi$ among the two observed ones (the third one is still
@@ -373,38 +397,38 @@
       \stopitemize
       
       In practice, creating a new $LTL_3$ monitor at each observation is
-      clearly unrealistic as the complexity is $\cal O(2^{2^n})$ where $n$ is
+      clearly unrealistic as the time complexity is $\cal O(2^{2^n})$ where $n$ is
       the size of the formula \cite[Bau11]. To avoid creating multiple
       instances of the same monitor, one $LTL_3$ monitor is built at RE time;
       the monitors being started at runtime are virtual copies of the former. A
       {\it virtual copy} only contains a pointer to the current state of the
-      $LTL_3$ monitor. The complexity of starting a "new" virtual monitor is
-      thus $\cal O(1)$.
+      $LTL_3$ monitor. The complexity of starting a "new" virtual monitor there becomes
+       $\cal O(1)$.
 
       The complexity of updating all monitors is $\cal O(n)$ where $n$ is the
       number of virtual monitors. This number depends on the number of
       observations. The worst-case situation corresponds to a system where all
       observed states are unique and all monitors remain inconclusive forever.
-      Such system is unlikely. Our running example and the evaluation case
+      Such system is fairly unlikely. Our running example and the evaluation case
       study in \in{Chapter}[chap:evaluation] suggest that monitors have a short
       life which reduces the cost of updating monitors.
 
       Other monitoring techniques such as \cite[dAm05, Gia01, Hav04, Tha05]
-      might be used to determine the satisfaction of $C\wedge\Theta OC$.
-      $LTL_3$, however, reports both violation and satisfaction of the formula
+      might be used to determine the satisfaction of the formula $C\wedge\Theta OC$.
+      $LTL_3$ technique, however, reports both violation and satisfaction of the formula
       as early as possible. Its three-value semantics distinguishes cases where
       a formula is satisfied, not satisfied, or none applies. Techniques such
-      as \cite[dAm05a] amalgamate the last two cases. Other monitoring
+      as \cite[dAm05] amalgamate the last two cases. Other monitoring
       techniques, such as \cite[Bas11], support richer logics such as metric
       temporal logic and first-order logic. These techniques might be used in
       place of $LTL_3$; this might improve the applicability or the technique
       to industrial settings.
 
-      \noindent {\bf Obtaining satisfaction rate.} In this setting, the {\it
-      monitored state probability} of state $s$ is the ratio between the number
-      of monitors started in $s$ whose current state is labeled as $T$ (true),
-      and the number of monitors started in $s$ whose current state is labeled
-      as $T$ (true) or $F$ (false).
+      \noindent {\bf {\bi (d)} Obtaining monitored satisfaction rates.} In this
+      setting, the {\it monitored state probability} of state $s$ is the ratio
+      between the number of monitors started in $s$ whose current state is
+      labeled as $T$ (true), and the number of monitors started in $s$ whose
+      current state is labeled as $T$ (true) or $F$ (false).
 
       In our example, the monitored state probability of state $A$ is not
       available for the two first observations; it is equal to $1$ for the five
@@ -416,9 +440,9 @@
 
       \in{Figure}[fig:satrate-dusty_environment] shows the evolution of the
       satisfaction rate of the obstacle \obstacle{Dusty Environment} in our
-      simulated environment. The black line show the estimated satisfaction
-      rate. The graph was produced by monitoring the system, with the provided
-      tool support (see \in{Chapter}[chap:tool_support]).
+      simulated environment. The black line shows the estimated satisfaction
+      rate. The graph was produced by monitoring the system with the tool
+      described in \in{Chapter}[chap:tool_support].
     
       \placefigure[bottom]
      	  [fig:satrate-dusty_environment]
@@ -426,13 +450,13 @@
         {\externalfigure[../images/chap7/satrate-dusty_environment.pdf][scale=1000]}
 
       To efficiently obtain the satisfaction rate of leaf obstacles, a list of
-      monitors is kept in memory for each observed state, and the number of
+      monitors is kept in memory for each observed state; the number of
       behaviors satisfying the formula $C\wedge\Theta OC$ and the number of
       behaviors violating it are kept in registers. Once a monitor reaches a
       monitor state labeled as {\it T} (true) or {\it F} (false), it can be
-      removed from the list and the corresponding register updated. Computing
-      the state probability is then reduced to arithmetic operations on these
-      registers.
+      removed from the list and the corresponding register is updated.
+      Computing the state probability is then reduced to arithmetic operations
+      on these registers.
       
     \stopsubsection
 
@@ -440,14 +464,14 @@
     
       To mitigate the risk of unnecessary system adaptations, \quote{enough}
       observations should be made before deciding whether or not an adaptation
-      is required. Otherwise, decisions would be based on non-statistically
+      is required. Otherwise, decisions might be based on non-statistically
       significant data, possibly leading to adaptations that deteriorate the
       system instead of improving it.
     
-      For example, assume 4 behaviors\emdash{}2 positives and 2 negatives. We
+      For example, assume 4 behaviors\emdash{}2 positive and 2 negative ones. We
       might be tempted to estimate the state probability to 0.5. However, it is
-      very likely that the real probability is not .5; it can be shown that
-      there is 95\% of chance for the \quote{exact} value to lie between $.01$
+      very likely that the real probability is not .5. It can be shown that
+      there is a 95\% of chance for the \quote{exact} value to lie between $.01$
       and $.99$, which is not very informative.
     
       To address this problem, we may compute the number of observations
@@ -456,29 +480,29 @@
       data.
     
       For example, let us require that the monitored satisfaction rate should
-      differ from the exact value by at most 1\%, with 95\% certainty; i.e.,
+      differ from the exact value by at most 1\% with 95\% certainty, that is,
       95\% of the values lies within $\pm1.96\sigma$ of the exact value, where
       $\sigma$ is the standard deviation. This interval holds if the variation
       around the exact satisfaction rate has a normal distribution
-      \cite[Wac07]. In our example, $1.96\sigma$ must equal $.01$. As the
+      \cite[Wac07]. In our example, $1.96\sigma$ must be equal to $.01$. As the
       value of $\sigma$ is not known, the following unbiased estimator provides
       an estimate \cite[Wac07]:
 
       \startformula
-        \hat{\sigma} = \sqrt{\frac{p\times(1-p)}{n}}
+        \hat{\sigma} = \sqrt{\frac{p\times(1-p)}{n}},
       \stopformula
     
       where $p$ is the estimated satisfaction rate. Replacing $\sigma$ by $\hat\sigma$ in
       our example results in the following expression:
     
       \startformula
-        1.96\hat\sigma = 1.96 \sqrt{\frac{p\times(1-p)}{n}} = 0.01
+        1.96\hat\sigma = 1.96 \sqrt{\frac{p\times(1-p)}{n}} = 0.01.
       \stopformula
     
       This expression can be solved to compute the number $n$ of observations
       that must be made to guarantee a satisfactory level of accuracy. If the
       estimated satisfaction rate for the obstacle \obstacle{Dusty Environment}
-      is 20\%:
+      is 20\%, we have:
   
       \startformula
         n = \left(\frac{1.96}{0.01}\right)^2 \times .8 \times .2 \approx 6146
@@ -486,37 +510,38 @@
     
       Our accuracy bound thus requires $6146$ observations of the state with
       the lowest state probability. With one observation every second, it
-      requires at least 1h 42m 26s. Note that this is a lower bound; the
-      satisfaction rate is the lowest state probability, to reach that
+      requires at least 1h 42m 26s. Note that this is a lower bound; as discussed in
+      \in{Section}[sec:defining_obstacles], the
+      satisfaction rate is the lowest state probability; to reach that
       uncertainty, the system has to stay in the same state for the required
       timespan. This indicates how fast our technique may compute a
       statistically accurate monitored satisfaction rate. (Note that such
       limitation applies to any monitoring technique with the same amount of
       observed data.)
       
-      In the opposite direction, we can compute the uncertainty margins given a
-      timespan of observation. Assume that we observe every second for 30
-      minutes, we therefore have 1800 observations. The estimated standard
-      deviation is
+      In the opposite direction, we may compute the uncertainty margins given a
+      timespan of observation. Assume that we make an observation every second for 30
+      minutes; we therefore have 1800 observations. The estimated standard
+      deviation is:
       
       \startformula
         \hat{\sigma} = \sqrt{\frac{p\times(1-p)}{n}} = \sqrt{\frac{.8\times.2}{1800}} = 0.009428...
       \stopformula
       
       The \quote{exact} monitored satisfaction rate lies between $78\%$ and
-      $81\%$, with 95\% of certainty; this is already a narrow interval. Such
+      $81\%$ with 95\% of certainty; this is already a narrow interval. Such
       information might be used at run-time to decide whether it is reasonable
       to adapt the running software.
     
       In our example, we used the estimated satisfaction rate $p = 0.2$. If no
       estimated satisfaction rate $p$ is available, it is common to use $.5$;
-      this value maximizes the number $n$ of observations. This thereby
-      guarantees the accuracy for any satisfaction rate.
+      this value maximizes the number $n$ of observations. This guarantees the
+      accuracy for any satisfaction rate.
       
-      \in{Figure}[fig:satrate-dusty_environment] shows the evolution of 95\%
-      confidence interval as more states are observed in dark gray. We can see
-      that the confidence interval is large at the begining, where few
-      observations are available and narrow around the satisfaction rate when
+      \in{Figure}[fig:satrate-dusty_environment] shows the evolution of the
+      95\% confidence interval as more states are observed in dark gray. We can
+      see that the confidence interval is large at the begining where few
+      observations are available, and narrow around the satisfaction rate when
       more observations are available.
     
     \stopsubsection
@@ -525,28 +550,39 @@
   
   \startsection[reference=sec:obstaclebased_adaptation, title={Obstacle-driven system adaptation}]
   
-    We propose to drive the runtime adaptation process using the probabilistic
-    goals and obstacles. A system adaptation is required at runtime when the
-    current configuration of countermeasures does not guarantee the required
-    satisfaction rate (RSR) of the system’s high-level goals. This provides a
-    criteria for deciding when and why an adaptation is required. It also
-    documents how the software system shall adapt.
+    This chapter proposes to let probabilistic goals and obstacles drive the
+    runtime adaptation process. A system adaptation is required at runtime when
+    the current configuration of countermeasures does not guarantee the
+    required satisfaction rate (RSR) of the system’s high-level goals. This
+    provides a criteria for deciding when and why an adaptation is required. It
+    also documents how the software system should adapt.
     
-    The actual satisfaction rate of these goals must therefore be determined
-    from the monitored satisfaction rates of leaf obstacles. When falling below
-    their RSR, alternative countermeasures maximizing the satisfaction rate of
-    these goals should replace the current configuration. An up-propagation
-    procedure, as described in \in{Chapter}[chap:assessing], determines the
-    satisfaction rate of high-level goals. A countermeasure selection
-    procedure, as described in \in{Chapter}[chap:controlling_obstacle], is used
-    to select the most appropriate countermeasures. Countermeasures are then
-    integrated in the ideal model and deployed in the running system\emdash{}As
-    \in{Section}[sec:sw_update] will describe next.
+    The {\it actual} satisfaction rate of these goals must therefore be
+    determined from the {\it monitored} satisfaction rates of leaf obstacles.
+    When this actual satisfaction rate falls below the goal's RSR, alternative
+    countermeasures maximizing its satisfaction rate of these goals should
+    replace the corresponding ones in the current configuration.
     
-    If no selection guarantee the required satisfaction rate, the selection
-    that maximize the satisfaction rate of the high-level goals is picked. The
-    monitoring system might also prompt the user to interactively define new
-    countermeasures.
+    \startitemize
+    
+      \item The up-propagation procedure described in
+      \in{Chapter}[chap:assessing] determine the actual satisfaction rate of
+      high-level goals from the monitored satisfaction rate of leaf obstacles.
+    
+      \item The countermeasure selection procedure described in
+      \in{Chapter}[chap:controlling_obstacle] is then used to select most
+      appropriate countermeasures.
+    
+      \item Countermeasures are then integrated in the ideal model and deployed
+      in the running system\emdash{}\in{Section}[sec:sw_update] will describe
+      next.
+    
+    \stopitemize
+    
+    If no selection guarantees the goal's required satisfaction rate, the
+    selection that maximizes the satisfaction rate of the high-level goals is
+    picked. The monitoring system might also prompt the user for interactively
+    defining new countermeasures.
     
     \placefigure[bottom]
    	  [fig:satrate-locals_warned_when_risk_imminent]
@@ -569,17 +605,17 @@
     Back to our example,
     \in{Figure}[fig:satrate-locals_warned_when_risk_imminent] shows the
     satisfaction rate for the goal \goal{Achieve [Locals Warned When Risk
-    Imminent]} computed from the monitored satisfaction rates of the leaf
+    Imminent]}, computed from the monitored satisfaction rates of the leaf
     obstacles. (See \in{Figure}[fig:goal_model] for the goal model.)
     \in{Figure}[fig:obstacle_adaptation] shows the monitored satisfaction rates
-    for our obstacles. Every 5 minutes, the optimization process compute the
+    for our obstacles. Every 5 minutes, the optimization process computes a
     most appropriate countermeasure selection. At 08:26 and 09:21, an
-    adaptation is required as the satisfaction rate is below the required
-    satisfaction rate.
+    adaptation is required as the goal's satisfaction rate falls below its
+    required satisfaction rate.
     
-    The peak at 08:47 as seen in
+    The peak at 08:47, seen in
     \in{Figure}[fig:satrate-locals_warned_when_risk_imminent] and in
-    \in{Figure}{(\obstacle{Noisy Image})}[fig:obstacle_adaptation] illustrate
+    \in{Figure}{(\obstacle{Noisy Image})}[fig:obstacle_adaptation], illustrate
     the problem with statistically innaccurate satisfaction rates discussed in
     \in{Section}[sec:innaccuracy_margins]. Here, it did not trigger an
     adaptation as the violation was very short (it lasts 2 seconds).
@@ -588,62 +624,77 @@
   
   \startsection[reference=sec:sw_update,title={Runtime deployment of most appropriate countermeasures}]
     
-    When most appropriate countermeasures are selected and integrated in the
-    goal model, the running software system must be adapted to match the
-    updated goal model. The software component responsible for adapting the
-    running system is named {\it Adaptor} in the following discussion. This
-    component keeps track of a current selection of countermeasures. When the
-    most appropriate countermeasures are computed, it identifies the
-    countermeasures that are {\it (i)} added\emdash{}that is, not found in the
-    current selection but in the selection of the most appropriate ones; and
-    {\it (ii)} removed\emdash{}that is, no longer in the selection of the most
-    appropriate ones.
+    When more appropriate countermeasures are selected and integrated in the
+    goal model, the running software system should be adapted to match the
+    updated goal model.
+    
+    The software component responsible for adapting the running system is named
+    {\it Adaptor} in the following discussion. This component keeps track of a
+    current selection of countermeasures. When new most appropriate
+    countermeasures are computed, it identifies the countermeasures to be {\it
+    (i)} {\it added}\emdash{}as not found in the current selection but in the
+    selection of the most appropriate ones; and {\it (ii)} {\it
+    removed}\emdash{}as no longer in the selection of the most appropriate ones.
 
     To adapt the software system, the {\it Adaptor} calls the activation and
     deactivation procedures associated with the countermeasures to be added or
-    removed. The activation procedure is the code-related procedure responsible
+    removed. The {\it activation} procedure is the code-related procedure responsible
     for the deployment of the corresponding countermeasure in the running
-    system. The deactivation procedure is responsible for its removal. These
-    procedures are used to: add, remove or replace a running component; update
-    configuration parameters; activate hardware components; and so forth. The
-    countermeasure goals are decorated with these procedures.
+    system. The {\it deactivation} procedure is responsible for its removal. These
+    procedures are used to:
+    
+    \startitemize
+    
+      \item add, remove or replace a running component; 
+      
+      \item update configuration parameters;
+    
+      \item activate hardware components;
+      
+      \item and so forth.
+      
+    \stopitemize
+      
+    \noindent The countermeasure goals are decorated with these procedures.
 
     For example, let us consider that the monitored satisfaction rate of the
     leaf obstacle \obstacle{Ultrasound Sensor Broken} increases at 08:26, as
     shown in \in{Figure}[fig:obstacle_adaptation]. This increase causes a
     decrease in the monitored satisfaction rate of the high-level goal
-    \goal{Achieve [Locals Warned When Risk Imminent]} (as seen in
-    \in{Figure}[fig:satrate-locals_warned_when_risk_imminent]) below its RSR.
-    This decrease causes the countermeasure \goal{Achieve [Speed Acquired Every
-    5 Sec By Camera]} to be selected as most appropriate countermeasure. The
-    activation procedure for \goal{Achieve [Speed Acquired Every 5 Sec By
-    Camera]} {\it DeployCamera} is called and replaces the software component
+    \goal{Achieve [Locals Warned When Risk Imminent]} below its RSR (as seen in
+    \in{Figure}[fig:satrate-locals_warned_when_risk_imminent]). This decrease
+    causes the countermeasure \goal{Achieve [Speed Acquired Every 5 Sec By
+    Camera]} to be selected as most appropriate countermeasure. The activation
+    procedure for \goal{Achieve [Speed Acquired Every 5 Sec By Camera]},
+    namely, {\it DeployCamera}, is called and replaces the software component
     acquiring the speed by the camera-related component. As
     \in{Figure}[fig:satrate-locals_warned_when_risk_imminent] shows, the
     satisfaction rate of the high-level goal increases above its RSR after
     software adaptation. At 09:21, the satisfaction rate of \goal{Achieve
-    [Locals Warned When Risk Imminent]} fall again below the required
+    [Locals Warned When Risk Imminent]} falls again below the required
     satisfaction rate. This fall is due to an increase in the satisfaction rate
-    for the obstacle \obstacle{Noisy Image} of the selected countermeasure
+    of the obstacle \obstacle{Noisy Image} for the selected countermeasure
     goal. This cause the countermeasure goal \goal{Achieve [Speed Acquired
     Every 5 Sec By Camera]} to be removed from the selection, causing the
     deactivation procedure {\it DeployUltrasound} to be activated. The
-    satisfaction rate increases back.
+    satisfaction rate then increases back.
   
   \stopsection
   
 	\startsection[reference=sec:update_k_uncertainty,title={Updating uncertain probability values at runtime}]
   
     Managing uncertainty at run-time is a critical challenge \cite[Ben10].
-    \in{Chapter}[chap:knowledge-uncertainty] presented how knowledge
-    uncertainty integrates with the obstacle assessment and control step. Such
-    knowledge uncertainty might be reduced at runtime using the monitored
-    information. Note that, however, if the observed values vary a lot over
-    time, the knowledge uncertainty might increase.
+    \in{Chapter}[chap:knowledge-uncertainty] discussed how knowledge
+    uncertainty can be integrated with obstacle assessment and control. 
     
-    To integrate knowledge uncertainty, the current monitored satisfaction rate
-    is no longer modeled as a single-value satisfaction rate but as a multi-value
-    satisfaction rate, typically a Normal probability distribution.
+    Such knowledge uncertainty may be reduced at runtime using the monitored
+    information. However, if the observed values vary a lot over time, the
+    knowledge uncertainty might increase, as \quote{actual} value is indeed
+    uncertain.
+    
+    To integrate knowledge uncertainty at runtime, the current monitored satisfaction rate
+    should no longer be expressed as a single-value but rather as a multi-value
+    satisfaction rate, typically a {\it Normal} probability distribution.
     
     \noindent The process for obtaining the monitored satisfaction rate is
     updated as follows.
@@ -652,85 +703,86 @@
     
       \item Observed states are collected;
       
-      \item (Optional) Observed states are filtered;
+      \item (Optional step) Those observed states are filtered;
       
-      \item Monitors are created and updated according the observed states;
+      \item Monitors are created and updated according to the observed states;
       
-      \item Monitors labeled with $T$ (true) and $F$ (false) are counted; The
-      ratio between the number of $T$ (true) and $F$ (false) monitors
+      \item Monitors labeled with $T$ (true) and $F$ (false) are counted; the
+      ratio between the number of $T$- and $F$-monitors
       provides the monitored satisfaction rate.
       
-      \sym{\it(e*)} A Beta probability distribution is fitted to the number of
-      monitors;
+      \sym{\it(e*)} A {\it Beta} probability distribution is fitted to the number of
+      monitors.
     
-      \sym{\it(f*)} The Beta distribution updates the current monitored
-      satisfaction rate using Bayesian inference; The updated satisfaction rate
-      becomes the new current satisfaction rate.
+      \sym{\it(f*)} The {\it Beta} distribution updates the current monitored
+      satisfaction rate using Bayesian inference. The updated satisfaction rate
+      then becomes the new satisfaction rate.
     
     \stopitemize
     
-    The step {\it (e)} is straightforward as the parameters of the Beta
+    Step {\it (e*)} is straightforward as the parameters of the {\it Beta}
     distribution are, $\alpha$, the number of positive monitors and, $\beta$,
     the number of negative monitors \cite[Vos08].
     
-    The computation in step {\it (f)} relies on Bayesian Inference. Bayesian
-    Inference is a statistical computation in which the Bayes' theorem is used
+    The computation in step {\it (f*)} relies on Bayesian Inference; it 
+    is a statistical computation in which the Bayes' theorem is used
     to update a probability distribution as more information becomes available
-    \cite[Wac07]. The updated satisfaction rate $P(O\mid M)$ ($M$ represents
-    what has has been observed last) is given by
+    \cite[Wac07]. The updated satisfaction rate $P(O\mid M)$, where $M$ represents
+    what has been last observed, is given by:
     
     \startformula
       P(O\mid M) = \frac{P(M\mid O)\times P(O)}{P(M)}
     \stopformula
     
-    where $P(M\mid O)$ is the likelihood to observe the monitored satisfaction
-    rate, $P(O)$ is the current monitored satisfaction rate, and $P(M)$ a
-    scaling factor. The Beta distribution obtained at step {\it (d)} models the
+    where $P(M\mid O)$ is the likelihood of observing the monitored satisfaction
+    rate, $P(O)$ is the current monitored satisfaction rate, and $P(M)$ is a
+    scaling factor. The Beta distribution obtained at step {\it (e*)} captures the
     likelihood $P(M\mid O)$.
+  
+    \placefigure[bottom]
+   	  [fig:runtime_update]
+   	  {Monitored satisfaction rate for the leaf obstacles with knowledge uncertainty.}
+      {\externalfigure[../images/chap7/runtime_update.pdf]}
     
     \in{Figure}[fig:runtime_update] shows how the satisfaction rate for the
     obstacle \obstacle{Pump Mechanical Failure} is updated with the observed
     satisfaction rate. The lighest line shows the satisfaction rate provided by
-    the experts, as \in{Chapter}[chap:knowledge-uncertainty] showed. The
-    darkest line show the satisfaction rate updated after 6 observations. The
-    other shades show the intermediate steps. For the example, we assumed that
-    the monitored satisfaction rate was $.45$ for the three first observations
+    the experts, as seen in \in{Chapter}[chap:knowledge-uncertainty]. The
+    darkest line shows the satisfaction rate updated after 6 observations. The
+    other shades show the intermediate steps. For this example, we assumed that
+    the monitored satisfaction rate was $.45$ for the first three observations
     and $.55$ for the three last. We can see that the more observations are
-    made, the more accurate the satisfaction rate (the curve is narrower.)
-  
-    \placefigure[here]
-   	  [fig:runtime_update]
-   	  {Monitored satisfaction rate for the leaf obstacles using knowledge uncertainty.}
-      {\externalfigure[../images/chap7/runtime_update.pdf]}
+    made, the more accurate the satisfaction rate is (the curve gets narrower.)
   
   \stopsection
   
   \startsection[title={Summary}]
   
-    Software systems should adapt to changing conditions and assumptions in
-    order to keep satisfying their goals. This chapter detailed an
-    obstacle-driven runtime adaptation approach aimed at increasing the actual
-    satisfaction rate of probabilistic system goals. Leaf obstacles are
+    Software systems should ideally self-adapt to changing conditions and
+    assumptions in order to keep their goals satisfied. This chapter detailed
+    an obstacle-driven runtime adaptation approach aimed at increasing the
+    actual satisfaction rate of probabilistic system goals. Leaf obstacles are
     monitored at runtime to let the system dynamically switch to more
     appropriate countermeasure goals that increase the satisfaction rate of the
-    system’s high-level goals under the current conditions. The approach
-    guarantees that the required satisfaction rate of high-level goals remains
-    satisfied when obstacle satisfaction rates are changing.
+    system’s high-level goals under new conditions. The approach guarantees
+    that the required satisfaction rate of high-level goals remains satisfied
+    when obstacle satisfaction rates are changing.
 
-    The presented monitoring technique extends the $LTL_3$ approach to support
-    the monitoring of probabilistic assertions. The monitors are built at RE
-    time and, at runtime, virtual copies of $LTL_3$ monitors keep track of
-    obstacle satisfaction. State probabilities for each observed state can
-    thereby be estimated; their upper bound provides monitored obstacle
-    satisfaction rates. The latter are propagated through the obstacle/goal
-    model up to the system’s high-level goals. The monitored satisfaction rates
-    obtained for these goals are compared with their required satisfaction
-    rate; when the former fall below the latter, more appropriate
-    countermeasures replace the current ones to remain above the required
-    threshold.
+    This requires obstacle satisfaction rates to be monitored at system
+    runtime. The proposed monitoring technique extends the $LTL_3$ approach in
+    \cite[Bau11] to support the monitoring of probabilistic assertions. The
+    monitors are built at RE time; at runtime, virtual copies of $LTL_3$
+    monitors keep track of obstacle satisfaction. State probabilities for each
+    observed state can thereby be estimated; their upper bound provides the
+    monitored obstacle satisfaction rates. The latter are propagated through
+    the obstacle/goal model up to the system’s high-level goals. The monitored
+    satisfaction rates thereby obtained for these goals are compared with their
+    required satisfaction rate; when the former fall below the latter, more
+    appropriate countermeasures replace the current ones to remain above the
+    required threshold.
     
-    The next chapter will present the tools supporting the techniques presented
-    in the thesis.
+    The next chapter describes the tools supporting the various techniques
+    presented in the thesis.
   
   \stopsection
   
