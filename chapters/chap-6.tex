@@ -6,55 +6,61 @@
 
 \startchapter
 	[reference=chap:knowledge-uncertainty,
-	 title={From Certain Values to Uncertain Values}]
+	 title={Handling Uncertainty in Satisfaction Rates}]
   
-  Requirements engineers faces uncertainties in a variety of facets of the
-  system-to-be \cite[Che09c,Esf13,Let14,Wel10,Per14]. In particular, the
-  extend to which the requirements are satisfied is uncertain. This type of
-  uncertainty is the physical uncertainty, referring to the system phenomena
-  \cite[OHa06a,Vos08,Per14]. For example, the chance of a sensor breaking
-  down might be defined by a probability. This is domain-level form of
-  uncertainty can be reduced by changing the system under
+  Requirements engineers faces uncertainties in a variety of ways regarding the
+  system-to-be \cite[Che09c,Esf13,Let14,Wel10,Per14]. In particular, the extent
+  to which the requirements will be satisfied is uncertain.
+  
+  This type of uncertainty is commonly called {\it physical uncertainty}; It
+  refers to system phenomena \cite[OHa06a,Vos08,Per14]. For example, the
+  chance of a sensor breaking down might be captured by a probability. This
+  domain-level form of uncertainty can be reduced by changing the system under
   consideration\emdash{}e.g., by introduction of appropriate countermeasures as
-  seen in the previous chapter. However, the extend to which these
-  probabilities are accurate is uncertain as well. This uncertainty is the
-  knowledge uncertainty, referring to the assessment of physical uncertainty by
-  experts \cite[OHa06a,Vos08,Per14]. Our imperfect knowledge of what the
-  exact probability value is, might lead us to estimate it with some uncertainty
+  seen in the previous chapter.
+  
+  However, the extent to which those probabilities are accurate is uncertain as
+  well. This uncertainty is commonly called {\it knowledge uncertainty}; it
+  refers to the assessment of physical uncertainty by experts
+  \cite[OHa06a,Vos08,Per14]. Our imperfect knowledge of what the exact
+  probability values are may lead us to estimate them with some uncertainty
   margin. Such meta-level form of uncertainty can be reduced through further
   studies, consultation of more experts, increased experience, run-time
-  monitoring of relevant events or data, and so forth. So far, few risk-based
-  requirement engineering frameworks support such knowledge uncertainty; the
-  techniques for assessing and controlling the risks are therefore not
-  applicable.
+  monitoring of relevant events or data, and so forth.
+  
+  Few risk-based requirement engineering frameworks so far support such
+  knowledge uncertainty; the techniques for risk assessment and control are
+  therefore less accurate and less applicable.
 
-  This chapter explains how knowledge uncertainty is captured, how the
-  uncertainty margins of leaf obstacles impacts the uncertainty margins of
+  This chapter addresses this problem of knowledge uncertainty in probability
+  values. It explains how knowledge uncertainty can be captured, how
+  uncertainty margins for leaf obstacles impact uncertainty margins for
   high-level goals, and how such uncertainty margins can be reduced. The
-  techniques proposed in the previous chapters to identify likely and critical 
-  risks, and to select most appropriate countermeasures, are extended to
-  support uncertain estimates.
+  techniques in the previous chapters for identifying likely and critical risks
+  and for selecting most appropriate countermeasures are extended to support
+  uncertainties in probability estimates.
 
-  We extend the framework with knowledge uncertainty captured by probability
-  distributions. Such distributions allows experts to specify their knowledge
-  about the satisfaction rates of leaf obstacles. Repeating the single-value
-  propagation procedure for computing the satisfaction rate of high-level goals
-  using sampled satisfaction rates for the leaf obstacles provides the
-  satisfaction rates for the high-level goals with their uncertainty margins.
-  Two metrics, the violation uncertainty and the uncertainty spread, summarizes
-  the uncertainty about the satisfaction rates. As a results, the metrics
-  provides finer-grained assessment for the critical obstacles. In presence of
-  uncertainty, selecting the most appropriate countermeasures guarantee that
-  the high-level goals are satisfied, up to an uncertainty threshold.
+  Our framework is extended to cope with knowledge uncertainty by means of
+  probability distributions. Such distributions allow experts to specify their
+  knowledge about satisfaction rates of leaf obstacles. A repeated application
+  of the single-value propagation procedure in
+  \in{Section}[sec:computing_satrate], using sampled satisfaction rates for the
+  leaf obstacles, provides satisfaction rates for higher-level goals together
+  with uncertainty margins. Two metrics, the violation uncertainty and the
+  uncertainty spread, summarize the uncertainty about satisfaction rates. These
+  metrics provide finer-grained assessment for critical obstacles. Selecting
+  most appropriate countermeasures in presence of uncertainty guarantees that
+  higher-level goals are satisfied up to some uncertainty threshold.
   
   The chapter is organized as follows.
-  \in{Section}[sec:capturing_k_uncertainty] presents how knowledge uncertainty
+  \in{Section}[sec:capturing_k_uncertainty] describes how knowledge uncertainty
   is captured through probability distributions.
-  \in{Section}[sec:assessment_k_uncertainty] presents how leaf obstacles are
-  assessed, how the knowledge uncertainty propagates through the obstacle and
-  the goal model, and how obstacles with critical uncertainty margins are
-  identified. \in{Section}[sec:selection_k_uncertainty] details how
-  countermeasures are selected in presence of knowledge uncertainty.
+  \in{Section}[sec:assessment_k_uncertainty] shows how leaf obstacles are
+  assessed when considering knowledge uncertainty, how the uncertainty
+  propagates through the obstacle and goal models, and how obstacles with
+  critical uncertainty margins are identified.
+  \in{Section}[sec:selection_k_uncertainty] details how countermeasures are
+  selected in presence of knowledge uncertainty.
 
     % \in{Section}[sec:update_k_uncertainty] shows how the knowledge uncertainty might be used at runtime to provide more refined estimates.
 
@@ -64,50 +70,60 @@
   
     Probability distributions are commonly used in risk analysis for
     representing the uncertainty about single-point values of random variables
-    \cite[Vos08]. A probability distribution is a function assigning a
-    specific probability to each possible single-point value in some domain.
-    The domain considered here is the set of possible probability values, that
-    is, the interval $[0, 1]$. This section extends the probabilistic
-    goal/obstacle specification language to capture the uncertainty about
-    estimated satisfaction rates of behavioral goals, assumptions, and
-    obstacles in the system-to-be.
-
-		\subsection {Uncertainty about Satisfaction Rates}
+    \cite[Vos08]. 
     
-      Let $A$ denote a probabilistic assertion specifying a goal, an assumption
-      (prescriptive or descriptive), or an obstacle in the goal/obstacle models.
+    A {\it probability distribution} is a function assigning a specific
+    probability to each possible single-point value in some domain. The domain
+    considered here is the set of possible probability values, that is, the
+    interval $[0, 1]$. This section extends the probabilistic goal/obstacle
+    specification framework to capture the uncertainty about estimated
+    satisfaction rates of behavioral goals, assumptions, and obstacles in the
+    system-to-be.
+
+    \in{Section}[sec:uncertainty_about_satrates] presents how uncertainty is
+    captured in satisfaction rates. \in{Section}[sec:uncertainty_metrics]
+    provides two metrics for measuring critical uncertainties.
+    \in{Section}[sec:eliciting_distributions_for_leaf_satrates] shows how
+    probability distributions can be estimated by domain experts.
+  
+		\subsection[sec:uncertainty_about_satrates]{Uncertainty about Satisfaction Rates}
+    
+      Let $A$ denote a probabilistic assertion specifying a goal, assumption
+      (prescriptive or descriptive), or obstacle in the goal/obstacle models.
 
       \startdefinition[def:sat_uncerainty]{Satisfaction Uncertainty}
       
         The satisfaction uncertainty for assertion $A$, denoted by $su_A$, is
-        defined by a probability distribution over its single-point
+        defined as a probability distribution over its single-point
         probabilities of satisfaction.
       
       \stopdefinition
 
       For example, \in{Figure}[fig:root_goal_uncertainty] shows the probability
-      distribution capturing the satisfaction uncertainty $su_G$ for $G:$
-      \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.
-      (\in{Section}[sec:computing_uncertainty] describes how such distribution
-      can be computed.) As seen in \in{Figure}[fig:root_goal_uncertainty], the
-      probability of satisfaction of this goal lies between 71.3\% and 84.1\%,
-      with a more likely value around 80\%. This multi-value estimate does not
-      completely meet the goal's RSR, prescribed to be 80\% as depicted by the
-      red line on the right.
+      distribution capturing the satisfaction uncertainty $su_G$ for the goal
+      \goal{Achieve [Make Up Water Provided When Loss Of Cooling]} appearing in
+      \in{Figure}[fig:make_up_water_provided]. As seen in
+      \in{Figure}[fig:root_goal_uncertainty], the probability of satisfaction
+      for this goal lies between 71.3\% and 84.1\%, with a more likely value
+      around 80\%. This multi-value estimate does not completely meet the
+      goal's required satisfaction rate (RSR), prescribed to be 80\% as
+      depicted by the red line on the right.
+      \in{Section}[sec:computing_uncertainty] below describes how such
+      distribution can be computed.
 
       \placefigure[here]
      	  [fig:root_goal_uncertainty]
-     	  {Satisfaction uncertainty for \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.}
+     	  {Satisfaction uncertainty for the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.}
         {\externalfigure[../images/chap6/usr_make_up_water_provided.pdf]}
   
-      A goal satisfaction uncertainty arises from obstacle uncertainties,
-      domain hypothesis, and domain assumptions satisfaction uncertainties. For
-      example, the certainty about the extent to which the goal \goal{Achieve
-      [Make Up Water Provided When Loss Of Cooling]} is satisfied depends on
-      our certainty about the extent to which, among others, the obstacles
-      \obstacle{Pump Electrical Failure} or \obstacle{No Power Available} are
-      satisfied. \in{Figure}[fig:obstacle_uncertainty] illustrates the
-      satisfaction uncertainty for these obstacles.
+      Uncertainty about goal satisfaction arises from satisfaction
+      uncertainties about obstacles, domain hypotheses, and domain assumptions.
+      For example, the certainty about the extent to which the goal
+      \goal{Achieve [Make Up Water Provided When Loss Of Cooling]} is satisfied
+      depends on our certainty about the extent to which, among others, the
+      obstacles \obstacle{Pump Electrical Failure} or \obstacle{No Power
+      Available} are satisfied. \in{Figure}[fig:obstacle_uncertainty]
+      illustrates the satisfaction uncertainty for these obstacles.
       
       \placefigure[here]
      	  [fig:obstacle_uncertainty]
@@ -119,8 +135,8 @@
 	
 		\subsection[sec:uncertainty_metrics]{Uncertainty Metrics for Goal Satisfaction}
 	
-      The probability to observe a satisfaction rate of at least $p$
-      for goal $G$, denoted $SU_G (p)$, is obtained as follows:
+      The probability of observing a satisfaction rate of at least $p$ for goal
+      $G$, denoted $SU_G (p)$, is obtained as follows \cite[Wac07]:
 
       \startformula
 
@@ -131,7 +147,7 @@
       This probability corresponds to the area delimited by the $su_G$ curve
       and value $p$. In \in{Figure}[fig:root_goal_uncertainty], the chance of
       the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}
-      being satisfied in at least 80\% of cases is given by:
+      being satisfied in at least 80\% of cases is accordingly given by:
 
       \startformula
       
@@ -142,8 +158,8 @@
       It corresponds to the red area in \in{Figure}[fig:root_goal_uncertainty].
       As shown in \in{Section}[sec:computing_uncertainty], $su_G$ can be
       computed by up-propagation from leaf obstacles to their root in obstacle
-      refinement trees and then by up-propagation through the goal model. Given
-      $su_G$, it is easy to compute $SU_G(p)$.
+      refinement trees, and then by up-propagation through the goal model.
+      Given $su_G$, it is fairly easy to compute $SU_G(p)$.
 
     	Two metrics may be defined to capture {\it (a)} our degree of certainty
     	that the goal's RSR will be met; and {\it (b)} the spread of satisfaction
@@ -161,21 +177,21 @@
 
       \stopformula
       
-      For discrete values, this is computed as the ratio between the number
-      of values below RSR and the total number of values.
+      For discrete values, the violation unceratinty is computed as the ratio
+      between the number of values below RSR and the total number of values.
 
       Graphically, this violation uncertainty corresponds to the surface below
-      the satisfaction uncertainty curve up to the goal required satisfaction
-      rate. In our example, the violation uncertainty of \goal{Achieve [Make Up
-      Water Provided When Loss Of Cooling]} is $.7313\%$. This means that it is
-      73.13\% certain that the goal will not meet its RSR of 80\%. In
+      the satisfaction uncertainty curve up to the goal's RSR. In our example,
+      the violation uncertainty of \goal{Achieve [Make Up Water Provided When
+      Loss Of Cooling]} is $.7313\%$. This means that it is 73.13\% certain
+      that the goal will not meet its RSR of 80\%. In
       \in{Figure}[fig:root_goal_uncertainty], most of the curve is on the left
       of the goal's RSR.
 
       \noindent {\bf Uncertainty spread.} Violation uncertainties only capture
       how much uncertainty lies below the required satisfaction rates. The same
-      surface might however take many shapes with more or less spread. Such
-      spread may help making decisions. It might be less problematic to have
+      surface might however take many shapes with more or less spread. In practice, such
+      spread may help making decisions. It might appear less problematic to have
       the uncertainty closer to the RSR than equally spread down to zero. If
       the uncertainty is close to the goal's RSR, a small change to this RSR
       might drastically change the violation uncertainty score.
@@ -184,9 +200,9 @@
     	measures the spread of uncertainty below the goal's RSR. It is defined as
     	the semi-standard deviation of its probability distribution with respect
     	to this RSR. The semi-standard deviation of the distribution is used here
-    	for measuring spread; It differs from standard deviation as only values
-    	below a threshold are taken into account \cite[Roh11]\emdash{}here, below
-    	the RSR.
+    	for measuring spread. It differs from standard deviation as only values
+    	below a threshold are taken into account \cite[Roh11]\emdash{}here, those
+    	below the RSR. The uncertainty spread is obtained as follows.
 
       \startformula
       
@@ -198,14 +214,15 @@
       
       \startformula
       
-        US(G) = \sqrt{\frac{1}{k}\sum_{x_i} \left(x_i - RSR(G)\right)^2}
+        US(G) = \sqrt{\frac{1}{k}\sum_{x_i} \left(x_i - RSR(G)\right)^2},
       
       \stopformula
 
-      where $x_i$ are the discrete values of G's satisfaction uncertainty that
-      fall below $RSR(G)$, and $k$ denotes the number of such values.
+      where $x_i$ are those discrete values of $G$'s satisfaction uncertainty
+      which fall below $RSR(G)$, and where $k$ denotes the number of such
+      values.
 
-    	Uncertainty spread values need to be interpreted according to the shape
+    	Uncertainty spread values need be interpreted according to the shape
     	of the curve. Whatever the shape, however, Chebyshev's inequality states
     	that at least 75\% of the data are at most at 2 spread values from $RSR(G)$
     	\cite[Wac07]. If the goal's satisfaction uncertainty fits a specific
@@ -217,40 +234,50 @@
     	least 75\% of the satisfaction uncertainty between $(78.63 - 2\times 2.69)
     	= 73.25\%$ and $(78.63 + 2\times 2.69) = 84.01\%$.
   
-    \subsection{Eliciting Distributions for Leaf Obstacle Satisfaction}
+    \subsection[sec:eliciting_distributions_for_leaf_satrates]{Eliciting Distributions for Leaf Obstacle Satisfaction}
  
       To facilitate the elicitation of distribution functions for leaf
       obstacles from domain experts, discrete points may be used that can be
-      fitted to specific probability distributions\emdash{}such as Beta,
-      PERT, Triangular, etc. \cite[Vos08]. A quantile is a single
-      probability value attached to a cumulative probability. It indicates
-      the cumulative probability to observe a single value of probability of
-      satisfaction \cite[Bed01]. The 50\high{th} quantile, called mode, is the most
+      fitted to specific probability distributions\emdash{}such as Beta, PERT,
+      Triangular, etc. \cite[Vos08]. A {\it quantile} is a single probability
+      value attached to a cumulative probability. It indicates the cumulative
+      probability to observe a single value of probability of satisfaction
+      \cite[Bed01]. The 50\high{th} quantile, called {\it mode}, is the most
       likely probability of satisfaction.
  
    	  To further support such elicitation from domain experts, databases
    	  providing estimates for quantiles can be used; they are available in a
    	  wide range of domains\emdash{}e.g., aerospace, health, bank, nuclear,
    	  chemical, gas, water pollution, and so forth \cite[Coo08]. For example,
-   	  our estimates were based on reliability databases and published
-   	  historical data in various industries \cite[Ayy14,Mil92,Cen92].
-   	  Reliable techniques are also available for obtaining accurate single
-   	  values or distribution estimates from trained experts \cite[OHa06a].
+   	  our estimates for the running example and the case-studies were based on
+   	  reliability databases and published historical data in various industries
+   	  \cite[Ayy14,Mil92,Cen92]. Reliable techniques are also available for
+   	  obtaining accurate single values or distribution estimates from trained
+   	  experts \cite[OHa06a].
  
-   	  For the leaf obstacle \obstacle{Pump Mechanical Failure}, as seen in
-   	  \in{Figure}[fig:obstacle_fragment_chap7], an expert might estimate that
-   	  there are at least 10\% chances of observing at least 10 mechanical
-   	  failures of a pump out of 100 days; at least 50\% chances of observing at
-   	  least 15 such occurrences; and at least 90\% chances to observe at least
-   	  30 of them. The 10\high{th}, 50\high{th} and 90\high{th} quantiles are
-   	  $.1$, $.15$, and $.3$ for the probability of satisfaction of this leaf
-   	  obstacle, respectively. \in{Figure}[fig:uso_pump_failure] shows the
-   	  satisfaction uncertainty for this obstacle.
-      
-      \placefigure[top]
+      \placefigure[here]
      	  [fig:obstacle_fragment_chap7]
      	  {An obstacle tree fragment for \goal{Achieve [Make Up Pump Motor On When Water Requested]}.}
         {\externalfigure[../images/chap6/obstacle_fragment_chap7.pdf]}
+      
+   	  For the leaf obstacle \obstacle{Pump Mechanical Failure}, as seen in
+   	  \in{Figure}[fig:obstacle_fragment_chap7], an expert might estimate that:
+      
+      \startitemize
+      
+        \item there are at least 10\% chances of observing at least 10
+        mechanical failures of a pump out of 100 days;
+
+        \item at least 50\% chances of observing at least 15 such occurrences;
+
+        \item and at least 90\% chances to observe at least 30 of them.
+      
+      \stopitemize
+      
+   	  The 10\high{th}, 50\high{th} and 90\high{th} quantiles are $.1$, $.15$,
+   	  and $.3$ for the probability of satisfaction of this leaf obstacle,
+   	  respectively. \in{Figure}[fig:uso_pump_failure] shows the satisfaction
+   	  uncertainty for this obstacle.
   
       \placefigure[here]
      	  [fig:uso_pump_failure]
@@ -258,18 +285,21 @@
         {\externalfigure[../images/chap6/uso_pump_failure.pdf]}
       
       In \in{Figure}[fig:uso_pump_failure], the 10\% of probabilities before
-      the 10\high{th} quantile were distributed uniformely down to $0$; The
+      the 10\high{th} quantile were distributed uniformely down to $0$; the
       10\% after the 90\high{th} quantiles uniformely up to $1$. So, the
-      0\high{th} quantile is $0$ and 100\high{th} quantile is $1$. This spread
-      is controlled by the {\it overshoot factor}; it determines the 0\high{th}
-      and 100\high{th} quantiles. \in{Figure}[fig:uso_pump_failure_of5] shows
-      the same estimates with a $.25$ overshoot factor. In that example, the
-      specified values are spread between 10\% and 30\%, so the spread is 20\%.
-      The overshoot is $.25 \times .20 = .05$. So the 0\high{th} quantile is
-      $.1 - .05 = .05$ and 100\high{th} quantile is $.30 + .05 = .35$. As we
-      can see by comparing \in{Figure}[fig:uso_pump_failure] and
-      \in{Figure}[fig:uso_pump_failure_of5], this might have a important impact
-      on the probability distribution.
+      0\high{th} quantile is $0$ and 100\high{th} quantile is $1$.
+      
+      This spread is controlled by the {\it overshoot factor}; it determines
+      the 0\high{th} and 100\high{th} quantiles.
+      \in{Figure}[fig:uso_pump_failure_of5] shows the same estimates with a
+      $.25$ overshoot factor. In that example, the specified values are spread
+      between 10\% and 30\%, so the spread is 20\%. The overshoot is $.25
+      \times .20 = .05$. So the 0\high{th} quantile is $.1 - .05 = .05$ and the
+      100\high{th} quantile is $.30 + .05 = .35$. As we can see by comparing
+      \in{Figure}[fig:uso_pump_failure] and
+      \in{Figure}[fig:uso_pump_failure_of5], this might have an important
+      impact on the probability distribution capturing the obstacle
+      satisfaction rate.
   
       \placefigure[here]
      	  [fig:uso_pump_failure_of5]
@@ -283,11 +313,11 @@
     [reference=sec:assessment_k_uncertainty,
      title={Obstacle Assessment with Knowledge Uncertainty}]
 	
-    As seen in \in{Chapter}[chap:assessing], identifying likely and critical 
-    obstacles is important for the next resolution step. This section shows how
-    identification of likely and critical  obstacle is extended to support
-    knowledge uncertainty. The satisfaction rate of some obstacles might be
-    highly uncertain; theses obstacles shall have their uncertainty margins
+    As seen in \in{Chapter}[chap:assessing], the identification of likely and
+    critical obstacles is important for the next resolution step. This section
+    shows how such identification is extended to support knowledge uncertainty
+    about satisfaction rates. The satisfaction rate of some obstacles might be
+    highly uncertain; these obstacles should have their uncertainty margins
     reduced. Our general approach for achieving this consists of the following
     steps:
     
@@ -295,7 +325,7 @@
     
       \item The accuracy of estimates for the satisfaction rate of leaf
       obstacles is increased by combining those elicited from multiple experts
-      and/or data sources (\in{Section}[sec:eliciting_more_accurate_estimates]);
+      and/or other data sources (\in{Section}[sec:eliciting_more_accurate_estimates]);
     
       \item Goal satisfaction rates and their uncertainty margin are computed
       from those more accurate estimates
@@ -308,25 +338,24 @@
     \stopitemize
   
 		\subsection
-      [title={Eliciting More Accurate Estimates},
+      [title={Eliciting more accurate estimates for leaf obstacles},
        reference=sec:eliciting_more_accurate_estimates]
          
-      The first step of our approach consist of eliciting estimated
+      The first step of our approach consists of eliciting estimated
       satisfaction rates for the leaf obstacles in the obstacle AND/OR
       refinement trees built during the obstacle identification phase. To
-      reduce uncertainty margins of the high-level goals, such estimates should
+      reduce uncertainty margins for high-level goals, such estimates should
       be as adequate and accurate as possible.
   
       As discussed in \in{Chapter}[chap:assessing], the use of multiple sources
       or multiple experts is generally recognized to increase the accuracy of
-      estimates and more mathematical approaches are recognized to produce
+      estimates and more mathematical approaches are recognized to produce more
       accurate results \cite[Coo91, Cle99]. Among available approaches, some
-      mathematical approaches are aimed at characterizing expert judgements by
-      comparative assessment between their estimates and known quantities. The
-      derived characteristics are then used for combining estimates from
-      multiple experts.
+      are aimed at characterizing expert judgements by comparative assessment
+      between their estimates and known quantities. The derived characteristics
+      are then used for combining estimates from multiple experts.
       
-      \noindent In the proposed probabilistic framework, obstacles may be
+      \noindent In our proposed probabilistic framework, obstacles may be
       annotated with estimated quantiles from multiple experts, e.g.,
       
       \startkaosspec
@@ -341,19 +370,27 @@
       narrow estimates; provide estimate ranges that are accurate or not; and
       so forth. To get more accurate estimates, we may compare those provided
       by multiple experts with known values in order to characterize each
-      expert. This is known as calibration \cite[Bed01].
+      expert. This is known as {\it calibration} \cite[Bed01].
     
-      A {\it calibration variable} is a quantity whose exact single-point value
-      is known. In our context, a calibration variable should be closely
-      related to a leaf obstacle\emdash{}typically, a leaf obstacle whose satisfaction
-      rate is known, an agent/resource failure whose failure rate is known from
-      reliability databases \cite[Akh01], etc. In our running example, three
-      calibration variables might be identified: \obstacle {Push Button
-      Broken}, \obstacle {Temperature Sensor Broken} and \obstacle {Fire
-      Sprinkler Broken}. \in{Table}[tab:estimate_calibration] summarizes
-      estimates and known values for two of them. The X\% columns show the
-      quantiles estimated by the corresponding expert for the calibration
-      variable.
+      \startdefinition{Calibration variable}
+    
+        A {\it calibration variable} is a quantity whose exact single-point
+        value is known.
+      
+      \stopdefinition 
+      
+      In our context, a calibration variable should be closely related to a
+      leaf obstacle\emdash{}typically, a leaf obstacle whose satisfaction rate
+      is known, an agent/resource failure whose failure rate is known from
+      reliability databases \cite[Akh01], and so forth. 
+      
+      In our running example, three calibration variables might be identified:
+      \obstacle {Push Button Broken}, \obstacle {Temperature Sensor Broken} and
+      \obstacle {Fire Sprinkler Broken}. \in{Table}[tab:estimate_calibration]
+      summarizes estimates and known values for two of them. The X\% columns
+      show the quantiles estimated by the corresponding domain expert for the
+      calibration variable. Our estimates were based on available reliability
+      databases \cite[Ayy14,Mil92,Cen92].
     
       \placetable[top][tab:estimate_calibration]
         {Expert estimates for calibration variables.}
@@ -365,7 +402,7 @@
         \setupTABLE[c][3,4,5,6][align={middle,lohi}]
         \setupTABLE[c][6][align={middle,lo}]
         \setupTABLE[c][3,4,5][width=1.5cm]
-        \setupTABLE[c][1][width=5cm]
+        \setupTABLE[c][1][width=3cm]
         \setupTABLE[c][2][width=1.8cm]
         \setupTABLE[c][6][width=1.8cm]
 %        \setupTABLE[c][3][leftframe=on]
@@ -390,34 +427,38 @@
       in order to combine multiple quantiles on a leaf obstacle into a single
       satisfaction uncertainty.
       
-      \noindent {\it Cooke's technique} characterizes each expert through a single weight
-      \cite[Coo91]. This weight combines a calibration score and an
-      information score. The {\it calibration score} measures how close the
-      expert's estimate is to the known value of the calibration variable; the
-      closer the probability estimated for this value, the higher the score.
-      The {\it information score} measures how precise the estimates are; the
-      narrower the estimates, the greater the score. The satisfaction
-      uncertainty combining the quantiles from multiple experts is obtained as
-      a weighted sum of these quantiles. In our example, {\it Expert 1} gets an
-      information score of $2.45$, a calibration score of $0.76$, and a weight
-      of $0.59$; {\it Expert 2} gets an information score of $2.75$, a
-      calibration score of $1$, and a weight of $0.40$.
-      \in{Figures}{(a)}[fig:obstacle_combination] and
-      \in{}{(b)}[fig:obstacle_combination] show the quantile function of both
-      experts; \in{Figure}{(c)}[fig:obstacle_combination] shows the resulting
-      satisfaction uncertainty.
+      \startitemize
       
-      \noindent {\it Mendel-Sheridan's technique} combines the quantiles of the experts
-      by use of a Bayesian calibrator/estimator \cite[Men89]. It first
-      computes a minimally informative distribution for the expert's
-      characteristics. This a priori distribution considers each expert to be
-      unbiased; it does not weight any probability more than others. This a
-      priori distribution is then updated with respect to the expert's
-      quantiles and the known value of calibration variables. The resulting
-      distribution is used to combine the quantiles of the experts into a
-      satisfaction uncertainty for our leaf obstacle.
-      \in{Figure}{(d)}[fig:obstacle_combination] shows the resulting
-      satisfaction uncertainty using this technique.
+        \item {\it Cooke's technique} \cite[Coo91] characterizes each expert
+        through a single weight. This weight combines a calibration score and
+        an information score. The {\it calibration score} measures how close
+        the expert's estimate is to the known value of the calibration
+        variable; the closer the probability estimated for this value, the
+        higher the score. The {\it information score} measures how precise the
+        estimates are; the narrower the estimates, the higher the score. The
+        satisfaction uncertainty combining the quantiles from multiple experts
+        is obtained as a weighted sum of these quantiles. In our example, {\it
+        Expert 1} gets an information score of $2.45$, a calibration score of
+        $0.76$, and a weight of $0.59$; {\it Expert 2} gets an information
+        score of $2.75$, a calibration score of $1$, and a weight of $0.40$.
+        \in{Figures}{(a)}[fig:obstacle_combination] and
+        \in{}{(b)}[fig:obstacle_combination] show the quantile function for
+        both experts; \in{Figure}{(c)}[fig:obstacle_combination] shows the
+        resulting satisfaction uncertainty.
+      
+        \item {\it Mendel-Sheridan's technique} combines the quantiles of the
+        experts by use of a Bayesian calibrator/estimator \cite[Men89]. It
+        first computes a minimally informative distribution for the expert's
+        characteristics. This a-priori distribution considers each expert to be
+        unbiased; it does not weight any probability more than others. This a
+        priori distribution is then updated with respect to the expert's
+        quantiles and the known value of calibration variables. The resulting
+        distribution is used to combine the quantiles of the experts into a
+        satisfaction uncertainty for our leaf obstacle.
+        \in{Figure}{(d)}[fig:obstacle_combination] shows the resulting
+        satisfaction uncertainty using this technique.
+      
+      \stopitemize
       
       Which technique performs best remains an open question; it may depend on
       the application domain, the experts, and the number of calibration
@@ -434,18 +475,18 @@
         \stopcombination}
 	
 		\subsection
-      [title={Computing Satisfaction Rates and Their Uncertainty},
+      [title={Computing goal satisfaction rates and their uncertainty},
        reference=sec:computing_uncertainty]
 	
-      The procedures presented in \in{Chapter}[chap:assessing] computes
+      \in{Chapter}[chap:assessing] described a procedure for computing
       single-point probability values for goal satisfaction from single-point
-      probability values for satisfaction of the obstructing leaf obstacles. To
-      build a complete probability distribution for a top goal in the goal
-      model, we need to sample the satisfaction uncertainty for these leaf
-      obstacles. To sample a satisfaction uncertainty, a random number between
-      $0$ and $1$ is uniformly picked. The inverse of the cumulative
-      distribution function associated with the satisfaction uncertainty is
-      then used to get a corresponding probability of satisfaction. More likely
+      probability values for satisfaction of obstructing leaf obstacles. To
+      build a full probability distribution for a top goal in the goal model,
+      we need to sample the satisfaction uncertainty for those leaf obstacles.
+      To sample a satisfaction uncertainty, a random number between $0$ and $1$
+      is uniformly picked. The inverse of the cumulative distribution function
+      associated with the satisfaction uncertainty is then used to get a
+      corresponding probability of satisfaction \cite[Wac07]. More likely
       probabilities of satisfaction are thereby picked more often than less
       likely ones.
       
@@ -456,21 +497,21 @@
       their frequency (This is known as {\it Kernel Density Estimation}
       \cite[Fri01].) For example, by repetitive sampling for the leaf
       obstacles, the following probabilities of satisfaction for the top goal
-      \goal{Achieve [Make Up Water Provided When Loss Of Cooling]} might be
-      obtained:
+      \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}, in
+      \in{Figure}[fig:make_up_water_provided], might be obtained:
       
       \startformula
         0.762, 0.690, 0.686, 0.675, 0.736, 0.908, 0.794, 0.555, 0.678 ...
       \stopformula
       
-      Using kernel density estimation techniques, we can build the distribution
+      Using Kernel Density Estimation techniques, we can build the distribution
       shown in \in{Figure}[fig:goal_combination].
       \in{Figure}{(a)}[fig:goal_combination] shows, in black, the satisfaction
-      rate when combining expert estimates using Cook's technique.
+      rate when expert estimates are combined using Cook's technique.
       \in{Figure}{(b)}[fig:goal_combination] shows, in black, the satisfaction
       rate using the Mendel-Sheridan's technique. The two curves in gray
-      corresponds to the satisfaction rates obtained when using only one of the
-      two expert.
+      corresponds to the satisfaction rates obtained when only one of the two
+      expert is used.
       
       \placefigure[here]
      	  [fig:goal_combination]
@@ -480,120 +521,144 @@
           {\externalfigure[../images/chap6/quantiles_make_up_water_provided_ms.pdf]}{\tfx(b) Combined estimates using Mendel-Sheridan’s technique}
         \stopcombination}
   
-      The number of sampling required depends on the satisfaction uncertainties
-      for the leaf obstacles, the numerical precision to achieve, the time
-      available to solve the problem, and so forth.
+      The number of samplings required depends on various factors such as the
+      satisfaction uncertainties for the leaf obstacles, the numerical
+      precision to achieve, the time available to solve the problem, and so
+      forth.
 	
-		\subsection[sec:finding_critical_obstacles_uncertainty]{Finding Critical Obstacles}
+		\subsection[sec:finding_critical_obstacles_uncertainty]{Finding critical obstacles}
 
-      The third step in the overall approach consists of prioritizing obstacles
-      according to the metrics introduced in
-      \in{Section}[sec:uncertainty_metrics], that is, the resulting violation
+      The third step in our approach for obstacle assessment in presence of
+      knowledge uncertainty about satisfaction rates consists of prioritizing
+      obstacles according to the metrics introduced in
+      \in{Section}[sec:uncertainty_metrics], that is, the  violation
       uncertainty and uncertainty spread for top-level goals.
       
-      The impact of each single leaf obstacle on the goal model must be
-      assessed individually. For a given top goal, the procedure in the
-      previous section is applied for each leaf obstacle with the satisfaction
-      probability of all other leaf goals being set to $0$. The violation
-      uncertainty and the uncertainty spread for the considered top goal are
-      then computed according to their definition in
-      \in{Section}[sec:uncertainty_metrics]. The result may be represented on a
-      scatter plot, called violation diagram, to highlight the most critical
-      obstacles to this top goal. When all likely and critical individual
-      obstacles are resolved, the violation uncertainty and uncertainty spread
-      may be computed again with pairs of leaf obstacles in order to build a
-      new violation diagram; then with triples, and so forth.
+      \startitemize
+      
+        \item The impact of each single leaf obstacle on the goal model must be
+        assessed individually. For a given top goal, the procedure in the
+        previous section is applied for each leaf obstacle with the
+        satisfaction probability of all other leaf goals being set to $0$. The
+        violation uncertainty and the uncertainty spread for the considered top
+        goal are then computed according to their definition in
+        \in{Section}[sec:uncertainty_metrics].
+      
+        The result may be represented on a scatter plot, called {\it violation
+        diagram}, to highlight the most critical obstacles to this top goal.
+      
+        \item When all likely and critical individual obstacles are resolved,
+        the violation uncertainty and uncertainty spread may be computed again
+        with pairs of leaf obstacles in order to build a new violation diagram;
+      
+        \item then with triples, and so forth.
+      
+      \stopitemize
       
       Our running example contains 12 leaf obstacles. The violation uncertainty
       and uncertainty spread for the top goal \goal{Achieve [Make Up Water
       Provided When Loss Of Cooling]} are $90.70\%$ and $0.1818$, respectively.
       \in{Figure}[fig:violation_diagram] shows the corresponding violation
-      diagram; the $x$-axis is logarithmic. The following observations can be
+      diagram, where the $x$-axis is logarithmic. The following observations can be
       made from it.
       
       \placefigure[top]
      	  [fig:violation_diagram]
-     	  {Violation Diagram.}
+     	  {Violation Diagram for the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.}
         {\externalfigure[../images/chap6/violation_diagram.pdf]}
       
       \startitemize
       
-        \item The obstacle \obstacle{Pump Mechanical Failure} is clearly a critical one.
-        The violation of the top goal it causes is mostly certain (with $78.3\%$).
+        \item The obstacle \obstacle{Pump Mechanical Failure} is clearly a
+        critical one. The violation of the top goal caused by the obstacle is
+        mostly certain (with $78.3\%$).
         
-        \item The top goal violation caused by \obstacle{Pump Electrical Failure}
-        is uncertain, however the uncertainty spread is very
-        low. This indicates that the uncertainty is probably close to the
-        goal's RSR. This obstacle might thus not be that critical as a slight
-        change in the goal's RSR might drastically change the violation
-        uncertainty.
+        \item The top goal violation caused by \obstacle{Pump Electrical
+        Failure} is uncertain; however the uncertainty spread is very low. This
+        indicates that the uncertainty is probably close to the goal's RSR.
+        This obstacle might thus not be that critical as a slight change in the
+        goal's RSR might drastically change the violation uncertainty.
       
         \item The top goal violation caused by \obstacle{Power Supply Failure}
-        is also uncertain but its uncertainty spread is high. The uncertainty
-        is probably not close by the RSR.
+        is also uncertain. Its uncertainty spread appears high; the uncertainty
+        is probably not close to the goal's RSR.
       
         \item The leaf obstacle \obstacle{Power Cabling Failure} is not causing
-        the highest violation uncertainty nor uncertainty spread.
+        the highest violation uncertainty or a high uncertainty spread.
         
-        \item For the remaining 8 obstacles, it is certain that they do not
+        \item It appears certain that the remaining 8 obstacles do not
         individually prevent the root goal from reaching its RSR.
       
       \stopitemize
       
       As \in{Figure}[fig:violation_diagram2] shows, the most critical pairs of
-      obstacles contains a critical obstacle identified in the violation
-      diagram containing only single obstacles. This suggests proceeding
-      iteratively on the size of obstacle combinations.
+      obstacles contain a critical obstacle identified to in the violation
+      diagram refering to single obstacles. This suggests the need for
+      iterating on the size of obstacle combinations.
       
       \placefigure[here]
      	  [fig:violation_diagram2]
-     	  {Violation Diagram.}
+     	  {Violation Diagram for the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.}
         {\externalfigure[../images/chap6/violation_diagram_2.pdf]}
       
   \stopsection
   
 	\startsection[reference=sec:selection_k_uncertainty,title={Selecting Countermeasures with Knowledge Uncertainty}]
   
-    Previous section showed how likely and critical  obstacles are highlighted.
-    When countermeasures to these are identified, the most appropriate ones
-    shall then be selected. Selecting most appropriate countermeasures in
-    presence of knowledge uncertainty requires a relaxation of safe selection.
-    In presence of uncertainty, a safe selection ensure that the violation
+    The previous section showed how likely and critical  obstacles can be highlighted in
+    the presence of knowledge uncertainty about satisfaction rates.
+    When countermeasures to these are identified,  most appropriate ones
+    should be selected. Selecting most appropriate countermeasures in
+    presence of knowledge uncertainty requires a relaxation of safe selections 
+    as defined in \in{Section}[sec:most_appropriate].
+    In the presence of uncertainty, a safe selection ensures that the violation
     uncertainty is bounded.
     
     \startdefinition{Safe Selection with Uncertainty}
     
-      Given a violation uncertainty threshold $t$, a {\it safe selection} of
+      Given a violation uncertainty threshold $T$, a {\it safe selection} of
       countermeasures is a set of countermeasures that, once integrated,
       guarantees that the violation uncertainty of the high-level goals is
-      lower than $t$.
+      lower than $T$.
     
     \stopdefinition
     
-    Not all safe selections are equal; the most appropriate selections minimize
-    the violation uncertainty\emdash{}i.e. maximize the fraction of uncertainty
-    that is above the required satisfaction rate\emdash{}, while minimizing the
-    uncertainty spread\emdash{}i.e. the closer the uncertainty to the RSR, the
-    better. According this relaxed definition, selecting the most appropriate
-    countermeasures amount to solving the following optimization problem:
+    \noindent Not all safe selections are equal. The most appropriate ones need
+    to
     
     \startitemize
+    
+      \item Minimize the high-level goal's violation uncertainty\emdash{}that
+      is, they need to maximize the fraction of uncertainty above the goal's
+      required satisfaction rate.
+    
+      \item Minimize the uncertainty spread\emdash{}the closer the uncertainty
+      to the goal's RSR, the better. 
+      
+    \stopitemize
+    
+    \noindent According this relaxed definition, selecting the most appropriate
+    countermeasures amount to solving the following optimization problem:
+    
+    \startitemize[n]
 
-      \item Finding the minimal cost for guaranteeing the violation uncertainty
-      threshold of the high-level goals,
+      \item Find the minimal cost for guaranteeing the violation uncertainty
+      threshold for the high-level goals,
 
-      \item Finding the selections that minimize the violation uncertainty and
-      the uncertainty spread of the high-level goals given this cost.
+      \item Find the selections that minimize the violation uncertainty and
+      the uncertainty spread for the high-level goals given this cost.
 
     \stopitemize
   
-    Back to our running example, the minimal cost to guarantee a violation
-    uncertainty below $5\%$ ranges from $1$ to $6$. There are 63 possibles
-    selections, among them, 48 are safe. The countermeasure selection that
-    minimize the violation uncertainty only contains \goal{Achieve [Cooling
-    System Repaired]}. The resulting violation uncertainty and uncertainty
-    spread is $2.9\%$ and $0.3773$ respectively; versus $89.8\%$ and $.1719$
-    respectively, without the countermeasure goal.
+    Back to our running example, consider the high-level goal \goal{Achieve
+    [Make Up Water Provided When Loss Of Cooling]}. The minimal cost for
+    guaranteing a violation uncertainty below $5\%$ ranges from $1$ to $6$.
+    There are 63 possibles selections; among these, 48 are safe. The
+    countermeasure selection that minimizes the violation uncertainty only
+    contains the countermeasure goal \goal{Achieve [Cooling System Repaired]}.
+    The resulting violation uncertainty and uncertainty spread is $2.9\%$ and
+    $0.3773$ respectively. This should be contrasted with their counterparts
+    $89.8\%$ and $.1719$, respectively, without the countermeasure goal.
   
   \stopsection
   
@@ -601,29 +666,30 @@
   
     The quantitative technique presented in this chapter allows analysts to
     cope with knowledge uncertainty about satisfaction rates of system goals
-    and their obstructing obstacles. The formal probabilistic framework
-    presented in the previous chapters is extended to explicitly reason about
+    and their obstructing obstacles. The probabilistic framework
+    presented in the previous chapters was extended to reason explicitly about
     uncertain estimates. The impact of estimation uncertainty is measured on
-    top-level goals through two metrics: goal violation uncertainty and
-    uncertainty spread. Satisfaction rates and their uncertainties for top
+    high-level goals through two metrics: goal violation uncertainty and
+    uncertainty spread. The satisfaction rates and their uncertainties for high-level
     goals are computed by up-propagation through obstacle and goal refinement
-    trees, from leaf obstacles whose satisfaction rate and uncertainty need be
-    estimated. As a result, more critical leaf obstacles may be highlighted for
+    trees, from leaf obstacles whose satisfaction rates and uncertainty need be
+    estimated. As a result, more critical leaf obstacles can be highlighted for
     resolution and most appropriate countermeasures can be selected. To reduce
-    the uncertainty margins, our approach allows estimates from multiple
+    uncertainty margins, our approach allows estimates from multiple
     sources to be combined.
     
-    Beyond frameworks for goal-oriented RE, other RE and risk analysis
-    frameworks might benefit from our techniques. In particular, FTA might
-    integrate similar metrics for problematic uncertainties together with means
-    for reasoning about risk consequences and combinations of multiple expert
-    estimates. Other software engineering areas are faced with the problem of
-    handling uncertainties about estimated quantities \cite[Fen00]. The
-    application of similar techniques appears worth considering in other
-    contexts beyond RE as well.
+    Beyond frameworks for goal-oriented RE, other frameworks for RE and risk
+    analysis might benefit from our techniques. In particular, Fault Tree
+    Analysis (FTA) might integrate similar metrics for problematic
+    uncertainties together with means for reasoning about risk consequences and
+    combinations of multiple expert estimates. Other software engineering areas
+    are faced with the problem of handling uncertainties about estimated
+    quantities \cite[Fen00]. The application of similar techniques appears
+    worth considering in other contexts beyond RE as well.
     
-    The next chapter show how the assessment and control of critical obstacles
-    can be performed at run-time to provide obstacle-driven runtime adaptation.
+    The next chapter shows how the assessment and control of critical obstacles
+    can be performed at system runtime to support obstacle-driven runtime model
+    adaptation.
   
   \stopsection
   
