@@ -47,14 +47,14 @@
     engineers rely on models. Models are increasingly recognized to be an
     effective way of identifying what software systems shall do and shall not
     and why \cite[Lam09]. A {\it model} is an abstract representation of the
-    software system where key elements are highlighted, specified and connected
+    software system where key elements are highlighted, specified, and connected
     to others. Using models for Requirements Engineering has multiple benefits:
     models allow analysts to abstract from details and focus on essential
     aspects of the software systems; they force stakeholders to be more precise
     about their expectations; it provide a structure for detecting errors,
     early in the process; and so forth.
     
-    Building a \quote{good} model is hard. A good model shoud be:
+    \noindent Building a \quote{good} model is hard. A good model shoud be:
     
     \startitemize
     
@@ -164,7 +164,7 @@
     criticality should be assessed against the system's high-level objectives.
     
     The {\it obstacle control} step is also crucial; it directly impacts the
-    adequacy, completeness and robustness of the goal model. However, little
+    adequacy and completeness of the goal model. However, little
     support is currently available for the control step beyond resolution
     operators for countermeasure exploration. In particular, it is totally
     unclear what most appropriate countermeasures are, how such countermeasures
@@ -256,7 +256,7 @@
 
 	\startsection[reference=sec:objectives,title={Objectives of the thesis}]
   
-    \noindent {\bf Obstacle Assessment.} A simple yet effective technique
+    \noindent {\bf Obstacle assessment.} A simple yet effective technique
     should be available for quantitative assessment of probabilistic obstacles.
     The proposed quantitative technique is intended to meet the following
     objectives.
@@ -299,7 +299,7 @@
 
     \stopitemize
   
-    \noindent {\bf Obstacle Control.} To address the problem of obstacle
+    \noindent {\bf Obstacle control.} To address the problem of obstacle
     resolution, systematic techniques for selecting and integrating appropriate
     countermeasures should be available. These techniques are intented to
     satisfy the folllowing objectives.
@@ -315,11 +315,11 @@
       rate of high-level objectives is satisfied while not costing more than
       necessary.
     
-      \item {\it Normal behavior} The system behaviors not affected by the
+      \item {\it Normal behavior.} The system behaviors not affected by the
       obstacles should be preserved by the integration process.
       
       \item {\it Correctness preservation.} The correctness of goal refinements
-      in the model should be preserved too by the integration process.
+      in the model should be preserved by the integration process.
     
       \item {\it Separation of concerns.} For higher readability and better
       visibility, the ideal model containing all functional and non-functional
@@ -338,14 +338,11 @@
       combinatorial blow-up of exceptional cases.
     
       \item {\it Traceability.} The traceability of exceptional cases should be
-      supported from requirements to architecture. Keeping exceptions separate
-      from each other and from the goals in normal situations enables
-      traceability from the goal model and its operationalization on the one
-      hand and exception handlers in the architecture on the other hand.
+      supported from requirements to architecture. 
     
     \stopitemize
         
-    \noindent {\bf Handling Uncertainty of Estimates.} The quantitative
+    \noindent {\bf Handling uncertainty of estimates.} The quantitative
     obstacle analysis framework should be extended to explicitly capture and
     reason about uncertainties on estimated likelihoods.
     
@@ -361,7 +358,7 @@
       \item {\it Highlighting of problematic uncertainty margins.} The techniques
       should allow analysts to highlight critical obstacles (in terms of
       severity of their consequences) whose knowledge uncertainty must be
-      reduced for deciding whether they are sufficiently likely or not.
+      reduced.
     
       \item {\it Knowledge uncertainty reduction.} Problematic uncertainty
       margins for critical obstacles should be reduced to enable finer-grained
@@ -369,7 +366,7 @@
     
     \stopitemize
     
-    \noindent {\bf Obstacle-Driven Runtime System Adaptation.} For increased
+    \noindent {\bf Obstacle-driven runtime system adaptation.} For increased
     satisfaction of probabilistic system goals at system runtime, techniques
     should be available for dynamically deploying most appropriate
     countermeasures under varying conditions.
@@ -378,8 +375,8 @@
     
       \item {\it Monitoring of satisfaction rates.} The satisfaction rate of
       probabilistic goals and obstacles should be monitored at runtime.
-      Monitoring helps determining whether goals are currently satisfied, and
-      what are the current likely and critical obstacles.
+      Monitoring helps determining whether probabilistic goals are currently
+      satisfied, and what are the current likely and critical obstacles.
     
       \item {\it No need for explicit behavior model.} Building a consistent
       and complete behavior model for large distributed systems with many
@@ -411,12 +408,11 @@
     
     \startitemize
     
-      \item Probabilistic goals and obstacles are introduced. Goals
-      may be specified to prescribe some property to
-      hold in $X$\% of the cases. Probabilistic obstacles provide more
-      evidence-based answers to questions such as, e.g., what are the most
-      critical obstacles to be resolved in view of higher-level,
-      safety-critical goals?
+      \item Probabilistic goals and obstacles are introduced. Goals may be
+      specified to prescribe some property to hold in $X$\% of the cases.
+      Probabilistic obstacles provide more evidence-based answers to questions
+      such as, e.g., what are the most critical obstacles to be resolved in
+      view of higher-level, mission-critical goals?
     
       \item A formal characterization of satisfaction rates of probabilistic
       goals and obstacles is provided in terms of observed states and
@@ -506,7 +502,7 @@
     
       \item Probabilistic obstacles are monitored at system runtime. The
       technique extends an existing monitoring technique, introduced in
-      \cite[Bau11] for non-probabilistic linear temporal logic (LTL), to
+      \cite[Bau11] for non-probabilistic Linear Temporal Logic (LTL), to
       monitor probabilistic LTL assertions at system runtime. From such
       monitoring of leaf obstacles in obstacle refinement trees, the
       satisfaction rate of high-level goals is obtained by up-propagation
@@ -557,28 +553,28 @@
       
       \item \in{Chapter}[chap:assessing] discusses the assessment of
       probabilistic obstacles. It describes how leaf obstacles are estimated
-      and how the satisfaction rate for higher-level goals is obtained by
+      and how the satisfaction rate of higher-level goals is obtained by
       up-propagation through the obstacle and the goal models. This chapter
       also shows how likely and critical obstacles are highlighted.
       
       \item \in{Chapter}[chap:controlling_obstacle] describes the techniques
-      and tools for controlling likely and critical obstacles through
+      for controlling likely and critical obstacles through
       appropriate countermeasures. It discusses what appropriate
       countermeasures are, how these are selected and how they are integrated
       in the original, ideal goal model.
       
       \item \in{Chapter}[chap:knowledge-uncertainty] describes how knowledge
-      uncertainties about probabilistic values are is integrated within the
+      uncertainties about probabilistic values are integrated within the
       {\it obstacle assessment} and {\it control} step.
             
       \item \in{Chapter}[runtime] extends the proposed techniques for runtime use  
       to drive the adaptation of software systems at runtime. The
-      technique guarantees the required satisfication rate for high-level
+      technique guarantees the required satisfation rate for high-level
       goals based on the monitoring low-level obstacles.
       
       \item \in{Chapter}[chap:tool_support] presents the tools supporting the
       various techniques presented in the thesis. It also describes the
-      text-based specification language used to represent goal and obstacle
+      text-based declaration language used to represent goal and obstacle
       models.
       
       \item \in{Chapter}[chap:evaluation] reports on the evaluation of the

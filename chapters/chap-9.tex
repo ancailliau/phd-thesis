@@ -126,7 +126,7 @@
         \stopitemize
         
         \item If goal $G$ is a leaf goal, its satisfaction rate is lower than
-        the estimated one. The actual satisfaction rate for the root obstacle
+        the estimated one. The actual satisfaction rate of the root obstacle
         is then higher than the computed satisfaction rate. However, the
         computed satisfaction rate of the root obstacle might be higher than
         the actual one if and only if obstacles are missing. If obstacles are
@@ -158,7 +158,7 @@
       
       Any countermeasure not returned by the procedure for selection most
       appropriate countermeasures costs more or would result in a lower computed
-      satisfaction rate for the considered high-level goal.
+      satisfaction rate of the considered high-level goal.
       
     \stopproposition
       
@@ -168,7 +168,7 @@
       cost is lower than the minimal one returned by the first optimization
       discussed in \in{Section}[sec:selecting_cm]. The minimal cost is
       therefore not minimal. If this countermeasure results in a higher
-      computed satisfaction rate for the considered high-level goal, the second
+      computed satisfaction rate of the considered high-level goal, the second
       optimization would not return the highest solution.
       %
     \stopproof 
@@ -188,14 +188,14 @@
     \stopproof 
       
     As for our monitoring-based techniques, we want the monitored satisfaction
-    rate to be \quote{safe}, that is, the monitored satisfaction rate for the
+    rate to be \quote{safe}, that is, the monitored satisfaction rate of the
     leaf obstacles must be an upper bound. Otherwise, the monitored
     satisfaction rate might underestimate the actual satisfaction rate, while
     would lead to unsafe conclusions.
       
     \startproposition
       
-      For a given state decomposition, the monitored satisfaction rate for a
+      For a given state decomposition, the monitored satisfaction rate of a
       leaf obstacle is lower or equal to the actual satisfaction rate obtained
       by the monitoring procedure in \in{Section}[sec:monitoring].
       
@@ -203,10 +203,10 @@
       
     \startproof 
       
-      (Ab absurdum.) By definition, the monitored satisfaction rate for the
+      (Ab absurdum.) By definition, the monitored satisfaction rate of the
       formula $\ltlF (C \wedge \Theta OC)$ is the highest state probability to
       satisfy the obstacle condition $C \wedge \Theta OC$. If the actual
-      satisfaction rate for a leaf obstacle is greater than the monitored
+      satisfaction rate of a leaf obstacle is greater than the monitored
       satisfaction rate, there is a state probability greater than the
       monitored statisfaction rate; the monitored satisfaction rate is
       therefore not the highest state probability.
@@ -286,9 +286,9 @@
     structure of the encoded formula, we may expect tighter bounds on the size
     of the BDD.
       
-    In practice, the computation cost of the satisfaction rate for the
+    In practice, the computation cost of the satisfaction rate of the
     considered high-level goals is often small. For example, computing the
-    satisfaction rate for the high-level goal in the Ambulance Dispatch System
+    satisfaction rate of the high-level goal in the Ambulance Dispatch System
     and in the Car Pooling System discussed in \in{Sections}[sec:bads] and
     \in{}[sec:cool] hereafter took less than a second. The timing includes the
     time to start the .NET virtual machine, read, and parse the model. As seen
@@ -519,14 +519,14 @@
       \noindent {\bf Global Impact Analysis.} The propagation of the estimated
       satisfaction rates from the leaf obstacles to the root obstacles, then
       from the root obstacles to the leaf goals, and then from the leaf goals
-      to the root goals yields the satisfaction rate for the two high-level
+      to the root goals yields the satisfaction rate of the two high-level
       goals. Using the techniques in
-      \in{Section}[sec:pattern_based_computation], the satisfaction rate for
+      \in{Section}[sec:pattern_based_computation], the satisfaction rate of
       \goal{Achieve [Ride Need Eventually Served]} is found to be only only
-      $37.28\%$. The satisfaction rate for the goal \goal{Achieve [Ride
+      $37.28\%$. The satisfaction rate of the goal \goal{Achieve [Ride
       Proposal Eventually Served]} is $81.02\%$.
       
-      The satisfaction rate for the high-level goal \goal{Achieve [Ride Need
+      The satisfaction rate of the high-level goal \goal{Achieve [Ride Need
       Eventually Served]} means that the probability of serving a ride request
       is only about 40\% if all leaf obstacles were correctly estimated and no
       countermeasures to likely problems are provided; there would thus be
@@ -597,7 +597,7 @@
       \in{Table}[tab:cool_sv]. The most critical pairs among these are shown in
       \in{Table}[tab:cool_sv2]. Together with the critical singletons, they are
       the ones having higher priority for resolution. Once resolved, if the
-      required satisfaction rate for the high-level goals is not yet reached,
+      required satisfaction rate of the high-level goals is not yet reached,
       triple combinations excluding the preceding critical singletons and pairs
       could reveal more critical obstacle combinations.
             
@@ -842,7 +842,7 @@
         }
         
       \noindent {\bf Global and local impact analysis.} Our global analysis
-      revealed that the satisfaction rate for \goal{Avoid [Injury and Illness
+      revealed that the satisfaction rate of \goal{Avoid [Injury and Illness
       Caused By YLS]} is 91.46\%. This does not meet the required satisfaction
       rate. Applying our techniques for local analysis revealed 12 obstacles
       that were sufficient alone to cause the satisfaction rate of the
@@ -1068,7 +1068,7 @@
         rate to be achieved. \in{Table}[tab:ads_sv] presents the likely and
         critical obstacles to be resolved with highest priority. There are 142
         pairs of obstacle, not containing one of the 17 obstacles previously
-        identified, that cause the estimated satisfaction rate to drop below
+        identified, that cause the computed satisfaction rate to drop below
         the required satisfaction rate.
 
         \placetable[top][tab:ads_sv]
@@ -1303,7 +1303,7 @@
         uncertainty and uncertainty spread for the top goal, taking all experts
         into account.
       
-        Seven obstacles were estimated to cause the top goal not to meet its
+        Seven obstacles were identified to cause the top goal not to meet its
         RSR with more than 90\% of certainty, namely, \obstacle{Ambulance In
         Traffic Deviation}, \obstacle{Allocated Ambulance Not At Station},
         \obstacle{GPS Black Spot}, \obstacle{Forget To Encode Leaving Status},

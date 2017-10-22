@@ -433,20 +433,20 @@
       In our example, the monitored state probability of state $A$ is not
       available for the two first observations; it is equal to $1$ for the five
       next observations, and to $.5$ for the last one. The satisfaction rate
-      for our obstacle is the upper bound of these state probabilities. It
+      of our obstacle is the upper bound of these state probabilities. It
       changes from ‘not available’ to 100\% at observation 2, then decreases
       from 100\% to 50\% at observation 7 (see the bottom of
       \in{Figure}[fig:monitor_execution]).
 
       \in{Figure}[fig:satrate-dusty_environment] shows the evolution of the
       satisfaction rate of the obstacle \obstacle{Dusty Environment} in our
-      simulated environment. The black line shows the estimated satisfaction
+      simulated environment. The black line shows the computed satisfaction
       rate. The graph was produced by monitoring the system with the tool
       described in \in{Chapter}[chap:tool_support].
     
       \placefigure[bottom]
      	  [fig:satrate-dusty_environment]
-     	  {Monitored satisfaction rate for \obstacle{Dusty Environment}.}
+     	  {Monitored satisfaction rate of \obstacle{Dusty Environment}.}
         {\externalfigure[../images/chap7/satrate-dusty_environment.pdf][scale=1000]}
 
       To efficiently obtain the satisfaction rate of leaf obstacles, a list of
@@ -501,7 +501,7 @@
     
       This expression can be solved to compute the number $n$ of observations
       that must be made to guarantee a satisfactory level of accuracy. If the
-      estimated satisfaction rate for the obstacle \obstacle{Dusty Environment}
+      estimated satisfaction rate of the obstacle \obstacle{Dusty Environment}
       is 20\%, we have:
   
       \startformula
@@ -586,13 +586,13 @@
     
     \placefigure[bottom]
    	  [fig:satrate-locals_warned_when_risk_imminent]
-   	  {Monitored satisfaction rate for the goal \goal{Achieve [Locals Warned When Risk
+   	  {Monitored satisfaction rate of the goal \goal{Achieve [Locals Warned When Risk
       Imminent]}.}
       {\externalfigure[../images/chap7/satrate-locals_warned_when_risk_imminent.pdf]}
   
     \placefigure[top]
    	  [fig:obstacle_adaptation]
-   	  {Monitored satisfaction rate for the leaf obstacles.}
+   	  {Monitored satisfaction rate of the leaf obstacles.}
       {\startcombination[2*3]
         {\externalfigure[../images/chap7/satrate-dusty_environment-small.pdf]}{\tfx (\obstacle{\tfx Dusty Environment})}
         {\externalfigure[../images/chap7/satrate-echo-small.pdf]}{\tfx (\obstacle{\tfx False Echo})}
@@ -604,7 +604,7 @@
     
     Back to our example,
     \in{Figure}[fig:satrate-locals_warned_when_risk_imminent] shows the
-    satisfaction rate for the goal \goal{Achieve [Locals Warned When Risk
+    satisfaction rate of the goal \goal{Achieve [Locals Warned When Risk
     Imminent]}, computed from the monitored satisfaction rates of the leaf
     obstacles. (See \in{Figure}[fig:goal_model] for the goal model.)
     \in{Figure}[fig:obstacle_adaptation] shows the monitored satisfaction rates
@@ -741,10 +741,10 @@
   
     \placefigure[bottom]
    	  [fig:runtime_update]
-   	  {Monitored satisfaction rate for the leaf obstacles with knowledge uncertainty.}
+   	  {Monitored satisfaction rate of the leaf obstacles with knowledge uncertainty.}
       {\externalfigure[../images/chap7/runtime_update.pdf]}
     
-    \in{Figure}[fig:runtime_update] shows how the satisfaction rate for the
+    \in{Figure}[fig:runtime_update] shows how the satisfaction rate of the
     obstacle \obstacle{Pump Mechanical Failure} is updated with the observed
     satisfaction rate. The lighest line shows the satisfaction rate provided by
     the experts, as seen in \in{Chapter}[chap:knowledge-uncertainty]. The

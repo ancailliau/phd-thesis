@@ -333,7 +333,7 @@
       computation of the satisfaction rate of the parent goal \goal{Achieve
       [Make Up Water Requested When Loss Of Cooling]} uses the satisfaction
       rate of this countermeasure goal rather than the satisfaction rate of the
-      replaced goal. When integrated, the satisfaction rate for the top goal
+      replaced goal. When integrated, the satisfaction rate of the top goal
       increases from 81.74\% to 81.77\%.
     
 %     To enable efficient computation of the impacts, the BDD-based propagation
@@ -394,7 +394,7 @@
       kept.} In this case, the anchor goal is refined into two subgoals; one
       subgoal is the obstructed goal conjoined with the negation of the
       obstacle condition; the other subgoal is the countermeasure goal. The
-      satisfaction rate for the anchor goal is obtained using the satisfaction
+      satisfaction rate of the anchor goal is obtained using the satisfaction
       rates of those two subgoals, as described
       \in{Section}[sec:computing_satrate].
   
@@ -486,7 +486,7 @@
       \stopdefinition
       
       The selection of most appropriate countermeasures is defined as the one
-      having the lowest resolution cost such that the satisfaction rate for the
+      having the lowest resolution cost such that the satisfaction rate of the
       high-level goals is maximized while being safe, consistent, and
       cost-optimal.
         
@@ -512,7 +512,7 @@
         \noindent
         We may then generate all possible selections, compute their cost, and
         keep the selection with a minimal cost and the largest satisfaction
-        rate for the high-level goals. The complexity of this naïve computation
+        rate of the high-level goals. The complexity of this naïve computation
         is $O(2^n)$ for $n$ countermeasures.
 
       \stopitemize

@@ -23,7 +23,7 @@
   expressed as loss in satisfaction of the obstructed goals. This chapter
   explains how likely and critical obstacles are identified. It shows how the
   satisfaction rate of finer-grained probabilistic obstacles are estimated, how
-  the satisfaction rate of high-level probabilistic obstacles and high-level
+  the satisfaction rate of higher-level probabilistic obstacles and higher-level
   probabilistic goals are computed from the estimated satisfaction rate of
   those finer-grained probabilistic obstacles, that is, leaves in obstacle
   refinement trees.
@@ -31,7 +31,7 @@
   The satisfaction rate of a leaf obstacle is estimated by domain experts as a
   single-value probability that can be combined with other single-value
   probabilities for more accurate estimates. The satisfaction rate of a
-  non-leaf obstacle is obtained by up-propagation from the leaf obstacles. The
+  higher-level obstacle is obtained by up-propagation from the leaf obstacles. The
   satisfaction rate of these probabilistic obstacles determines likely
   obstacles.
   
@@ -48,7 +48,7 @@
   
   Determining the likely and critical obstacles amounts to finding those likely
   obstacle combinations maximizing the drop in high-level goal satisfaction
-  rates. As a result, the next {\it control} step might then focus on the likely and
+  rates. As a result, the next {\it control} step might then focus on likely and
   critical obstacles to increase the completeness, accuracy and adequacy of the
   requirements.
 
@@ -69,7 +69,7 @@
     satisfaction rate of higher-level obstacles and then of obstructed goals in
     the goal model.
     
-    The satisfaction rate for the leaf obstacles might be available from
+    The satisfaction rate of the leaf obstacles might be available from
     historical data, measurements, specification sheets provided by
     contractors, etc. However, such data migth not be available for cost
     reasons, technical difficulties, system uniqueness or some practical
@@ -78,7 +78,7 @@
     
     To obtain more accurate estimates from domain experts, we proceed in two
     steps: single, fine-grained estimates are obtained from a diversity of
-    experts (\in{Section}[sec:asfge]) and those estimates are combined
+    domain experts (\in{Section}[sec:asfge]) and those estimates are combined
     (\in{Section}[sec:combining_sat_rate]).
 
     \startsubsection [reference=sec:asfge,title={Acquiring single fine-grained estimates}]
@@ -100,7 +100,7 @@
         techniques, biais identification, and de-biasing techniques is
         available in \cite[Coo91,Vos08].
 
-        \item Elicit the satisfaction rate for the selected leaf obstacles from
+        \item Elicit the satisfaction rate of the selected leaf obstacles from
         the selected experts. Techniques and pitfalls for such elicitation
         sessions are described in \cite[OHa06a,Vos08]. Note that the structure
         of the goal and obstacle models might be modified by the experts during
@@ -250,12 +250,12 @@
         
         \noindent Using a {\it $0$-norm} for combining the satisfaction rate of the
         subobstacles yields $\sqrt{.2 \times .1} = .14$ for both subobstacles.
-        With these combined estimates, the satisfaction rate for the parent
+        With these combined estimates, the satisfaction rate of the parent
         obstacle is $.14 + .14 = .28$.
         
-        \noindent With the {\it $1$-norm}, however, the $r$-norm satisfaction rate for
+        \noindent With the {\it $1$-norm}, however, the $r$-norm satisfaction rate of
         both subobstacle is $.5\times(.2 + .1) = .15$. In that case, the
-        satisfaction rate for the parent obstacle is $.3$, as the experts have
+        satisfaction rate of the parent obstacle is $.3$, as the experts have
         independently estimated those quantities.
         
         The {\it $1$-norm} is known to be the only {\it $r$-norm} to exhibit
@@ -276,16 +276,16 @@
         \obstacle{Primary Power Supply Down}. The second expert estimate $.2$
         for \obstacle{Diesel Generator Failure} and $.1$ for \obstacle{Primary
         Power Supply Down}. Considering experts independently, they both
-        estimate the satisfaction rate for the parent obstacle \obstacle{Power
+        estimate the satisfaction rate of the parent obstacle \obstacle{Power
         Supply Failure} to be $.1 \times .2 = .02$.
         
         \noindentation Using {\it $1$-norm} to combine their estimates, we
-        obtain $.15$ for both subobstacles. The satisfaction rate for the
+        obtain $.15$ for both subobstacles. The satisfaction rate of the
         parent obstacle is therefore $.15 \times .15 = .0225$, which differs
         from the estimate they provided independently.
         
-        \noindentation Using {\it $0$-norm}, the $r$-norm satisfaction rate for
-        the subobstacle is $\sqrt{.2\times .1}$. The satisfaction rate for the
+        \noindentation Using {\it $0$-norm}, the $r$-norm satisfaction rate of
+        the subobstacle is $\sqrt{.2\times .1}$. The satisfaction rate of the
         parent obstacle $O$ is $(\sqrt{.2\times .1})^2 = .02$.
         
         The {\it $0$-norm} has the independence preservation property unlike
@@ -302,8 +302,8 @@
      reference=sec:computing_satrate]
 
     The previous section showed how the satisfaction rate of leaf obstacles can
-    be estimated from multiple expert. The second phase consists of determining
-    the satisfaction rates of higher-level goals obstacles and then of
+    be estimated from multiple domain experts. The second phase consists of determining
+    the satisfaction rates of higher-level obstacles and then of
     high-level goals in the goal model from these estimated satisfaction rates.
     For obstacle assessment, the former satisfaction rate provides obstacle
     likelihoods whereas the latter satisfaction rate provide obstacle
@@ -313,7 +313,7 @@
     \startsubsection
       [reference=sec:computing_bdd,title={BDD-based computation of satisfaction rates}]
 
-      A first procedure for computing the satisfaction rate of obstacles and of
+      A first procedure for computing the satisfaction rate of obstacles and 
       goals in a goal model can be outlined as follows. 
       
       \startitemize
@@ -325,13 +325,13 @@
 
         \item To compute the satisfaction rate of a goal, the set of
         AND-combination of leaf obstacles obstructing a given goal in the goal
-        model is computed; this set is called the {\it obstruction superset}.
+        model is then computed; this set is called the {\it obstruction superset}.
       
       \stopitemize
       
       Those sets are encoded as a binary decision diagram (BDD) \cite[Bry92]
       (\in{Section}[sec:computing_obstruction_set]). Based on the estimated
-      satisfaction rate for the leaf obstacles, the probability for the
+      satisfaction rate of the leaf obstacles, the probability for the
       obstruction or entailment superset is computed
       (\in{Section}[sec:computing_sat_rate].)
             
@@ -437,8 +437,9 @@
         Activated Until Measured Water Level Appropriate]} is the set
         containing all obstruction sets above.
       
-        The entailment, respectively obstruction, sets in the entailement,
-        respectively obstruction, superset should ideally be independent:
+        The entailment sets, respectively the obstruction sets, in an
+        entailement superset, respectively an obstruction superset, should
+        ideally be independent:
 
         \startdefinition{Dependent entailment sets}
  
@@ -473,7 +474,7 @@
         through obstacle refinement tree from the leaf obstacles and domain
         properties/hypotheses in obstacle trees to their root obstacle. The
         obstruction superset for a goal is then computed by up-propagation from
-        the root obstacle to the corresponding obstructed leaf goal and finally
+        the root obstacle to the corresponding obstructed leaf goals and finally
         from the leaf goals in goal trees to the considered higher-level goal.
 
         \noindent {\bf Step 1: From leaf obstacles to root obstacles.} Consider
@@ -517,7 +518,7 @@
 
         \noindent {\bf Step 2: From root obstacles to leaf goals.} The
         obstruction superset for a leaf goal $LG$ obstructed by a root obstacle
-        $RO$ is simply:
+        $RO$ is:
 
         \startformula
           OS (LG) = ES (RO)
@@ -549,8 +550,8 @@
         obstruction sets. Such dependencies must be taken into account when
         computing the probability of satisfaction of obstruction sets. This can
         be achieved automatically, see \in{Section}[sec:computing_sat_rate].
-        Obstruction sets are minimal if and only if goal and obstacle
-        refinements are minimal.
+        Obstruction sets are minimal if goal and obstacle refinements are
+        minimal.
 
         Consider the goal refinement presented in
         \in{Figure}[fig:make_up_water_provided]. The obstruction superset for
@@ -568,17 +569,18 @@
         	{Refinement of \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.}
           {\externalfigure[../images/chap4/make_up_water_provided.pdf]}
 
-        An entailment superset somewhat corresponds to the {\it cut set} of a
-        fault tree \cite[Bed01,Lam09]. However, a first difference is that a
-        cut set yields all combinations of leaf events causing the root event
-        to occur whereas an obstruction superset yields all combinations of
-        leaf obstacles causing the corresponding goal in the goal model to be
-        obstructed. The propagation must therefore continue bottom-up through
-        the goal model with specific propagation rules to assess the severity
-        of obstruction consequences\emdash{}see Step 2 and Step 3, not found in
-        Fault Tree Analysis. Another difference is that the tree nodes here are
-        formalizable goal/obstacle specifications, linked by entailment
-        relationships among levels, rather than event labels.
+        \indentation An entailment/obstruction superset somewhat corresponds to
+        the {\it cut set} of a fault tree \cite[Bed01,Lam09]. However, a cut
+        set yields all combinations of leaf events causing the root event to
+        occur, like an entailment superset, whereas an obstruction superset
+        yields all combinations of leaf obstacles causing the corresponding
+        goal in the goal model to be obstructed. The propagation must therefore
+        continue bottom-up through the goal model with specific propagation
+        equations to assess the severity of obstruction consequences\emdash{}see
+        Step 2 and Step 3, not found in Fault Tree Analysis. Another difference
+        is that the tree nodes here are formalizable goal/obstacle
+        specifications, linked by entailment relationships among levels, rather
+        than event labels.
         
       \stopsubsubsection
       
@@ -602,16 +604,14 @@
         hypotheses through the disjunction of the conjunction of elements in
         each obstruction set. As the ordered BDD is canonical, equivalent
         formulas result in the same BDD. This makes specific treatments of
-        dependent entailment or obstruction sets unnecessary; An entailement/
-        obstruction superset with dependent entailement/obstruction sets will
-        result in the same BDD than an equivalent entailement/obstruction
-        superset with independent entailement/obstruction sets.
+        dependent entailment or obstruction sets unnecessary; a superset with
+        dependent sets will result in the same BDD than an equivalent superset
+        with independent sets.
         
-        In our example, for the goal \goal{Achieve [Make Up Pump
-        Motor On When Water Requested]} (see
-        \in{Figure}[fig:or_and_obstacle_refinement] and
-        \in{Figure}[fig:make_up_water_pump_on]) and its obstruction sets given
-        before, the corresponding boolean formula is:
+        In our example, consider the goal \goal{Achieve [Make Up Pump Motor On
+        When Water Requested]} (see \in{Figure}[fig:or_and_obstacle_refinement]
+        and \in{Figure}[fig:make_up_water_pump_on]). Its obstruction sets given
+        before, correspond to the following Boolean formula:
       
         \startformula\openup -5pt \startalign[n=1,align=left]
           \NC \text{\obstacle{Pump Mechanical Failure}} \NR
@@ -626,13 +626,13 @@
         probability values from single-point probability values for the
         variables \cite[Bed01]. \in{Figure}[fig:bdd] shows a BDD corresponding
         to the preceding formula. Each node represents a leaf obstacle. By
-        following the solid edges if the leaf obstacle is satisfied or the
-        dotted edges otherwise, we can determine whether the corresponding
-        Boolean formula is true or false. The terminal nodes indicate whether
-        the formula is satisfied (1) or not (0). For example, if
-        \obstacle{Diesel Generator Failure} and \obstacle{Primary Power Supply
-        Down} are both satisfied, the obstruction set is satisfied since the
-        BDD path ends at node (1).
+        following the solid edge if the corresponding leaf obstacle is
+        satisfied or the dotted edge otherwise, we can determine whether the
+        corresponding Boolean formula is {\it true} or {\it false}. The
+        terminal nodes indicate whether the formula is satisfied (1) or not
+        (0). For example, if \obstacle{Diesel Generator Failure} and
+        \obstacle{Primary Power Supply Down} are both satisfied, the
+        obstruction set is satisfied since the BDD path ends at node (1).
         
         \placefigure[bottom]
         	[fig:bdd]
@@ -641,9 +641,9 @@
         
         \noindent {\bf Step 2: Propagating probability values.} Every edge in
         the BDD has a probability label. The probability label for a solid edge
-        corresponds to the estimated satisfaction rate for the obstacle at its
-        source; for a dotted edge, the probability label corresponds to 1 minus
-        this probability.
+        corresponds to the estimated satisfaction rate of the leaf obstacle at
+        its source; for a dotted edge, the probability label corresponds to 1
+        minus this probability.
 
         The probability of a non-terminal node captures the probability that
         the formula corresponding to the sub-tree is satisfied. It is given by
@@ -769,12 +769,12 @@
       satisfaction rate of the obstacle or goal at each propagation step.
       Similarly to the approach presented in the previous section, this
       alternative procedure propagates the satisfaction rate from leaf
-      obstacles to root obstacles, then from root obstacle to obstructed leaf
-      goal, and finally from leaf goals to root goals. As opposed to the
+      obstacles to root obstacles, then from root obstacles to obstructed leaf
+      goals, and finally from leaf goals to root goals. As opposed to the
       previous approach, obstruction supersets are not computed here.
       
       \noindent{\bf Step 1: From leaf obstacles to root obstacles.} For an
-      obstacle $O$ refined into two subobstacles $SO_1, SO_2$, the satisfaction
+      obstacle $O$ refined through two subobstacles $SO_1, SO_2$, the satisfaction
       rate of the parent obstacle is given by:
       
       \startformula
@@ -784,11 +784,11 @@
       The term $P(O\mid SO_1, SO_2)$ captures weak entailment, as the
       combination of the subobstacles might not entail $O$ (See
       \in{Definition}[def:partial-obstacle-entailment]). This term has to be
-      estimated by experts and annotate the refinement.
+      estimated by domain experts and annotate the refinement.
       
-      An obstacle OR-refined by two subobstacles is satisfied if one of them is
-      satisfied. Therefore, an obstacle OR-refined by two subobstacles is {\it
-      not} satisfied if none of the subobstacle is satisfied. For a
+      An obstacle OR-refined through two subobstacles is satisfied if one of them is
+      satisfied. Therefore, an obstacle OR-refined through two subobstacles is {\it
+      not} satisfied if all subobstacle are {\it not} satisfied. For a
       OR-Refinement of the obstacle $O$ into two subobstacles $SO_1, SO_2$ the
       satisfaction rate of $O$ is given by:
       
@@ -813,9 +813,9 @@
             
       \noindent{\bf Step 3: From leaf goals to top goals.} In the most general
       case, the parent goal is satisfied if the two subgoals are satisfied, or
-      the satisfaction of the first is sufficient for satisfying the parent, or
-      the satisfaction of the second is sufficient for satisfying the parent.
-      This leads to the following {\it general propagation equation for
+      if the first is satisfied and sufficient for satisfying the parent, or if
+      the second is satisfied and sufficient for satisfying the parent. This
+      leads to the following {\it general propagation equation for
       AND-refinements}:
       
       \startformula\openup -5pt
@@ -828,9 +828,9 @@
       \stopformula
       
       As we focus our attention on a single system, no alternative
-      OR-refinements are to be considered. The satisfaction rate for a goal $G$
-      given that none of the subgoals is satisfied is then equal to zero and
-      the last term in the previous equation disappears. Moreover, if the
+      OR-refinements are to be considered. The satisfaction rate of a goal $G$
+      given that none of the subgoals is satisfied is then equal to zero;
+      thereby $P (G \mid \neg SG_1, \neg SG_2) = 0$. Moreover, if the
       refinement is complete, we have
       
       \startformula
@@ -848,17 +848,16 @@
       \stopformula
       
       wher the terms $P(G\mid ...)$ capture that a single subgoal may entail
-      the parent goal. Such probabilities are to be estimated by the experts
+      the parent goal. Such probabilities are to be estimated by domain experts
       and annotate the refinement.
       
       Depending on the type of refinement and goal, this propagation equation can
       be made further specific. \in{Table}[tab:propagation-rules] gives
-      propagation rules for a sample of common refinement patterns known to be
-      complete, consistent and minimal \cite[Dar95]; the subgoals there are
-      therefore independent.
+      propagation equations for a sample of common refinement patterns known to be
+      complete, consistent and minimal \cite[Dar95].
       
       \placetable[top][tab:propagation-rules]
-        {Propagation rules for common goal refinement patterns.}
+        {Propagation equations for common goal refinement patterns.}
         {\setupTABLE[c][each][align={right,lohi},frame=off,offset=0pt]
         \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
         \setupTABLE[r][2][toffset=4pt]
@@ -908,44 +907,46 @@
       \stopluacode
       
       The propagation procedure using obstruction supersets supports dependent
-      goals and obstacles. The pattern-based propagation procedure does not.
-      The computation of satisfaction rate of a goal or an obstacle only
-      depends on the refinees whereas the obstruction supersets capture the
-      refinement structure together with the leaf obstacles.
+      goals and obstacles. The pattern-based propagation procedure does not. In
+      the pattern-based propagation, the computation of satisfaction rate of a
+      goal or an obstacle only depends on the refinees whereas in the BDD-based
+      propagation the obstruction supersets also capture the refinement
+      structure.
       
+      \noindent
       For example, consider the goal model fragment in
-      \in{Figure}[fig:shared_obstacle]. The satisfaction rate for the obstacle
+      \in{Figure}[fig:shared_obstacle]. The satisfaction rate of the obstacle
       \obstacle{No Power Available} is
       $\ctxlua{round3(eps_o_power_supply_failure)}$. With the pattern-based
-      propagation procedure, the satisfaction rate for both subgoals is
+      propagation procedure, the satisfaction rate of both subgoals is
       $\ctxlua{round3(1 - eps_o_power_supply_failure)}$. The satisfaction rate
-      for the parent goal \goal{Achieve [Make Up Water Provided When
-      Requested]} is computed using the specialized propagation rule for a {\it
-      divide-and-conquer} refinement \cite[Dar95], leading to $\ctxlua{round3(1
-      - eps_o_power_supply_failure)} \times \ctxlua{round3(1 -
+      of the parent goal \goal{Achieve [Make Up Water Provided When
+      Requested]} is computed using the specialized propagation equation for a {\it
+      divide-and-conquer} refinement \cite[Dar95], leading to $\ctxlua{round2(1
+      - eps_o_power_supply_failure)} \times \ctxlua{round2(1 -
       eps_o_power_supply_failure)} = \ctxlua{round3((1 -
       eps_o_power_supply_failure) * (1 - eps_o_power_supply_failure))}$. This
       however counts the obstacles twice. In contrast, the obstruction superset
       for the parent goal is $\{\{\text{\obstacle{No Power Available}}\}\}$.
       The probability to satisfy the obstruction superset is
-      $\ctxlua{round3(eps_o_power_supply_failure)}$. The satisfaction rate for
-      the goal is therefore $\ctxlua{round3(1 - eps_o_power_supply_failure)}$.
+      $\ctxlua{round2(eps_o_power_supply_failure)}$. The satisfaction rate of
+      the goal is therefore $\ctxlua{round2(1 - eps_o_power_supply_failure)}$.
 
       \placefigure[top]
       	[fig:shared_obstacle]
       	{Goal/obstacle model fragment for \goal{Achieve [Make Up Water Provided When Requested]}.}
         {\externalfigure[../images/chap4/shared_obstacle.pdf]}
-        
-      On the other hand, the pattern-based propagation procedure appears to be
+       
+      \indentation The pattern-based propagation procedure appears to be
       finer-grained as it supports weak entailments and weak obstructions.
       These need however to be elicited from domain experts. Using more
       specific propagation equation leads to more precise estimates, in
       particular when the refinement follows the {\it by-case} refinement
       pattern \cite[Dar95].
       
-      For example, consider the (hypothetical) refinement in
+      \noindent For example, consider the (hypothetical) refinement in
       \in{Figure}[fig:by_case]. Given independent obstruction sets, the
-      satisfaction rate for the goal \goal{Maintain [Water Level Above LOW]}
+      satisfaction rate of the goal \goal{Maintain [Water Level Above LOW]}
       will equal the product of the satisfaction rate of the subgoals. However,
       the refinement with only one subgoal satisfies the partial entailment
       condition. In other words, the probability that \goal{Maintain [Water
@@ -960,40 +961,45 @@
       	{By-case refinement for \goal{Maintain [Water Level Above LOW]}.}
         {\externalfigure[../images/chap4/by_case.pdf]}
       
-      The main difference between the two propagation procedures is about {\it
-      when} most of the computation occurs. With the BDD-based propagation
-      technique, most of the computation cost occurs at the construction of the
-      obstruction supersets for the considered goal. The computation of the
-      probability given an obstruction superset is very cheap in comparison.
-      With the pattern-based approach, the cost cannot be split in two smaller
-      procedures.
+      \indentation The main difference between the two propagation procedures
+      is about {\it when} most of the computation occurs. With the BDD-based
+      propagation technique, most of the computation cost occurs at the
+      construction of the obstruction supersets for the considered goal. The
+      computation of the probability given an obstruction superset is very
+      cheap in comparison. With the pattern-based approach, the cost cannot be
+      split in two smaller procedures. In particular,
       
-      As it will be seen in \in{Chapter}[chap:knowledge-uncertainty], the
-      BDD-based approach also enables fast computation of probability distributions.
-      To obtain probability distributions, we compute many obstruction
-      superset probabilities on the same obstruction superset, taking advantage
-      of the separation in two steps. 
+      \startitemize
       
-      As it will be seen in \in{Chapter}[runtime], The BDD-based procedure also
-      enables the runtime monitoring of satisfaction rates as the obstruction
-      superset is not computed at runtime.
+        \item As it will be seen in \in{Chapter}[chap:knowledge-uncertainty],
+        the BDD-based approach also enables fast computation of probability
+        distributions. To obtain probability distributions, we compute many
+        obstruction superset probabilities on the same obstruction superset,
+        taking advantage of the separation in two steps.
       
-      On a randomly generated model with 10.000 goals and 10.000 obstacles
-      (with 1000 obstruction links), the pattern-based computation takes about
-      13 seconds, whereas the BDD-based computation takes about 18 seconds.
-      However, computing the probability of the obstruction set takes only 5
-      milliseconds. Each experiment was performed 80 times and the observed
-      variance was very small (below 60 ms for the two propagations, and below
-      a tenth of a millisecond for the probability computation). All benchmarks
-      were performed using {\it BenchmarkDotNet} \cite[BDNET] on an Apple
-      MacBook Pro with a 3 GHz Intel Core i7, 16 GB of 1600 MHz DDR3 Ram, and
-      an Apple SSD drive.
+        \item As it will be seen in \in{Chapter}[runtime], the BDD-based
+        procedure also enables the runtime monitoring of satisfaction rates as
+        the obstruction superset is not computed at runtime.
       
-      The BDD-based procedure appears superior to the pattern-based procedure
-      as it is more efficient, thanks to the pre-computation of the BDD and to
-      the simpler equations, more general, as it does not depend on specific
-      refinement patterns, and requires less input from domain experts, as weak
-      entailment and weak obstructions are not considered.
+      \stopitemize
+      
+      \indentation On a randomly generated model with 10.000 goals and 10.000
+      obstacles (with 1000 obstruction links), the pattern-based computation
+      takes about 13 seconds, whereas the BDD-based computation takes about 18
+      seconds. However, computing the probability of the obstruction superset takes
+      only 5 milliseconds. Each experiment was performed 80 times and the
+      observed variance was very small (below 60 ms for the two propagations,
+      and below a tenth of a millisecond for the probability computation). All
+      benchmarks were performed using {\it BenchmarkDotNet} \cite[BDNET] on an
+      Apple MacBook Pro with a 3 GHz Intel Core i7, 16 GB of 1600 MHz DDR3 Ram,
+      and an Apple SSD drive.
+      
+      In conclusion, the BDD-based procedure appears superior to the
+      pattern-based procedure as it is more efficient, thanks to the
+      pre-computation of the BDD and to the simpler equations; more general, as
+      it does not depend on specific refinement patterns; and requires less
+      input from domain experts, as weak entailment and weak obstructions are
+      not considered.
       
     % \in{Figure}[fig:nb_goals] shows the mean time to compute the satisfaction
     % rate of a high-level goal on a randomly generated goal/obstacle model.
@@ -1038,10 +1044,10 @@
 
     This section shows how likely and critical risks are pointed out based on
     the estimated statisfaction rates for leaf obstacles (see
-    \in{Section}[sec:estimating_satrate]) and the satisfaction rate for the
+    \in{Section}[sec:estimating_satrate]) and the satisfaction rate of the
     obstructed high-level goals, as computed by one of the two propagation
     procedures (see \in{Section}[sec:computing_satrate]). These likely and
-    critical obstacles should be resolved in the next phase of risk control.
+    critical obstacles should be resolved in the next phase of obstacle control.
     
     The criticality of an obstacle is accordingly determined as the loss in
     satisfaction rate of some important high-level goals from the goal model.
@@ -1062,7 +1068,7 @@
     \stopdefinition
   
     An obstacle is said {\it acceptable} for a goal if it results in a
-    satisfaction rate for this goal.
+    satisfaction rate for this goal higher than its required threshold.
   
     \startdefinition{Acceptable obstacle}
   
@@ -1072,17 +1078,29 @@
   
     \stopdefinition
   
+    An obstacle is said to be {\it tolerable} if the goal's satisfaction rate
+    falls below some tolerable satisfaction rate but still above the required
+    satisfaction rate.
+  
+    \startdefinition{Tolerable obstacle}
+  
+      A probabilistic obstacle $O$ is {\it tolerable} for a goal $G$ if it
+      results in a satisfaction rate for the goal $G$ such that $TSR(G) < P(G) <
+      RSR(G)$.
+  
+    \stopdefinition
+  
     \noindent To evaluate obstacles criticality, we may proceed in two ways:
   
     \startitemize
 
-      \item {\bf Global impact analysis:} the satisfaction rate for {\it all}
+      \item {\bf Global impact analysis:} the satisfaction rate of {\it all}
       leaf obstacles are together propagated bottom-up in the goal graph to see
       how much the resulting statisfaction rate of higher-level goals deviates
       from their required satisfaction rate.
 
       \item {\bf Local impact analysis:} the consequence of a {\it single} leaf
-      obstacle is evaluated by up-propagation of the satisfaction rate for this
+      obstacle is evaluated by up-propagation of the satisfaction rate of this
       leaf obstacles, all other leaf obstacles being assigned a probability of
       $0$ (meaning that they are all assumed to never happen).
   
@@ -1096,13 +1114,13 @@
     \goal{Achieve [Make Up Water Provided When Loss Of Cooling]} is satisfied
     in $80.31\%$ of cases when all obstacles are considered. Local impact
     analysis reveals that the obstacle \obstacle{UPS Battery Failure} causes
-    the satisfaction rate for the root goal \goal{Achieve [Make Up Water
+    the satisfaction rate of the root goal \goal{Achieve [Make Up Water
     Provided When Loss Of Cooling]} to fall from $1$ to $.989$. With a required
     satisfaction rate of $.99$, the obstacle \obstacle{UPS Battery Failure} is
     critical for \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.
     
     The most critical obstacle for a goal is the obstacle that maximize the
-    violation severity for this goal.
+    violation severity.
   
     \startdefinition{Most critical obstacle}
   
@@ -1116,18 +1134,6 @@
     violation severity to drop below $0$. A set of obstacle is {\it the most
     critical set of obstacles} if no other set of obstacles of the same size
     causes a higher violation severity.
-  
-    An obstacle is said to be {\it tolerable} if the goal's satisfaction rate
-    falls below some tolerable satisfaction rate but still above the required
-    satisfaction rate.
-  
-    \startdefinition{Tolerable obstacle}
-  
-      A probabilistic obstacle $O$ is {\it tolerable} for a goal $G$ if it
-      results in a satisfaction rate of the goal $G$ such that $TSR(G) < P(G) <
-      RSR(G)$.
-  
-    \stopdefinition
     
   % \startdefinition{Severity of the consequences}
   % 
@@ -1146,17 +1152,28 @@
   % assigned to the root goal $G$.
   
   
-    Risks assessment can be presented using a {\it violation diagram} for early
-    criticality assessment. A violation diagram somewhat correspond to a risk
-    matrix \cite[Ayy14]; A risk matrix groups risk likelihood and criticality
-    in discrete categories. In a violation diagram, the risks are represented
-    in a two-dimensional plot showing the violation severity for a high-level
-    goal and probability of occurence of a leaf obstacle combination.
+    Obstacle assessment can be presented using a {\it violation diagram}. A
+    violation diagram somewhat correspond to a risk matrix \cite[Ayy14]; A risk
+    matrix groups risk likelihood and criticality in discrete categories. In a
+    violation diagram, the risks are represented in a two-dimensional plot
+    showing the violation severity for a high-level goal and probability of
+    occurence of a leaf obstacle combination.
+
+    In a violation diagram, the $x$-axis represents the probability of leaf
+    obstacle combination occurence; it is the product of the estimated
+    satisfaction rate of the leaf obstacles in the combination. The $y$-axis
+    captures the violation severity for the goal considering the leaf obstacles
+    in the combination.
   
     \in{Figure}[fig:violation_diagram_single_value] shows a violation diagram
     for the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}
     with the leaf obstacles from the obstacle model; here, the combinations
-    contains a single leaf obstacle.
+    contains a single leaf obstacle. We can see that most of
+    the obstacles taken alone have a zero violation severity; these are
+    therefore not critical for the system. Three obstacles are however
+    critical, namely \obstacle{Pump Mechanical Failure}, \obstacle{UPS Battery
+    Failure}, and \obstacle{Power Cabling Failure}. These critical obstacles
+    should be resolved in the next phase.
   
     \placefigure[here]
     	[fig:violation_diagram_single_value]
@@ -1164,18 +1181,6 @@
       {
         \externalfigure[../images/chap4/violation_diagram_single_value.pdf]
       }
-  
-    The $x$-axis represents the probability of leaf obstacle combination
-    occurence; it is the product of the estimated satisfaction rate for the
-    leaf obstacles in the combination. The $y$-axis captures the violation
-    severity for the goal considering the leaf obstacles in the combination.
-    
-    In \in{Figure}[fig:violation_diagram_single_value], we can see that most of
-    the obstacles taken alone have a zero violation severity; these are
-    therefore not critical for the system. Three obstacles are however
-    critical, namely \obstacle{Pump Mechanical Failure}, \obstacle{UPS Battery
-    Failure}, and \obstacle{Power Cabling Failure}. These critical obstacles
-    should be resolved in the next phase.
   
     Criticality assessment should be an iterative process. Once the most likely
     and critical obstacle combinations of size $i$ are resolved, a new
@@ -1186,16 +1191,16 @@
     \in{Figure}[fig:violation_diagram_single_value2] shows a violation diagram
     for the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}
     considering pairs of obstacles, i.e. combinations of size $2$. Among the 91
-    pairs of leaf obstacles, 39 are critical; 36 contains a critical obstacle
-    identified with the previous violation diagram in
+    pairs of leaf obstacles, 39 are critical; there are 36 pairs that contains
+    a critical obstacle identified with the previous violation diagram in
     \in{Figure}[fig:violation_diagram_single_value]. 3 pairs of leaf obstacles
-    are critical and do not contain an obstacle critical alone, namely,
+    are critical and do not contain an obstacle critical alone. Those are
     (\obstacle{Pump Electrical Failure} and \obstacle{Alarm Not Raised And Low
     Water}), (\obstacle{Pump Electrical Failure}, \obstacle{Valve Mechanical
     Failure}), and (\obstacle{Pump Electrical Failure}, \obstacle{Valve
-    Electrical Failure}). In our experience, we observed that likely and
-    critical obstacle combinations are often caused only by a subset of likely
-    and critical obstacle.
+    Electrical Failure}). In our experience, we observed that most of the
+    likely and critical obstacle combinations are caused only by a subset of
+    these.
   
     \placefigure[bottom]
     	[fig:violation_diagram_single_value2]
@@ -1204,26 +1209,26 @@
         \externalfigure[../images/chap4/violation_diagram_single_value2.pdf]
       }
     
-    There is a multi-criteria optimization problem here as we are looking for
-    minimal sets of leaf obstacles that maximize the severity of goal
-    violations. To solve the optimization problem, we can naïvely generate all
-    possible leaf obstacle combinations. The violation severity $SV (G)$ is
-    then computed for the root goal $G$. The most critical combinations are
+    \indentation There is a multi-criteria optimization problem here as we are
+    looking for minimal sets of leaf obstacles that maximize the severity of
+    goal violations. To solve the optimization problem, we can naïvely generate
+    all possible leaf obstacle combinations. The violation severity $SV (G)$ is
+    then computed for the root goal $G$. Most critical combinations are
     identified by sorting the leaf obstacle combinations by violation severity.
 
-    A most critical obstacle combination is {\it Pareto efficient} for the size
-    of the combination; No other combination cause a higher violation severity.
-    The set of leaf obstacle combinations that maximizes the severity defines a
-    {\it Pareto front}; it is the set containing the most critical obstacle
-    combinations. Efficient algorithms for generating {\it Pareto fronts} are
-    available \cite[Bor01,Kun75]. These algorithms and the specific structure
-    of our problem suggests that our generation of leaf obstacle combinations
-    and their ranking by severity could thereby be optimized in order to scale
-    up for larger systems.
+    Note that a \quote{most critical obstacle combination} is {\it Pareto
+    efficient} for the size of the combination; that is no other combination
+    cause a higher violation severity. The set of leaf obstacle combinations
+    that maximizes the severity defines a {\it Pareto front}; it is the set
+    containing the most critical obstacle combinations. Efficient algorithms
+    for generating {\it Pareto fronts} are available \cite[Bor01,Kun75]. These
+    algorithms and the specific structure of our problem suggests that our
+    generation of leaf obstacle combinations and their ranking by severity
+    could thereby be optimized in order to scale up for larger systems.
   
     The techniques presented in this chapter consider a single high-level goal
     only. In practice, several high-level goals might be competing. In such
-    situations, the satisfaction rate for these high-level goals are to be
+    situations, the satisfaction rate of these high-level goals are to be
     combined using a normalized weighted sum in order to apply the techniques
     as if there was only a single aggregated high-level goal. The weights in
     this aggregation correspond to the relative priority of those high-level
@@ -1237,15 +1242,15 @@
     This chapter showed how likely and critical risks are pointed out to focus
     the resolution step on important obstacle combinations. The satisfaction
     rates of leaf obstacles are first estimated by domain experts, possibly
-    multiple ones to be combined to produce more accurate estimates. The leaf
-    estimates are then up-propagated through the obstacle and the goal models
-    to compute the satisfaction rate of important high-level goals. The chapter
-    presented two propagation techniques: a BDD-based approach and a
+    multiple ones to be combined in order to produce more accurate estimates.
+    The leaf estimates are then up-propagated through the obstacle and goal
+    models to compute the satisfaction rate of important high-level goals. The
+    chapter presented two propagation techniques: a BDD-based approach and a
     pattern-based one. The BDD-based approach is more efficient, more general
-    and requires less input from domain experts; the Pattern-Based approach
+    and requires less input from domain experts; the Pattern-based approach
     provides finer-grained estimates. The computed satisfaction rate of the
     high-level goals is then compared with their respective required
-    satisfaction rates. Obstacles causing the estimated satisfaction rate to
+    satisfaction rates. Obstacles causing the computed satisfaction rate to
     fall below the required satisfaction rate of these high-level goals are the
     critical obstacles to be resolved in the next phase of risk control.
     Violation diagrams captures likely and critical obstacle combinations.

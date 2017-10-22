@@ -36,10 +36,10 @@
     specification. The latter is defined as a measure over a probabilistic
     behavior model. The satisfaction rate of a goal is defined as the lowest
     state probability to satisfy the goal's specification whereas the
-    satisfaction rate for an obstacle is defined as the highest state
+    satisfaction rate of an obstacle is defined as the highest state
     probability to satisfy the obstacle's specification. The refinement
     structure connecting non-probabilistic goals and obstacles is generalized
-    to probabilistic goals; thereby the satisfaction arguments and the
+    to probabilistic goals; thereby the satisfaction arguments and
     conditions imposed by the refinement structure are extended to the
     probabilistic framework. Specification patterns for probabilistic goals are
     also introduced to ease formal specification. As a result, the precise
@@ -80,7 +80,7 @@
       specifying probabilistic assertions.
 	     
       The reader familiar with $\sigma$-algebras, probability spaces,
-      Markov-chains and PCTL/PCTL* logic may skip this section. The background
+      Markov chains and PCTL/PCTL* logic may skip this section. The background
       recalled here is largely inspired from \cite[Bai08] where details and
       proofs can be found.
       
@@ -102,9 +102,9 @@
         
         \startdefinition{Measurable set}
         
-        A set is measurable if a corresponding $\sigma$-algebra
-        exists; a probability measure over that $\sigma$-algebra then
-        quantifies the probability of satisfying an assertion.
+          A set is {\it measurable} if a corresponding $\sigma$-algebra exists;
+          a probability measure over that $\sigma$-algebra then quantifies the
+          probability of satisfying an assertion.
        
         \stopdefinition
        
@@ -218,6 +218,11 @@
         measure are provided. A Markov chain no longer requires a probability
         measure function to be provided for all combinations. This makes our
         characterization usable in practical applications.
+        
+        Note that the probability measure is defined here over a Markov chain
+        that must not necessarily be explicitely specified; we assume that such
+        Markov chain exists and captures the behaviors exhibited by the system
+        in order to make the semantic further precise.
                     
         A {\it Markov Chain} is a state machine where transitions between
         states are decorated by probabilities. The successor of a state is
@@ -283,7 +288,7 @@
         behaviors {\ss (Water\-Pump\-On, Water\-Pump\-Off, Water\-Pump\-On,
         Water\-Pump\-Off,...)} and {\ss (Water\-Pump\-On, Water\-Pump\-Off,
         Water\-Pump\-On, Water\-Pump\-On, ...)} but not {\ss (Water\-Pump\-On,
-        Water\-Pump\-On, Water\-Pump\-Off,...)}.
+        {\bf Water\-Pump\-On}, Water\-Pump\-Off,...)}.
         
         The $\sigma$-algebra associated with the Markov chain is the smallest
         $\sigma$-algebra that contains all the cylinder sets spanned by all
@@ -299,7 +304,7 @@
         (Water\-Pump\-On, Water\-Pump\-Off)} will be given by
         
         \startformula
-        	Pr(Cyl({\ss WaterPumpOn,WaterPumpOff})) = 1\times.99
+        	Pr(Cyl({\ss WaterPumpOn,WaterPumpOff})) = 1\times.7
         \stopformula
         
         This characterization provides a pratical way of determining the
@@ -327,10 +332,7 @@
         the set of possible behaviors starting in $s$.
         
         This section introduced the formal semantic that will be used for
-        probabilistic goals and obstacles in the next section. The probability
-        measure is defined over a Markov chain that must not necessarily be
-        explicitely specified; we assume that such Markov chain exists and
-        captures the behaviors exhibited by the system.
+        probabilistic goals and obstacles in the next section. 
         
       \stopsubsection
     
@@ -357,13 +359,15 @@
         PCTL {\it state formulas} are built using standard logic connectives
         (such as $\wedge$, $\vee$, $\neg$, $\rightarrow$, $\leftrightarrow$)
         over atomic propositions. A state formula can include the probability
-        operator ${\blackboard{}P}_I(\psi)$ where $\psi$ is a behavior formula, and
-        $I \subseteq [0,1]$ is a non-empty interval. The behavior formulas
-        are built using the temporal operators (such as $\ltlF$, $\ltlG$,
-        $\ltlW$, $\ltlU$) over state formulas. Boolean combinations of behavior
-        formulas are not allowed in PCTL, but are allowed in PCTL*. PCTL* is
-        strictly more expressive than PCTL. All formulas expressed in LTL can
-        be expressed in PCTL* but not in PCTL \cite[Bai08].
+        operator ${\blackboard{}P}_I(\psi)$ where $\psi$ is a behavior formula,
+        and $I \subseteq [0,1]$ is a non-empty interval;
+        ${\blackboard{}P}_I(\psi)$ is {\it true} for a state $s$ if $Pr^s(\psi)
+        \in I$. The {\it behavior formulas} are built using the temporal
+        operators (such as $\ltlF$, $\ltlG$, $\ltlW$, $\ltlU$) over state
+        formulas. Boolean combinations of behavior formulas are not allowed in
+        PCTL, but are allowed in PCTL*. PCTL* is strictly more expressive than
+        PCTL. All formulas expressed in LTL can be expressed in PCTL* but not
+        in PCTL \cite[Bai08].
         
         For convenience, intervals for the probabilistic operators are often
         abbreviated, e.g. ${\blackboard{}P}_{\geq .5}(\psi)$ denotes
@@ -499,7 +503,7 @@
           \ltlG\,\ltlG_{\geq 30\,min}(WaterLevel > LOW)
         \stopformula  
         
-        This deidealized goal states that the water level is above {\ss LOW}
+        This deidealized goal states that the water level shall be above {\ss LOW}
         for at least 30 minutes. States are more likely to satisfy this
         assumption partially.
         
@@ -530,20 +534,20 @@
         \stopdefinition
             
         The definitions above provide the basis for probabilistic goals. The
-        latter are annotated with an {\it estimated} satisfaction rate and a
+        latter are annotated with a {\it computed} satisfaction rate and a
         {\it required} satisfaction rate.
             
-        \startdefinition[dfn:esr]{Estimated goal satisfaction rate}
+        \startdefinition[dfn:esr]{Computed goal satisfaction rate}
         
-          The {\it estimated satisfaction rate} (ESR) of a goal is the
+          The {\it computed satisfaction rate} (CSR) of a goal is the
           satisfaction rate of this goal in view of its possible obstructions.
 
         \stopdefinition
           
-        The ESR is computed from the goal/obstacle models;
-        \in{Chapter}[chap:assessing] will describe how estimated satisfaction
+        The CSR is computed from the goal and obstacle models;
+        \in{Chapter}[chap:assessing] will describe how computed satisfaction
         rates for high-level goals are computed from the estimated satisfaction
-        rate of obstacles.
+        rate of leaf obstacles.
                   
         In our running example, the water level might not be within the
         tolerable limits for various reasons, e.g., a leak in the pool, some
@@ -566,8 +570,8 @@
         The ESR shall be ideally above the RSR. Analysts might introduce
         a {\it Tolerable Satisfaction Rate} (TSR) above the required
         satisfaction rate to capture a buffer zone between required and
-        desirable statisfaction rates. With such buffer zone, the ESR must be
-        above the RSR and shall ideally be above the TSR. 
+        desirable statisfaction rates. With such buffer zone, the ESR shall be
+        above the RSR and should ideally be above the TSR. 
                           
         For example, we might require that the temperature of our spent fuel
         pool does not exceed 54°C for more than 20 minutes in 95\% of cases.
@@ -586,7 +590,7 @@
         Note that non-probabilistic goals are generalized here; for such goals
         we have: $RSR (G) = 1$.
 		       
-        Given the estimated satisfaction rate $P(G)$ and the required
+        Given the computed satisfaction rate $P(G)$ and the required
         satisfaction rate $RSR(G)$ of a goal, we can measure the gap between
         these satisfaction rates. If $P(G) \geq RSR(G)$, the goal's required
         satisfaction threshold is reached; if $P(G) < RSR(G)$, it is not; the
@@ -664,14 +668,16 @@
         satisfaction. The completeness, consistency and minimality conditions
         in \in{Section}[sec:background_goal] are generalized as follows.
         
-        A refinement of probabilistic goals is {\it complete} if the
+        \startitemize
+        
+        \item A refinement of probabilistic goals is {\it complete} if the
         satisfaction of the subgoals is sufficient for the satisfaction of the
         parent goal.
 			
         \startdefinition{Complete refinement}
 			
           A refinement of goal $G$ into subgoals $SG_1, ..., SG_n$ is said to
-          be complete iff
+          be {\it complete} iff
   			
           \startformula
 					  P (G\mid SG_1, ..., SG_n, Dom) = 1
@@ -679,13 +685,13 @@
 
         \stopdefinition
 		
-			  A refinement of probabilistic goals is {\it consistent} if at
+			  \item A refinement of probabilistic goals is {\it consistent} if at
 			  least one behavior satisfies all subgoals and domain properties.
 
 			  \startdefinition{Consistent refinement}
 			
           A refinement of a goal $G$ into subgoals $SG_1, ..., SG_n$ is said to
-          be consistent iff
+          be {\it consistent} iff
   			
           \startformula
 					  P (SG_1, ..., SG_n, Dom) > 0
@@ -693,13 +699,13 @@
 
         \stopdefinition
 		
-			  A refinement of probabilistic goals is {\it minimal} if
+			  \item A refinement of probabilistic goals is {\it minimal} if
 			  removing any subgoal from the refinement hinder its completeness.
 
 			  \startdefinition{Minimal refinement}
 			
           A refinement of a goal $G$ into subgoals $SG_1, ..., SG_n$ is said to
-          be minimal iff
+          be {\it minimal} iff
   			
           \startformula
 					  P (G\ \mid \bigwedge_{j\neq i} SG_j, Dom) < 1\hskip1cm \text{for all $i$ s.t. $1 \leq i \leq n$}
@@ -707,23 +713,19 @@
 
         \stopdefinition
         
+        \stopitemize
+        
         A refinement of probabilistic goals is said to be {\it correct} if it
         satisfies the completeness, consistency and minimality conditions.
         
-        \startdefinition{Correct refinement}
-
-          A {\it correct refinement} is complete, consistent and minimal.
-        
-        \stopdefinition
-			
-			  The completeness condition could be relaxed to allow for partial
+        The completeness condition could be relaxed to allow for partial
 			  refinements. In a partial refinement, the satisfaction of the subgoals
 			  does not fully guarantee the satisfaction of the parent goal.
 			
 			  \startdefinition{Partial refinement}
 				  
           A refinement of a goal $G$ into subgoals $SG_1, ..., SG_n$ is said to
-          be partial iff
+          be {\it partial} iff
     			
           \startformula
 					  0 < P (G\mid SG_1, ..., SG_n, Dom) < 1
@@ -739,7 +741,7 @@
 			  \startdefinition{Minimal partial refinement}
 				
           A partial refinement of goal $G$ into subgoals $SG_1, ..., SG_n$ is
-          said to be minimal iff
+          said to be {\it minimal} iff
     			
           \startformula
 					  P (G\ \mid \bigwedge_{j\neq i} SG_j, Dom) < P (G\ \mid \bigwedge_{j} SG_j, Dom)\hskip1cm \text{for all $i$ s.t. $1 \leq i \leq n$}
@@ -765,9 +767,6 @@
     			\stopformula
 
         \stopdefinition
-        
-        \noindent As expressed by the second condition, the boundary condition
-        $B\wedge Dom$ must be realizable by the environment.
 
       \stopsubsection
         
@@ -840,7 +839,7 @@
         \goal{Achieve [Make Up Pump Motor On When Water Requested]}.
         
         The AND/OR refinement structure in a correct goal model can be
-        exploited to syntactically determine whether two goals are independent.
+        exploited to syntactically determine whether two goals are weakly independent.
             
         \startproposition
 				  
@@ -957,7 +956,7 @@
         \stopformula
         
         has a state probability $.9$ in $s_1$; $.8$ in $s_2$; and $.7$ in
-        $s_3$. The satisfaction rate for this obstacle is the largest state
+        $s_3$. The satisfaction rate of this obstacle is the largest state
         probability, that is, $.9$. The system satisfies
 
         \startformula
@@ -980,12 +979,12 @@
         
         \stopdefinition
         
-        In our probabilistic framework, obstacles are annotated with an
+        In our probabilistic framework, leaf obstacles are annotated with an
         estimated satisfaction rate.
         
         \startdefinition{Estimated obstacle satisfaction rate}
 
-          The {\it estimated satisfaction rate} (ESR) of an obstacle is the
+          The {\it estimated satisfaction rate} (ESR) of a leaf obstacle is the
           satisfaction rate obtained from fine-grained estimates provided by
           domain experts.
 
@@ -993,15 +992,15 @@
         
         \noindent The ESR of leaf obstacles in obstacle refinement trees is
         provided by domain experts based on their experience or available data;
-        it is computed for higher-level obstacles. \in{Chapter}[chap:assessing]
-        will show how their computation proceeds by up-propagation through the
-        refinement trees.
+        The satisfaction rate of higher-level obstacles is computed from those
+        estimates; \in{Chapter}[chap:assessing] will show how their computation
+        proceeds by up-propagation through the refinement trees.
         
         Leaf obstacles are precise and ideally capture one single exceptionnal
         situation that is easier for the domain experts to estimate. The domain
         experts opinions and beliefs can be challenged with the precise
         characterization in terms of behaviors and states. It helps to reduce
-        the subjective estimates provided by the domain experts.
+        the subjectivity in the estimates provided by the domain experts.
         
         Obstacles are related to goals through the {\it obstruction} relation.
         An obstacle has to obstruct some goal, i.e., prevent the full
@@ -1036,10 +1035,6 @@
               P (O \mid Dom) > 0
             \stopformula
         
-            The condition $O \wedge Dom$ has to be realizable by the environment
-            monitoring the variables constrainted by the obstructed goal and
-            controlling the others.
-        
           \stopdefinition
         
         \stopitemize
@@ -1057,8 +1052,6 @@
           \stopformula
         
         \stopdefinition
-        
-        Unless explicit, the thesis consider strong goal obstructions.
               
 		  \stopsubsection
     
@@ -1071,7 +1064,7 @@
         
         \startitemize
         
-        \item An AND-refinement of a probabilistic obstacle is complete if the
+        \item An AND-refinement of a probabilistic obstacle is {\it complete} if the
         satisfaction of the subobstacles is sufficient for the satisfaction of
         the parent obstacle.
         
@@ -1086,7 +1079,7 @@
 
         \stopdefinition
 		
-			  \item An AND-refinement of a probabilistic obstacle is consistent if at
+			  \item An AND-refinement of a probabilistic obstacle is {\it consistent} if at
 			  least one behavior satisfies all subobstacles and domain properties.
         
         \startdefinition{Consistent AND-refinement}
@@ -1100,7 +1093,7 @@
 
         \stopdefinition
 		
-			  \item An AND-refinement of a probabilistic obstacle is minimal if
+			  \item An AND-refinement of a probabilistic obstacle is {\it minimal} if
 			  removing a subobstacle hinders the completeness of the refinement.
         
         \startdefinition{Minimal AND-refinement}
@@ -1129,7 +1122,7 @@
           
         \stopdefinition
         
-        \noindent This condition can be relaxed to support partial entailment.
+        \noindent This condition can be relaxed:
 		
 			  \startdefinition[def:partial-obstacle-entailment]{Weak entailment}
         
@@ -1164,9 +1157,9 @@
         [reference=ref:independence-obstacles,
          title={Independence among probabilistic obstacles}]
         
-        In our example, the probability for the relay of the water pump to fail
+        In our example, the probability for a mechanical failure of the water pump to fail
         does not depend on, e.g., the probability of a leak in the spent fuel
-        pool. Note such assumption must be carefully checked by domain experts.
+        pool. Such assumption must be carefully checked by domain experts.
         On the contrary, the satisfaction of a parent obstacle depends on the
         satisfaction of its children.
         
@@ -1251,13 +1244,16 @@
         
       \startformula
         
-        \ltlG \mathbb{P}_{\geq rsr}(C\rightarrow\Theta T)
+        \ltlG \mathbb{P}_{\geq rsr}(C\rightarrow\Theta T).
         
       \stopformula
         
-      where the assertion $\ltlG {\blackboard{}P}_{\geq rsr}(\phi)$ is
-      satisfied by a behavior $\pi$ if all states $s$ along this behavior
-      satisfy $\mathbb{P}^s_{\geq rsr}(\phi)$. To ease the specification of
+      As recall, the assertion $\ltlG {\blackboard{}P}_{\geq
+      rsr}(C\rightarrow\Theta T)$ is satisfied by a behavior $\pi$ if all
+      states $s$ along this behavior satisfy $Pr^s(C\rightarrow\Theta T) \geq
+      rsr$.
+      
+      To ease the specification of
       such probabilistic goals, we introduce the following shorthand notation
       similar to the operator \quote{leads to} introduced in \cite[Han94]
     
@@ -1300,10 +1296,10 @@
       
       \noindent\bold{Probabilistic {\bi Achieve} and {\bi Cease}}. An
       \italic{Achieve} goal (respectively \italic{Cease} goal) requires a
-      target condition to be true (respectively false) at some point in the
+      target condition to be {\it true} (respectively {\it false}) at some point in the
       future when a current condition is satisfied. The time elapsed between
       the states satisfying the current and target conditions must be bounded
-      for finite violability. In LTL, this is formalized as:
+      for finite violability. In M-LTL, this is formalized as:
       
       \startformula
         C \Rightarrow \ltlF_{\bowtie t} T \hskip.5cm\text{\it(Achieve)}
@@ -1313,7 +1309,7 @@
       
       where $\bowtie$ is a comparison operator such as $>, <, \leq, \geq$, or $=$.
       
-      This probabilistic version for an {\it Achieve} goal (respectively {\it
+      The probabilistic version for an {\it Achieve} goal (respectively {\it
       Cease} goal), states that a target condition is achieved (respectively
       not achieved) from a current condition with some probability above a
       specified threshold $p$. Such specification patterns are also sometimes
@@ -1346,10 +1342,12 @@
         C \Rightarrow \ltlG_{\bowtie t} \neg T \hskip.5cm\text{\it(Avoid)}
       \stopformula
       
-      The probabilistic counterpart to a {\it Maintain} states that the target
-      condition must hold with at least some given probability. For a
-      probabilistic {\it Avoid} goal, the target condition may not hold. This
-      can be formalized as
+      where $\bowtie$ is a comparison operator such as $>, <, \leq, \geq$, or $=$.
+      
+      The probabilistic version for a {\it Maintain} goal states that the
+      target condition must hold with at least some given probability threshold
+      $p$. For a probabilistic {\it Avoid} goal, the target condition may not
+      hold with at least a probability threshold $p$. This can be formalized as
       
       \startformula
         C \Rightarrow_{\geq p} \ltlG_{\bowtie t} T \hskip.5cm\text{\it(Maintain)}
@@ -1370,23 +1368,21 @@
   \startsection[title={Summary}]
   
     This chapter introduced probabilistic goals and probabilistic obstacles
-    together with a precise definition in terms of state and behaviors. This
+    together with a precise definition in terms of states and behaviors. This
     characterization helps reducing subjective estimates provided by domain
     experts. Correctness conditions on the goal/obstacle model structure were
     generalized to support both probabilistic goals and obstacles. The
     satisfaction arguments there were formulated in terms of contraints on
-    probabilities. The independence of probabilistic goals and obstacles is
-    important for accurate estimates. The chapter provided precise
-    characterization of the independence for probabilistic goals and obstacles.
-    It showed how such characterization might be enforced by leveraging the
-    refinement structure. The chapter also showed how the specification of
-    probabilistic goals may be facilitated by use of specification patterns to
-    enable formal analysis.
+    probabilities. The chapter provided precise characterization of the
+    independence for probabilistic goals and obstacles. It showed how such
+    characterization might be enforced by leveraging the refinement structure.
+    The chapter also showed how the specification of probabilistic goals may be
+    facilitated by use of specification patterns to enable formal analysis.
     
     This chapter provides the basis for the assessment and control techniques
     of probabilistic obstacles as elaborated in the next two chapters. In
     addition, the proposed characterization in terms of states and behaviors
-    enables the monitoring, at system runtime, the probabilistic obstacles for
+    enables the monitoring, at system runtime, of probabilistic obstacles for
     dynamic model adaptation, as \in{Chapter}[runtime] will show.
   
   \stopsection
