@@ -6,61 +6,70 @@
 
 \startchapter[reference=chap:tool_support,title={Tool support}]
 
-  The techniques presented in the previous chapters might require many
-  computations. For example, computing the satisfaction rate of high-level
-  goals together with their uncertainty margins typically requires at least
-  100.000 propagations to achieve reasonable precision. Manual propagation or
-  propagation using standard spreadsheet software is not feasible in practice.
-  Other examples include computing the most appropriate countermeasures, which
-  requires computing the satisfaction rate for every countermeasure
-  combination. Dedicated tools are thereby needed to apply the techniques in an
-  industrial and realistic setting. This chapter discusses the tools supporting
-  the techniques, used in the presented running examples and evaluated on
-  larger models in \in{Chapter}[chap:evaluation].
+  The techniques presented in the previous chapters involve a significant
+  amount of computation. For example, computing the satisfaction rate of
+  high-level goals together with their uncertainty margins typically requires a
+  large number of propagations to achieve reasonable precision. Manual
+  propagation or the use of standard spreadsheets appears not feasible in
+  practice. Other examples include the computation of most appropriate
+  countermeasures, which requires computing the satisfaction rate for every
+  countermeasure combination.
   
-  The chapter is organized as follows. \in{Section}[sec:kt_lang] describes the
-  KAOSTools specification language enabling the analyst to provide a textual
-  specification of the goal and obstacle models. \in{Section}[sec:kt_arch]
-  describes the architecture of the KAOSTools tool suite.
-  \in{Section}[sec:kt_tools] details the command-line tools available to the
-  risk and requirement analysis for applying the techniques.
+  Dedicated tools are thereby needed to apply our techniques in a realistic
+  setting. This chapter discusses the toolset, called KAOSTools, supporting our
+  techniques. These tools were used in the presented running examples troughout
+  the preceding chapters and evaluated on larger models in
+  \in{Chapter}[chap:evaluation].
   
-  All tools described in this chapter are written in C\# and runs on Windows,
+  Unlike \cite[Dar97], the proposed toolset is freely available together with
+  its source code enabling other researcher to easily reuse or extend the
+  tools; the toolset accepts a textual declaration of goal and obstacle models
+  that can be easily shared and integrated with existing versionning tools; the
+  proposed toolset was designed to run on remote servers through command-line
+  tools.
+  
+  This chapter is organized as follows. \in{Section}[sec:kt_lang] describes the
+  declaration language allowing analysts to provide a textual declaration of
+  the goal and obstacle models. \in{Section}[sec:kt_arch] describes the
+  architecture of the KAOSTools toolset. \in{Section}[sec:kt_tools] details the
+  command-line tools available for applying the techniques.
+  
+  All tools described in this chapter are written in C\# and run on Windows,
   Linux, and MacOS. The source code is freely available under MIT Licence
   \cite[Cai17b,Cai17d,Cai17f]. Packaged versions are also available in NuGet
   \cite[NuGet].
 
-  \startsection[reference=sec:kt_lang,title={KAOSTools Specification Language}]
+  \startsection[reference=sec:kt_lang,title={KAOSTools: the declaration language}]
   
-  The techniques presented in the previous chapter rely on a goal and an
-  obstacle model. To specify such models, the tools take as an input a textual
-  specification of these models. This section presents the specification
-  language.
+  The techniques presented in the previous chapters rely on a goal model and
+  its corresponding obstacle model. Such models are declared in a textual
+  format. This section presents the declaration language used for input to the
+  tools.
   
-  In the language, declaring an element starts with the keyword
-  \typeKAOSTool{declare} and ends with the keyword \typeKAOSTool{end}. All
-  elements have a unique identifier that is used to reference the element.
-  Attributes precisely specify each element. Attributes start with a keyword,
-  such as \typeKAOSTool{name} or \typeKAOSTool{definition}, and ends with a
+  In this language, element declaration start with the keyword
+  \typeKAOSTool{declare} and end with the keyword \typeKAOSTool{end}. All
+  elements have a unique identifier used to reference the element.
+  Attributes precisely declare each element. They start with a keyword,
+  such as \typeKAOSTool{name} or \typeKAOSTool{definition}, and end with a
   value, such as a string or an integer. The accepted values depend on the
   attribute.
   
-  The following describes the attributes for each element, such as goals and
-  obstacles, and provides examples of such specifications.
+  The following subsections describe the attributes for each element, such as
+  goals and obstacles, and provide examples of such declarations.
   
   \subsubject{Goals, soft goals, domain properties, and domain hypotheses}
   
   To declare a goal, the keyword \typeKAOSTool{declare} must be followed by the
-  keyword \typeKAOSTool{goal}. \in{Code}[code:goal_1] provides an example to
-  specify the goal \goal{Achieve [Make Up Water Provided When Loss Of
+  keyword \typeKAOSTool{goal}. \in{Code}[code:goal_1] provides an example of
+  declaring the goal \goal{Achieve [Make Up Water Provided When Loss Of
   Cooling]}. The unique identifier \typeKAOSTool{make_up_water_provided}
   immediately follows the keyword \typeKAOSTool{goal} between square brackets.
-  Comments starts with a dash (\typeKAOSTool{#}) and ends at the end of the
-  line. \in{Table}[tab:goal_attributes] describes the attributes for specifying
+  Comments start with a dash (\typeKAOSTool{#}) and end at the end of the
+  line. \in{Table}[tab:goal_attributes] describes the attributes for declaring
   goals.
   
     \placecode[][code:goal_1]
-    {Specification of the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.}
+    {Declaration of the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.}
     {\startKAOSTool
       declare goal [ make_up_water_provided ]
         name "Achieve [Make Up Water Provided When Loss Of Cooling]"
@@ -72,7 +81,7 @@
     \stopKAOSTool}
   
   \placetable[][tab:goal_attributes]
-  {Attributes for goal specification}
+  {Attributes for goal declarations}
   {
       \setupTABLE[c][each][align={right,lohi},frame=off,offset=0pt]
       \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
@@ -83,9 +92,9 @@
       \setupTABLE[c][3][width=6cm]
       \switchtobodyfont[small]
       \bTABLE
-  \bTR \bTD Attribute                   \eTD \bTD Definition                  \eTD \bTD Accepted value \eTD \eTR
+  \bTR \bTD Attribute                   \eTD \bTD Used for                  \eTD \bTD Accepted value \eTD \eTR
   \bTR \bTD \typeKAOSTool{name}         \eTD \bTD Name                        \eTD \bTD String \eTD \eTR
-  \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Definition                  \eTD \bTD String \eTD \eTR
+  \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Used for                  \eTD \bTD String \eTD \eTR
   \bTR \bTD \typeKAOSTool{refinedby}    \eTD \bTD Goal AND-Refinement          \eTD \bTD List of identifiers \eTD \eTR
   \bTR \bTD \typeKAOSTool{rsr}          \eTD \bTD Required Satisfaction Rate  \eTD \bTD Number or percentage \eTD \eTR
   \bTR \bTD \typeKAOSTool{obstructedby} \eTD \bTD Goal obstruction            \eTD \bTD Identifier \eTD \eTR
@@ -94,42 +103,42 @@
   \eTABLE
   }
   
-  \noindent {\bf Goal refinement.} Goal refinements are specified using the
-  keyword \typeKAOSTool{refinedby}. The list of identifiers shall refer to other
-  goals, domain properties or domain hypotheses; These forms an AND-Refinement.
-  If an identifier is not explicitly defined, a goal with the corresponding
+  {\it Goal refinements} are declared using the
+  keyword \typeKAOSTool{refinedby}. The list of identifiers refers to other
+  goals, domain properties or domain hypotheses in the corresponding AND-Refinement.
+  If an identifier is not explicitly defined, a goal with corresponding
   identifier is added to the model. For example, the \in{Code}[code:goal_1]
-  specify a single AND-Refinement with two subgoals,
+  specifies a single AND-Refinement with two subgoals,
   \typeKAOSTool{response_to_loss_of_cooling} and
   \typeKAOSTool{pump_on_when_activated}.
   
-  Multiple \typeKAOSTool{refinedby} attributes are used to specify alternative
-  refinements. Goal refinements might be decorated with their refinement
+  Multiple \typeKAOSTool{refinedby} attributes are used to declare alternative
+  refinements. Goal refinements can be decorated with their refinement
   pattern using the name of the pattern between square brackets, as seen in
-  \in{Code}[code:goal_2]. In addition, a partial entailment can be specified
+  \in{Code}[code:goal_2]. In addition, a partial entailment can be declared
   for the subgoals; the probability to satisfy the parent goal alone is
-  specified between brackets after the subgoal identifier.
-  \in{Code}[code:goal_2] specify that subgoal
+  declared between brackets after the subgoal identifier.
+  \in{Code}[code:goal_2] declare that subgoal
   \typeKAOSTool{amb_mobilized_when_amb_allocated_on_ road} satisfy its parent
   goal with a probability $.8$.
   
   \placecode[][code:goal_2]
-      {Specification of the refinement pattern and partial entailment.}
+      {Declaration of the refinement pattern and partial entailment.}
       {\startKAOSTool
       refinedby [case]
         amb_mobilized_when_amb_allocated_on_road [.8], 
         amb_mobilized_when_amb_allocated_at_station [.2]
       \stopKAOSTool}
       
-  Similarly to goals, soft goals can be specified using the keywork
-  \typeKAOSTool{softgoal}. The accepted attributes are \typeKAOSTool{name} and
+  Similarly to goals, soft goals can be declared using the keywork
+  \typeKAOSTool{softgoal} with attributes \typeKAOSTool{name} and
   \typeKAOSTool{definition}. Domain properties and domain hypotheses are
-  specified using the keyword \typeKAOSTool{domprop} and \typeKAOSTool{domhyp}
-  respectively. The accepted attributes are summarized in
+  declared using the keyword \typeKAOSTool{domprop} and \typeKAOSTool{domhyp},
+  respectively. The available attributes are summarized in
   \in{Table}[tab:dom_attributes].
   
   \placetable[here][tab:dom_attributes]
-  {Attributes for domain properties and hypotheses specification}
+  {Attributes for declarations of domain properties and hypotheses}
   {
       \setupTABLE[c][each][align={right,lohi},frame=off,offset=0pt]
       \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
@@ -140,23 +149,23 @@
       \setupTABLE[c][3][width=6cm]
       \switchtobodyfont[small]
       \bTABLE
-  \bTR \bTD Attribute                   \eTD \bTD Definition                  \eTD \bTD Accepted value \eTD \eTR
+  \bTR \bTD Attribute                   \eTD \bTD Used for                  \eTD \bTD Accepted value \eTD \eTR
   \bTR \bTD \typeKAOSTool{name}         \eTD \bTD Name                        \eTD \bTD String \eTD \eTR
-  \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Definition                  \eTD \bTD String \eTD \eTR
+  \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Used for                  \eTD \bTD String \eTD \eTR
   \bTR \bTD \typeKAOSTool{formalspec}   \eTD \bTD Formal specification        \eTD \bTD Formal specification \eTD \eTR
   \eTABLE
   }
   
   \subsubject{Obstacles} 
   
-  Obstacles are specified using the keyword \typeKAOSTool{obstacle} followed by
+  Obstacles are declared using the keyword \typeKAOSTool{obstacle} followed by
   their unique identifier between square brackets. \in{Code}[code:obstacle_1]
-  shows the specification for the non-leaf obstacle \obstacle{Valve Not Opened
+  shows the declaration for the non-leaf obstacle \obstacle{Valve Not Opened
   And Requested}. \in{Table}[tab:obstacle_attributes] shows the attributes
-  available to specify obstacles.
+  available for declaring obstacles.
   
   \placetable[here][tab:obstacle_attributes]
-  {Attributes for obstacle specification}
+  {Attributes for obstacle declaration}
   {
       \setupTABLE[c][each][align={right,lohi},frame=off,offset=0pt]
       \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
@@ -167,9 +176,9 @@
       \setupTABLE[c][3][width=6cm]
       \switchtobodyfont[small]
       \bTABLE
-  \bTR \bTD Attribute                   \eTD \bTD Definition                  \eTD \bTD Accepted value \eTD \eTR
+  \bTR \bTD Attribute                   \eTD \bTD Used for                  \eTD \bTD Accepted value \eTD \eTR
   \bTR \bTD \typeKAOSTool{name}         \eTD \bTD Name                        \eTD \bTD String \eTD \eTR
-  \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Definition                  \eTD \bTD String \eTD \eTR
+  \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Used for                  \eTD \bTD String \eTD \eTR
   \bTR \bTD \typeKAOSTool{refinedby}    \eTD \bTD Obstacle AND-Refinement     \eTD \bTD List of identifiers \eTD \eTR
   \bTR \bTD \typeKAOSTool{resolvedby}   \eTD \bTD Obstacle resolution         \eTD \bTD Identifier \eTD \eTR
   \bTR \bTD \typeKAOSTool{formalspec}   \eTD \bTD Formal specification        \eTD \bTD Formal specification \eTD \eTR
@@ -177,15 +186,15 @@
   \eTABLE
   }
       
-  \noindent {\bf Obstacle refinements.} The specification of obstacle
-  refinements is similar to the specification of goal refinements. However,
+  \noindent {\bf Obstacle refinements.} The declaration of obstacle
+  refinements is similar to the declaration of goal refinements. The
   identifiers must refer to obstacles, domain properties or domain hypotheses.
-  If an identifier is not explicitly defined, a new obstacle with the
+  If an identifier is not explicitly defined, a new obstacle with 
   corresponding identifier is added to the model. \in{Code}[code:obstacle_1]
-  shows 4 alternative refinements with a single obstacle each.
+  declares four alternative refinements each with a single obstacle.
   
   \placecode[][code:obstacle_1]
-      {Specification of the obstacles \obstacle{Valve Not Opened And Requested}.}
+      {Declaration of the obstacles \obstacle{Valve Not Opened And Requested}.}
       {\startKAOSTool
       declare obstacle [ valve_not_open ]
         name "Valve Not Opened And Requested"
@@ -196,15 +205,15 @@
       end
       \stopKAOSTool}
   
-  \noindent {\bf Goal obstructions.} Obstructions to goals are specified using
-  the keyword \typeKAOSTool{obstructedby}. The value of the attribute is a
+  \noindent {\bf Goal obstructions.} Obstructions to goals are declared using
+  the keyword \typeKAOSTool{obstructedby}. The value of this attribute is a
   single identifier referring to an obstacle\emdash{}if not explicitly
   defined, a new obstacle will be added. \in{Code}[code:goal_3] shows how the
   obstruction of \goal{Achieve [Make Up Pump Motor On When Water Requested]} is
-  specified.
+  declared.
   
   \placecode[][code:goal_3]
-      {Specification of the goal \goal{Achieve [Make Up Pump Motor On When Water Requested]}.}
+      {Declaration of the goal \goal{Achieve [Make Up Pump Motor On When Water Requested]}.}
       {\startKAOSTool  
         declare goal [ pump_motor_on ]
           ...
@@ -212,17 +221,17 @@
         end
       \stopKAOSTool}
   
-  \noindent {\bf Obstacle satisfaction rate.} Leaf obstacles are estimated by
-  experts. The specification language supports both single-value and
+  \noindent {\bf Obstacle satisfaction rates.} Leaf obstacles are estimated by
+  experts. The declaration language supports both single-value and
   multi-value satisfaction rates. \in{Code}[code:obstacle_2] shows the
-  specification of the obstacle \obstacle{Valve Mechanical Failure} with a
-  single-value $.002$ satisfaction rate, whereas \in{Code}[code:obstacle_3]
-  shows the specification of the obstacle \obstacle{Pump Mechanical Failure}
+  declaration of the obstacle \obstacle{Valve Mechanical Failure} with a
+  single-value  satisfaction rate of $.002$, whereas \in{Code}[code:obstacle_3]
+  shows the declaration of the obstacle \obstacle{Pump Mechanical Failure}
   with a multi-value satisfaction rate. The supported multi-value satisfaction
   rates are summarized in \in{Table}[tab:multisatrate].
   
   \placecode[][code:obstacle_2]
-      {Specification of the obstacle \obstacle{Valve Mechanical Failure}.}
+      {Declaration of the obstacle \obstacle{Valve Mechanical Failure}.}
       {\startKAOSTool
       declare obstacle [ valve_failure ]
         name "Valve Mechanical Failure"
@@ -233,7 +242,7 @@
       \stopKAOSTool}
       
     \placecode[][code:obstacle_3]
-        {Specification of the obstacle \obstacle{Valve Not Opened When Valve Control Not Unavailable}.}
+        {Declaration of the obstacle \obstacle{Valve Not Opened When Valve Control Not Unavailable}.}
         {\startKAOSTool
 @experts.quantiles "(10%, 50%, 90%)"
 declare obstacle [ manual_opening_valve_failure ]
@@ -243,15 +252,15 @@ end
         \stopKAOSTool}
   
   As seen in \in{Chapter}[chap:knowledge-uncertainty], a quantile is a single
-  probability value attached to a cumulative probability. To specify the
-  cumulative probabilities, model attribute \typeKAOSTool{@experts.quantiles}
-  must be specified. For example, \in{Code}[code:obstacle_3] specify that
+  probability value attached to a cumulative probability. To declare the
+  cumulative probabilities, the model attribute \typeKAOSTool{@experts.quantiles}
+  must be provided. For example, \in{Code}[code:obstacle_3] specify that
   $10\%$ of the values are below $0.001$, $50\%$ are below $0.002$ and $90\%$
   of the values are below $0.003$. The model attribute
-  \typeKAOSTool{@experts.quantiles} shall only be specified once for the model.
+  \typeKAOSTool{@experts.quantiles} need only be declared once for the model.
   
   \placetable[here][tab:multisatrate]
-  {Supported multi-value satisfaction rates}
+  {Multi-value satisfaction rates}
   {
   \setupTABLE[c][each][align={right,lohi},frame=off,offset=0pt]
   \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
@@ -259,27 +268,29 @@ end
   \setupTABLE[r][2][toffset=4pt]
   \switchtobodyfont[small]
   \bTABLE[option=stretch]
-  \bTR \bTD Value                       \eTD \bTD Definition               \eTD \bTD Example \eTD \eTR
-  \bTR \bTD \typeKAOSTool{beta}         \eTD \bTD Beta Distribution        \eTD \bTD \typeKAOSTool{beta[2,4]}. A beta distribution with $\alpha = 2$ and $\beta = 4$. See \cite[Vos08] for details on the parameters $\alpha$ and $\beta$. \eTD \eTR
+  \bTR \bTD Value                       \eTD \bTD Used for               \eTD \bTD Example \eTD \eTR
+  \bTR \bTD \typeKAOSTool{beta}         \eTD \bTD Beta Distribution        \eTD \bTD \typeKAOSTool{beta[2,4]}. A beta distribution with $\alpha = 2$ and $\beta = 4$. See \cite[Vos08] for details on parameters $\alpha$ and $\beta$. \eTD \eTR
   \bTR \bTD \typeKAOSTool{uniform}      \eTD \bTD Uniform Distribution     \eTD \bTD \typeKAOSTool{uniform[.1,.3]}. A uniform distribution between $.1$ and $.3$. \eTD \eTR
   \bTR \bTD \typeKAOSTool{triangular}   \eTD \bTD Triangular Distribution  \eTD \bTD \typeKAOSTool{triangular[.1,.4,.6]}. A triangular distribution with a $.1$ min-value, $.6$ max-value and a $.4$ mode. \eTD \eTR
-  \bTR \bTD \typeKAOSTool{pert}         \eTD \bTD PERT Distribution        \eTD \bTD \typeKAOSTool{pert[.1,.4,.6]}. A PERT distribution with a $.1$ min-value, $.6$ max-value and a $.4$ mode. See \cite[Vos08] for details about the PERT distribution. \eTD \eTR
+  \bTR \bTD \typeKAOSTool{pert}         \eTD \bTD PERT Distribution        \eTD \bTD \typeKAOSTool{pert[.1,.4,.6]}. A PERT distribution with a $.1$ min-value, $.6$ max-value and a $.4$ mode. See \cite[Vos08] for details about PERT distributions. \eTD \eTR
   \bTR \bTD \typeKAOSTool{quantiles}    \eTD \bTD Quantiles                \eTD \bTD \typeKAOSTool{quantiles[.1,.4,.6]}. A list of quantiles. \eTD \eTR
   \eTABLE
   }
 
-  \noindent {\bf Obstacle resolutions.} Obstacles resolutions are specified
-  using the keyword \typeKAOSTool{resolvedby} followed by an identifier to a
-  goal\emdash{}if not explicitely defined, a new goal will be added.
-  \in{Code}[code:obstacle_2] shows the specification of the resolution by the
-  goal \typeKAOSTool{cooling_system_repaired}. The resolution tactic might be
-  specified between square brackets (\typeKAOSTool{restoration} in
-  \in{Code}[code:obstacle_2]), followed by the anchor goal
-  (\typeKAOSTool{make_up_water_provided} in the example).
+  \noindent {\bf Obstacle resolutions.} Obstacles resolutions are declared
+  using the keyword \typeKAOSTool{resolvedby} followed by a goal
+  identifier\emdash{}if not explicitely defined, a new goal will be added.
+  \in{Code}[code:obstacle_2] shows the declaration of the resolution of
+  obstacle \obstacle{Valve Mechanical Failure} by the goal
+  \typeKAOSTool{cooling_system_repaired}.
+  
+  Resolution tactics can be declared between square brackets (see
+  \typeKAOSTool{restoration} in \in{Code}[code:obstacle_2]), followed by the
+  anchor goal (\typeKAOSTool{make_up_water_provided} in the example).
   \in{Table}[tab:kt_rtact] summarizes the supported resolution tactics.
 
   \placetable[here][tab:kt_rtact]
-  {Supported multi-value satisfaction rates}
+  {Resolution tactics}
   {
   \setupTABLE[c][each][align={right,lohi},frame=off,offset=0pt]
   \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
@@ -287,7 +298,7 @@ end
   \setupTABLE[r][2][toffset=4pt]
   \switchtobodyfont[small]
   \bTABLE[option=stretch]
-  \bTR \bTD Resolution tactic                 \eTD \bTD Definition               \eTD \eTR
+  \bTR \bTD Resolution tactic                 \eTD \bTD Used for               \eTD \eTR
   \bTR \bTD \typeKAOSTool{substitution}       \eTD \bTD Goal substitution        \eTD \eTR
   \bTR \bTD \typeKAOSTool{prevention}         \eTD \bTD Obstacle prevention      \eTD \eTR
   \bTR \bTD \typeKAOSTool{obstacle_reduction} \eTD \bTD Obstacle reduction       \eTD \eTR
@@ -303,27 +314,27 @@ end
   
   \subsubject{Agents}
   
-  Agents are specified using the keyword \typeKAOSTool{agent} followed by their
+  Agents are declared using the keyword \typeKAOSTool{agent} followed by their
   unique identifier between square brackets. \in{Table}[tab:agent_attributes]
-  summarizes the attributes to specify agents. \in{Code}[code:agent_1] provides
-  an example of agent specification.
+  summarizes the attributes for agents. \in{Code}[code:agent_1] provides
+  an example of agent declaration.
         
   \placecode[here][code:agent_1]
-    {Specification of the agent \agent{Controlling Software}.}
+    {Declaration of the agent \agent{Controlling Software}.}
     {\startKAOSTool
     declare agent [ operator ]
       name "Operator"
     end
     \stopKAOSTool}
   
-  \noindent {\bf Agent assignments.} An agent assignment to a goal is specified
+  \noindent {\bf Agent assignments.} An agent assignment to a goal is declared
   using the keyword \typeKAOSTool{assignedto}. \in{Code}[code:agent_2] shows
   how the agent \agent{Operator} is assigned to the goal \goal{Achieve [Valve
-  Opened When Unavailable Due To Maintenance]}. If not explicitely defined, an
-  agent with the corresponding identifier is added to the model.
+  Opened When Unavailable Due To Maintenance]}. If not explicitly defined, an
+  agent with corresponding identifier is added to the model.
   
   \placecode[here][code:agent_2]
-    {Specification of the goal \goal{Achieve [Valve Opened When Unavailable Due To Maintenance]}.}
+    {Declaration of the goal \goal{Achieve [Valve Opened When Unavailable Due To Maintenance]}.}
     {\startKAOSTool
     declare goal [ manual_opening_of_valve ]
       name "Achieve [Valve Opened When Unavailable Due To Maintenance]"
@@ -333,7 +344,7 @@ end
     \stopKAOSTool}
   
   \placetable[here][tab:agent_attributes]
-  {Attributes for agent specification}
+  {Attributes for agent declaration}
   {
       \setupTABLE[c][each][align={right,lohi},frame=off,offset=0pt]
       \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
@@ -344,21 +355,28 @@ end
       \setupTABLE[c][3][width=6cm]
       \switchtobodyfont[small]
       \bTABLE
-  \bTR \bTD Attribute                   \eTD \bTD Definition                  \eTD \bTD Accepted value \eTD \eTR
+  \bTR \bTD Attribute                   \eTD \bTD Used for                  \eTD \bTD Accepted value \eTD \eTR
   \bTR \bTD \typeKAOSTool{name}         \eTD \bTD Name                        \eTD \bTD String \eTD \eTR
-  \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Definition                  \eTD \bTD String \eTD \eTR
+  \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Used for                  \eTD \bTD String \eTD \eTR
   \bTR \bTD \typeKAOSTool{type}         \eTD \bTD Whether the agent is a {\it software} or a {\it environment} agent.
      \eTD \bTD \typeKAOSTool{software} or \typeKAOSTool{environment} \eTD \eTR
   \eTABLE
   }
   
-  \subsubject{Predicates and formal specifications}
+  \subsubject{Predicates and formal declarations}
   
-  Formal specification of goals and obstacles can be provided using the keyword
+  Formal specifications of goals and obstacles can be provided using the keyword
   \typeKAOSTool{formalspec}. The language supports first-order, linear temporal
-  logic, assertions. A complete BNF grammar is available in
+  logic assertions. A complete BNF grammar is available in
   \in{Appendix}[chap:bnf]. \in{Code}[code:formalspec_1] provides an example of
-  a formal specification.
+  a formal specification\emdash{}here, the LTL formula 
+  
+  \startformula\startalign[n=1,align={left}]
+  
+    \NC \ltlF (dieselGeneratorRequested \NR\noalign{\vskip-.5em}
+    \NC \hskip1em \wedge \ltlG_{\geq 5 min} \neg (\exists g: DieselGenerator \cdot generatorStarted(g))) \NR
+  
+  \stopalign\stopformula
 
   \placecode[here][code:formalspec_1]
     {Formal specification of the obstacle \predicate{Diesel Generator Not Started}.}
@@ -375,14 +393,14 @@ end
     \stopKAOSTool} 
   
   The identifier \typeKAOSTool{generatorStarted} refers to a predicate with a
-  single argument. Predicates can be explicitly specified using the keyword
+  single argument. Predicates can be explicitly declared using the keyword
   \typeKAOSTool{predicate} followed by a unique identifier.
-  \in{Code}[code:pred_1] shows the specification of the predicate
+  \in{Code}[code:pred_1] shows the declaration of the predicate
   \predicate{GeneratorStarted}. \in{Table}[tab:predicate_attributes] provides
-  the attributes for specifying predicates.
+  the attributes for declaring predicates.
   
   \placecode[here][code:pred_1]
-    {Specification of the predicate \predicate{ValveOpened}.}
+    {Declaration of the predicate \predicate{ValveOpened}.}
     {\startKAOSTool
     declare predicate [ generatorStarted ]
       name "GeneratorStarted"
@@ -392,36 +410,35 @@ end
     \stopKAOSTool}  
   
   \noindent {\bf Arguments.} As seen in \in{Code}[code:pred_1], predicates
-  might have arguments. The formal specification of the predicate can refer to
-  the argument variables. In the example, the formal specification states that
+  may have arguments in a formal specification. In the example, the formal specification states that
   the predicate is true if the attribute \typeKAOSTool{Started} is true for the
   instance of \typeKAOSTool{DieselGenerator} provided as an argument. When
   referring to a predicate in a formal specification, the actual arguments must
-  match the order and the respective entity types specified in the 
+  match the order and the respective entity types declared in the 
   argument list.
   
   \subsubject{Entities, associations and types}
   
-  Formal specifications, in the end, refer to entities and associations to
-  express their truth value. All the referenced entities, entity attributes,
-  associations, association attributes and types are automatically inferred
+  Formal specifications refer to entities and associations to
+  express their truth value. All referenced entities, entity attributes,
+  associations, association attributes and types from the object model
+  associated with the considered goal model are automatically inferred
   from the formal specification of goals, domain properties, domain hypotheses,
-  obstacles, and predicates. This revealed to be particularly useful to check
-  whether formal specifications refer to the appropriate elements and avoid
+  obstacles, and predicates. This appears  particularly useful for checking
+  whether formal specifications refer to the appropriate elements and to avoid
   similar names (e.g. \typeKAOSTool{dieselGenerator} and
   \typeKAOSTool{diesel_generator}).
   
-  The analyst might enrich the object model by explicitly defining the
+  The analyst might enrich the object model by explicitly defining 
   elements. \in{Tables}[tab:entity_attributes],
-  \in{}[tab:association_attributes] and \in{}[tab:type_attributes] provides the
-  attributes for specifying entities, associations and given types. The
-  following briefly shows how an object model can be specified.
+  \in{}[tab:association_attributes] and \in{}[tab:type_attributes] provide the
+  attributes for declaring entities, associations and given types. 
   
   \startplacetable[location={page,none}]
     \startfloatcombination[nx=1,ny=4,after={\blank[10mm]}]
    
       \placetable[here][tab:predicate_attributes]
-      {Attributes for predicate specification}
+      {Attributes for predicate declaration}
       {
       \setupTABLE[c][each][align={right,lohi},frame=off,offset=0pt]
       \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
@@ -432,16 +449,16 @@ end
       \setupTABLE[c][3][width=6cm]
       \switchtobodyfont[small]
       \bTABLE
-      \bTR \bTD Attribute                   \eTD \bTD Definition           \eTD \bTD Accepted value \eTD \eTR
+      \bTR \bTD Attribute                   \eTD \bTD Used for           \eTD \bTD Accepted value \eTD \eTR
       \bTR \bTD \typeKAOSTool{name}         \eTD \bTD Name                 \eTD \bTD String \eTD \eTR
-      \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Definition           \eTD \bTD String \eTD \eTR
+      \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Used for           \eTD \bTD String \eTD \eTR
       \bTR \bTD \typeKAOSTool{formalspec}   \eTD \bTD Formal specification \eTD \bTD Formal specification \eTD \eTR
       \bTR \bTD \typeKAOSTool{argument}     \eTD \bTD Formal arguments     \eTD \bTD An identifier followed by a colon (\typeKAOSTool{:}) and an identifier \eTD \eTR
       \eTABLE
       }
     
       \placetable[here][tab:entity_attributes]
-      {Attributes for entity specification}
+      {Attributes for entity declaration}
       {
       \setupTABLE[c][each][align={right,lohi},frame=off,offset=0pt]
       \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
@@ -452,9 +469,9 @@ end
       \setupTABLE[c][3][width=6cm]
       \switchtobodyfont[small]
       \bTABLE
-      \bTR \bTD Attribute                   \eTD \bTD Definition   \eTD \bTD Accepted value \eTD \eTR
+      \bTR \bTD Attribute                   \eTD \bTD Used for   \eTD \bTD Accepted value \eTD \eTR
       \bTR \bTD \typeKAOSTool{name}         \eTD \bTD Name         \eTD \bTD String \eTD \eTR
-      \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Definition   \eTD \bTD String \eTD \eTR
+      \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Used for   \eTD \bTD String \eTD \eTR
       \bTR \bTD \typeKAOSTool{type}   \eTD \bTD Entity type  \eTD \bTD \typeKAOSTool{software}, \typeKAOSTool{environment} or \typeKAOSTool{shared} \eTD \eTR
       \bTR \bTD \typeKAOSTool{isa}          \eTD \bTD Inheritance  \eTD \bTD Identifier \eTD \eTR
       \bTR \bTD \typeKAOSTool{attribute}    \eTD \bTD Attribute    \eTD \bTD An identifier optionally followed by a colon (\typeKAOSTool{:}) and an identifier \eTD \eTR
@@ -462,7 +479,7 @@ end
       }
  
       \placetable[here][tab:association_attributes]
-      {Attributes for association specification}
+      {Attributes for association declaration}
       {
       \setupTABLE[c][each][align={right,lohi},frame=off,offset=0pt]
       \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
@@ -473,16 +490,16 @@ end
       \setupTABLE[c][3][width=6cm]
       \switchtobodyfont[small]
       \bTABLE
-      \bTR \bTD Attribute                   \eTD \bTD Definition           \eTD \bTD Accepted value \eTD \eTR
+      \bTR \bTD Attribute                   \eTD \bTD Used for           \eTD \bTD Accepted value \eTD \eTR
       \bTR \bTD \typeKAOSTool{name}         \eTD \bTD Name                 \eTD \bTD String \eTD \eTR
-      \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Definition           \eTD \bTD String \eTD \eTR
+      \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Used for           \eTD \bTD String \eTD \eTR
       \bTR \bTD \typeKAOSTool{attribute}    \eTD \bTD Attribute            \eTD \bTD An identifier optionally followed by a colon (\typeKAOSTool{:}) and an identifier \eTD \eTR
       \bTR \bTD \typeKAOSTool{link}         \eTD \bTD Linked entity        \eTD \bTD An identifier \eTD \eTR
       \eTABLE
       }  
  
       \placetable[here][tab:type_attributes]
-      {Attributes for given type specification}
+      {Attributes for given type declaration}
       {
       \setupTABLE[c][each][align={right,lohi},frame=off,offset=0pt]
       \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
@@ -493,9 +510,9 @@ end
       \setupTABLE[c][3][width=6cm]
       \switchtobodyfont[small]
       \bTABLE
-      \bTR \bTD Attribute                   \eTD \bTD Definition           \eTD \bTD Accepted value \eTD \eTR
+      \bTR \bTD Attribute                   \eTD \bTD Used for           \eTD \bTD Accepted value \eTD \eTR
       \bTR \bTD \typeKAOSTool{name}         \eTD \bTD Name                 \eTD \bTD String \eTD \eTR
-      \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Definition           \eTD \bTD String \eTD \eTR
+      \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Used for           \eTD \bTD String \eTD \eTR
       \eTABLE
       }
     \stopfloatcombination
@@ -503,13 +520,13 @@ end
         
   \noindent {\bf Entity and association attributes.} An entity or association
   attribute is composed of an attribute identifier and a given type. A given
-  type is a base type, such as boolean or string, or a domain-specific type
-  such as {\it MotorStatus}. These custom types might be declared using
+  type is a base type, such as Boolean or String, or a domain-specific type
+  such as {\it MotorStatus}. The latter are declared using the
   \typeKAOSTool{type} keyword. \in{Code}[code:object_1] shows an example of
-  attribute specification.
+  attribute declaration.
   
   \placecode[here][code:object_1]
-    {Specification of the entity \entity{DieselGenerator}.}
+    {Declaration of the entity \entity{DieselGenerator}.}
     {\startKAOSTool
     declare entity [ dieselGenerator ]
       name "DieselGenerator"
@@ -517,16 +534,16 @@ end
     end
     \stopKAOSTool} 
   
-  \noindent {\bf Linking associations and entities.} Entities connect to other
-  entities by associations. The attribute \typeKAOSTool{link} specify the
-  association connecting entities, optionally with the corresponding
+  \noindent {\bf Linking associations and entities.} Entities are connected to other
+  entities through associations. The attribute \typeKAOSTool{link} declares the
+  association connecting entities, optionally with corresponding
   multiplicities \cite[Lam09]. \in{Code}[code:object_2] provides an example
   with an association linking the entities \entity{DieselGenerator} and
   \entity{ElectroValve}. In the association, there is at most one diesel
-  generator, but there might have more than one corresponding valve.
+  generator, but one or more corresponding valve(s).
   
   \placecode[here][code:object_2]
-    {Specification of the association \association{GeneratorValves}.}
+    {Declaration of the association \association{GeneratorValves}.}
     {\startKAOSTool
     declare association [ generator_valves ]
       name "GeneratorValves"
@@ -535,10 +552,10 @@ end
     end
     \stopKAOSTool} 
   
-  \subsubject{Experts and Calibration variables}
+  \subsubject{Experts and calibration variables}
   
   To support the techniques presented in
-  \in{Chapter}[chap:knowledge-uncertainty], the specification language was
+  \in{Chapter}[chap:knowledge-uncertainty], the declaration language was
   extended to explicitly declare experts and calibration variables. Experts are
   declared using the keyword \typeKAOSTool{expert} followed by their unique
   identifier. Calibration variables are declared using the keyword
@@ -548,7 +565,7 @@ end
   the attributes availables.
   
   \placecode[here][code:expert_1]
-    {Specification of the association \association{GeneratorValves}.}
+    {Declaration of the association \association{GeneratorValves}.}
     {\startKAOSTool  
     declare expert [ expert1 ] name "Expert 1" end
     declare expert [ expert2 ] name "Expert 2" end
@@ -562,7 +579,7 @@ end
     \stopKAOSTool} 
  
     \placetable[here][tab:expert_attributes]
-    {Attributes for expert specification}
+    {Attributes for expert declaration}
     {
     \setupTABLE[c][each][align={right,lohi},frame=off,offset=0pt]
     \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
@@ -573,13 +590,13 @@ end
     \setupTABLE[c][3][width=6cm]
     \switchtobodyfont[small]
     \bTABLE
-    \bTR \bTD Attribute                   \eTD \bTD Definition           \eTD \bTD Accepted value \eTD \eTR
+    \bTR \bTD Attribute                   \eTD \bTD Used for           \eTD \bTD Accepted value \eTD \eTR
     \bTR \bTD \typeKAOSTool{name}         \eTD \bTD Name                 \eTD \bTD String \eTD \eTR
     \eTABLE
     }  
 
     \placetable[here][tab:cal_attributes]
-    {Attributes for calibration variable specification}
+    {Attributes for declaration of calibration variables.}
     {
     \setupTABLE[c][each][align={right,lohi},frame=off,offset=0pt]
     \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
@@ -590,23 +607,23 @@ end
     \setupTABLE[c][3][width=6cm]
     \switchtobodyfont[small]
     \bTABLE
-    \bTR \bTD Attribute                   \eTD \bTD Definition           \eTD \bTD Accepted value \eTD \eTR
+    \bTR \bTD Attribute                   \eTD \bTD Used for           \eTD \bTD Accepted value \eTD \eTR
     \bTR \bTD \typeKAOSTool{name}         \eTD \bTD Name                 \eTD \bTD String \eTD \eTR
-    \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Definition           \eTD \bTD String \eTD \eTR
+    \bTR \bTD \typeKAOSTool{definition}   \eTD \bTD Used for           \eTD \bTD String \eTD \eTR
     \bTR \bTD \typeKAOSTool{esr}          \eTD \bTD Estimated Satisfaction Rate \eTD \bTD Number, probability distribution or percentage \eTD \eTR
     \eTABLE
     }
   
-  \noindent {\bf Expert satisfaction rate.} For a calibration variable, the
-  reference value is specified using the \typeKAOSTool{esr} attribute without
-  specifying an expert. The estimates by the experts are specified using the
-  \typeKAOSTool{esr} attribute while specifying the expert, between square
-  brackets. When specifying the estimated satisfaction rate by an expert in an
-  obstacle, the expert is also specified in square brackets (see
+  For a calibration variable, the
+  reference value is declared using the \typeKAOSTool{esr} attribute without
+  declaring an expert. The estimates by experts are declared using the
+  \typeKAOSTool{esr} attribute with the corresponding expert between square
+  brackets. When declaring the estimated satisfaction rate by an expert in an
+  obstacle, the expert is also declared in square brackets (see
   \in{Code}[code:expert_2]).
   
   \placecode[here][code:expert_2]
-    {Specification of the association \association{GeneratorValves}.}
+    {Declaration of the association \association{GeneratorValves}.}
     {\startKAOSTool  
       declare obstacle [ power_cable_failure ]
         name "Power Cabling Failure"
@@ -618,20 +635,20 @@ end
   \subsubject{Additional features}
   
   In addition to the constructs presented before, it is possible to define
-  custom attributes, split the model into different files, and specify model
+  custom attributes to split the model into different files, to declare model managment
   attributes such as the title of the model, the version, and the authors.
-  Utilities are also available to help the analyst writing specifications.
+  Utilities are also available to help analysts writing declarations.
   
-  \noindent {\bf Custom attributes.} All elements might have extra attributes
-  not specified by the grammar. These custom attributes must start with
-  \typeKAOSTool{$}. It showed useful for extending the specification language
+  \noindent {\bf Custom attributes.} All elements can have extra attributes
+  not declared by the grammar. These custom attributes must start with
+  \typeKAOSTool{$}. Such extensions proved usefull 
   to support specific tools without changing the grammar. For example,
   \in{Code}[code:custom_attr] shows how activation and deactivation procedures
-  are specified\emdash{}the risk-driven runtime adaptation tools did not
-  require changes in the KAOSTools specification language.
+  are declared\emdash{}our runtime adaptation tool did not
+  require changes to the declaration language.
   
   \placecode[here][code:custom_attr]
-    {Specification of the association \association{GeneratorValves}.}
+    {Declaration of the association \association{GeneratorValves}.}
     {\startKAOSTool
     declare goal [ speed_acquired_by_camera ]
       name "Achieve [SpeedAcquiredEvery5SecondsByCamera]"
@@ -643,19 +660,19 @@ end
     end
     \stopKAOSTool} 
   
-  \noindent {\bf Splitting into multiple files.} It is easier to handle a large
+  \noindent {\bf Splitting the model into multiple files.} It is easier to handle a large
   model by splitting it into multiple files. Sub-models can be imported using
   \typeKAOSTool{import} followed by the path to the sub-model. Adding
-  attributes to an element already declared facilitate the splitting into
+  attributes to an element already declared facilitates the splitting into
   multiple files. The element is \quote{declared} using the keyword
   \typeKAOSTool{override}, in place of \typeKAOSTool{declare}, to add an
-  attribute. \typeKAOSTool{override} showed useful to split goals in a file and
-  obstacles in another while specifying the obstructions in the file with the
-  obstacle specifications. \in{Code}[code:import] shows an example of such
+  attribute. This proved useful to split goals in a specific file and
+  obstacles in another one while declaring the obstructions in the file with the
+  obstacle declarations. \in{Code}[code:import] shows an example of such
   usage.
   
   \placecode[here][code:import]
-    {Splitting model specification accross multiple files.}
+    {Splitting model declaration accross multiple files.}
     {\startKAOSTool
     # In the file 'goal.kaos'
     declare goal [ manual_opening_of_valve ]
@@ -677,7 +694,8 @@ end
     \stopKAOSTool}
     
   \noindent {\bf Model attributes.} \in{Code}[code:model_attributes] shows how
-  to specify the title, the authors and the version of the specified goal model.
+  the title, the authors and the version of the considered goal model can be
+  declared.
   
     \placecode[here][code:model_attributes]
       {Model attributes.}
@@ -687,11 +705,12 @@ end
     @version "0.1"
     \stopKAOSTool}
   
-  \noindent {\bf Utilities.} The tool \tool{ModelChecker} is available to check
-  the correct syntax and provides statistics for the model. For example,
+  \noindent {\bf Utilities.} A \tool{Checker}  tool  is available for checking
+  the correct syntax and providing statistics for the model. For example, this
+  tool may produce the following:
   
   \startCLI
-  $ mono ModelChecker.exe model.kaos 
+  $ mono Checker.exe model.kaos 
   Goals: 20
   Root goals: 1
   Leaf goals: 14
@@ -708,97 +727,96 @@ end
   Generated provided assumption: 23 (distributed over 6 goals)
   \stopCLI
   
-  The tool
-  \tool{OmnigraffleExport} generates several goal and obstacle diagrams
+  The tool \tool{OmnigraffleExport} generates goal and obstacle diagrams
   corresponding to the graphical syntax of the model provided in textual
-  format. The analyst might edit the generated diagrams with OmniGraffle
-  \cite[Ols10]. This tool was used to produce all goal and obstacles diagrams
+  format. The analyst can edit the generated diagrams using OmniGraffle
+  \cite[Ols10]. This tool was used to produce all goal and obstacle diagrams
   presented in the thesis. Last, a bundle is available for the TextMate text
   editor \cite[Gra07] to provide syntax highlighting.
   
   \stopsection
 
-  \startsection[reference=sec:kt_arch,title={KAOSTools Architecture}]
+  \startsection[reference=sec:kt_arch,title={KAOSTools: Architecture}]
   
     \in{Figure}[fig:kt_architecture] shows the architecture of the KAOSTools
-    tool suite: Boxes shows libraries, dashed boxes are external libraries.
-    External libraries were developed to support KAOSTools and might be used
-    outside the framework. Arrows indicates {\it USE} links \cite[Med10].
-    Brief descriptions of the modules are provided below.
+    tool suite. Boxes refer to libraries, dashed boxes to external libraries.
+    The latter were developed to support KAOSTools and might be used
+    outside the framework. Arrows indicate {\it USE} links \cite[Med10].
+    The architectural modules are briefly described below.
   
     \placefigure[]
          [fig:kt_architecture]
          {KAOSTools Architecture.}
       {\externalfigure[../images/chap8/architecture.pdf]}
     
-    \noindent {\bf Core.} This package contains the classes representing the
+    \noindent {\bf Core.} This package contains all classes representing the
     probabilistic goals, domain properties, obstacles, and so forth. It mainly
-    support the \in{Chapter}[chap:proba-framework]. It supports the other
-    libraries by providing a set of helpers for selecting, modifying, and
-    creating KAOS elements.
+    supports the techniques in \in{Chapter}[chap:proba-framework] together with
+    other libraries through {\it helpers} for selecting, modifying, and
+    creating KAOS model elements.
   
     \noindent {\bf Parsing.} This package contains all the classes related to
-    the parsing of the KAOSTools specification language. On parsing, a model is
+    the parsing of the KAOSTools declaration language. On parsing, a model is
     built in memory using the helpers provided in \tool{Core}.
   
     \noindent {\bf Propagators.} This package implements the techniques
-    presented in \in{Chapter}[chap:assessing]. Classes implement both the
-    Pattern-based and BDD-based computations. The package also supports the
-    computation of satisfaction rate with their uncertainty margins. This
+    presented in \in{Chapter}[chap:assessing]. The classes there implement both
+    the Pattern-based and BDD-based computations. The package also supports the
+    computation of satisfaction rates with their uncertainty margins. This
     library relies on \tool{BDDSharp} to support the BDD-based computation.
     \tool{BDDSharp} is a freely available library to create and manipulates
-    {Reduced Order Binary Decision Diagrams} (ROBDDs) in C\# \cite[Cai17d].
-    Ease of deployment and availability on multiple OSes motivated the creation
-    of the library; If required, more efficient BDD libraries might replace
-    \tool{BDDSharp} in the KAOSTools suite.
+    {Reduced Order Binary Decision Diagrams} (ROBDDs) in C\# \cite[Cai17d]. The
+    ease of deployment and the availability on multiple OSes motivated the
+    creation of the library; If needed, more efficient BDD libraries can
+    replace \tool{BDDSharp} in the KAOSTools suite.
   
     \noindent {\bf CriticalObstacles.} This package implements the techniques
-    presented in \in{Chapter}[chap:assessing] to highlight the most critical
-    obstacles. This packages also support the highlighting of the most critical
-    obstacles with their knowledge uncertainty margins as presented in
-    \in{Chapter}[chap:knowledge-uncertainty]. This library generates the
+    presented in \in{Chapter}[chap:assessing] to highlight most critical
+    obstacles. This package also supports such highlighting taking uncertainty
+    margins into account as presented in
+    \in{Chapter}[chap:knowledge-uncertainty]. This library also generates
     violation diagrams.
   
     \noindent {\bf Integrators.} This package implements the techniques
-    presented in \in{Chapter}[chap:controlling_obstacle] related to the
+    presented in \in{Chapter}[chap:controlling_obstacle] for 
     integration of countermeasures. The package supports both {\it hard}
-    integration (modifying the goal/obstacle model), and {\it soft} integration
-    (using the constructs presented in \in{Section}[sec:exception_handling]).
+    integration that modifies the goal/obstacle model, and {\it soft} integration
+    using the constructs presented in \in{Section}[sec:exception_handling].
   
     \noindent {\bf Optimizers.} This package implements the techniques
-    presented in \in{Chapter}[chap:controlling_obstacle] related to the
-    selection of countermeasures. The package implements the selection of most
-    appropriate countermeasures for both single-value and multi-value leaf
-    obstacle estimates.
+    presented in \in{Chapter}[chap:controlling_obstacle] for selection of most
+    appropriate countermeasures. Single-value and multi-value leaf obstacle
+    estimates are both supported.
     
     \noindent {\bf ExpertCombination.} This package implements the techniques
     presented in \in{Chapter}[chap:knowledge-uncertainty]. It supports the
-    combination of multiple experts using both Cook's and Mendel-Sheridan's
-    techniques. This library relies on \tool{ExpertOpinionSharp} to combine the
-    expert opinions. \tool{ExpertOpinionSharp} was developed specifically for
-    combining expert estimates using calibration variables \cite[Cai17e]. It
-    was developed as a separate library as other approaches might reuse
-    these combination techniques.
+    combination of multiple experts estimates using both Cook's and
+    Mendel-Sheridan's techniques. This library relies on
+    \tool{ExpertOpinionSharp} to combine expert opinions.
+    \tool{ExpertOpinionSharp} was developed specifically for combining expert
+    estimates using calibration variables \cite[Cai17e]. It was developed as a
+    separate library; other approaches can thereby reuse these combination
+    techniques.
   
     \noindent {\bf Monitoring.} This package supports the techniques presented
     in \in{Chapter}[runtime]. The library relies on \tool{LTLSharp} for the
     generation and update of $LTL_3$ monitors. \tool{LTLSharp} is a library
-    that provides model checking algorithms, algorithms to build Buchï
+    that provides model checking algorithms, algorithms for building Buchï
     automata, and $LTL_3$ monitors for C\# libraries and applications
     \cite[Cai17f].
     
   \stopsection
 
-  \startsection[reference=sec:kt_tools,title={KAOSTools Tool Suite}]
+  \startsection[reference=sec:kt_tools,title={KAOSTools: Tool Suite}]
   
-    In addition to the libraries developed supporting the techniques, a series
+    In addition to the various libraries developed to support our techniques, a series
     of command-line tools enables the analyst to run the techniques on their
     goal/obstacle models. This section briefly describes the tools. More
-    detailed descriptions are available by passing the option {\tttf --help} to
+    detailed descriptions are available through the option {\tttf --help} to
     the command-line tools.
 
     \noindent {\bf Utils.Propagator.} This tool computes the satisfaction rate
-    of the high-level goals.
+    of the input high-level goals.
     
     \startCLI
     $ mono Propagator.exe --root=make_up_water_provided model.kaos 
@@ -806,10 +824,11 @@ end
     \stopCLI
     
     \noindent {\bf Utils.UncertaintyPropagator.} This tool computes the
-    satisfaction uncertainty and violation uncertainty for the high-level goals.
+    satisfaction uncertainty and violation uncertainty for the input high-level goals.
     
     \startCLI
-    $ mono UncertaintyPropagator.exe --root=make_up_water_provided model-uncertainty.kaos 
+    $ mono UncertaintyPropagator.exe --root=make_up_water_provided \
+      model-uncertainty.kaos 
     Achieve [Make Up Water Provided When Loss Of Cooling]:
       Mean: 78.67 %
       Required Satisfaction Rate: 80.00 %
@@ -818,12 +837,12 @@ end
     \stopCLI
   
     \noindent {\bf Utils.ViolationDiagram.} This tool generates the data
-    corresponding to the violation uncertainty diagrams. The violation diagram
+    for violation uncertainty diagrams. The latter
     can then be generated using R \cite[Tea00].
   
     \noindent {\bf Utils.CMIntegrator.} This tool provides an interactive
-    console to integrate countermeasures into an ideal goal model. The ideal
-    goal model can then be exported.
+    console for integrating countermeasures into an original goal model. The
+    latter can then be exported.
     
     \startCLI
     $ mono CMIntegrator.exe model.kaos 
@@ -834,10 +853,10 @@ end
     > 
     \stopCLI
       
-    \noindent {\bf Utils.CMSelector.} This tool returns the list of the most
-    appropriate countermeasures. {\bf Utils.CMSelectorUncertainty} returns the
-    list of the most appropriate countermeasures when leaf obstacles are
-    estimated together with their knowledge uncertainty margins.
+    \noindent {\bf Utils.CMSelector.} This tool returns a list of most
+    appropriate countermeasures. {\bf Utils.CMSelectorUncertainty} returns a
+    list of most appropriate countermeasures when leaf obstacles are estimated
+    together with their uncertainty margins.
     
     \startCLI
     $ mono CMSelectorUncertainty.exe --root=make_up_water_provided \
@@ -868,24 +887,25 @@ end
     \stopCLI
   
     \noindent {\bf Utils.Monitor.} This tool runs the monitoring of
-    probabilistic obstacles, select the most appropriate countermeasures and
-    pushes the activation/deactivation procedure that should be applied into a
-    RabbitMQ queue \cite[Vid12]. \in{Section}[sec:bads] provides more details
-    about the monitoring infrastructure.
+    probabilistic obstacles, selects more appropriate countermeasures and
+    triggers the activation/deactivation procedure to be applied.
+    \in{Section}[sec:bads] provides concrete details about the monitoring
+    infrastructure in action on a case study.
     
   \stopsection
 
   \startsection[title={Summary}]
   
-    This chapter presented the tools supporting the techniques presented in the
-    previous chapters. The tools accept a textual specification of the
-    goal/obstacle model. The modular architecture of KAOSTools enables new
-    techniques to be implemented while leveraging the existing ones.
+    This chapter briefly presented the toolset supporting the techniques
+    discussed in the previous chapters. The tools accept a textual declaration
+    of the goal/obstacle model as inout. The modular architecture of KAOSTools
+    enables new techniques to be implemented and integrated while leveraging
+    the existing ones.
   
-    The presented tools were used to generate all diagrams, charts, and
-    computation results provided in the various examples through the thesis.
-    The tools were used to evaluate the techniques, as presented in the next
-    chapter.
+    The tools presented in this chapter were used to generate all diagrams,
+    charts, and computation results provided in the various examples throughout
+    the thesis. These were also used to evaluate our techniques, as presented
+    in the next chapter.
   
   \stopsection
 
