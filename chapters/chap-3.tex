@@ -916,54 +916,44 @@
         [reference=sec:defining_obstacles,
          title={Defining probabilistic obstacles}]
       
-        Consider the goal \goal{Achieve [Make Up Pump Motor On When Water
-        Requested]} requiring the pump motor to be turned on when requested by
-        the operator. It is formalized by
-        
-        \startformula
-          WaterPumpRequested \Rightarrow \ltlF_{\leq5m} WaterPumpMotor = \quote{\it On}
-        \stopformula
-
-        There is a domain property stating a necessary condition for the motor
-        to be turned on, namely, the electrical relay is not be broken.
-        
-        \startformula
-           WaterPumpMotor = \quote{\it On} \Rightarrow \neg PumpRelayBroken
-        \stopformula
-        
-        By regression of the goal negation through this domain property,
-        we obtain the obstacle \obstacle{Pump Electrical Failure}:
-        
-        \startformula
-          \ltlF(WaterPumpRequested \wedge \ltlG_{\geq5m} PumpRelayBroken)
-        \stopformula
-
-        This condition captures the situation of the water pump not turned on
-        due to a faulty relay. Such conditions should hopefully not be
-        satisfied too often.
+        An obstacle $\ltlF (C \wedge \Theta OC)$ requires behaviors where at
+        least a system state satisfy $C \wedge \Theta OC$. As obstacles might
+        be partially satisfied, a state $s$ has a probability to satisfy $C
+        \wedge \Theta OC$. Dually to goals, we take a conservative approach
+        requiring an upper bound as we need to pessimistically consider the
+        highest chance of goal violation.
 
         \startdefinition{Obstacle satisfaction rate}
 
-          The satisfaction rate of an obstacle of form $\ltlF (C \wedge \Theta
-          OC)$ is the highest state probability of the assertion $C \wedge
-          \Theta OC$ in any possible state $s$.
+          The satisfaction rate of an obstacle of form $\ltlF (C \wedge
+          \Theta OC)$ is the highest state probability of the assertion $C
+          \wedge \Theta OC$ in any possible state $s$.
 
         \stopdefinition
         
-        The satisfaction rate of an obstacle $O$ is denoted by $P(O)$. Dually
-        to goals, we take a conservative approach requiring an upper bound as
-        we need to pessimistically consider the highest chance of goal
-        violation; thus, for an obstacle $\ltlF (C \wedge \Theta OC)$:
+        \noindent The satisfaction rate of an obstacle $O$ is denoted by
+        $P(O)$. For an obstacle of form $\ltlF (C \wedge \Theta OC)$:
         
         \startformula
           P(O) = \max_{s\in S} P^s(C \wedge \Theta OC)
         \stopformula
         
         For example, consider a system with three states and the obstacle
-        \obstacle{Pump Electrical Failure} specified above. Assume that
+        \obstacle{Pump Electrical Failure}, obtained in
+        \in{Section}[sec:obstacle_analysis] and as seen in
+        \in{Figure}[fig:background_make_up_water_pump_on]:
+    
+        \startkaosspec
+            \ObstacleName {Pump Electrical Failure}
+            \KaosAttribute {FormalDef} {
+              $\ltlF(WaterPumpRequested \wedge \ltlG_{\geq5m} PumpElectricalFailure)$
+          }
+        \stopkaosspec
+        
+        \noindent Assume that
         
         \startformula
-          WaterPumpRequested \wedge \ltlG_{\geq5m} PumpRelayBroken
+          WaterPumpRequested \wedge \ltlG_{\geq5m} PumpElectricalFailure
         \stopformula
         
         has a state probability $.9$ in $s_1$; $.8$ in $s_2$; and $.7$ in
@@ -971,7 +961,7 @@
         probability, that is, $.9$. The system satisfies
 
         \startformula
-          \ltlG~\mathbb{P}_{\leq .9} (WaterPumpRequested \wedge \ltlG_{\geq5m} PumpRelayBroken)
+          \ltlG~\mathbb{P}_{\leq .9} (WaterPumpRequested \wedge \ltlG_{\geq5m} PumpElectricalFailure)
         \stopformula
         
         Similarily to goals, the probability of $O$ over all behaviors
@@ -1003,7 +993,7 @@
         
         \noindent The ESR of leaf obstacles in obstacle refinement trees is
         provided by domain experts based on their experience or available data;
-        it is computed for non-leaf obstacles. \in{Chapter}[chap:assessing]
+        it is computed for higher-level obstacles. \in{Chapter}[chap:assessing]
         will show how their computation proceeds by up-propagation through the
         refinement trees.
         
