@@ -190,17 +190,17 @@
       \startitemize[packed,nowhite]
         
         \item The $\infty\text{-norm}$ amounts to taking the largest
-        satisfaction rate. The combined satisfaction rate is:
+        satisfaction rate. The $r$-norm satisfaction rate is:
         
           \startformula P_\infty(\text{\obstacle{Power Cabling Failure}}) = .3 \stopformula
         
         \item The $-\infty\text{-norm}$ amounts to taking the
-        smallest satisfaction rate. The combined satisfaction rate is:
+        smallest satisfaction rate. The $r$-norm satisfaction rate is:
         
           \startformula P_{-\infty}(\text{\obstacle{Power Cabling Failure}}) = .1 \stopformula
           
         \item The $0\text{-norm}$ corresponds to a geometric mean.
-        The combined satisfaction rate is:
+        The $r$-norm satisfaction rate is:
               
           \startformula 
             P_0(\text{\obstacle{Power Cabling Failure}}) = \sqrt{.3\times.1} = 
@@ -208,7 +208,7 @@
           \stopformula
 
         \item The $1\text{-norm}$ corresponds to an arithmetic mean.
-        The combined satisfaction rate is:
+        The $r$-norm satisfaction rate is:
 
           \startformula 
             P_1(\text{\obstacle{Power Cabling Failure}}) = \frac{.3 + .1}{2} =
@@ -217,7 +217,7 @@
 
       \stopitemize
       
-      As shown in the example above, the combined satisfaction rate depends on
+      As shown in the example above, the $r$-norm satisfaction rate depends on
       parameter $r$. Which {\it $r$-norm satisfaction rate} to chose depends on
       which properties for the combined estimate are desirable among the
       following ones.
@@ -225,62 +225,68 @@
       \startitemize
 
         \item {\bf Zero Preservation}. If all expert estimates that the
-        satisfaction rate of an obstacle is zero, the combined satisfaction
+        satisfaction rate of an obstacle is zero, the $r$-norm satisfaction
         rate should be zero. This property is satisfied for all {\it r-norms}.
 
-        \item {\bf Marginalization}. The combined satisfaction rate should not
+        \item {\bf Marginalization}. The $r$-norm satisfaction rate should not
         depend on how the obstacle is OR-Refined. In other words, given an
         obstacle $O$ OR-refined in two disjoint subobstacles $SO_1$, $SO_2$,
-        the combined satisfaction rate should satisfy
+        the $r$-norm satisfaction rate should satisfy
         
         \startformula 
           P_r(O) =  P_r(SO_1) + P_r(SO_2).
         \stopformula
         
-        For example, consider two experts estimating the subobstacles of the
-        OR-Refinement in \in{Figure}[fig:or_and_obstacle_refinement]. The first
-        expert estimates $.1$ for \obstacle{Power Cabling Failure} and $.2$ for
-        \obstacle{UPS Battery Failure}. The second expert estimates $.2$ for
-        \obstacle{Power Cabling Failure} and $.1$ for \obstacle{UPS Battery
-        Failure}. (For simplicity, we ignore the subobstacle \obstacle{Power
-        Supply Failure}.) As we will show in
-        \in{Section}[sec:computing_satrate], both experts estimate that the
-        satisfaction rate of the parent obstacle \obstacle{No Power Available}
-        is $.1 + .2 = .3$. Using a {\it $0$-norm} for combining the
-        satisfaction rate of the subobstacles yields $\sqrt{.2 \times .1} =
-        .14$ for both subobstacles. With these combined estimates, the
-        satisfaction rate for the parent obstacle is $.14 + .14 = .28$. With
-        the {\it $1$-norm}, however, the combined satisfaction rate for both
-        subobstacle is $.5\times(.2 + .1) = .15$. In that case, the
+        \indentation For example, consider two experts estimating the
+        subobstacles of the OR-Refinement in
+        \in{Figure}[fig:or_and_obstacle_refinement]. The first expert estimates
+        $.1$ for \obstacle{Power Cabling Failure} and $.2$ for \obstacle{UPS
+        Battery Failure}. The second expert estimates $.2$ for \obstacle{Power
+        Cabling Failure} and $.1$ for \obstacle{UPS Battery Failure}. (For
+        simplicity, we ignore the subobstacle \obstacle{Power Supply Failure}.)
+        As we will show in \in{Section}[sec:computing_satrate], both experts
+        estimate that the satisfaction rate of the parent obstacle \obstacle{No
+        Power Available} is $.1 + .2 = .3$.
+        
+        \noindent Using a {\it $0$-norm} for combining the satisfaction rate of the
+        subobstacles yields $\sqrt{.2 \times .1} = .14$ for both subobstacles.
+        With these combined estimates, the satisfaction rate for the parent
+        obstacle is $.14 + .14 = .28$.
+        
+        \noindent With the {\it $1$-norm}, however, the $r$-norm satisfaction rate for
+        both subobstacle is $.5\times(.2 + .1) = .15$. In that case, the
         satisfaction rate for the parent obstacle is $.3$, as the experts have
         independently estimated those quantities.
         
         The {\it $1$-norm} is known to be the only {\it $r$-norm} to exhibit
         the marginalization property \cite[Bed01].
 
-        \item {\bf Independence Preservation}. The combined satisfaction rate
+        \item {\bf Independence Preservation}. The $r$-norm satisfaction rate
         should not depend on how the obstacle is AND-Refined. In other words,
         given an obstacle $O$ AND-refined in two independent subobstacles
-        $SO_1$, $SO_2$, the combined satisfaction rate should satisfy:
+        $SO_1$, $SO_2$, the $r$-norm satisfaction rate should satisfy:
         
         \startformula 
-          P_r(O) =  P_r(SO_1) \times P_r(SO_2)
+          P_r(O) =  P_r(SO_1) \times P_r(SO_2).
         \stopformula
         
-        For example, consider the AND-refinement depicted in
+        \indentation For example, consider the AND-refinement depicted in
         \in{Figure}[fig:or_and_obstacle_refinement]. The first expert estimates
-        $.1$ and $.2$ for the obstacle \obstacle{Diesel Generator Failure} and
-        \obstacle{Primary Power Supply Down} respectively. The second expert
-        estimate $.2$ and $.1$ for those obstacles, respectively. Considering
-        experts independently, they both estimate the satisfaction rate for the
-        parent obstacle \obstacle{Power Supply Failure} to be $.1 \times .2 =
-        .02$. Using {\it $1$-norm} to combine their estimates, we obtain $.15$
-        for both subobstacles. The satisfaction rate for the parent obstacle is
-        therefore $.15 \times .15 = .0225$, which differs from the estimate
-        they provided independently. Using {\it $0$-norm}, the combined
-        satisfaction rate for the subobstacle is $\sqrt{.2\times .1}$. The
-        resulting satisfaction rate for the parent obstacle $O$ is
-        $\sqrt{.2\times .1} \times \sqrt{.2\times .1} = .02$.
+        $.1$ for the obstacle \obstacle{Diesel Generator Failure} and $.2$ for
+        \obstacle{Primary Power Supply Down}. The second expert estimate $.2$
+        for \obstacle{Diesel Generator Failure} and $.1$ for \obstacle{Primary
+        Power Supply Down}. Considering experts independently, they both
+        estimate the satisfaction rate for the parent obstacle \obstacle{Power
+        Supply Failure} to be $.1 \times .2 = .02$.
+        
+        \noindentation Using {\it $1$-norm} to combine their estimates, we
+        obtain $.15$ for both subobstacles. The satisfaction rate for the
+        parent obstacle is therefore $.15 \times .15 = .0225$, which differs
+        from the estimate they provided independently.
+        
+        \noindentation Using {\it $0$-norm}, the $r$-norm satisfaction rate for
+        the subobstacle is $\sqrt{.2\times .1}$. The satisfaction rate for the
+        parent obstacle $O$ is $(\sqrt{.2\times .1})^2 = .02$.
         
         The {\it $0$-norm} has the independence preservation property unlike
         the {\it $1$-norm} \cite[Bed01].
@@ -308,14 +314,22 @@
       [reference=sec:computing_bdd,title={BDD-based computation of satisfaction rates}]
 
       A first procedure for computing the satisfaction rate of obstacles and of
-      goals in a goal model can be outlined as follows. To compute the
-      satisfaction rate of an obstacle, the set of AND-combinations of leaf
-      obstacles entailing a given obstacle in the obstacle model is computed;
-      this set is called the {\it entailment superset}. To compute the
-      satisfaction rate of a goal, the set of AND-combination of leaf obstacles
-      obstructing a given goal in the goal model is computed; this set is
-      called the {\it obstruction superset}. Those sets are encoded as a binary
-      decision diagram (BDD) \cite[Bry92]
+      goals in a goal model can be outlined as follows. 
+      
+      \startitemize
+      
+        \item To compute the satisfaction rate of an obstacle, the set of
+        AND-combinations of leaf obstacles entailing a given obstacle in the
+        obstacle model is computed; this set is called the {\it entailment
+        superset}.
+
+        \item To compute the satisfaction rate of a goal, the set of
+        AND-combination of leaf obstacles obstructing a given goal in the goal
+        model is computed; this set is called the {\it obstruction superset}.
+      
+      \stopitemize
+      
+      Those sets are encoded as a binary decision diagram (BDD) \cite[Bry92]
       (\in{Section}[sec:computing_obstruction_set]). Based on the estimated
       satisfaction rate for the leaf obstacles, the probability for the
       obstruction or entailment superset is computed
@@ -749,7 +763,7 @@
     
     \stopsubsection
      
-		\subsection {Pattern-based computation of satisfaction rates}
+		\subsection[sec:pattern_based_computation]{Pattern-based computation of satisfaction rates}
     
       As an alternative approach to propagation, we may compute the
       satisfaction rate of the obstacle or goal at each propagation step.
