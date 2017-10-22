@@ -6,53 +6,422 @@
 
 \chapter[chap:evaluation] {Evaluation}
 
-  This chapter illustrates and evaluates the techniques proposed in the
-  previous chapters on real case-studies of significant size. The three case
-  studies are a Car Pooling System, an industrial Yoke Lifting System, and an
-  Ambulance Dispatch System. The case-studies are real, mission-critical
-  systems with non-trivial requirements and significant risks that could
-  prevent their correct operations.
+  This chapter illustrates the techniques proposed in the previous chapters
+  while showing them in action on real case-studies of significant size. Our
+  techniques are evaluated according to five hierarchical criteria. Each
+  criterion is a prerequisite for the next \cite[Dam14,Let14]. The criteria are
+  the following:
   
-  The chapter is structured as follows. \in{Section}[sec:cs] describes the
-  case-studies and evaluates the techniques regarding their specific
-  objectives. The section \in{Section}[sec:discussion_eval] provides a more
-  general discussion about the correctness, performance, scalability,
-  applicability, utility, and usability of the techniques.
+  \startitemize
+    
+    \item {\it Correctness}: Are the proposed techniques correct with regard to
+    their specifications?
+  
+    \item {\it Performance and Scalability}: Are the techniques efficient for
+    realistically-sized problems?
+  
+    \item {\it Applicability}: Are the techniques applicable to real-world
+    problems?
+  
+    \item {\it Utility}: Are the techniques solving a real problem?
+  
+    \item {\it Usability}: Are the techniques usable by risk analysts and
+    requirements engineers?
+  
+  \stopitemize
+  
+  \noindent These criteria here refer to the techniques presented in the
+  thesis, namely:
+  
+  \startitemize
+  
+    \item the propagation procedures as seen in \in{Section}[sec:computing_bdd]
+    and \in{Section}[sec:pattern_based_computation];
+    
+    \item the procedure for identifying critical obstacles as seen in
+    \in{Section}[sec:indentifying_most_critical_obstacles] and
+    \in{Section}[sec:finding_critical_obstacles_uncertainty];
+    
+    \item the selection of most appropriate countermeasures as seen in
+    \in{Section}[sec:selecting_cm];
+    
+    \item the integration of countermeasures into the goal model as seen in
+    \in{Section}[sec:integrating];
+    
+    \item the assessment of leaf obstacles together with uncertainty margins as
+    seen in \in{Section}[sec:assessment_k_uncertainty];
+    
+    \item the runtime monitoring of probabilistic obstacles as seen in
+    \in{Section}[sec:obstaclebased_adaptation].
+  
+  \stopitemize
+  
+  As for applicability, the case studies considered for application are real,
+  mission-critical systems with non-trivial requirements and significant risks
+  that could prevent their correct operation. They includes a Car Pooling
+  System, an industrial Yoke Lifting System, and an Ambulance Dispatch System.
+  The case-studies are
+  
+  The chapter is structured as follows. \in{Section}[sec:correctness] discusses
+  the correctness of our techniques. \in{Section}[sec:performance] briefly
+  presents the complexities and the performance of the proposed approach.
+  \in{Section}[sec:applicability] describes the three case-studies, evaluates
+  the applied techniques regarding their specific objectives, and briefly
+  discusses the applicability of the techniques. \in{Section}[sec:utility]
+  discusses the extent to which our techniques solve a real problem.
+  \in{Section}[sec:usability] shows how our techniques are usable by risk
+  analysts and requirements engineers.
 
-  \startsection[reference=sec:cs, title={Case-studies}]
-  
-    This section describes three case-studies, the application of the proposed
-    techniques and evaluates the techniques regarding their specific
-    objectives. \in{Section}[sec:cool] details a Car Pooling System and
-    evaluates the techniques presented in \in{Chapter}[chap:assessing].
-    \in{Section}[sec:iba] illustrates the application of the techniques
-    presented in \in{Chapter}[chap:assessing] on an industrial yoke lifting
-    system from a leading medical technology company. Last,
-    \in{Section}[sec:bads] describes the Brussels Ambulance Dispatching System
-    and discusses the use of the techniques proposed in
-    \in{Chapter}[chap:assessing], \in{Chapter}[chap:controlling_obstacle],
-    \in{Chapter}[chap:knowledge-uncertainty] and \in{Chapter}[runtime].
+  \startsection[reference=sec:correctness,title={Correctness}]
+    
+    This section shows that the techniques proposed in
+    \in{Chapters}[chap:assessing]-\in{}[runtime] meet their specification.
+      
+    In particular, the propagation procedures in \in{Chapter}[chap:assessing]
+    compute \quote{safe} estimates, that is, lower bound estimates. Otherwise,
+    the computed goal satisfaction rates might overestimate the actual one. As
+    a consequence, the goal would be stated to meet its required satisfaction
+    rate even if does not.
+      
+    \startproposition
+      
+      In a model with complete, consistent, and minimal goal refinements and
+      with domain-complete obstacle refinements, the satisfaction rate of the
+      considered high-level goals is greater or equal to the estimated
+      satisfaction rate computed by the propagation procedures in
+      \in{Chapter}[chap:assessing].
+      
+    \stopproposition
+      
+    \startproof 
+    
+      (Ab absurdum.) Assume a high-level goal and its lowest descendant $G$
+      whose actual satisfaction rate is lower than the computed satisfaction
+      rate. The latter goal is either refined or is leaf goal.
+      
+      \startitemize
+
+        \item If goal $G$ is refined, its subgoals have an actual satisfaction
+        rate greater or equal to their respective computed satisfaction rate.
+        If not, $G$ is not the lowest descendant as there exists a subgoal with
+        an actual satisfaction rate lower than its respective computed
+        satisfaction rate.
         
-      \startsubsection[reference=sec:cool,title={A Car Pooling System}]
+        \startitemize
+        
+          \item In the pattern-based computation, the satisfaction rate is
+          computed using a specific propagation equation. Assuming that the
+          satisfaction rates for the subgoals are correct, if the estimated
+          satisfaction rate is lower than the computed satisfaction rate, then
+          at least a term in the generic propagation equation was not taken
+          into account; the appropriate specific propagation equation was
+          therefore not applied.
+        
+          \item In the BDD-based computation, the satisfaction rate would be
+          lower than the computed one if and only if the obstruction supersets
+          include fewer obstacles; however, by construction, all obstacles are
+          included; there is no unidentified obstacles as the model is assumed
+          to be domain-complete.
+        
+        \stopitemize
+        
+        \item If goal $G$ is a leaf goal, its satisfaction rate is lower than
+        the estimated one. The actual satisfaction rate for the root obstacle
+        is then higher than the computed satisfaction rate. However, the
+        computed satisfaction rate of the root obstacle might be higher than
+        the actual one if and only if obstacles are missing. If obstacles are
+        missing the model is not domain-complete.%
+      %
+      \stopitemize%
+      \vskip\dimexpr(-2\lineheight-2pt)
+    \stopproof 
+      
+    \startproposition
+      
+      The obstacles returned by the critical obstacle identification procedure
+      cause a loss of satisfaction for the specified goal.
+      
+    \stopproposition
+      
+    \startproof 
+      
+      By definition of violation severity (\in{Definition}[dfn:vs]), obstacles
+      with a positive violation severity cause a loss in the computed
+      satisfaction rate of the high-level goal. The critical obstacle
+      identification procedure presented in
+      \in{Section}[sec:indentifying_most_critical_obstacles] returns all
+      obstacles with positive violation severity.
+      %
+    \stopproof 
+      
+    \startproposition
+      
+      Any countermeasure not returned by the procedure for selection most
+      appropriate countermeasures costs more or would result in a lower computed
+      satisfaction rate for the considered high-level goal.
+      
+    \stopproposition
+      
+    \startproof 
+    
+      If a countermeasure not returned by the procedure would cost less, its
+      cost is lower than the minimal one returned by the first optimization
+      discussed in \in{Section}[sec:selecting_cm]. The minimal cost is
+      therefore not minimal. If this countermeasure results in a higher
+      computed satisfaction rate for the considered high-level goal, the second
+      optimization would not return the highest solution.
+      %
+    \stopproof 
+      
+    \startproposition
+      
+      The integration of a countermeasure in a complete, consistent and minimal
+      model produces a complete, consistent and minimal model.
+      
+    \stopproposition
+      
+    \startproof 
+    
+      This is trivially enforced by the {\it correctness preservation}
+      property, as seen in \in{Section}[sec:integrating].
+      %
+    \stopproof 
+      
+    As for our monitoring-based techniques, we want the monitored satisfaction
+    rate to be \quote{safe}, that is, the monitored satisfaction rate for the
+    leaf obstacles must be an upper bound. Otherwise, the monitored
+    satisfaction rate might underestimate the actual satisfaction rate, while
+    would lead to unsafe conclusions.
+      
+    \startproposition
+      
+      For a given state decomposition, the monitored satisfaction rate for a
+      leaf obstacle is lower or equal to the actual satisfaction rate obtained
+      by the monitoring procedure in \in{Section}[sec:monitoring].
+      
+    \stopproposition
+      
+    \startproof 
+      
+      (Ab absurdum.) By definition, the monitored satisfaction rate for the
+      formula $\ltlF (C \wedge \Theta OC)$ is the highest state probability to
+      satisfy the obstacle condition $C \wedge \Theta OC$. If the actual
+      satisfaction rate for a leaf obstacle is greater than the monitored
+      satisfaction rate, there is a state probability greater than the
+      monitored statisfaction rate; the monitored satisfaction rate is
+      therefore not the highest state probability.
+      %
+    \stopproof 
+    
+    \noindent {\it Note.}\hskip1em As seen in \in{Section}[sec:monitoring], the
+    monitoring procedure relies on observed states. However, the same system
+    might be observed with a different state decomposition. The state
+    decomposition might impact state probabilities. For example, consider the
+    flooding system, and assume two states $RiverHigh$ and $RiverLow$. Both
+    have a state probability to satisfy the obstacle \obstacle{Dusty
+    Environment}, say $p_{high}$ and $p_{low}$. A decomposition with more
+    states or with fewer states changes the values of state probabilities;
+    this impacts the monitored satisfaction rate of obstacles and goals.
+      
+    Consider a decomposition with one state {\it RiverLowHigh} instead of two.
+    As a decomposition forms a partition over all possible states, this single
+    state is a combination of the two states in the previous decomposition. The
+    state probability $p_{low/high}$ for the single state is a combination of
+    the two state probabilities:
+
+    \startformula
+      p_{low/high} = t_{high} \times p_{high} + t_{low} \times p_{low},
+    \stopformula
+    
+    where $t_{high}$ and $t_{low}$ represent the fraction of time spent in the
+    corresponding state, respectively. However, given that the system might be
+    in one of the two states but cannot be in both states, $t_{high} + t_{low}
+    = 1$. No combination of the probabilities $p_{high}$ and $p_{low}$ can be
+    higher than $p_{high}$ or $p_{low}$. The state probability $p_{low/high}$
+    for the single state is therefore at least smaller than the state
+    probabilities for the two states, i.e.,
+      
+    \startformula
+      p_{low/high} \leq p_{high} \hskip1.5cm p_{low/high} \leq p_{low}.
+    \stopalign\stopformula
+          
+    Instead of a single state, consider now a decomposition with three states.
+    Reversing the above reasoning, it is possible that one of the states in
+    this decomposition has a state probability higher than the state
+    probabilities $p_{high}$ or $p_{low}$. The satisfaction rate of the leaf
+    goal would then be higher, leading our technique to underestimate the
+    satisfaction rate of an obstacle. This limitation calls for a finer-grained
+    analysis of monitored satisfaction rates.
+    
+  \stopsection
+
+  \startsection[reference=sec:performance,title={Performance and scalability}]
+    
+    This section discusses the theoretical complexity of the procedures for
+    propagating satisfaction rate (\in{Section}[sec:computing_satrate]), for
+    indentifying critical obstacles
+    (\in{Section}[sec:indentifying_most_critical_obstacles]), for selecting
+    most appropriate countermeasures (\in{Section}[sec:selecting_cm]), for
+    integrating selected countermeasures into the goal model
+    (\in{Section}[sec:integrating]), and for monitoring probabilistic obstacles
+    (\in{Section}[sec:monitoring]), together with their performance in
+    realistic problems.
+      
+    \noindent {\bf Propagation procedures.} The {\it Pattern-based computation}
+    performs at most $g + o$ computations where $g$ is the number of goals and
+    $o$ the number of obstacles. The complexity of this procedure is therefore
+    $\cal O(g + o)$.
+
+    The {\it BDD-based computation} performs at most $r_g + o_b + r_o$ BDD
+    operations where $r_g$ is the number of goal refinements, $o_b$ is the
+    number of obstructions, and $r_o$ is the number of obstacle refinements.
+    The complexity of a BDD operation is linear in the size of the combined
+    BDDs \cite[Mei12]. However, the size of the BDDs might be exponential in
+    the number of variables \cite[Mei12]. The size of our BDDs is $\cal
+    O(2^o)$, where $o$ is the number of obstacles. Computing the satisfaction
+    rate of an obstruction superset is linear in the number of nodes of the
+    BDD. Therefore, the complexity of the BDD-based computation is bounded by
+    $\cal O((r_g + o_b + r_o) \times 2^o + 2^o)$. In practice, however, BDDs
+    often have a much smaller size than $\cal O(2^o)$. Given the specific
+    structure of the encoded formula, we may expect tighter bounds on the size
+    of the BDD.
+      
+    In practice, the computation cost of the satisfaction rate for the
+    considered high-level goals is often small. For example, computing the
+    satisfaction rate for the high-level goal in the Ambulance Dispatch System
+    and in the Car Pooling System discussed in \in{Sections}[sec:bads] and
+    \in{}[sec:cool] hereafter took less than a second. The timing includes the
+    time to start the .NET virtual machine, read, and parse the model. As seen
+    in \in{Section}[sec:compare_propagations], the time to compute the
+    satisfaction rates of high-level goals on large, randomly generated
+    goal/obstacle models is small. As a recall, on models with 10.000 goals and
+    10.000 obstacles, it takes 13s for the Pattern-based computation and 18s
+    for the BDD-based computation (including 5ms for computing the probability
+    of an obstruction superset.)
+      
+    When computing satisfaction rates with their uncertainty margins, the
+    propagation procedure is repeated. The complexity of the repeated procedure
+    is bounded by $\cal O(n\times2^o)$ where $n$ is the number of samples
+    computed. In practice, a value such as $n = 1,000,000$ provides
+    sufficiently accurate satisfaction rates in less than 5 seconds for the
+    Ambulance Dispatching System in \in{Sections}[sec:bads]. Note that on a
+    model with 10.000 goals and 10.000 obstacles, it would take about 1h20m;
+    this would call for specific techniques to be developped event though such
+    model size appears questionable in practice.
+      
+    \noindent {\bf Identification of critical obstacles.} To identify likely
+    and critical obstacles, the procedure in \in{Section}
+    [sec:indentifying_most_critical_obstacles] generates all combinations of
+    size $1$, then $2$, etc. The complexity for such identification of obstacle
+    combinations of size $i$ is $\cal O(o^i)$, where $o$ is the number of
+    obstacles.
+      
+    In practice, the identification of the critical obstacles and pairs of
+    obstacles for the Car Pooling System in \in{Section}[sec:cool] took about a
+    second. The identification of critical triplets took about 3 seconds
+    whereas the identification of 4-tuples took 30 seconds. Similar times were
+    observed for the running example, for the Ambulance Dispatch System in
+    \in{Section}[sec:bads] and for the C230 Yoke Lifting System in
+    \in{Section}[sec:iba]. Again, these timing indications includes the time to
+    start the .NET virtual machine and read and parse the models.
+          
+    \noindent {\bf Selection of most appropriate countermeasures.} The
+    selection of most appropriate countermeasure solves two combinatorial
+    optimization problems, as seen in \in{Section}[sec:selecting_cm]. The
+    complexity of solving these problems is bounded by $\cal O(2^c)$ where $c$
+    is the number of countermeasures. As discussed in
+    \in{Section}[sec:selecting_cm], future improvements are expected to reduce
+    the computation effort.
+      
+    In practice, selecting most appropriate countermeasures for the Ambulance
+    Dispatching System in \in{Section}[sec:bads] took about 2 minutes.
+
+    \noindent {\bf Integration of countermeasures.} Countermeasure integration
+    using the constructs presented in \in{Section}[sec:exception_handling] is
+    in $\cal O(1)$. However, changes may need to be propagated in the
+    goal/obstacle model; this requires, in the worst case, $\cal O(g + o)$ {\it
+    Provided} annotations.
+      
+    In practice, the time to integrate all countermeasures in the Ambulance
+    Dispatching System \in{Section}[sec:bads] or in the running example took
+    less than a second.
+          
+    \noindent {\bf Runtime monitoring of probabilistic obstacles.} As discussed
+    in \in{Section}[sec:monitoring_based], the building of monitors is in $\cal
+    O(2^{2^n})$ where $n$ is the size of the formula \cite[Bau11]. The
+    complexity of updating all monitors at runtime is $\cal O(n)$ where $n$ is
+    the number of virtual monitors.
+      
+    As suggested by the Ambulance Dispatch System case-study in
+    \in{Section}[sec:bads] and the Flooding System in
+    \in{Section}[sec:runtime_running_example] the approach appears to be
+    applicable in practice. For the former, building the required monitors
+    takes about 10 seconds. Updating the monitors at runtime takes less than 50
+    ms, which allows monitoring to occur every second without any problem. The
+    monitoring overhead appears very small and could be balanced on different
+    computers.
+    
+  \stopsection
+  
+  \startsection[reference=sec:applicability,title={Applicability}]
+    
+    This section shows our proposed techniques in action in realistic
+    situations. It describes three case-studies and the application of our
+    techniques.
+    
+    \startitemize
+    
+      \item The first case study, a Car Pooling System (CPS), was chosen to evaluate
+      the applicability of the proposed obstacle assessment techniques as seen
+      in \in{Chapter}[chap:assessing]. An existing goal and obstacle models
+      with a large number of obstacles calls for our obstacle prioritization
+      techniques. (See \in{Section}[sec:cool].)
+    
+      \item The second case study evaluates the application of the obstacle
+      assessment techniques presented in \in{Chapter}[chap:assessing] in an
+      industrial setting. Our techniques were applied to an industrial yoke
+      lifting system from a leading medical technology company and compared to
+      a risk analysis previously performed by engineers of the company. (See
+      \in{Section}[sec:iba].)
+      
+      \item Last, the techniques proposed in \in{Chapter}[chap:assessing] to
+      \in{}[runtime] are applied to a benchmark commonly used for evaluating
+      obstacle analysis techniques \cite[Fin96,Lam00,Let02,Alr12,Alr16] and
+      other techniques such as self-adaptation \cite[Sou12]: an Ambulance
+      Despatching System (ADS). This case study was chosen for the availability
+      of existing goal and obstacles models, domain experts, and for the
+      experience of the author in this type of systems. (See
+      \in{Section}[sec:bads].)
+    
+    \stopitemize
+    
+    \startsubsection[reference=sec:cool,title={A car pooling system}]
     
       The techniques presented in \in{Chapter}[chap:assessing] were evaluated
-      on a car pooling system. The system is briefly described as follows.
+      on a first case study of a car pooling system. This section focuses on
+      evaluating the techniques in
+      \in{Section}[sec:indentifying_most_critical_obstacles] for determining
+      the likely and critical obstacles. The system is briefly described as
+      follows.
       
       {\vskip.8\baselineskip}
       \framed[width=local,align={width},offset=10pt,after={\vskip-\baselineskip}
-      ] {\it The system should act as a marketplace for drivers to offer empty
-      seats in real time and travellers to use them under agreed conditions. A
-      driver is matched in real time with anyone searching for a ride along a
-      common route. Effective carpooling may critically depend on marketplace
-      size; the system should, therefore, be attractive to drivers, in
-      particular by not over constraining them. Drivers are assumed to have a
-      GPS-based navigation device and a PDA/iPhone-like touch screen.}
+       ] {\it The system should act as a marketplace for drivers to offer empty
+      seats in real time and for travellers to use them under agreed
+      conditions. A driver is matched in real time with anyone searching for a
+      ride along a common route. Effective carpooling may critically depend on
+      marketplace size; the system should therefore be attractive to drivers,
+      in particular by not over-constraining them. Drivers are assumed to have
+      a GPS-based navigation device and a PDA/iPhone-like touch screen.}
+
+      \noindent A mode detailed description of the system can be found in
+      \cite[Dam10].
     
-      \noindent {\bf Goal and Obstacle model.} The goal model contains 44 goals
-      with 2 root goals refined by 20 refinements, leading to 24 leaf goals.
-      The obstacle model contains 109 obstacles with 12 root obstacles and 69
-      leaf obstacles. The model contains 108 obstacle refinements. The complete
-      model is available in \in{Section}[app:cool].
+      \noindent {\bf Goal and Obstacle model.} The goal model for this system
+      contains 44 goals with 2 root goals refined through 20 refinements
+      leading to 24 leaf goals. The obstacle model contains 109 obstacles with
+      12 root obstacles and 69 leaf obstacles. The model contains 108 obstacle
+      refinements. The complete model is found in \in{Section}[app:cool].
       
       The root goals are \goal{Achieve [Ride Need Eventually Served]} and
       \goal{Achieve [Ride Proposal Eventually Served]}. Both have a required
@@ -64,7 +433,7 @@
         arrive at that destination within the specified time constraints.}
         \KaosAttribute {RSR} {$95\%$}
       \stopkaosspec
-      
+    
       \startkaosspec
         \GoalName {Achieve [Ride Proposal Eventually Served]}
         \KaosAttribute {Def} {Rides proposed by drivers shall be fulfilled
@@ -75,11 +444,11 @@
       
       The goal \goal{Achieve [Ride Need Eventually Served]} is refined in 3
       subgoals whereas \goal{Achieve [Ride Proposal Eventually Served]} is
-      refined by 2; both refinements follow the {\it milestone-driven}
-      refinement pattern. \in{Figure}[fig:goal_cool1] and
+      refined in two subgoals; both refinements follow the {\it
+      milestone-driven} refinement pattern. \in{Figure}[fig:goal_cool1] and
       \in{Figure}[fig:goal_cool2] show the corresponding goal model fragments.
-      The non-assigned goals are in-turn refined, using a variety of refinement
-      patterns \cite[Lam09], until all goals are assigned to agents. The
+      The non-assigned goals are refined in turn using a variety of refinement
+      patterns \cite[Lam09] until all goals are assigned to single agents. The
       system includes 3 agents: \agent{Driver}, \agent{Passenger} and
       \agent{Software}.
       
@@ -87,31 +456,30 @@
            [fig:goal_cool1]
            {Goal model fragment for the Car Pooling System.}
         {\externalfigure[../images/chap9/cool_goal_1.pdf]}
-        
+      
       \placefigure[]
            [fig:goal_cool2]
            {Goal model fragment for the Car Pooling System.}
         {\externalfigure[../images/chap9/cool_goal_2.pdf]}
       
-      The root obstacles were generated by negating the leaf goals. 
-      For example, the goal \goal{Maintain [Ride Offer
-      Accurate]} is obstructed by the obstacle \obstacle{Ride Offer Not
-      Accurate}.
+      The root obstacles were generated by negating the leaf goals from the
+      goal model. For example, the goal \goal{Maintain [Ride Offer Accurate]}
+      is obstructed by the obstacle \obstacle{Ride Offer Not Accurate}:
       
       \startkaosspec
         \GoalName {Maintain [Ride Offer Accurate]}
-        \KaosAttribute {Def} {Ride offers, proposed by the drivers, shall
+        \KaosAttribute {Def} {Ride offers proposed by the drivers shall
         always be as accurate as possible.}
-        
+      
         \ObstacleName {Ride Offer Not Accurate}
-        \KaosAttribute {Def} {Ride offer encoded in the system does not
-        correspond accurately to a ride proposal in the real world.}
+        \KaosAttribute {Def} {A ride offer encoded in the system does not
+        accurately correspond to a ride proposal in the real world.}
       \stopkaosspec
 
       These obstacles are recursively refined until the satisfaction rate of
-      the leaf obstacles can be estimated by experts using the available
-      techniques \cite[Lam09]. \in{Figure}[fig:cool_obstacle_1] shows a
-      fragment of the obstacle model.
+      the leaf obstacles can be estimated by experts using available techniques
+      \cite[Lam09]. \in{Figure}[fig:cool_obstacle_1] shows a fragment of the
+      obstacle model.
       
       \placefigure[]
            [fig:cool_obstacle_1]
@@ -120,22 +488,22 @@
       
       \noindent {\bf Obstacle Assessment.} The 69 leaf obstacles were then
       annotated with estimates of their satisfaction rate. As they are grounded
-      on the domain, such estimates can be elicited from the users' experience or 
-      statistical data. As the system provides specific features for ride
-      evaluation by the riders, the evaluation questionnaire might be designed
-      for non-positive evaluations to reflect the obstacle model to acquire
+      on the domain, such estimates can be elicited from users' experience or
+      from statistical data. As the system provides specific features for ride
+      evaluation by riders, the evaluation questionnaire might be designed for
+      non-positive evaluations to reflect the obstacle model so as to acquire
       relevant data.
 
       \in{Table}[tab:cool_estimates] provides leaf obstacle estimates based on
       personal carpooling experience by colleagues and us. These estimates
-      should be refined from statistical data when available. For example, 5
-      behaviors at least were estimated to satisfy the obstacle condition out
-      of 1,000 possible behaviors for the obstacle \obstacle{Drop Point
-      Inaccessible By Car}. Its satisfaction rate is therefore estimated to be
-      $.5\%$.
+      should be refined from statistical data when available. For example, for
+      the obstacle \obstacle{Drop Point Inaccessible By Car} 5 behaviors at
+      least were estimated to satisfy the obstacle condition out of 1,000
+      possible behaviors, the satisfaction rate of this leaf obstacle is
+      therefore estimated to be $.5\%$.
     
       \placetable[new][tab:cool_estimates]
-        {Estimates for the leaf obstacles.}
+        {Estimates for identified leaf obstacles.}
         {\setupTABLE[c][each][align={left,lohi},frame=off,offset=0pt]
         \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
         \setupTABLE[c][1,3][align={right,lohi},width=6cm]
@@ -148,32 +516,35 @@
         \input{../case-studies/car-pooling/obstacle_probability_table.tex}
         }
         
-      \noindent {\bf Global Impact Analysis.} Propagating the estimated
-      satisfaction rates from the leaf obstacles to the root obstacles, from
-      the root obstacles to the leaf goals, and from the leaf goals to the root
-      goals provides the satisfaction rate for the two high-level goals. The
-      satisfaction rate for \goal{Achieve [Ride Need Eventually Served]} is
-      only $37.28\%$. The satisfaction rate for the goal \goal{Achieve [Ride
+      \noindent {\bf Global Impact Analysis.} The propagation of the estimated
+      satisfaction rates from the leaf obstacles to the root obstacles, then
+      from the root obstacles to the leaf goals, and then from the leaf goals
+      to the root goals yields the satisfaction rate for the two high-level
+      goals. Using the techniques in
+      \in{Section}[sec:pattern_based_computation], the satisfaction rate for
+      \goal{Achieve [Ride Need Eventually Served]} is found to be only only
+      $37.28\%$. The satisfaction rate for the goal \goal{Achieve [Ride
       Proposal Eventually Served]} is $81.02\%$.
       
-      The satisfaction rate for \goal{Achieve [Ride Need Eventually Served]}
-      means that the probability of serving a ride request is only about 40\%
-      if all leaf obstacles were correctly estimated, and 
-       countermeasures to likely problems are missing,
-      there is approximately 2 chance out of 5 to serve a ride request. This is
-      far from the RDS of 95\% prescribed on this main goal.
+      The satisfaction rate for the high-level goal \goal{Achieve [Ride Need
+      Eventually Served]} means that the probability of serving a ride request
+      is only about 40\% if all leaf obstacles were correctly estimated and no
+      countermeasures to likely problems are provided; there would thus be
+      approximately 2 chances out of 5 to serve a ride request. This is far
+      from the RSR of 95\% prescribed on this main goal.
        
-      Given the low satisfaction rates obtained by propagating the estimates,
-      likely and critical  obstacles shall be resolved. Due to a large number of
-      leaf obstacles (68), we need to prioritize them so that we may focus our
-      resolutions on the most critical one.
+      Given the low goal's satisfaction rates obtained by propagating leaf
+      obstacle estimates, likely and critical obstacles need be resolved. Due
+      to a large number of leaf obstacles (68), we need to prioritize them so
+      that we focus our resolutions on most critical ones.
       
       \noindent {\bf Local Impact Analysis.} To complement our global analysis,
-      we may, therefore, consider one single leaf obstacle at a time, setting
-      the satisfaction rates of all other leaf obstacles to $0$. By
+      we may therefore consider one single leaf obstacle at a time, setting the
+      satisfaction rates of all the other leaf obstacles to $0$. By
       up-propagation of these satisfaction rates, we obtain the violation
-      severity for the root goal. Among the 68 single leaf obstacles, only three
-      revealed to cause a severe violation, as \in{Table}[tab:cool_sv] depicts.
+      severity for the root goal. Among the 68 single leaf obstacles, only
+      three revealed to cause a severe violation, as \in{Table}[tab:cool_sv]
+      depicts.
             
       \placetable[top][tab:cool_sv]
         {Critical obstacles for the Car Pooling System.}
@@ -193,42 +564,42 @@
           \bTR \bTD Passenger Late At Pickup Point    \eTD \bTD 6\%            \eTD \bTD 1\%               \eTD \eTR
         \eTABLE
         }
-      
+    
       \placefigure[bottom]
            [fig:violation_diagram_cool_1]
            {Violation Diagram for the Car Pooling System with single obstacle.}
         {\externalfigure[../images/chap9/cool_violation_diagram_1.pdf]}
-      
+    
       As seen in \in{Table}[tab:cool_sv], the leaf obstacle \obstacle{Stuck In
       Traffic Jams}, with an estimated satisfaction rate of 10\%, causes a
-      violation severity of 5\% for the root goal; this means that only 90\% of
+      violation severity of 5\% for the root goal. This means that only 90\% of
       requested rides would then be served. The leaf obstacle \obstacle{Wrong
       Contact Information}, with an estimated satisfaction rate of 7\%, causes
       a violation severity of 2\% for the root goal. The leaf obstacle
-      \obstacle{Passenger Late At Pickup Point} with an estimated satisfaction rate of 6\%, yields a
-      violation severity of 1\% with respect to the root goal's prescribed RDS
-      of 95\%. \in{Figure}[fig:violation_diagram_cool_1] shows the violation
-      diagrams with these obstacles.
+      \obstacle{Passenger Late At Pickup Point}, with an estimated satisfaction
+      rate of 6\%, yields a violation severity of 1\% with respect to the root
+      goal's prescribed RSR of 95\%. \in{Figure}[fig:violation_diagram_cool_1]
+      shows the violation diagrams for these obstacles.
       
-      Similar table and violation diagram can be generated for the second root
-      goal \goal{Achieve [Ride Proposal Eventually Served]}. However, no
-      obstacle alone is sufficient for dropping the satisfaction rate below the
-      required satisfaction rate.
+      A similar table and violation diagram can be generated for the second
+      root goal \goal{Achieve [Ride Proposal Eventually Served]}. However, no
+      obstacle alone is sufficient here for dropping the satisfaction rate
+      below the required satisfaction rate.
       
       After having found the single leaf obstacles that are critical, we need
-      to turn our attention to the critical pair of obstacles. Assuming those
-      critical singletons are selected for resolution, the critical pairs
-      should not redundantly include them. Using the brute-force approach
+      to turn our attention to the critical obstacle pairs. Assuming the
+      preceding critical singletons are selected for resolution, the critical
+      pairs should not redundantly include them. Using the brute-force approach
       discussed in \in{Section}[sec:indentifying_most_critical_obstacles], we
       found 206 pairs of leaf obstacles that are critical with respect to the
-      root goal, out of the 2415 generated pairs. Among those 206 pairs, 2 do
-      not include any of the critical singletons in \in{Table}[tab:cool_sv].
-      The most critical pairs among these are shown in
+      root goal out of the 2415 generated pairs in less than a second. Among
+      those 206 pairs, 2 do not include any of the critical singletons in
+      \in{Table}[tab:cool_sv]. The most critical pairs among these are shown in
       \in{Table}[tab:cool_sv2]. Together with the critical singletons, they are
       the ones having higher priority for resolution. Once resolved, if the
-      required satisfaction rate for the high-level goals is not met, triple
-      combination excluding the preceding critical singletons and pairs could
-      reveal more critical obstacle combinations.
+      required satisfaction rate for the high-level goals is not yet reached,
+      triple combinations excluding the preceding critical singletons and pairs
+      could reveal more critical obstacle combinations.
             
       \placetable[here][tab:cool_sv2]
         {Critical pairs of obstacle for the Car Pooling System.}
@@ -250,63 +621,73 @@
         \eTABLE
         }
 
-      Ranking leaf obstacles by their satisfaction rate is not the same as
-      ranking them by the resulting violation severity for the root goal. The
-      obstacle pair \{\obstacle{Ride Offer Cancelled Last
+      Note that the ranking of leaf obstacles by their satisfaction rate is not
+      the same as their ranking by the resulting violation severity for the
+      root goal. The obstacle pair \{\obstacle{Ride Offer Cancelled Last
       Minute},\obstacle{Failed Communication}\} has a lower satisfaction rate
       compared to the pair \{\obstacle{Driver Get Lost To Pickup Point When GPS
-      Broken}, \obstacle{Driver GPS Broken Down}\} but their violation
-      severities are close.
+      Broken}, \obstacle{Driver GPS Broken Down}\} even though their violation
+      severities are close to each other.
       
-      \noindent {\bf Discussion} Global impact analysis revealed that our ideal
-      model is not compliant with our probabilistic requirement of serving 95\%
-      of encoded ride requests. Prioritization was required to handle the large
-      number of leaf obstacles obtained. Local impact analysis revealed
-      critical single obstacles and critical obstacle pairs to be resolved
-      first in the next phase of risk control.
+      \noindent {\bf Discussion.} Our global impact analysis revealed that the
+      original model is not compliant with our probabilistic requirement of
+      serving 95\% of encoded ride requests. Prioritization was required to
+      handle the large number of leaf obstacles obtained. Our local impact
+      analysis revealed critical single obstacles and critical obstacle pairs
+      to be resolved first in the next phase of risk control.
 
-      Some of the leaf obstacles appeared to have more importance than others,
-      even if they have a small satisfaction rate, especially combined with
-      other obstacles. For example, the obstacle \obstacle{Ride Request
-      Cancelled And Ride List Proposed}, with a satisfaction rate of 0.02, was
-      seen to potentially obstruct the leaf goals \goal{Achieve [Suggestions
-      Selected When Proposed by Passenger]} and \goal{Achieve [Suggestions
-      Selected When Proposed by Driver]}. Even if the estimated satisfaction
-      rate is low, the obstacle might be critical. Leaf obstacles with lower
-      satisfaction rate may thus be more important than other ones with higher
-      satisfaction rate when they obstruct more goals; an increase in their
-      satisfaction rate might have a major impact on root goal satisfaction.
+      Some of the leaf obstacles appeared more critical than others, even if
+      they have a small satisfaction rate, especially combined with other
+      obstacles. For example, the obstacle \obstacle{Ride Request Cancelled And
+      Ride List Proposed}, with a satisfaction rate of 0.02, was seen to
+      potentially obstruct the leaf goals \goal{Achieve [Suggestions Selected
+      When Proposed by Passenger]} and \goal{Achieve [Suggestions Selected When
+      Proposed by Driver]}. Even if its estimated satisfaction rate is low, the
+      obstacle may be critical.
+        
+      Leaf obstacles with lower satisfaction rate may thus be more critical
+      than other ones, with a higher satisfaction rate when they obstruct more
+      goals; an increase in their satisfaction rate may have a major impact on
+      root goal satisfaction.
 
       Critical combinations with one or two leaf obstacles appeared to include
       most of the critical obstacles. Combinations with more obstacles were
       often supersets of those critical combinations. The resolution of
-      critical singletons and pairs is therefore expected to reduce the number
-      of critical combinations of a larger size substantially.
+      critical singletons and pairs is therefore expected to substantially
+      reduce the number of critical combinations of a larger size.
 
       In short, the large number of obstacles made it quite difficult to
-      identify the most critical obstacles to be considered first for
+      identify most critical obstacles to be considered first for
       resolution. The prioritized list of obstacles produced by our technique
       helped significantly in that direction.
       
+      Most likely and critical obstacles should be resolved next; this case
+      study however focused on evaluation the techniques for {\it obstacle
+      assessment}. The techniques for {\it obstacle control} are evaluated in
+      \in{Section}[sec:bads] on a different case study.
       
     \stopsubsection
         
-      \startsubsection[reference=sec:iba,title={The IBA Yoke Lifting System}]
+    \startsubsection[reference=sec:iba,title={The IBA yoke lifting system}]
     
-      We applied our techniques from \in{Chapter}[chap:assessing] to a second
-      case-study. This second case study is an industrial system in the medical
-      domain. IBA is a medical technology company based in Louvain-la-Neuve
-      (BE) founded in 1986 and active in the field of proton therapy. IBA is
-      currently the world leader in proton therapy solutions for cancer
-      treatment \cite[Lin11]. Among their products, cyclotrons accelerate
-      particles using a high-frequency alternating voltage applied between
-      electrodes inside a vacuum chamber. A two-part yoke encloses the
-      necessary equipment. The upper part of the yoke can be lifted to access
-      the inside of the cyclotron for operation and maintenance purposes. Given
-      the weight (> 110 tons) and size of the upper yoke, the lifting system is
-      critical for operators safety. \in{Figure}[fig:iba_kiube] shows a IBA
-      ‎Cyclone 230\fontchar{registered} cyclotron open (left) and closed
-      (right), showing the yoke lifting system in action.
+      We applied the techniques from \in{Chapter}[chap:assessing] to a second
+      case-study. This section focuses on evaluating the applicability of the
+      techniques for {\it obstacle assessment} in an industrial setting.
+        
+      This second case study is an industrial system in the medical domain. IBA
+      is a medical technology company based in Louvain-la-Neuve (BE), founded
+      in 1986, and active in the field of proton therapy. IBA is currently the
+      world leader in proton therapy solutions for cancer treatment
+      \cite[Lin11]. Among their products, cyclotrons accelerate particles using
+      a high-frequency alternating voltage applied between electrodes inside a
+      vacuum chamber. A two-part yoke encloses the necessary equipment; {\it
+      yoke} refers to the pieces sustaining the distance between the
+      electrodes. The upper part of the yoke can be lifted to access the inside
+      of the cyclotron for operation and maintenance purposes. Given the weight
+      (> 110 tons) and size of the upper yoke, the lifting system is critical
+      for operators safety. \in{Figure}[fig:iba_kiube] shows a IBA ‎Cyclone
+      230\fontchar{registered} cyclotron open (left) and closed (right),
+      showing the yoke lifting system in action.
       
       \placefigure[]
            [fig:iba_kiube]
@@ -316,29 +697,41 @@
           {\externalfigure[../images/chap9/c230_closed.jpg][width=5.5cm]}{}
         \stopcombination}
       
-      The risk analysis focus on the human safety aspects for the IBA Cyclotron
-      Service Engineers (named operators in the following) on the IBA C230 Yoke
-      Lifting System (C230-YLS). The goal and obstacle models were built and
-      analyzed in collaboration with G. Gérard (IBA R&D Requirement Engineer)
-      and P. Cailliau (IBA R&D C230 System Owner). The purpose of the analysis
-      was two-fold: {\it (a)} Identifying potential failures, assessing their
-      criticality and defining mitigations when required; {\it (b)} Evaluating
-      the goal/obstacle analysis approach for this kind of risk analysis. A
-      first risk analysis (FMECA) was available before building the
+      Our risk analysis focussed on the human safety aspects for the IBA
+      Cyclotron Service Engineers, named {\it operators} in the following, on
+      the IBA C230 Yoke Lifting System (C230-YLS).
+        
+      The goal and obstacle models were built and analyzed in collaboration
+      with G. Gérard (IBA R&D Requirement Engineer) and P. Cailliau (IBA R&D
+      C230 System Owner). 
+      
+      \noindent The purpose of the analysis was two-fold:
+      
+      \startitemize[a]
+      
+        \item Identifying potential failures, assessing their criticality and
+        defining mitigations when required;
+
+        \item Evaluating the proposed approach for {\it obstacle assessment} on
+        this kind of risk analysis.
+        
+      \stopitemize
+      
+      \noindent A first risk analysis (FMECA) was available before building the
       goal/obstacle models.
       
-      \noindent {\bf Goal and Obstacle model.} We built a generic goal model
-      for human safety requirements based on {\it Occupational Injury and
-      Illness Classification Manual} \cite[Sta92]. Our model contains 220
-      goals with 47 refinements and 173 leaf goals. The model provides a set of
-      detailed safety requirements. Most of the goals in the model are {\it
-      Avoid} goals such as \goal{Avoid [Contact with hot objects or
-      substances]} or \goal{Avoid [Fall from moving vehicle, mobile
-      equipment]}. These goals are directly mapped to the categories of
-      injuries and illness from the available classification manual; the manual
-      provides the definitions and appropriate examples.
-      \in{Figure}[fig:iba_goal_1] shows the refinement for the root goal
-      \goal{Avoid [Occupational Injury and Illness]}.
+      \noindent {\bf Building the goal and obstacle models.} A generic goal
+      model was built for human safety requirements based on an available
+      document entitled {\it Occupational Injury and Illness Classification
+      Manual} \cite[Sta92]. Our model contains 220 goals with 47 refinements
+      and 173 leaf goals. The model provides a set of detailed safety
+      requirements. Most of the goals in the model are {\it Avoid} goals such
+      as \goal{Avoid [Contact with hot objects or substances]} or \goal{Avoid
+      [Fall from moving vehicle or mobile equipment]}. These goals were
+      directly mapped to categories of injuries and illness from the available
+      classification manual; this manual provides definitions and appropriate
+      examples. \in{Figure}[fig:iba_goal_1] shows the refinement for the root
+      goal \goal{Avoid [Occupational Injury and Illness]}.
       
       \placefigure[]
            [fig:iba_goal_1]
@@ -347,69 +740,84 @@
       
       The goal model was then specialized to identify the specific human safety
       requirements for the C230-YLS. Thanks to the refinement structure, large
-      parts of the generic model were pruned; for instance, as no transport is
+      parts of the generic model were pruned. For instance, as no transport is
       involved in the system, the goal \goal{Avoid [Transportation Accident]}
-      (see \in{Figure}[fig:iba_goal_1]) could be removed from the model
-      together with its descendants. The high-level goal \goal{Avoid [Assault
-      and violent acts]} was considered to be out-of-scope, the goal and its
+      in \in{Figure}[fig:iba_goal_1] could be removed from the model together
+      with its descendants. The high-level goal \goal{Avoid [Assault and
+      violent acts]} was considered to be out of scope; this and its
       descendants were removed too. Such pruning was applied recursively on the
-      refinement structure, eliminating goals that are either not relevant or
-      out-of-scope. The resulting specific goal model contains 22 goals refined
-      by 9 goal refinements into 13 leaf goals. These are the specific human
-      safety goals that shall be enforced by the C230-YLS.
+      refinement structure, to eliminate goals that are either not relevant or
+      out of scope. The resulting specific goal model contains 22 goals refined
+      through 9 goal refinements into 13 leaf goals. These are the specific
+      human safety goals to be enforced by the C230-YLS.
       
-      The obstacle analysis anchors on the leaf goals: from the negation of
-      these leaf goals, obstacles unique to the C230-YLS were generated based
-      on prior experience, existing risk analysis and incident reports.
-      \in{Figure}[fig:iba_obstacle_1] shows such an obstacle tree. The obstacle
-      model contains 43 obstacles and 28 obstacle refinements. Thanks to the
-      systematic process, we identified risks that were absent from the prior FMECA
-      risk analysis.
+      Obstacle analysis was anchored on those leaf goals. From the negation of
+      these leaf goals, obstacles unique to the C230-YLS were produced based on
+      prior experience, existing risk analysis and incident reports.
+      \in{Figure}[fig:iba_obstacle_1] shows one of the obstacle trees. The
+      obstacle model contains 43 obstacles and 28 obstacle refinements. Thanks
+      to a systematic obstacle identification process, we identified risks that
+      were absent from the prior risk analysis performed by IBA engineers. The
+      latter used Failure Modes, Effects, and Criticality Analysis (FMECA)
+      \cite[Lev01].
       
       \placefigure[]
            [fig:iba_obstacle_1]
            {Obstacle tree fragment for the goal \goal{Avoid [Caught in running equipment or machinery]}.}
         {\externalfigure[../images/chap9/iba_obstacle_1.pdf]}
-    
-      \noindent {\bf Obstacle Assessment.} To assess the risks, Failure Modes,
-      Effects, and Criticality Analysis (FMECA) tables were generated from the
-      obstacle refinement trees (See \in{Section}[sec:comparing_ra] for a
-      detailed comparison between our techniques and FMECA.) Each row in a FMECA table corresponds to a failure
+  
+      \noindent {\bf Obstacle Assessment.} To assess the risks, FMECA tables
+      were generated from the obstacle refinement trees (See
+      \in{Section}[sec:comparing_ra] for a detailed comparison between our
+      techniques and FMECA.) Each row in a FMECA table corresponds to a failure
       mode. A FMECA table contains the following columns:
       
       \startitemize[packed]
-        \item {\bf ID.} A unique identified.
-        \item {\bf Failure Mode Description.} Describes the unsatisfied requirement.
-        \item {\bf Cause.} Describes why the requirement is not satisfied.
-        \item {\bf Effect.} Describes the consequences of not satisfying of the requirement.
-        \item {\bf Risk.} Assessment of the risk likelihood and criticality.
-        \item {\bf Mitigated by.} Describes the mitigations for the risk.
-        \item {\bf Risk After.} Assessment of the risk likelihood and criticality after the mitigations.
+
+        \item {\bf ID:} a unique identifier.
+
+        \item {\bf Failure Mode Description:} describes the unsatisfied
+        requirement.
+
+        \item {\bf Cause:} describes why the requirement is not satisfied.
+
+        \item {\bf Effect:} describes the consequences of not satisfying of the
+        requirement.
+
+        \item {\bf Risk:} assessment of the risk likelihood and criticality.
+
+        \item {\bf Mitigated by:} describes the mitigations for the risk.
+
+        \item {\bf Risk after:} assessment of the risk likelihood and
+        criticality after the mitigations.
+
       \stopitemize
+    
+      \noindent The FMECA-obstacle mapping is as follows. The {\it Failure Mode
+      Description} corresponds to the obstructed leaf goal; {\it cause} was
+      generated from the obstacle AND-refinements containing leaf goals, {\it
+      effect} was initially generated from the ancestors of the obstructed leaf
+      goal but was later reformulated manually to match IBA practices.
       
-      \noindent The {\it Failure Mode Description} corresponds the obstructed
-      leaf goal, {\it Cause} was generated from the obstacles AND-Refinements
-      containing leaf goals, {\it Effect} was initially generated from the
-      ancestors of the obstructed leaf goal but was later reformulated manually
-      to match IBA practices. We generated 5 tables corresponding to the
-      level-$1$ goals refining the root goals: \goal{Avoid [Bodily reaction]},
-      \goal{Avoid [Exposure to harmful substances or environments]},
-      \goal{Avoid [Falls]}, \goal{Avoid [Contact with object and equipement]},
-      \goal{Avoid [Fires and explosion]}.
-      
-      \noindent {\bf Assessing Likelihood and Criticality of Obstacles.} The
-      risk assessment was performed by IBA engineers based on the FMECA tables.
-      The risk assessment was introduced back into the goal/obstacle model
-      afterward. Risk likelihoods were assessed using a standard
-      semi-quantitative scale ranging from A to F \cite[Ayy14]. To apply our
-      techniques, we converted this scale to quantitative values using
-      reference values provided in \cite[Ayy14]; \in{Table}[tab:iba_scale]
-      shows the correspondence between the two scales. The RSR for the
-      top-level goal was defined to $99.99\%$. Interestingly, during the risk
-      assessment process engineers split some leaf obstacles into subobstacles to
-      support more fine-grained evaluation; the changes were reflected in our
-      models.
-          
+      We generated 5 tables corresponding to the level-$1$ goals refining the
+      root goals in \in{Figure}[fig:iba_goal_1], namely, \goal{Avoid [Bodily
+      reaction]}, \goal{Avoid [Exposure to harmful substances or
+      environments]}, \goal{Avoid [Falls]}, \goal{Avoid [Contact with object
+      and equipement]}, \goal{Avoid [Fires and explosion]}.
+    
+      \noindent {\bf Assessing the likelihood and criticality of obstacles.}
+      Risk assessment was performed by IBA engineers based on the FMECA tables.
+      This assessment was introduced back into the goal/obstacle model
+      afterwards. Risk likelihoods were assessed using a standard
+      semi-quantitative scale ranging from A to F \cite[Ayy14]. To enable our
+      techniques, we converted this scale into quantitative values using
+      reference values provided in \cite[Ayy14]. \in{Table}[tab:iba_scale]
+      shows the correspondence between the two scales. The required
+      satisfaction rate (RSR) for the top-level goal was defined to $99.99\%$.
+      Interestingly, during risk assessment process engineers split some of the
+      leaf obstacles into subobstacles to support more fine-grained evaluation;
+      the changes were reflected in our models.
+        
       \placetable[bottom][tab:iba_scale]
         {Semi-quantitative scale for risk assessment at IBA.}
         {\setupTABLE[c][each][align={left,lohi},frame=off,offset=0pt]
@@ -433,281 +841,295 @@
         \eTABLE
         }
         
-      \noindent {\bf Global and local analysis.} Our global analysis revealed
-      that the satisfaction rate for \goal{Avoid [Injury and Illness Caused By
-      YLS]} is 91.46\%. This does not meet the required satisfaction rate.
-      Applying our techniques for local analysis revealed 12 obstacles that
-      were sufficient alone to cause the satisfaction rate of the high-level
-      goal to fall below its required satisfaction rate. Two groups of
+      \noindent {\bf Global and local impact analysis.} Our global analysis
+      revealed that the satisfaction rate for \goal{Avoid [Injury and Illness
+      Caused By YLS]} is 91.46\%. This does not meet the required satisfaction
+      rate. Applying our techniques for local analysis revealed 12 obstacles
+      that were sufficient alone to cause the satisfaction rate of the
+      high-level goal to fall below its required threshold. Two groups of
       obstacles could be identified: obstacles with a $.01$ satisfaction rate
       and obstacles with a $.001$ satisfaction rates. All obstacles identified
-      as likely and critical  by our techniques were considered as intolerable
+      as likely and critical by our techniques were considered as intolerable
       using the IBA Risk Criticality Matrix. This matrix classifies risks in
       three categories: {\it Intolerable} (I), {\it As low as reasonably
       practicable} (II) and {\it Broadly Acceptable} (III).
       
-      % Caught in or crushed by collasped accessory during yoke movement:
-      %   vs = 0.000899999999999901, cp = 0.001
-      % Caught in or crushed by collapsed yoke during yoke movement: 
-      %   vs = 0.000899999999999901, cp = 0.001
-      % Struck by falling pillar during positioning/manipulation: 
-      %   vs = 0.000899999999999901, cp = 0.001
-      % Fall to floor On Command Cables: 
-      %   vs = 0.000899999999999901, cp = 0.001
-      % Contact with electrical current from electrovalve: 
-      %   vs = 0.000899999999999901, cp = 0.001
-      % 
-      % Struck by falling pillar during storage: 
-      %   vs = 0.00989999999999991, cp = 0.01
-      % Struck by falling pillar during transport: 
-      %   vs = 0.00989999999999991, cp = 0.01
-      % Struck by falling wood plate: 
-      %   vs = 0.00989999999999991, cp = 0.01
-      % Bodily reaction when positioning pillars in/out: 
-      %   vs = 0.00989999999999991, cp = 0.01
-      % Bodily reaction when transporting pillars: 
-      %   vs = 0.00989999999999991, cp = 0.01
-      % Contact with electrical command cable: 
-      %   vs = 0.00989999999999991, cp = 0.01
-      % Contact with electrical current from command: 
-      %   vs = 0.00989999999999991, cp = 0.01
+        % Caught in or crushed by collasped accessory during yoke movement:
+        %   vs = 0.000899999999999901, cp = 0.001
+        % Caught in or crushed by collapsed yoke during yoke movement: 
+        %   vs = 0.000899999999999901, cp = 0.001
+        % Struck by falling pillar during positioning/manipulation: 
+        %   vs = 0.000899999999999901, cp = 0.001
+        % Fall to floor On Command Cables: 
+        %   vs = 0.000899999999999901, cp = 0.001
+        % Contact with electrical current from electrovalve: 
+        %   vs = 0.000899999999999901, cp = 0.001
+        % 
+        % Struck by falling pillar during storage: 
+        %   vs = 0.00989999999999991, cp = 0.01
+        % Struck by falling pillar during transport: 
+        %   vs = 0.00989999999999991, cp = 0.01
+        % Struck by falling wood plate: 
+        %   vs = 0.00989999999999991, cp = 0.01
+        % Bodily reaction when positioning pillars in/out: 
+        %   vs = 0.00989999999999991, cp = 0.01
+        % Bodily reaction when transporting pillars: 
+        %   vs = 0.00989999999999991, cp = 0.01
+        % Contact with electrical command cable: 
+        %   vs = 0.00989999999999991, cp = 0.01
+        % Contact with electrical current from command: 
+        %   vs = 0.00989999999999991, cp = 0.01
       
       \noindent {\bf Controlling Obstacles.} Based on the generated FMECA
       tables, IBA engineers identified 32 mitigations; these were introduced as
-      countermeasures goals. However, our techniques presented in
-      \in{Chapter}[chap:controlling_obstacle] could not be applied to select
-      the most appropriate countermeasures. The current practice at IBA
-      assesses the {\it risk after} as the severity of the risk once all
-      mitigations are integrated. The mitigations are elicited as long as the
-      {\it risk after} do not meet the target severity. Our approach separates
-      the identification of countermeasures from the assessment and requires
-      assessment for each individual countermeasure.
+      countermeasures goals. The techniques presented in
+      \in{Chapter}[chap:controlling_obstacle] could however not be applied to
+      select most appropriate countermeasures. The current practice at IBA
+      intertwines assessment and control; it assesses the {\it risk after} as
+      the severity of the risk once all mitigations are integrated. The
+      mitigations are elicited as long as the {\it risk after} does not meet
+      the target severity. Our approach separates the countermeasures
+      identification from assessment and applies assessment to each individual
+      countermeasure.
       
-      \noindent {\bf Discussion.} Overall the goal/obstacle approach appeared
-      to be helpful as it provides a complementary top-down approach to the
-      current bottom-up approach in use at IBA. The goal/obstacle models
-      provide a more global view of the system under scrutiny compared to the
-      more detailed approach proposed by FMECA. Risks not accounted for in the
-      previous risk analysis were found during the goal/obstacle analysis, as
-      well as extra mitigations. How top-down and bottom-up risk analysis
-      approaches could be integrated is, to us, an open question.
+      \noindent {\bf Discussion.} By separating countermeasure identification
+      from assessment, our approach may improve the cost-effectiveness of the
+      selected mitigations. Such separation is discussed in the context of
+      conflict resolutions in \cite[Eas94]. It enables the selection of most
+      appropriate countermeasures at a system level but requires some extra
+      assessment from domain experts. It appeared that {\it (a)} some of the
+      selected mitigations might be redundant and {\it (b)} that more global
+      mitigations resolving multiple risks could be favored over more local
+      mitigations.
+        
+      Overall the goal/obstacle approach appeared to be helpful as it provides
+      a complementary top-down approach to the current bottom-up approach in
+      use at IBA. The goal/obstacle models provide a more global view of the
+      system under scrutiny compared to the more detailed approach proposed by
+      FMECA. Risks not accounted for in the risk analysis previously performed
+      were found during the goal/obstacle analysis together with extra
+      mitigations. How top-down and bottom-up risk analysis approaches could be
+      integrated remains, to us, an open issue.
       
-      By separating the identification from the assessment of the
-      countermeasures, our approach might improve the cost-effectiveness of the
-      selected mitigations. This separation is discussed in the context of
-      conflict resolutions in \cite[Eas94]. Such separation enables the
-      selection of most appropriates countermeasures at a system-level but
-      requires an extra assessment from the experts. It appeared that some
-      selected mitigations might be redundant and that more global mitigations
-      resolving multiple risks could be favored to more local mitigations.
-      
-      In addition, the anchoring of probabilistic obstacles with real-world
-      phenomena felt helpful to estimates the obstacle satisfaction rates,
-      making the mapping to statistics available publicly or internally easier.
-      IBA currently works on improving the quantitative aspects of their risk
-      analysis to enables the reuse of such available statistics.
+      In addition, the anchoring of probabilistic obstacles on real-world
+      phenomena was felt helpful for estimating obstacle satisfaction rates,
+      making the mapping to available statistics easier. IBA currently works on
+      improving the quantitative aspects of their risk analysis to enable the
+      reuse of such available statistics.
   
-      Applying our techniques revealed that some obstacles were considered as
-      likely and critical  by our techniques but were considered as {\it As low
-      as reasonably practicable} (II). Our framework considers that
-      requirements are either satisfied, either not. Differentiating between
-      minor and major injuries unveiled to be challenging. For example a minor
-      injury while moving a pillar of 20kg and a major injury resulting from
-      being crushed by the 110 tons yoke both results in the non-satisfaction
-      of the high-level goal \goal{Avoid [Injury and Illness Caused By YLS]};
-      there is, however, a major distinction, not accounted for in our
-      approach, between the two.
+      Our techniques revealed that some obstacles were considered as likely and
+      critical by our techniques while being considered as \quote{{\it As low
+      as reasonably practicable} (II)}; those were risks causing minor
+      injuries. Differentiating between minor and major injuries turned to be
+      challenging. For example a minor injury, while moving a pillar of 20kg
+      and a major injury resulting from being crushed by the 110 tons yoke both
+      result in the non-satisfaction of the high-level goal \goal{Avoid [Injury
+      and Illness Caused By YLS]}. There is, however, a major distinction, not
+      accounted for in our approach, between the two.
   
     \stopsubsection
 
-      \startsubsection[reference=sec:bads,title={The Brussels Ambulance Dispatch System}]
-    
-      We applied the techniques from \in{Chapter}[chap:assessing],
-      \in{Chapter}[chap:controlling_obstacle],
-      \in{Chapter}[chap:knowledge-uncertainty] and \in{Chapter}[runtime], to a
-      benchmark commonly used for evaluating obstacle analysis techniques
-      \cite[Fin96,Lam00,Let02,Alr12,Alr16] and other techniques such as
-      self-adaptation \cite[Sou12]. The model used for the evaluation is
-      inspired by the one used for evaluating obstacle analysis techniques
-      presented in \cite[Lam00,Let02] while building upon the author's
+    \startsubsection[reference=sec:bads,title={The Brussels ambulance dispatch system}]
+  
+      The techniques from \in{Chapter}[chap:assessing]-\in{}[runtime] were
+      applied to a benchmark commonly used for evaluating obstacle analysis
+      techniques \cite[Fin96,Lam00,Let02,Alr12,Alr16] and for evaluating other
+      techniques software engineering techniques, in particular self-adaptation
+      \cite[Sou12]. The aim is evaluate the applicability of our {\it obstacle
+      assessment} and {\it control} techniques to a system of significant size.
+      
+      The model used for the evaluation was inspired by the one used for
+      evaluating obstacle analysis techniques in \cite[Lam00,Let02]. In
+      addition, the model was adapted and enriched based on the author's
       experience as a volunteer Emergency Medical Technician (EMT) in this type
       of system. When appropriate, the system was tailored to match the
       regulations and practice applicable in the Brussels area (Belgium)
-      \cite[Pub13]. The following description briefly explains the Ambulance
-      Dispatch System (ADS).
+      \cite[Pub13].
       
+      \noindentation The following description briefly explains the Ambulance
+      Dispatch System (ADS).
+    
       {\vskip.8\baselineskip}
       \framed[width=local,align={width},offset=10pt,after={\vskip-\baselineskip}
-       ] {\it Calling 112 connect the caller to a dispatch operator who feeds
-      the information about the incident into the dispatch software. The system
-      would then allocate and mobilize an appropriate ambulance and transmit
-      details to the selected vehicle. The system also tracks actual
-      availability and position of the ambulances.}
+       ] {\it A "112" call connects the caller to a dispatch operator who
+      inputs information about the incident into the dispatch software. The
+      system then has to allocate and mobilize an appropriate ambulance, and
+      transmit all relevant details to the selected vehicle. The system has
+      also to track the actual availability and position of the ambulances.}
       
-      \noindent {\bf Goal and Obstacle model.} The goal model contains 56 goals
-      with three root goals. 27 refinements leading to 34 leafs goals refines
-      the root goals. The obstacle model includes 84 obstacles. Root obstacles
-      obstruct 17 leaf goals. 69 refinements refine these root obstacles,
-      leading to 54 leaf obstacles. \in{Section}[app:bas] details the complete
-      specifications for the goals and obstacles.
-      
-      The primary root goal is \goal{Achieve [Incident Resolved]} with a $95\%$
-      required satisfaction rate.
-      
+      \noindent For a more detailed system description, see \cite[Let02].
+    
+      \noindent {\bf Goal and obstacle model.} The goal model contains 56 goals
+      with 3 root goals. There are 27 refinements leading to 34 leaf goals. The
+      obstacle model includes 84 obstacles. The root obstacles obstruct 17 leaf
+      goals. There are 69 refinements for these root obstacles, leading to 54
+      leaf obstacles. \in{Section}[app:bas] details the complete specification
+      for the goals and obstacles.
+    
+      The primary root goal is \goal{Achieve [Incident Resolved]}, with a
+      $95\%$ required satisfaction rate.
+    
       \startkaosspec
         \GoalName {Achieve [Incident Resolved]}
-        \KaosAttribute {Def} {All incidents in the real-world shall be
+        \KaosAttribute {Def} {All incidents shall be
         resolved. An incident is resolved if the victim is treated on the
-        incident scene or transported to the hospital.}
+        incident scene or transported to an hospital.}
         \KaosAttribute {RSR} {$95\%$}
       \stopkaosspec
-      
-       A {\it milestone-driven} refinement refines the root goal \goal{Achieve
-       [Incident Resolved]} into three subgoals: \goal{Achieve [Incident
-       Reported]}, \goal{Achieve [Ambulance On Scene When Incident Reported]},
-       and \goal{Achieve [Incident Resolved When Ambulance On Scene]}. The
-       agent \agent{Public} is responsible for the goal \goal{Achieve [Incident
-       Reported]}; the agent \agent{Ambulance staff} in collaboration with the
-       \agent{Automated Dispatch System} (\agent{ADS}) is responsible for the goal
-       \goal{Achieve [Incident Resolved When Ambulance On Scene]} (the goal is
-       therefore refined until assigned to these agents, not seen in
-       \in{Figure}[fig:ads_goal_1]q). In turn, three subgoals refines the goal
-       \goal{Achieve [Ambulance On Scene When Incident Reported]}, as
-       \in{Figure}[fig:ads_goal_1] shows. The goals are recursively refined
-       until assigned to single agents.
-      
+    
+      A {\it milestone-driven} refinement decomposes the root goal
+      \goal{Achieve [Incident Resolved]} into three subgoals: \goal{Achieve
+      [Incident Reported]}, \goal{Achieve [Ambulance On Scene When Incident
+      Reported]}, and \goal{Achieve [Incident Resolved When Ambulance On
+      Scene]}. The \agent{Public} agent is responsible for the goal
+      \goal{Achieve [Incident Reported]}; the \agent{Ambulance staff} agent in
+      collaboration with the \agent{Automated Dispatch System} (\agent{ADS}) is
+      responsible for the goal \goal{Achieve [Incident Resolved When Ambulance
+      On Scene]}; the goal is therefore refined until assigned to these agents,
+      not seen in \in{Figure}[fig:ads_goal_1]. Three subgoals refine the goal
+      \goal{Achieve [Ambulance On Scene When Incident Reported]} as
+      \in{Figure}[fig:ads_goal_1] shows. The latter goals are recursively
+      refined until assigned to single agents.
+    
       \placefigure[]
            [fig:ads_goal_1]
            {Goal model fragment for the Ambulance Dispatch System.}
         {\externalfigure[../images/chap9/ads_goal_1.pdf]}
-      
+    
       The two other root goals are \goal{Maintain [Accurate Ambulance Status
-      Known]} and \goal{Maintain [Accurate Ambulance Location Known]}.
-      
+      Known]} and \goal{Maintain [Accurate Ambulance Location Known]}:
+    
       \startkaosspec
         \GoalName {Maintain [Accurate Ambulance Status Known]}
         \KaosAttribute {Def} {The status of the ambulance shall be accurately
-        known by the dispatching software. A status is accurate if the
+        known to the dispatching software. A status is accurate if the
         known status corresponds to the status of the ambulance
-        in the real-world. The status shall be known by the dispatching software
+        in the real-world. The status shall be known to the dispatching software
         within 3 minutes when encoded by the staff.}
         \KaosAttribute {RSR} {$90\%$}
       \stopkaosspec
-      
+    
       \startkaosspec
         \GoalName {Maintain [Accurate Ambulance Location Known]}
-        \KaosAttribute {Def} {The accurate location of the ambulance is known by the dispatching software. A location is accurate if the position of the
-        ambulance in the real-world and the dispatching do not differ by more
-        than 250 meters.}
+        \KaosAttribute {Def} {The accurate location of the ambulance is known
+        by the dispatching software. A location is accurate if the position of
+        the ambulance in the real-world and the dispatching position do not differ by
+        more than 250 meters.}
         \KaosAttribute {RSR} {$90\%$}
       \stopkaosspec
-      
+    
       \placefigure[bottom]
            [fig:ads_obstacle_1]
            {Obstacle model fragment for the Ambulance Dispatch System.}
         {\externalfigure[../images/chap9/ads_obstacle_1.pdf]}
-      
+    
       Negating the leaf goals generates obstacles that are later refined. For
       example, the leaf goal \goal{Achieve [Mobilized Ambulance On Scene]}
       generates the root obstacle \obstacle{Mobilized Ambulance Not On Scene}.
-      This obstacle is refined until experts can determine the leaf obstacle
-      satisfaction rates. \in{Figure}[fig:ads_obstacle_1] shows an obstacle
-      tree for the goal \goal{Achieve [Mobilized Ambulance On Scene]}.
-      
-      Available resolution tactics generate countermeasure goal candidates. For
-      example, the following shows five countermeasure goals for two leaf
-      obstacles:
+      This obstacle is refined until experts can estimate the satisfaction
+      rates for the leaf obstacles. \in{Figure}[fig:ads_obstacle_1] shows an
+      obstacle tree for the goal \goal{Achieve [Mobilized Ambulance On Scene]}.
     
+      The available resolution tactics \cite[Lam00,Dar95] produce
+      countermeasure goal candidates. For example, here are five countermeasure
+      goals for two leaf obstacles:
+  
       \startkaosspec
         \ObstacleName {Mobilization Taken By Other Ambulance}
         \KaosAttribute {Resolvedby} {Achieve [Mobilization By Other Ambulance Known]}
         \KaosAttribute {Resolvedby} {Avoid [Mobilization Without Order]}
       \stopkaosspec
-    
+  
       \startkaosspec
         \ObstacleName {Displayed Mobilization Order Ignored}
         \KaosAttribute {Resolvedby} {Achieve [Alarm When Mobilization Order Displayed]}
         \KaosAttribute {Resolvedby} {Achieve [Failed Mobilization Recovered]}
         \KaosAttribute {Resolvedby} {Achieve [Late Mobilization When Crew Not Responsive]}
       \stopkaosspec
-      
-      \subsubsubject{Assessing Obstacles} 
+    
+      \subsubsubject{Assessing likelihood and criticality of obstacles}
 
         In order to evaluate the techniques presented in
-        \in{Chapter}[chap:assessing], we estimated the 34 leaf obstacles based
-        upon the author's experience as a volunteer Emergency Medical
-        Technician (EMT) in this type of system.
+        \in{Chapter}[chap:assessing], the satisfaction rate of 34 leaf
+        obstacles was estimated based upon the author's experience as a
+        volunteer Emergency Medical Technician (EMT) exposed to the Brussels
+        ambulance system.
 
-        Our global analysis reveal that \goal{Achieve [Incident Resolved]} has
-        an estimated satisfaction rate of 6.20\%; this is far from the required
-        satisfaction rate of 95\% to be achieved by the system-to-be but agrees
-        with the observed rate of ideal ambulance intervention.
-        
-        Local analysis reveal that 17 obstacles are sufficient alone to prevent
-        the required satisfaction rate to be achieved. \in{Table}[tab:ads_sv]
-        presents the likely and critical  obstacles to be resolved next. 142
+        Our global impact analysis using the techniques in
+        \in{Section}[sec:indentifying_most_critical_obstacles] revealed that
+        the high-level goal \goal{Achieve [Incident Resolved]} in \in{Figure}[fig:ads_goal_1] has a computed
+        satisfaction rate of 6.20\%; this is far from the required satisfaction
+        rate of 95\% to be achieved by the system-to-be while agreeing with the
+        observed rate of ideal ambulance interventions.
+      
+        Local impact analysis using the techniques in
+        \in{Section}[sec:indentifying_most_critical_obstacles] revealed that 17
+        obstacles are sufficient alone to prevent the required satisfaction
+        rate to be achieved. \in{Table}[tab:ads_sv] presents the likely and
+        critical obstacles to be resolved with highest priority. There are 142
         pairs of obstacle, not containing one of the 17 obstacles previously
-        identified, cause the estimated satisfaction rate to drop below the
-        required satisfaction rate.
+        identified, that cause the estimated satisfaction rate to drop below
+        the required satisfaction rate.
 
-      \placetable[top][tab:ads_sv]
-        {Critical obstacles for the Ambulance Despatch System.}
-        {\setupTABLE[c][each][align={left,lohi},frame=off,offset=0pt]
-        \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
-        \setupTABLE[c][1,3][align={right,lohi},loffset=4pt,roffset=4pt]
-        \setupTABLE[c][2,3][align={middle,lohi}]
-        \setupTABLE[r][2][toffset=4pt]
-        \setupTABLE[c][1][width=8cm]
-        \setupTABLE[c][2][width=2cm]
-        \setupTABLE[c][3][width=2cm]
-        \switchtobodyfont[small]
-        \bTABLE
-          \bTR \bTD Obstacle \eTD \bTD Probability \eTD \bTD SV \eTD \eTR
-          \bTR \bTD Out Of Paper \eTD \bTD 40.00\% \eTD \bTD 35.00\% \eTD \eTR
-          \bTR \bTD Allocated Ambulance Not At Station \eTD \bTD 33.33\% \eTD \bTD 28.33\% \eTD \eTR
-          \bTR \bTD Patient Not Transportable \eTD \bTD 13.33\% \eTD \bTD 8.33\% \eTD \eTR
-          \bTR \bTD Patient Cannot Reach Ambulance \eTD \bTD 13.33\% \eTD \bTD 8.33\% \eTD \eTR
-          \bTR \bTD Special Unit Required \eTD \bTD 13.33\% \eTD \bTD 8.33\% \eTD \eTR
-          \bTR \bTD Crew Not In Ambulance \eTD \bTD 13.33\% \eTD \bTD 8.33\% \eTD \eTR
-          \bTR \bTD Paper Jam \eTD \bTD 10.00\% \eTD \bTD 5.00\% \eTD \eTR
-          \bTR \bTD GPS Black Spot \eTD \bTD 10.00\% \eTD \bTD 5.00\% \eTD \eTR
-          \bTR \bTD Ambulance In Traffic Deviation \eTD \bTD 10.00\% \eTD \bTD 5.00\% \eTD \eTR
-          \bTR \bTD Ambulance Stuck In Traffic Jam Toward Incident \eTD \bTD 7.00\% \eTD \bTD 2.00\% \eTD \eTR
-          \bTR \bTD Printer Off \eTD \bTD 6.67\% \eTD \bTD 1.67\% \eTD \eTR
-          \bTR \bTD Destination Confused \eTD \bTD 6.67\% \eTD \bTD 1.67\% \eTD \eTR
-          \bTR \bTD Hazardous Environment \eTD \bTD 6.67\% \eTD \bTD 1.67\% \eTD \eTR
-          \bTR \bTD Unreachable Patient \eTD \bTD 6.67\% \eTD \bTD 1.67\% \eTD \eTR
-          \bTR \bTD Ressource Out Of Order \eTD \bTD 6.67\% \eTD \bTD 1.67\% \eTD \eTR
-          \bTR \bTD Insufficient Capacity \eTD \bTD 6.67\% \eTD \bTD 1.67\% \eTD \eTR
-          \bTR \bTD Crew Distracted \eTD \bTD 6.67\% \eTD \bTD 1.67\% \eTD \eTR
-        \eTABLE
-        }
-  
-      \subsubsubject{Controlling Obstacles} 
-  
-        The number of obstacles and countermeasure goals (29) called for our
-        countermeasure integration and encapsulation techniques presented in
+        \placetable[top][tab:ads_sv]
+          {Critical obstacles for the Ambulance Despatch System.}
+          {\setupTABLE[c][each][align={left,lohi},frame=off,offset=0pt]
+          \setupTABLE[r][1][style=bold,bottomframe=on,boffset=4pt]
+          \setupTABLE[c][1,3][align={right,lohi},loffset=4pt,roffset=4pt]
+          \setupTABLE[c][2,3][align={middle,lohi}]
+          \setupTABLE[r][2][toffset=4pt]
+          \setupTABLE[c][1][width=8cm]
+          \setupTABLE[c][2][width=2cm]
+          \setupTABLE[c][3][width=2cm]
+          \switchtobodyfont[small]
+          \bTABLE
+            \bTR \bTD Obstacle \eTD \bTD Probability \eTD \bTD Violation Severity \eTD \eTR
+            \bTR \bTD Out Of Paper \eTD \bTD 40.00\% \eTD \bTD 35.00\% \eTD \eTR
+            \bTR \bTD Allocated Ambulance Not At Station \eTD \bTD 33.33\% \eTD \bTD 28.33\% \eTD \eTR
+            \bTR \bTD Patient Not Transportable \eTD \bTD 13.33\% \eTD \bTD 8.33\% \eTD \eTR
+            \bTR \bTD Patient Cannot Reach Ambulance \eTD \bTD 13.33\% \eTD \bTD 8.33\% \eTD \eTR
+            \bTR \bTD Special Unit Required \eTD \bTD 13.33\% \eTD \bTD 8.33\% \eTD \eTR
+            \bTR \bTD Crew Not In Ambulance \eTD \bTD 13.33\% \eTD \bTD 8.33\% \eTD \eTR
+            \bTR \bTD Paper Jam \eTD \bTD 10.00\% \eTD \bTD 5.00\% \eTD \eTR
+            \bTR \bTD GPS Black Spot \eTD \bTD 10.00\% \eTD \bTD 5.00\% \eTD \eTR
+            \bTR \bTD Ambulance In Traffic Deviation \eTD \bTD 10.00\% \eTD \bTD 5.00\% \eTD \eTR
+            \bTR \bTD Ambulance Stuck In Traffic Jam Toward Incident \eTD \bTD 7.00\% \eTD \bTD 2.00\% \eTD \eTR
+            \bTR \bTD Printer Off \eTD \bTD 6.67\% \eTD \bTD 1.67\% \eTD \eTR
+            \bTR \bTD Destination Confused \eTD \bTD 6.67\% \eTD \bTD 1.67\% \eTD \eTR
+            \bTR \bTD Hazardous Environment \eTD \bTD 6.67\% \eTD \bTD 1.67\% \eTD \eTR
+            \bTR \bTD Unreachable Patient \eTD \bTD 6.67\% \eTD \bTD 1.67\% \eTD \eTR
+            \bTR \bTD Ressource Out Of Order \eTD \bTD 6.67\% \eTD \bTD 1.67\% \eTD \eTR
+            \bTR \bTD Insufficient Capacity \eTD \bTD 6.67\% \eTD \bTD 1.67\% \eTD \eTR
+            \bTR \bTD Crew Distracted \eTD \bTD 6.67\% \eTD \bTD 1.67\% \eTD \eTR
+          \eTABLE
+          }
+
+      \subsubsubject{Controlling likely and critical obstacles} 
+
+        The number of obstacles and countermeasure goals called for
+        countermeasure integration according to the techniques presented in
         \in{Chapter}[chap:controlling_obstacle]. As a result, the
-        countermeasure goals appear to focus on a small number of important
+        countermeasure goals appeared to focus on a small number of important
         goals; e.g., the goal \goal{Achieve [Incident Resolved When Ambulance
-        On Scene]} has 8 exceptions. The overall integration produced 28
-        exceptions distributed over 8 goals only.
-     
+        On Scene]} has 8 {\it Except} constructs. The overall integration
+        produced 28 {\it Except} constructs distributed among 8 goals only.
+   
         The techniques presented in \in{Chapter}[chap:controlling_obstacle]
         helped significantly for the following reasons.
-    
+  
         \noindent {\bf Model simplification by separation of concerns.} The
-        goals referring to normal situations were systematically distinguished
+        goals referring to normal situations are systematically distinguished
         from those handling obstacle occurrences. Emerging assumptions were
         incrementally down-propagated to the obstructed descendants of the
-        corresponding anchor goals; this produced 62 {\it Provided} annotations
+        corresponding anchor goals. This produced 62 {\it Provided} annotations
         distributed over 13 goals. Without these annotations, details related
-        to exceptional cases clutters the formal specification of those goals.
+        to exceptional cases would have cluttered the formal specification of
+        those goals.
 
         For example, the goal \goal{Achieve [Allocated Ambulance Mobilized When
         Mobilization Order Printed And Phone Contact]} is defined as follows
         after integration in the model:
-      
+    
         \startkaosspec
           \GoalName {Achieve [Allocated Ambulance Mobilized \blank[none]\hskip4em When Mobilization Order Printed And Phone Contact]}
           \KaosAttribute {ProvidedNot} {Mobilization Taken By Other Ambulance}
@@ -715,43 +1137,44 @@
           \KaosAttribute {ProvidedNot} {Allocated Ambulance Not Available}
           \KaosAttribute {ProvidedNot} {Printed Mobilization Order Ignored}
         \stopkaosspec
-     
+   
         The full equivalent specification of this goal without {\it
-        ProvidedNot} annotations would completely hide the ideal case; it would
-        then appear hard to distinguish the part of the goal antecedent related
-        to the ideal case from those related to exceptional case. An example is
-        provided next.
-     
-        The {\it Detach-Except} operator applied to the {\it case-driven}
+        ProvidedNot} annotations would have completely hidden the ideal case.
+        It would then appear hard to distinguish the part of the goal
+        antecedent related to the ideal case from the parts related to
+        exceptional cases. An example is provided here.
+   
+        The {\it Detach-Except} operator was applied to the {\it case-driven}
         refinement of the goal \goal{Achieve [Allocated Ambulance
         Mobilization]}. Allocating an ambulance when not at its station was
         estimated fairly rare\emdash{}5\% of cases according to typical figures in
         the domain. The parent goal of these two goals was therefore modified
         accordingly:
-     
+   
         \startkaosspec
           \GoalName {Achieve [Allocated Ambulance Mobilization]}
-          \KaosAttribute {Except} {AllocatedAmbulanceNotAtStation {\bf then} Achieve [Allocated Ambulance Mobilization At Station]}
+          \KaosAttribute {Except} {AllocatedAmbulanceNotAtStation \blank[none]\hskip2em{\bf then} Achieve [Allocated Ambulance Mobilization At Station]}
         \stopkaosspec
-        
+      
         Such refactoring reduces model complexity by hiding the part of the
         model handling the mobilization of an ambulance when on the road. The
         resulting ideal goal model contains fewer refinements and fewer goals,
         making it easier to understand and separate typical behaviors from
         exceptional ones.
-        
-        \noindent {\bf Compositionality.} Without our techniques, the
-        integration of so many exceptions for only 8 goals would have resulted
-        in large, complicated refinements with a combinatorial blow-up of
-        exceptional cases. To illustrate this important point, consider the
-        goal \goal{Achieve [Ambulance Mobilized When Allocated]}. The original,
-        ideal specification is:
-        
+      
+        \noindent {\bf Compositionality.} Without the techniques in
+        \in{Section}[sec:exception_handling], the integration of so many
+        exceptions for only 8 goals would have resulted in large, complicated
+        refinements with a combinatorial blow-up of exceptional cases. To
+        illustrate this important point, consider the goal \goal{Achieve
+        [Ambulance Mobilized When Allocated]}. The original, ideal
+        specification is:
+      
         \startformula\startalign[n=1,align=left] \NC \forall amb: Ambulance, inc: Incident \cdot \NR\noalign{\vskip-.5em} \NC \hskip.5cm Allocated (amb, inc) \Rightarrow \ltlF_{\leq 1 min} Mobilized (amb, inc) \NR \stopalign\stopformula
-        
-        After obstacle analysis, this goal is guaranteed through 5
-        countermeasure goals (see \in{Figure}[fig:ads_exception_1]). The
-        brute-force integration of only the three countermeasure goals (in red,
+      
+        After obstacle analysis, this goal is ensured through 5
+        countermeasure goals (see \in{Figure}[fig:ads_exception_1]). A
+        brute-force integration of only three of those (in red,
         see \in{Figure}[fig:ads_exception_1]) would have resulted in the
         following formal specification for the final version of the goal
         \goal{Achieve [Ambulance Mobilized When Allocated]}:
@@ -769,8 +1192,8 @@
         \stopalign\stopformula
 
         In addition to this complex specification, the goal refinement
-        structure would have been heavily modified:
-        
+        structure would have been heavily modified as follows:
+      
         \startkaosspec
           Achieve [Ambulance Mobilized When Allocated] \blank[none]
           \hskip.5cm \leftarrow~ Achieve [Other Ambulance Mobilized \blank[none]
@@ -785,13 +1208,13 @@
           \hskip3.4cm            And Printed Mobilization Order Not Ignored]
         \stopkaosspec
 
-        With such a brute-force integration, each countermeasure goal must be
+        With such brute-force integration, each countermeasure goal must be
         refined by taking other countermeasures into account. This lead to a
         combinatorial blow-up of cases. Thanks to our technique, the original
         specification of this goal and its refinement structure are preserved.
         The {\it Except} and {\it Provided} constructs encapsulate the
         modifications for a more robust system.
-      
+    
         \placefigure[]
              [fig:ads_exception_1]
              {Exception Diagram for \goal{Achieve [Ambulance Mobilized When Allocated]}.}
@@ -799,10 +1222,10 @@
 
         \noindent {\bf No premature decision and freedom of choice.} The
         exceptions separate the specification and documentation of unusual
-        behaviors from the usual ones; this allowed us delaying the decision of
+        behaviors from the usual ones. This allowed delaying the decision of
         how and when the handling of exceptional cases should occur.
 
-        \noindent {\bf Other benefits.} The {\it Replaces} annotation felt
+        \noindent {\bf Other benefits.} The {\it Replaces} annotation was felt
         useful for documenting the replacing countermeasure goals\emdash{}e.g.,
         \goal{Achieve [Ambulance On Scene Or Cancelled When Incident Reported]}
         replacing \goal{Achieve [Ambulance On Scene When Incident Reported]} to
@@ -811,14 +1234,15 @@
 
         Exception diagrams significantly helped understand the model where all
         countermeasures are integrated; they document exceptions one single
-        goal at a time as shown in \in{Figure}[fig:ads_exception_1]. For the
+        goal at a time, as shown in \in{Figure}[fig:ads_exception_1]. For the
         ADS, 14 exception diagrams document exceptional cases and
         countermeasure goals.
-      
-      \subsubsubject{From Certain Values to Uncertain Values}
-      
-        To evaluate the techniques handling knowledge uncertainty presented in
-        \in{Chapter}[chap:controlling_obstacle], we asked five experienced EMTs
+    
+      \subsubsubject{Handling uncertainty in satisfaction rates}
+    
+        To evaluate the techniques in
+        \in{Section}[sec:assessment_k_uncertainty] for obstacle assessment in
+        presence of knowledge uncertainty, we asked five experienced EMTs
         involved in the system to estimate missing or unavailable data. The
         satisfaction rates for the leaf obstacles in the Brussels area are not
         publicly available although they are partially recorded.
@@ -826,7 +1250,7 @@
         experts provided estimates based on a custom number of interventions;
         all estimates were then converted into percentages (which explains
         decimal values in \in{Table}[tab:ads_estimates]).
-    
+  
         \placetable[here][tab:ads_estimates]
           {Expert estimates for the Ambulance Dispatch System.}
           {\setupTABLE[c][each][align={left,lohi},frame=off,offset=0pt]
@@ -841,12 +1265,12 @@
           \switchtobodyfont[small]
           \input{../case-studies/ambulance-dispatching-system/expert_estimates.tex}
           }
-        
-        As \in{Table}[tab:ads_estimates] shows, experts might disagree strongly
-        on the estimated satisfaction rate, e.g. \goal{MDT Turned Off}.
-        Surprisingly, two leaf obstacles, \obstacle{Mobilization Taken By Other
-        Ambulance} and \obstacle{AVLS Out of Service}, were estimated by all
-        experts to have a satisfaction rate of 0\%. This needs further
+      
+        As \in{Table}[tab:ads_estimates] shows, experts may disagree strongly
+        on estimated satisfaction rates such as the one for \goal{MDT Turned
+        Off}. Surprisingly, two leaf obstacles, \obstacle{Mobilization Taken By
+        Other Ambulance} and \obstacle{AVLS Out of Service}, were estimated by
+        all experts to have a satisfaction rate of 0\%. This calls for further
         evaluation before removing the obstacles from the model.
 
         For calibration, statistical data were obtained about the following
@@ -859,37 +1283,37 @@
         following respects.
 
         \noindent {\bf Managing knowledge uncertainty.} Based on the
-        calibration and collected data, the violation uncertainty obtained for
+        calibration and on collected data, the violation uncertainty obtained for
         the top goal \goal{Achieve [Incident Resolved]} was 100\%, with an
         uncertainty spread of $0.9258$. \in{Figure}[fig:usr_ads] shows the
         satisfaction uncertainty for this goal. This might seem low; the reason
         is that the model only captures the ideal case without taking any
-        countermeasure to obstacles into account. The rate of ideal ambulance
-        intervention is experienced to be roughly similar to the curve obtained
+        countermeasure to obstacles into account. The rate for ideal ambulance
+        intervention was experienced to be roughly similar to the curve obtained
         with our technique.
-        
+      
         \placefigure[here]
              [fig:usr_ads]
              {Satisfaction Uncerainty for \goal{Achieve [Incident Resolved]}.}
           {\externalfigure[../images/chap9/uncertainty_sat_rate_achieve_incident_resolved.pdf]}
 
-        Violation diagrams helped to identify most likely and critical
+        Violation diagrams helped identify most likely and critical
         obstacles together with obstacles requiring further elicitation. The
         gray dots in \in{Figure}[fig:violation_diagram_ads] show the violation
         uncertainty and uncertainty spread for the top goal, taking all experts
         into account.
-        
+      
         Seven obstacles were estimated to cause the top goal not to meet its
         RSR with more than 90\% of certainty, namely, \obstacle{Ambulance In
         Traffic Deviation}, \obstacle{Allocated Ambulance Not At Station},
         \obstacle{GPS Black Spot}, \obstacle{Forget To Encode Leaving Status},
         \obstacle{Forget To Encode AvailableRadio Status}, \obstacle{Forget To
         Encode AvailableStation Status}, \obstacle{Wrong Info About Patient}.
-        Adequate countermeasures to these obstacles should therefore be
+        Adequate countermeasures to these critical obstacles should therefore be
         elaborated and integrated.
-        
+      
         Among all obstacles, 30 have an uncertainty spread higher than $0.10$.
-        These obstacles might, therefore, be further refined, or more experts
+        These obstacles might, therefore, be further refined; or more experts
         should be asked to reduce the uncertainty margins further. The
         uncertainty spread for the 24 other critical obstacles was low. This
         indicates that experts roughly agreed on their satisfaction rate. Over
@@ -898,37 +1322,39 @@
 
         \noindent {\bf Capturing uncertainty about risk estimates.} Emergency
         Medical Technicians were asked to estimate a lower bound, the most
-        probable value, and an upper bound for all leaf obstacles. To mitigate
-        the common difficulty of estimating strict and accurate lower and upper
-        bounds \cite[Vos08], the ones we collected were used as 10th and 90th
-        quantiles, with a 10\% overshoot being integrated. Eliciting
-        probability distributions would have been impossible in practice as the
-        required statistical background is far too important.
+        probable value, and an upper bound for the satisfaction rate of all
+        leaf obstacles. To mitigate the common difficulty of estimating strict
+        and accurate lower and upper bounds \cite[Vos08], the ones collected
+        were used as 10th- and 90th- quantiles, with a 10\% overshoot being
+        integrated. Eliciting probability distributions would have been
+        impossible in practice as the required statistical background is far
+        too important for the considered personnel.
 
         \noindent {\bf Integrating estimates from multiple experts.} The
-        uncertainty spread, taking only {\it Expert 1} into account, for the goal
-        \goal{Achieve [Incident Resolved]} is $0.9487$ which is very high. The
-        uncertainty spread caused by each obstacle is then high on average, as
-        the orange triangles in \in{Figure}[fig:violation_diagram_ads] shows.
-        Using more than one expert helped us reduce the general uncertainty
-        spread. However, in some cases, it increased the uncertainty spread as
-        experts might disagree.
-        
+        uncertainty spread for the goal \goal{Achieve [Incident Resolved]}
+        taking only {\it Expert 1} into account is $0.9487$ which is very high.
+        The uncertainty spread caused by each obstacle is then high on average,
+        as the orange triangles in \in{Figure}[fig:violation_diagram_ads]
+        shows. Using more than one expert helped us reduce the general
+        uncertainty spread. However, in some cases, it increased the
+        uncertainty spread as experts may disagree.
+      
         \placefigure[here]
              [fig:violation_diagram_ads]
              {Violation Diagram for the Ambulance Dispatch System.}
           {\externalfigure[../images/chap9/violation_diagram_ads.pdf]}
-            
-      \subsubsubject{Handling Obstacles At System Runtime}
-  
-        To evaluate the risk-driven adaptation techniques, we simulated the
-        operation of the ambulance dispatching system in Brussels, considering
-        15 ambulances and 10 simultaneous incidents. Over a 4-hour simulation,
-        a total of 100 incidents was reached. In comparison, the real Brussels
+          
+      \subsubsubject{Handling obstacles at system runtime}
+
+        To evaluate the risk-driven adaptation techniques in
+        \in{Section}[sec:obstaclebased_adaptation], we simulated the operation
+        of the ambulance dispatching system in Brussels, considering 15
+        ambulances and 10 simultaneous incidents. Over a 4-hour simulation, a
+        total of 100 incidents was reached. In comparison, the real Brussels
         ambulance dispatching system handles about 25 ambulances and 300
         incidents per day. The simulation was performed on a MacBook Pro 3Ghz
         equipped with 16Gb of RAM.
-        
+      
         \noindent {\bf Dispatching software implementation and simulator.} The
         ambulance dispatch software, developed in C\#, implements the
         identified software requirements. The software is freely available to
@@ -941,29 +1367,29 @@
         status reporting. \in{Figure}[fig:ads_visualization] shows a screenshot
         of the web application to visualize incidents and ambulances; dots
         represent ambulances and incidents together with their status.
-            
+          
         \placefigure[]
              [fig:ads_visualization]
              {ADS Visualizaton Web Application.}
           {\externalfigure[../images/chap9/ads_visualization.png][width=10cm]}
 
         The environment simulator simulates the behavior of the ambulance staff,
-        the dispatchers, and other environment agents. For example, it “presses”
-        buttons on mobile data terminals (MDT), “drives” the ambulance to the
-        incident location, and so forth. The simulator also generates incident;
+        the dispatchers, and other environment agents. For example, the simulator \quote{presses}
+        buttons on mobile data terminals (MDT), \quote{drives} the ambulance to the
+        incident location, and so forth. The simulator also generates incidents;
         the user can manually encode incidents using the \tool{ADS Console} tool.
         The simulator runs in a separate process (and might run on a different
         machine) and communicates with the dispatching software through RabbitMQ
         queues \cite[Vid12].
-      
-        \in{Figure}[fig:ads_architecture] shows the global architecture with the
-        communication queues. The {\it ADS Monitoring Client} takes snapshots of
-        the software system and generates the truth value for the corresponding
-        predicates. \tool{Utils.Monitor}, presented in
+    
+        \in{Figure}[fig:ads_architecture] shows the global architecture with
+        communication queues. The {\it ADS Monitoring Client} takes snapshots
+        of the software system and generates the truth value for the
+        corresponding predicates. \tool{Utils.Monitor}, presented in
         \in{Chapter}[chap:tool_support], consumes these predicates and feeds a
-        queue with the activation/deactivation procedures that need to be applied
-        to guarantee high-level goal RSR.
-        
+        queue with the activation/deactivation procedures that need to be
+        applied to guarantee the RSR of the high-level goal.
+      
         \placefigure[]
              [fig:ads_architecture]
              {ADS Architecture.}
@@ -976,7 +1402,7 @@
         goals \goal{Achieve [Ambulance On Scene When Incident Reported]} and
         \goal{Avoid [Ambulance On Road Mobilized]} was computed. Every 5
         minutes, the tool compared the monitored satisfaction rate of these
-        goals with their respective RSR. When required, it computed the most
+        goals with their respective RSR. When required, it computed most
         appropriate countermeasures. Later on, the tool called the
         corresponding activation/deactivation procedure for reconfiguring the
         ADS. The optimization process took about 2 minutes. During simulation,
@@ -996,12 +1422,12 @@
 
         \noindent {\bf Simulation scenarios.} We ran three simulations over 4
         hours to cover the following three scenarios.
-        
+      
         \startitemize[a]
-        
+      
           \item {\bf Rush Hour.} During rush hour, the obstacle
           \obstacle{Ambulance Stuck In Traffic Jam Toward Incident} has an
-          increased satisfaction rate. Such increase caused the countermeasures
+          increased satisfaction rate. This increase caused the countermeasures
           \goal{Achieve [Ambulance Stuck In Traffic Jam ReAllocated]} and
           \goal{Achieve [Patient Transported At Hospital When Required And
           Traffic Jam]} to be selected, integrated and deployed in the running
@@ -1016,13 +1442,13 @@
           \item {\bf On-Road Mobilization.} At night, the RSR for the goal
           \goal{Avoid [Ambulance On Road Mobilized]} is $.5$. During the day,
           however, ambulance staff prefer to not intervene in multiple
-          incidents without going back to their station. The RDS is increased
+          incidents without going back to their station. The RSR is increased
           to $.8$, as \in{Figure}[fig:runtime_scenarios]{(b)} shows. As a
           result, the countermeasure \goal{Achieve [Ambulance Allocated At
           Station When Incident Reported]} was deployed during the day. The
           adaptation replaced the {\it DefaultAllocator} component. The new
           allocation strategy reduced the satisfaction rates of the obstacle
-          \obstacle{Ambulance Mobilized On Road} and guaranteed the goal RSRs.
+          \obstacle{Ambulance Mobilized On Road} and guaranteed the goal's RSRs.
 
           \item {\bf Forgetting Ambulance Status.} Late at night and early in
           the morning, ambulance staff tends to forget to push buttons. This
@@ -1031,29 +1457,30 @@
           During that period, the countermeasure goals such as \goal {Achieve
           [Automated Leaving Status Detection]} and \goal {Achieve [Automated
           OnScene Status Detection]} were selected, integrated and deployed.
-          The integration caused the satisfaction rate to increase again beyond
-          their RSR threshold. \in{Figure}[fig:runtime_scenarios]{(c)} shows
-          the satisfaction rate of \goal{Achieve [Ambulance On Scene When
-          Incident Reported]}.
-        
+          The integration caused the computed satisfaction rate to increase
+          again beyond their RSR threshold.
+          \in{Figure}[fig:runtime_scenarios]{(c)} shows the satisfaction rate
+          of \goal{Achieve [Ambulance On Scene When Incident Reported]}.
+      
         \stopitemize
-        
+      
         \noindent Our techniques were felt to help significantly for the
         following reasons.
 
         \noindent {\bf Precise semantics regarding behaviors.} Thanks to formal
         specifications being anchored on real-world phenomena, the mapping
-        between predicates and the running software system were
+        between predicates and the running software system was
         straightforward. For example, the evaluation of the predicate {\ss
-        ambulanceA9OnScene} triggered a simple query in the database.
+        ambulanceA9OnScene} triggered a simple database query.
 
         All monitored items had a clear, precise meaning. Surprising results
-        were easily understandable, e.g., our technique identified inaccurate
-        specifications with missing conditions or unrealistic time constraints.
+        were easily understandable. In particular, our technique identified
+        inaccurate specifications with missing conditions or unrealistic time
+        constraints.
 
         \noindent {\bf Traceability of monitored indicators and deployed
         countermeasures.} The monitored satisfaction rates of high-level goals
-        significantly helped to understand whether an increase in the
+        significantly helped understand whether an increase in the
         satisfaction rate of an obstacle is critical. Comparing their monitored
         satisfaction rate with their RSR provided a traceable criterion for
         system adaptation.
@@ -1061,11 +1488,11 @@
         For example, the activation of the {\it TrafficJamAllocator} software
         component in the ADS is directly traceable to its countermeasure goal
         \goal{Achieve [Ambulance Stuck In Traffic Jam ReAllocated]}. The latter
-        in turn is traceable to high-level goals such as \quote{\it an
-        ambulance shall be on scene within 12 minutes}.
+        in turn is traceable to high-level goals such as \quote{{\it an
+        ambulance shall be on scene within 12 minutes}}.
 
         \noindent {\bf Model-based adaptation.} The goal/obstacle model drives
-        the selection of the most appropriate countermeasure. As the results
+        the selection of most appropriate countermeasure. As the results
         showed, their dynamic selection ensured that the high-level
         probabilistic goals remained satisfied. Without our technique, the
         monitoring and adaptation of the ambulance dispatching software would
@@ -1076,9 +1503,9 @@
         processes. Building a complete, consistent, and adequate state machine
         model for this system appears quite hard.
 
-        \noindent {\bf Other benefits.} The formalization effort is kept
-        minimal as only leaf obstacles need to be formalized. In addition, a
-        change in the formal specification of a leaf obstacle does not require
+        \noindent {\bf Other benefits.} The formalization effort was kept
+        minimal as only leaf obstacles needed to be formalized. In addition, a
+        change in the formal specification of a leaf obstacle did not require
         source code modification.
 
         This validation case study also highlighted areas for improvement. In
@@ -1094,312 +1521,86 @@
         may impact on the performance of the monitored system. Our preliminary
         experience suggests that most of the impact may be transferred to a
         separate computer to reduce the footprint on the monitored system.
-  
-    \stopsubsection
-  
-  \stopsection
 
-  \startsection[reference=sec:discussion_eval,title={Global evaluation}]
-  
-    This section evaluates the techniques according to five hierarchical
-    criteria; Each criteria being a prerequisite for the next
-    \cite[Dam14,Let14]. The criteria are the following: {\it Correctness}
-    (Are the proposed techniques correct regarding their specifications?), {\it
-    Performance and Scalability} (Are the techniques efficient for
-    realistically-sized problems?), {\it Applicability} (Are the techniques
-    applicable to real-world problems?), {\it Utility} (Are the techniques
-    solving a real problem?), and {\it Usability} (Are the techniques usable by
-    risk and requirements engineers?).
+      \stopsubsection
     
-    The following sections consider the criteria regarding the techniques
-    presented in the thesis: {\it (a)} The propagation procedures; {\it (b)}
-    The procedure identifying critical obstacles; {\it (c)} The selection of
-    most appropriate countermeasures; {\it (d)} The integration of
-    countermeasures; {\it (e)} The runtime monitoring of probabilistic
-    obstacles.
-  
-    \startsubsection[title={Correctness}]
-    
-      This section shows that the proposed techniques are meeting their
-      specifications.
+      \startsubsection[title={Discussion}]
       
-      We want the propagation procedures to compute \quote{safe} estimates,
-      i.e., estimates that are a lower bound; Otherwise, the computed
-      satisfaction rate might overestimates the satisfaction rate and concludes
-      that the goal meet its required satisfaction rate even if does not.
-      
-      \startproposition
-      
-        In a model with complete, consistent, and minimal goal refinement and
-        domain-complete obstacle refinements, the satisfaction rate for a
-        high-level goal is greater or equal to the estimated satisfaction rate
-        returned by the propagation procedure.
-      
-      \stopproposition
-      
-      \noindent To support this claim, consider the lowest descendant $G$ whose
-      satisfaction rate is lower than the estimated satisfaction rate. This
-      goal $G$ is either refined or is a leaf goal.
+      In addition to the discussion regarding the specific objectives of the
+      techniques as presented in the previous subsection, the following briefly
+      discusses the applicability of our techniques:
       
       \startitemize
-
-        \item If the goal $G$ is refined, the subgoals have a satisfaction
-        rate greater or equal to their respective satisfaction rate (otherwise,
-        $G$ is not the lowest descendant). In the pattern-based computation,
-        the satisfaction rate is computed using a specific propagation
-        equation. Assuming that the satisfaction rates for the subgoals are
-        correct, if the estimated satisfaction rate is lower than the computed
-        satisfaction rate, then a factor is missing, and the appropriate
-        specific propagation equation was not applied. In the BDD-based
-        computation, the satisfaction rate would be lower than the computed one
-        if and only if the obstruction supersets includes fewer obstacles;
-        however, by construction, all obstacles are included (no non-identified
-        obstacles exists as the model is assumed to be domain-complete)
+      
+        \item Goal and obstacles models have been applied to a wide variety of
+        application domains; see for example,
+        \cite[Lut07,Pon07,Dar07,Lam09,Let02,Cai13b]. We see no critical
+        difficulty in building goal and obstacle models.
         
-        \item Consider the goal $G$ is a leaf goal. If the satisfaction rate of
-        the goal is lower than the estimated satisfaction rate, the
-        satisfaction rate for the root obstacle is higher than the estimated
-        satisfaction rate. However, the satisfaction rate of the root obstacle
-        might be higher if and only if obstacles are missing. If obstacles are
-        missing the model is not domain-complete.
+        \item The other inputs required by our approach are the estimated
+        satisfaction rates for leaf obstacles and estimated probability
+        distributions to be elicited from domain experts. Tools and
+        methodologies are available for this as discussed in
+        \cite[Otw92,Coo91,Vos08]. Other approaches also rely on estimated
+        values, such as \cite[Lam00,Let04,Hea11,Let14], providing additional
+        examples of the applicability of eliciting the required inputs.
+        
+        \item The Car Pooling System and Ambulance Despatching System showed
+        how the proposed techniques for {\it obstacle assessment} and {\it
+        control} are applicable to those type of software systems. The C230-YLS
+        system showed how the proposed techniques are applicable for assessing
+        the human safety risks. The applicability of our techniques to other
+        application domains, such as the avionics industry, and to other type
+        of risk analysis, such as security risk analysis, should be further
+        evaluated.
+      
+        \item We played the role of the analysts in applying the techniques.
+        Future studies should demonstrate the applicability of the techniques
+        by people with a different expertise. In particular, the cost for
+        training risk analysts, building the goal and obstacle models and
+        applying the proposed technique should be compared to the cost of other
+        risk assessment and control techniques. Whether our techniques are
+        cost-effectively applicable by risk analysts should be assessed.
+        
+        \item The C230-YLS case study suggests that our techniques may
+        integrate with existing practice such as FMECA. However, how the
+        proposed techniques may be integrated, at a larger scale, within the
+        existing practices in industry remains an open question. For example,
+        the extend to which the risk analysis process currently in use at IBA
+        need be modified should be carrefuly evaluated.
+        
+      \stopitemize
+      
+      \stopsubsection
+    
+    \stopsection
+
+    \startsection[reference=sec:utility,title={Utility}]
+    
+      This section briefly discuss the extent to which our proposed techniques solve a real problem. The
+      problems the thesis focuses on are: 
+      
+      \startitemize
+        
+        \item the requirements completeness problem addressed by the techniques
+        presented in \in{Chapter}[chap:proba-framework], \in{}[chap:assessing]
+        and \in{}[chap:controlling_obstacle];
+
+        \item the handling of knowledge uncertainty addressed by the techniques
+        presented in \in{Chapter}[chap:knowledge-uncertainty];
+        
+        \item the risk-driven runtime adaptation addressed in
+        \in{Chapter}[runtime].
       
       \stopitemize
       
-      \startproposition
-      
-        The obstacles returned by the critical obstacle identification
-        procedure causes a loss of satisfaction for the specified goal.
-      
-      \stopproposition
-      
-      \noindent By definition of the violation severity, the obstacles with a
-      positive violation severity causes a loss in the satisfaction rate of the
-      high-level goal. The critical obstacle identification procedure,
-      presented in \in{Section}[sec:indentifying_most_critical_obstacles],
-      returns the obstacles with positive violation severity.
-      
-      \startproposition
-      
-        Countermeasure not returned by the most appropriate countermeasure
-        selection procedure cost more or would result in a lower satisfaction
-        rate for a high-level goal.
-      
-      \stopproposition
-      
-      \noindent If a countermeasure (not returned by the procedure) cost less
-      then the cost for the countermeasure is lower than the minimal cost
-      returned by the first optimization problem presented in
-      \in{Section}[sec:selecting_cm]. The minimal cost is therefore not
-      minimal. If a countermeasure results in a higher satisfaction rate for a
-      high-level goal, then the second optimization problem does not return the
-      highest solution.
-      
-      \startproposition
-      
-        The integration of a countermeasure in a complete, consistent and
-        minimal model produce a complete, consistent and minimal model.
-      
-      \stopproposition
-      
-      \noindent This is enforced by the property {\it Correctness
-      preservation}. As seen in \in{Section}[sec:integrating], the resulting
-      models are therefore complete, consistent and minimal.
-      
-      Regarding the monitoring, we want the monitored satisfaction rate to be
-      \quote{safe}, i.e., the monitored satisfaction rate for the leaf
-      obstacles is an upper bound. Otherwise, the monitored satisfaction rate
-      might underestimates the satisfaction rate, leading to unsafe conclusions.
-      
-      \startproposition
-      
-        Given a decomposition in states, the satisfaction rate for a leaf
-        obstacle is lower or equal to the monitored satisfaction rate obtained
-        by monitoring.
-      
-      \stopproposition
-      
-      \noindent By definition, the monitored satisfaction rate for $\ltlF (C
-      \wedge \Theta OC)$ is the highest state probability to satisfy the
-      obstacle condition $C \wedge \Theta OC$. If the current satisfaction rate
-      for a leaf obstacle is greater than the monitored satisfaction rate, then
-      there is a state probability greater than this monitored rate; which
-      contradicts the definition above.
-      
-      The decomposition in states might, however, impact the state
-      probabilities. For example, consider the flooding system, and assume two
-      states $RiverHigh$ and $RiverLow$. Both have a state probability to
-      satisfy the obstacle \obstacle{Dusty Environment}, say $p_{high}$ and
-      $p_{low}$. However, a decomposition with more states or fewer states
-      changes the values of the state probabilities.
-      
-      Consider a decomposition with one state {\it RiverLowHigh} instead of two. As
-      a decomposition forms a partition over all possible states, this single
-      state is a combination of the two states in the previous decomposition.
-      The state probability $p_{low/high}$ for the single state is a
-      combination of the two state probabilities:
-
-      \startformula
-        p_{low/high} = t_{high} \times p_{high} + t_{low} \times p_{low}
-      \stopformula
-    
-      where $t_{high}$ and $t_{low}$ represents the fraction of time spent in
-      the corresponding state. However, given that the system might be in one
-      of the two states but cannot be in both states, so $t_{high} + t_{low} =
-      1$, no combination of the probabilities $p_{high}$ and $p_{low}$ can be
-      higher than $p_{high}$ or $p_{low}$. The state probability $p_{low/high}$
-      for the single state is therefore at least smaller than the state
-      probabilities for the two states, i.e.,
-      
-      \startformula
-        p_{low/high} \leq p_{high} \hskip1.5cm p_{low/high} \leq p_{low}
-      \stopalign\stopformula
-          
-      Instead of one state, consider now a decomposition with three states.
-      Reversing the above reasoning, it is possible that one of the states in
-      this decomposition has a state probability higher than the state
-      probabilities $p_{high}$ or $p_{low}$. The satisfaction rate of the leaf
-      goal would then be higher, leading our technique to underestimate the
-      satisfaction rate of an obstacle. This limitation calls for a
-      finer-grained analysis of monitored satisfaction rate.
-    
-    \stopsubsection
-
-    \startsubsection[title={Performance and Scalability}]
-    
-      This section discusses the theoretical complexity of each procedure as
-      well as their performance in realistic problems.
-      
-      \noindent {\bf Propagation procedures.} The Pattern-based computation
-      performs at most $g + o$ computations where $g$ is the number of goals
-      and $o$ the number of obstacles. The complexity of this procedure is,
-      therefore, $\cal O(g + o)$.
-
-      The BDD-based computation performs at most $r_g + o_b + r_o$ BDD
-      ITE-operations where $r_g$ is the number of goal refinements, $o_b$ is
-      the number of obstructions and $r_o$ is the number of obstacle
-      refinements. The complexity of an ITE-operation is linear regarding the
-      size of the combined BDDs \cite[Mei12]. However, the size of the BDDs
-      might be exponential regarding the number of variables \cite[Mei12]. The
-      size of our BDDs is $\cal O(2^o)$ where $o$ is the number of obstacles.
-      Computing the satisfaction rate of an obstruction superset is linear in
-      the number of nodes of the BDD. So, the complexity of the BDD-based
-      computation is bounded by $\cal O((r_g + o_b + r_o) \times 2^o + 2^o)$.
-      In practice, however, BDDs often have a much smaller size than $\cal
-      O(2^o)$. Given the specific structure of the encoded formula, we might
-      expect tighter bounds on the size of the BDD.
-      
-      In practice, the computation cost of the satisfaction rate for the
-      high-level goals is often small. For example, computing the satisfaction
-      rate for the high-level goal in the Ambulance Dispatch System and the Car
-      Pooling System takes less than a second. Timing includes the time to
-      start the .NET virtual machine, read, and parse the model. As seen in
-      \in{Section}[sec:compare_propagations], the time to compute the
-      satisfaction rates of high-level goals on large, randomly generated
-      goal/obstacle models, is small; As a recall, on model with 10.000 goals
-      and 10.000 obstacles, it takes 13s for the Pattern-based computation, and
-      18s for the BDD-based computation (including 5ms for computing the
-      probability of an obstruction superset.)
-      
-      When computing satisfaction rates with their uncertainty margins, the
-      propagation procedure is repeated. The complexity of the is bounded by
-      $\cal O(n\times2^o)$ where $n$ is the number of samples computed. In
-      practice, $n = 1,000,000$ provides sufficiently accurate satisfaction
-      rates in less than 5 seconds for the Ambulance Dispatching System. Note
-      that on a model with 10.000 goals and 10.000 obstacles, it would take
-      about 1h20m, calling for specific techniques to be developped.
-      
-      \noindent {\bf Identifying critical obstacles.} To identify the likely
-      and critical  obstacles, the procedure in \in{Section}
-      [sec:indentifying_most_critical_obstacles] generates all combinations of
-      size $1$, then $2$, etc. The complexity for identifying the likely and
-      critical  obstacle combination of size $i$ is $\cal O(o^i)$ where $o$ is the
-      number of obstacles.
-      
-      In practice, the identification of the critical obstacles and pair of
-      obstacles for the Car Pooling System take about a second. The
-      identification of critical triplets takes about 3 seconds whereas the
-      identification of 4-tuples takes 30 seconds. Similar times were observed
-      for the running examples, the Ambulance Dispatch System and the C230 Yoke
-      Lifting System. Again, these timing indications includes the time to
-      start the .NET virtual machine and read and parse the models.
-          
-      \noindent {\bf Selection of most appropriate countermeasure.} The
-      selection of most appropriate countermeasure solves two combinatorial
-      optimization problems, as seen in \in{Section}[sec:selecting_cm]. The
-      complexity of solving these problems is bounded by $\cal O(2^c)$ where
-      $c$ is the number of countermeasures. As discussed in
-      \in{Section}[sec:selecting_cm], future improvements are expected to
-      reduce the computation effort.
-      
-      In practice, selecting the most appropriate countermeasures for the
-      Ambulance Dispatching System take about 2 minutes.
-
-      \noindent {\bf Integration of countermeasures.} Integrating
-      countermeasure using the constructs presented in
-      \in{Section}[sec:exception_handling] is $\cal O(1)$; however, changes
-      mights be propagated in the goal/obstacle model and requires, in the
-      worst case, $\cal O(g + o)$ {\it Provided} annotations.
-      
-      In practice, the time to integrate all countermeasures in the Ambulance
-      Dispatching System or in the running-examples took less than a second.
-          
-      \noindent {\bf Runtime monitoring of probabilistic obstacles.} As
-      discussed in \in{Section}[sec:monitoring_based], building the monitors is
-      $\cal O(2^{2^n})$ where $n$ is the size of the formula \cite[Bau11]. The
-      complexity of updating all monitors at runtime is $\cal O(n)$ where $n$
-      is the number of virtual monitors.
-      
-      As shown by the Ambulance Dispatch System case-study and the Flooding
-      System running example the approach appears to be applicable in practice.
-      For the ADS, building the required monitors takes about 10 seconds.
-      Updating the monitors at runtime takes less than 50 ms, allowing the
-      monitoring to occur every second without problems. The monitoring
-      overhead appears to be quite small and could be balanced on different
-      computers.
-    
-    \stopsubsection
-  
-    \startsubsection[title={Applicability}]
-      
-      This section shows that the proposed techniques apply to realistic
-      situations.
-      
-      Goal and obstacles models have been applied to a wide variety of
-      application domains; for example
-      \cite[Lut07,Pon07,Dar07,Lam09,Let02,Cai13b]. We see no critical
-      difficulty to the technical applicability of building goal and obstacle
-      models. The other required inputs are the estimated satisfaction rates
-      and estimated probability distributions. Tools and methodologies are
-      available to elicit such inputs as discussed in
-      \cite[Otw92,Coo91,Vos08]. Other approaches also rely on estimated
-      values, such as \cite[Lam00,Let04,Hea11,Let14], providing additional
-      examples of the applicability of eliciting the required inputs.
-      
-      More specifically, our techniques were applied to different case-studies
-      as presented in the previous section, and we experienced no difficulties
-      in the application of the techniques. We were, however, the analysts to
-      apply the techniques; Future studies should demonstrate the applicability
-      of the techniques by people less familiar with the internal details.
-    
-    \stopsubsection
-
-    \startsubsection[title={Utility}]
-    
-      This section review how the proposed techniques solve a real problem. The
-      problems the thesis focuses on are {\it (a)} the requirements
-      completeness problem with the techniques presented in
-      \in{Chapter}[chap:proba-framework], \in{}[chap:assessing] and
-      \in{}[chap:controlling_obstacle]; {\it (b)} the handling of knowledge
-      uncertainty with the techniques presented in
-      \in{Chapter}[chap:knowledge-uncertainty]; and {\it (c)} the risk-driven
-      runtime adaptation, as seen in \in{Chapter}[runtime].
-      
-      First, requirements completeness is recognized as a major challenge. As
-      discussed in the introduction of \in{Chapter}[chap:proba-framework], such
-      incompleteness arise from our tendency to conceive over-ideal systems and
-      integrating risk analysis into the requirement process helps to produce
-      more complete and accurate requirements \cite[Lam09]. Also, today, more
-      and more software systems are built according to models
+      \noindent {\bf Adressing the completeness problem. } This problem is
+      recognized as a major challenge in software engineering. As discussed in
+      the introduction of \in{Chapter}[chap:proba-framework], such
+      incompleteness arises from our tendency to conceive over-ideal systems;
+      integrating risk analysis into the requirement process helps producing
+      more complete and accurate requirements \cite[Lam09]. Moreover,
+      increasingly many software systems are built according to models
       \cite[Sta06,Bra12] and are driven, at runtime, by models \cite[Ben07].
       These models shall thereby be as complete as possible to provide robust
       software systems. Our techniques complement the obstacle analysis process
@@ -1407,76 +1608,111 @@
       and goals. Our techniques felt significantly helpful to identify missing
       risks (as seen in the IBA C230-YLS case-study) or inaccurate
       specifications (such as in the ADS case-study). Besides, our techniques
-      help to focus on likely and critical  risks and most appropriate
+      help to focus on likely and critical risks and most appropriate
       countermeasure selection; these problems were confirmed by IBA engineers
       to be major challenges, as seen in the case-study.
       
-      Second, as discussed in the introduction of
-      \in{Chapter}[chap:knowledge-uncertainty], knowledge uncertainty impedes
-      the application of the standard risk prioritization techniques. The
-      problem of managing uncertainties is recognized to be a major issue
-      \cite[Coo91,Men03,Che09b,Let14]. Our techniques felt significantly
-      helpful to identify and control these uncertainty margins, as seen in the
-      ADS case-study.
+      \noindent {\bf Adressing uncertain estimates.} As discussed in the
+      introduction of \in{Chapter}[chap:knowledge-uncertainty], knowledge
+      uncertainty impedes the application of standard risk prioritization
+      techniques. The problem of managing uncertainties is recognized to be a
+      major issue \cite[Coo91,Men03,Che09b,Let14]. Our techniques were felt
+      significantly helpful identifying and controlling uncertainty margins, as
+      seen in the Ambulance Despatching System case study in
+      \in{Section}[sec:bads].
       
-      Third, facing a changing environment, today's software system must be
-      flexible, robust, efficient and adapt to changing operational contexts
-      and environments. The problem of software adaptation at runtime is
-      recognized to be a challenge for modern software engineering practice
-      \cite[Che09,DeL13,Gie13]. Our techniques proposed to drive the
-      software adaptation by the satisfaction of high-level goals, relying on
-      the identified obstacles to highlight the most appropriate adaptation to
-      deploy.
+      \noindent {\bf Addressing risk-driven runtime adaptation.} Today's
+      software systems should be flexible, robust, and efficient in adapting to
+      changing operational contexts and environments. The problem of software
+      adaptation at runtime is recognized to be a challenge for modern software
+      engineering practice \cite[Che09,DeL13,Gie13]. Our techniques can be used
+      to drive software adaptation by high-level goal satisfaction, relying on
+      identified obstacles to highlight most appropriate adaptations to deploy.
     
-    \stopsubsection
+    \stopsection
 
-    \startsubsection[title={Usability}]
+    \startsection[reference=sec:usability,title={Usability}]
     
-      This section discusses the usability of the proposed techniques.
+      This section briefly discusses the usability of the techniques proposed
+      in this thesis. Criteria proposed in \cite[Nie94] for evaluating the
+      usability of a design are adapted here for our techniques:
       
-      The goal/obstacle language is used in industrial settings, as seen in
-      \cite[Lut07,Pon07,Dar07,Lam09,Let02,Cai13b]. In addition, other
-      techniques such as CORAS \cite[Lun10], or Fault Tree Analysis
-      \cite[Rui15,Ves81] requires a similar level of expertise for building
-      the models. As seen in the ADS or in the IBA C230-YSL case-studies,
-      domain experts are, in practice, able to estimate the satisfaction rates
-      for the leaf obstacles.
+      \startitemize
       
-      For the runtime adaptation, our techniques rely on the formal
-      specifications of the probabilistic obstacles. While formal specification
-      remains a challenge \cite[Fra91], elicitations techniques and
-      specification patterns \cite[Dwy98,Dar95] ease the production of formal
-      specifications \cite[Lam09]. Future research shall more precisely
-      evaluate the impact of formal specifications to the usability of our
-      monitoring techniques.
+        \item {\it Learnability}: How easy is it for users to apply the
+        techniques?
+        
+        \item {\it Errors}: How many errors do users make, how severe are these
+        errors, and how easily can they recover from the errors?
+        
+        \item {\it Efficiency}: Once users have learned the techniques, how
+        quickly can they perform tasks?
+        
+        \item {\it Memorability}: When users return to the techniques after a
+        period of not using it, how easily can they reestablish proficiency?
       
-      The level of feedback in case of errors provided by the tools
-      implementing the techniques could be improved to be usable by users less
-      familiar with the internal details of our techniques. In addition,
-      interpreting the results should be performed with care. With proper
-      training, we see no insurmountable obstacles here. Future work shall,
-      however, include case-studies where the role of the risk analyst is not
-      played by ourselves to better evaluate the usability of the proposed
+      \stopitemize
+      
+      \noindent {\bf Learnability.} The goal/obstacle languages are used in
+      industrial settings, as seen in
+      \cite[Lut07,Pon07,Dar07,Lam09,Let02,Cai13b]. Other techniques such as
+      CORAS \cite[Lun10] or Fault Tree Analysis \cite[Rui15,Ves81] require a
+      similar level of expertise in model building.
+      
+      For obstacle assessment, as seen in the ADS or the IBA C230-YSL
+      case-studies \in{Sections}[sec:bads] and \in{}[sec:iba], domain experts
+      were, in practice, able to estimate the satisfaction rates for leaf
+      obstacles.
+      
+      For obstacle control, applying our techniques presents no specific
+      difficulty once the goal and obstacle models are built and leaf obstacles
+      are estimated. How easily risk analysts can select most appropriate
+      countermeasures remains an open question and should be further evaluated.
+      
+      For uncertain estimates, as seen in the ADS in \in{Section}[sec:bads],
+      domain experts were able to estimates the satisfaction rates for leaf
+      obstacles together with uncertainty margins. The extends to which the
+      metrics {\it violation uncertainty} and {\it uncertainty spread} are easy
+      to interpret by risk analysts also remains an open question to us.
+      
+      For runtime adaptation, our techniques rely on formal specifications of
+      probabilistic obstacles. While formal specification remains a challenge
+      \cite[Fra91], elicitations techniques and specification patterns
+      \cite[Dwy98,Dar95] may be used to ease the production of formal
+      specifications \cite[Lam09]. Future work should more precisely evaluate
+      the impact of formal specifications on the usability of our monitoring
       techniques.
+      
+      \noindent {\bf Errors.} The level of feedback in case of errors provided
+      by the tools implementing the techniques should be improved for better
+      usability by users less familiar with the internal details of our
+      techniques. In addition, the interpretation of the results should be
+      performed with care. With proper training, we see no major impediment
+      here. This should however be rigourously tested.
+      
+      \noindent {\bf Efficiency and memorability.} Future work should consider
+      case studies where the role of the risk analysts is not played by
+      ourselves in order to better evaluate the efficency and memorability of
+      the proposed techniques.
     
-    \stopsubsection
+    \stopsection
 
   \stopsection
   
   \startsection[title={Summary}]
   
-    This chapter presented three case-studies illustrating the correctness,
-    performance, and scalability, applicability, utility and usability of our
-    techniques. Two case-studies, the ADS, and the CPS are realistic
-    case-studies whereas the IBA C230-YLS is a real industrial case-study. The
-    proposed techniques are shown to be correct regarding their specification.
-    The 3 case-studies show that our techniques apply to realistically-sized
-    problems and that the complexities and performance of the proposed
-    techniques are not prohibitive. Last, the case-studies illustrates that our
-    techniques are applicable, useful and usable in realistic situations.
-    
-    The next chapter will present related techniques and approaches and will
-    discuss these with regards to our proposed techniques.
+    The chapter evaluated the correctness, performance and scalability,
+    applicability, utility and usability of the techniques for {\it obstacle
+    assessment} and {\it obstacle control}. The proposed techniques are shown
+    to be correct with respect to their specification. The complexities and
+    performance of those appears to be reasonable in practice. Three
+    case-studies suggest that our techniques may be applicable to
+    realistically-sized problems. Two case-studies, the CPS and the ADS are
+    realistic case-studies showing the applicability of our techniques to this
+    kind of software systems; the IBA C230-YLS is a real industrial case-study
+    showing the applicability of our techniques for assessing human safety
+    risks. Last, our techniques are shown to be useful and usable in realistic
+    situations. 
   
   \stopsection
 

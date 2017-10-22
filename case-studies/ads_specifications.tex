@@ -14,7 +14,7 @@
 
   \startkaosspec
   	\GoalName {Achieve [Incident Resolved]}
-  	\KaosAttribute {Def} {All incidents in the real-world shall be resolved. An incident is resolved if the victim is treated on the incident scene or transported to the hospital.}
+  	\KaosAttribute {Def} {All incidents shall be resolved. An incident is resolved if the victim is treated on the incident scene or transported to an hospital.}
   	\KaosAttribute {RSR} {0.95}
   	\KaosAttribute {RefinedBy} {Achieve [Incident Reported], Achieve [Ambulance On Scene When Incident Reported], Achieve [Incident Resolved When Ambulance On Scene]}
   \stopkaosspec
@@ -66,7 +66,7 @@
 
   \startkaosspec
   	\GoalName {Maintain [Appropriate Hospital Known]}
-  	\KaosAttribute {Def} {The nearest and most appropriate hospital is known by the ambulance staff. Such hospital is indicated on the mobilization order.}
+  	\KaosAttribute {Def} {The nearest and most appropriate hospital is known to the ambulance staff. Such hospital is indicated on the mobilization order.}
   	\KaosAttribute {AssignedTo} {Ambulance Staff}
   \stopkaosspec
   
@@ -155,7 +155,7 @@
 
   \startkaosspec
   	\GoalName {Maintain [Accurate Ambulance Availability Known]}
-  	\KaosAttribute {Def} {Accurate information about the availability of the ambulance is known by the dispatching software.}
+  	\KaosAttribute {Def} {Accurate information about the availability of the ambulance is known to the dispatching software.}
   	\KaosAttribute {RefinedBy} {Maintain [Accurate Status Encoded On MDT], Maintain [Status Known Based On Encoded Information]}
   \stopkaosspec
 
@@ -174,7 +174,7 @@
     
   \startkaosspec
   	\GoalName {Maintain [Accurate Ambulance Status Known]}
-  	\KaosAttribute {Def} {The status of the ambulance shall be accurately known by the dispatching software. A status is accurate if the known status correspond to the status of the ambulance in the real-world. The status shall be known by the dispatching software within 3 minutes when encoded by the staff.}
+  	\KaosAttribute {Def} {The status of the ambulance shall be accurately known to the dispatching software. A status is accurate if the known status correspond to the status of the ambulance in the real-world. The status shall be known to the dispatching software within 3 minutes when encoded by the staff.}
   	\KaosAttribute {RefinedBy} {Maintain [Accurate Status Encoded], Achieve [Encoded Status Known]}
   \stopkaosspec
 
@@ -186,7 +186,7 @@
   
   \startkaosspec
   	\GoalName {Achieve [Encoded Status Known]}
-  	\KaosAttribute {Def} {The encoded availability information shall be known by the despatching software.}
+  	\KaosAttribute {Def} {The encoded availability information shall be known to the despatching software.}
   	\KaosAttribute {RefinedBy} {Achieve [Status Sent When Encoded], Achieve [Status Transmitted], Maintain [Status Recorded]}
   \stopkaosspec
 
@@ -403,7 +403,7 @@
 
   \startkaosspec
   	\GoalName {Maintain [Accurate Ambulance Location Known]}
-  	\KaosAttribute {Def} {Accurate location of the ambulance is known by the dispatching software. A location is accurate if the position of the ambulance in the real-world and the dispatching do not differ by more than 250 meters.}
+  	\KaosAttribute {Def} {Accurate location of the ambulance is known to the dispatching software. A location is accurate if the position of the ambulance in the real-world and the dispatching position do not differ by more than 250 meters.}
   	\KaosAttribute {RefinedBy} {Achieve [Ambulance Location Sent Every 3 Seconds], Maintain [Ambulance Location Known When Sent]}
   \stopkaosspec
   
@@ -416,7 +416,7 @@
 
   \startkaosspec
   	\GoalName {Maintain [Status Known Based On Encoded Information]}
-  	\KaosAttribute {Def} {Availability of the ambulance shall be known by the dispatching software when encoded by the ambulance staff.}
+  	\KaosAttribute {Def} {Availability of the ambulance shall be known to the dispatching software when encoded by the ambulance staff.}
   	\KaosAttribute {RefinedBy} {Maintain [Status Known Based On Encoded Status And Accurate Mapping], Accurate MDT Mapping}
   \stopkaosspec
   
@@ -442,7 +442,7 @@
 
   \startkaosspec
   	\GoalName {Maintain [Status Known Based On Encoded Status And Accurate Mapping]}
-  	\KaosAttribute {Def} {Availability of the ambulance shall be known by the dispatching software when encoded by the ambulance staff, based on the mapping between the MDTs and the ambulances.}
+  	\KaosAttribute {Def} {Availability of the ambulance shall be known to the dispatching software when encoded by the ambulance staff, based on the mapping between the MDTs and the ambulances.}
   	\KaosAttribute {RefinedBy} {Achieve [Status Sent When Encoded], Achieve [Status Transmitted], Maintain [Status Recorded]}
   \stopkaosspec
   
@@ -455,7 +455,7 @@
 
   \startkaosspec
   	\GoalName {Maintain [Ambulance Location Known When Sent]}
-  	\KaosAttribute {Def} {The ambulance location is known by the dispatching software when sent.}
+  	\KaosAttribute {Def} {The ambulance location is known to the dispatching software when sent.}
   	\KaosAttribute {RefinedBy} {Maintain [Ambulance Location Transmitted When Sent], Maintain [Ambulance Location Known When Transmitted]}
   \stopkaosspec
   
@@ -512,7 +512,7 @@
 
   \startkaosspec
   	\GoalName {Maintain [Accurate Ambulance Info Known]}
-  	\KaosAttribute {Def} {Accurate availability and accurate location about the ambulance shall be known by the software system.}
+  	\KaosAttribute {Def} {Accurate availability and accurate location about the ambulance shall be known to the software system.}
   	\KaosAttribute {RefinedBy} {Maintain [Accurate Ambulance Location Known], Maintain [Accurate Ambulance Availability Known]}
   \stopkaosspec
 
@@ -531,7 +531,7 @@
   
   \startkaosspec
   	\GoalName {Achieve [Ambulance Leaving Status Known]}
-  	\KaosAttribute {Def} {The ambulance leaving status is known by the dispatching software when the mobilized ambulance left the ambulance station.}
+  	\KaosAttribute {Def} {The ambulance leaving status is known to the dispatching software when the mobilized ambulance left the ambulance station.}
   	\KaosAttribute {RefinedBy} {Maintain [Status Leaving Encoded When Leaving Station], Achieve [Status Sent When Encoded], Achieve [Status Transmitted], Ambulance Left Station When Status Transmitted}
   \stopkaosspec
   

@@ -14,7 +14,7 @@
 
   \startkaosspec
   	\GoalName {Achieve [Ride Proposal Eventually Served]}
-  	\KaosAttribute {Def} {Rides proposed by drivers shall be fulfilled within time constraints. By fulfilled, we mean that the driver did not travel alone.}
+  	\KaosAttribute {Def} {Rides proposed by drivers shall be granted within time constraints. By granted, we mean that the driver did not travel alone.}
   	\KaosAttribute {RSR} {0.95}
   	\KaosAttribute {RefinedBy} {Achieve [Ride Offer Encoded For Ride Proposal], Achieve [Adequate Pair Found When Ride Offer Encoded]}
   \stopkaosspec
@@ -84,7 +84,7 @@
   
   \startkaosspec
   	\GoalName {Maintain [Ride Offer Accurate]}
-  	\KaosAttribute {Def} {Ride offers, proposed by the drivers, shall always be as accurate as possible.}
+  	\KaosAttribute {Def} {Ride offers proposed by the drivers shall always be as accurate as possible.}
   	\KaosAttribute {ObstructedBy} {Ride Offer Not Accurate}
   	\KaosAttribute {AssignedTo} {Driver}
   \stopkaosspec
@@ -425,53 +425,54 @@
 
   \startkaosspec
   	\ObstacleName {Ride Offer Not Accurate}
-  	\KaosAttribute {Def} {Ride offer encoded in the system does not correspond accurately to a ride proposal in the real world.}
+  	\KaosAttribute {Def} {A ride offer encoded in the system does not accurately
+          correspond  to a ride proposal in the real world.}
   	\KaosAttribute {RefinedBy} {Fake Ride Offer}
   	\KaosAttribute {RefinedBy} {Ride Offer Outdated}
-  	\KaosAttribute {RefinedBy} {Ride Offer Miscoded}
+  	\KaosAttribute {RefinedBy} {Ride Offer Misencoded}
   \stopkaosspec
 
   \startkaosspec
   	\ObstacleName {Fake Ride Offer}
-  	\KaosAttribute {Def} {Ride offer encoded in the system does not correspond to any ride proposal in the real world.}
+  	\KaosAttribute {Def} {A ride offer encoded in the system does not correspond to any ride proposal in the real world.}
   	\KaosAttribute {ESR} {0.10\%}
   \stopkaosspec
 
   \startkaosspec
   	\ObstacleName {Ride Offer Outdated}
-  	\KaosAttribute {Def} {Ride offer is out-dated; the author of the offer did not update information yet.}
+  	\KaosAttribute {Def} {A ride offer is out-dated; the author of the offer did not update information yet.}
   	\KaosAttribute {ESR} {1.00\%}
   \stopkaosspec
 
   \startkaosspec
-  	\ObstacleName {Ride Offer Miscoded}
-  	\KaosAttribute {Def} {Ride offer was miscoded; some information may be missing or inaccurate.}
-  	\KaosAttribute {RefinedBy} {Departure Date/Time Miscoded}
-  	\KaosAttribute {RefinedBy} {Departure Point Miscoded}
-  	\KaosAttribute {RefinedBy} {Arrival Date/Time Miscoded}
-  	\KaosAttribute {RefinedBy} {Arrival Point Miscoded}
+  	\ObstacleName {Ride Offer Misencoded}
+  	\KaosAttribute {Def} {Ride offer was Misencoded; some information may be missing or inaccurate.}
+  	\KaosAttribute {RefinedBy} {Departure Date/Time Misencoded}
+  	\KaosAttribute {RefinedBy} {Departure Point Misencoded}
+  	\KaosAttribute {RefinedBy} {Arrival Date/Time Misencoded}
+  	\KaosAttribute {RefinedBy} {Arrival Point Misencoded}
   \stopkaosspec
 
   \startkaosspec
-  	\ObstacleName {Departure Date/Time Miscoded}
+  	\ObstacleName {Departure Date/Time Misencoded}
   	\KaosAttribute {Def} {The departure date or time for a ride offer or request encoded in the system does not correspond to the expected date or time in the real world.}
   	\KaosAttribute {ESR} {0.90\%}
   \stopkaosspec
 
   \startkaosspec
-  	\ObstacleName {Departure Point Miscoded}
+  	\ObstacleName {Departure Point Misencoded}
   	\KaosAttribute {Def} {The departure address for a ride offer or request encoded in the system does not correspond to the expect arrival point in the real world.}
   	\KaosAttribute {ESR} {1.50\%}
   \stopkaosspec
 
   \startkaosspec
-  	\ObstacleName {Arrival Date/Time Miscoded}
+  	\ObstacleName {Arrival Date/Time Misencoded}
   	\KaosAttribute {Def} {The arrival date or time for a ride offer or request encoded in the system does not correspond to the expected date or time in the real world.}
   	\KaosAttribute {ESR} {0.90\%}
   \stopkaosspec
 
   \startkaosspec
-  	\ObstacleName {Arrival Point Miscoded}
+  	\ObstacleName {Arrival Point Misencoded}
   	\KaosAttribute {Def} {The arrival address for a ride offer or request encoded in the system does not correspond to the expect arrival point in the real world.}
   	\KaosAttribute {ESR} {1.50\%}
   \stopkaosspec
@@ -1212,7 +1213,7 @@
   	\KaosAttribute {Def} {Ride request encoded in the system does not correspond accurately to a ride need in the real world.}
   	\KaosAttribute {RefinedBy} {Fake Ride Request}
   	\KaosAttribute {RefinedBy} {Ride Request Out-dated}
-  	\KaosAttribute {RefinedBy} {Ride Request Miscoded}
+  	\KaosAttribute {RefinedBy} {Ride Request Misencoded}
   \stopkaosspec
 
   \startkaosspec
@@ -1228,12 +1229,12 @@
   \stopkaosspec
 
   \startkaosspec
-  	\ObstacleName {Ride Request Miscoded}
-  	\KaosAttribute {Def} {Ride request origin or destination information is miscoded.}
-  	\KaosAttribute {RefinedBy} {Departure Date/Time Miscoded}
-  	\KaosAttribute {RefinedBy} {Departure Point Miscoded}
-  	\KaosAttribute {RefinedBy} {Arrival Date/Time Miscoded}
-  	\KaosAttribute {RefinedBy} {Arrival Point Miscoded}
+  	\ObstacleName {Ride Request Misencoded}
+  	\KaosAttribute {Def} {Ride request origin or destination information is Misencoded.}
+  	\KaosAttribute {RefinedBy} {Departure Date/Time Misencoded}
+  	\KaosAttribute {RefinedBy} {Departure Point Misencoded}
+  	\KaosAttribute {RefinedBy} {Arrival Date/Time Misencoded}
+  	\KaosAttribute {RefinedBy} {Arrival Point Misencoded}
   \stopkaosspec
 
   \startkaosspec
