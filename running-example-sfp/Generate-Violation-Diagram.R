@@ -24,7 +24,7 @@ breaks <- subset(data, violation_uncertainty > 0)[,2:3]
 
 print(data)
 
-p <- ggplot (data, aes(x = violation_uncertainty, y = uncertainty_spread))
+p <- ggplot (data, aes(y = violation_uncertainty, x = uncertainty_spread))
 
 p <- p + geom_point(data = subset(data, facet == 1))
 p <- p + geom_point(data = subset(data, facet == 2))
@@ -37,18 +37,18 @@ p <- p + geom_text_repel(aes(label = combination),
                          force = 10,
                          family="myriad",size=2.8222222)
                          
-p <- p + labs(x = "Violation Uncertainty (Log2)", y = "Uncertainty Spread")
+p <- p + labs(y = "Violation Uncertainty (Log2)", x = "Uncertainty Spread")
 
-p <- p + scale_y_continuous(breaks = unique(breaks$uncertainty_spread),
+p <- p + scale_x_continuous(breaks = unique(breaks$uncertainty_spread),
                             labels = function (x) round(x, digit=2))
 
-p <- p + scale_x_continuous(breaks = unique(c(0,breaks$violation_uncertainty)),
+p <- p + scale_y_continuous(breaks = unique(c(0,breaks$violation_uncertainty)),
                             labels = function(x) { lapply(x, function(y) { if (is.na(y) | y <= .000001) { percent(0) } else { percent(y) } } ) }, 
                             trans=log2_trans())
 
 
 
-p <- p + facet_grid(~facet, scales = 'free', space = 'free')
+# p <- p + facet_grid(~facet, scales = 'free', space = 'free')
 
 p <- p +   theme(strip.background = element_blank(),
         strip.text = element_blank())
