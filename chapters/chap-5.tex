@@ -6,7 +6,7 @@
 
 \chapter[chap:controlling_obstacle]{Controlling Likely and Critical Obstacles}
 
-  Once they are identified and assessed, obstacles needs to be resolved. Likely
+  Identified and assessed obstacles need be resolved. Likely
   and critical ones have to be cost-effectively controlled through appropriate
   countermeasures yielding new goals to be integrated in the goal model.
   Alternative countermeasures are identified first; appropriate ones are
@@ -55,8 +55,8 @@
     
     \stopdefinition
     
-    Integrating a countermeasure might requires to de-idealize goals; those
-    needs to be validated by domain experts.
+    Integrating a countermeasure may requires to de-idealize goals; those need
+    be validated by domain experts.
 
     \startdefinition[def:de-idealized-goal]{De-idealized goal}
       
@@ -92,15 +92,26 @@
       \NC \{ LO', Dom' \} \models false        \NC \hskip2em \text{(domain-inconsistency)} \NR
     \stopalign\stopformula
     
-    where $M' = Int_{LO,CG}(M)$, $OG'$ is the obstructed goal in the model $M'$
-    corresponding to $OG$, $LO'$ is the leaf obstacle in the model $M'$
-    corresponding to $LO$, and $Dom'$ is the set of domain properties in the
-    model $M'$. (As a recall, $p \models false$ means that there exists a
-    behavior satisfying $p$.)
+    where, given that $M' = Int_{LO,CG}(M)$,
+    
+    \startitemize[packed]
       
-    The first condition may be relaxed in order to raise the obstruction on a
-    higher-level goal $AG$, as in the {\it Strong mitigation} resolution tactic
-    \cite[Lam00]:
+      \item $OG'$ is the obstructed goal in the model $M'$ corresponding to
+      $OG$,
+      
+      \item $LO'$ is the leaf obstacle in the model $M'$ corresponding to $LO$,
+
+      \item $Dom'$ is the set of domain properties in the model $M'$.
+    
+    \stopitemize
+    
+    \noindentation
+    As a recall, $p \models false$ means that there exists a
+    behavior satisfying $p$.
+      
+    The first condition may be relaxed in order to remove the obstruction on a
+    higher-level goal $AG$ rather than on the obstructed leaf goal $LO$, as in
+    the {\it Strong mitigation} resolution tactic \cite[Lam00]:
       
     \startformula
       
@@ -116,8 +127,8 @@
     
     \startformula\startalign[n=2,align={left,left}]
       \NC P ( \neg OG' \mid LO', Dom' ) < 1      \NC \hskip2em \text{(strong non-obstruction)} \NR
-      \NC P ( LO', Dom' ) = 0                  \NC \hskip2em \text{(strong domain-inconsistency)} \NR
       \NC P ( \neg AG' \mid LO', Dom' ) < 1     \NC \hskip2em \text{(strong ancestor non-obstruction)} \NR
+      \NC P ( LO', Dom' ) = 0                  \NC \hskip2em \text{(strong domain-inconsistency)} \NR
     \stopalign\stopformula
     
     These conditions are however strong and might prove to be unrealistic. The
@@ -147,6 +158,13 @@
     
     \stopdefinition
     
+    Note that if a countermeasure goal satisfies the {\it weak
+    domain-inconsistency}, it satisfies {\it weak non-obstruction}; an decrease
+    in the satisfaction rate of an obstacle results in an increase of the
+    satisfaction rate of the obstructed goal. If a countermeasure goal
+    satisfied the {\it weak non-obstruction}, it trivially satisfies the {\it
+    weak ancestor non-obstruction}.
+    
     A {\it valid countermeasure} is a sufficient condition for guaranteeing an
     increase in the satisfaction rate of some root goal.
     
@@ -170,9 +188,7 @@
         
         \item In a correct goal refinement, an increase in the satisfaction
         rate of a children goal results in an increase in the satisfaction rate
-        of the parent goal. Otherwise, the goal refinement is not minimal as
-        the satisfaction rate of the children might be reduced to $0$ without
-        impacting the satisfaction of the parent goal.
+        of the parent goal. Otherwise, the goal refinement is not minimal.
       
         \item An decrease in the satisfaction rate of a root obstacle results
         in an increase in the satisfaction rate of the corresponding obstructed
@@ -184,7 +200,7 @@
         of the obstacle goal. Otherwise, the obstacle refinement is not minimal.
        
       \stopitemize
-      
+      \vskip\dimexpr(-29pt)
     \stopproof
     
     Obstacle resolution tactics such as {\it Avoid obstacle}, {\it Reduce
@@ -194,6 +210,8 @@
     propagations of their effect through the refinement trees in which they are
     involved (such propagation will be explained in
     \in{Section}[sec:integrating]).
+    
+    \page
     
     For example, the countermeasure goal \goal{Achieve [Redundant Pump Motor On
     When Primary Pump Failure]} to the obstacle \obstacle{Pump Electrical
@@ -213,15 +231,17 @@
     Multiple candidate ancestors might be considered for the {\it weak ancestor
     non-obstruction} condition. In our example, \goal{Achieve [Make Up Water
     Provided When Requested]} and \goal{Achieve [Make Up Water Provided When
-    Loss Of Cooling]} are potential candidates with respect to the goal
+    Loss Of Cooling]} are potential candidates with respect to the countermeasure goal
     \goal{Achieve [Redundant Pump Motor On When Primary Pump Failure]}. 
     
     The nearest candidate to this goal in the goal graph appears preferable to
     ensure more local model changes\emdash{}that is, in our example the goal
     \goal{Achieve [Make Up Water Provided When Requested]}. The lower ancestor
-    the more local the change as goals above the ancestor are likely not
-    modified whereas the descedants are likely modified; less goals are thereby
-    impacted by the integration when a lower ancestor is considered.
+    the more local the change. The ancestor of the anchor goal may need be
+    de-idealized, but all the descendants of the anchor goal are more likely to
+    be de-idealized by the propagation, as seen in
+    \in{Section}[sec:integration_schema]. The lower the anchor goal, the fewer
+    goals may need modification.
 
     \startdefinition{Anchor goal}
     
@@ -242,11 +262,12 @@
     As \in{Figure}[fig:redundant_pump] shows, a countermeasure goal should
     itself be refined down to leaf goals assignable to single agents. These
     leaf goals might be obstructed by new obstacles; a new cycle of obstacle
-    analysis may be therefore needed at RE time. 
+    analysis may be therefore needed.
     
-    To determine whether a new obstacle
-    analysis cycle is required, the maximal change in satisfaction rate of the
-    considered high-level goals should be taken into account. 
+    To determine whether a new obstacle analysis cycle is required, the maximal
+    change in satisfaction rate of the considered high-level goals once the
+    countermeasure goal is integrated into the goal model should be taken into
+    account.
     
     \startitemize
     
@@ -319,7 +340,7 @@
 
       \startitemize
 
-      \item {\bf Assessing countermeasure impact when the obstructed goal is
+      \item {\it Assessing countermeasure impact when the obstructed goal is
       replaced.} In this case, when the satisfaction rate of the high-level
       goal is computed as described in \in{Section}[sec:computing_satrate], the
       propagation procedure computing the satisfaction rate of a high-level
@@ -390,7 +411,7 @@
 %       \NC \hskip2cm \{R, \obstacle{Alarm Not Raised And Low Water}\}\} \NR
 %     \stopalign\stopformula
   
-      \item {\bf Assessing countermeasure impact when the obstructed goal is
+      \item {\it Assessing countermeasure impact when the obstructed goal is
       kept.} In this case, the anchor goal is refined into two subgoals; one
       subgoal is the obstructed goal conjoined with the negation of the
       obstacle condition; the other subgoal is the countermeasure goal. The
@@ -400,7 +421,7 @@
   
       For example, integrating the countermeasure goal \goal{Achieve [Redundant
       Pump Motor On When Primary Pump Failure]} causes the anchor goal to be
-      refined in two subgoals: \goal{Achieve [Make Up Water Provided When
+      refined through two subgoals: \goal{Achieve [Make Up Water Provided When
       Requested And No Pump Failure]} and \goal{Achieve [Redundant Pump Motor
       On When Primary Pump Failure]}. The satisfaction rate of the root goal
       increases from 81.74\% to 94.94\%: The down-propagation of changes in the
@@ -435,11 +456,11 @@
       The resolutions are added and removed to evaluate the impact of the
       countermeasure.
       
-      This however requires the BDD to be built at each combination, which
+      This however requires the BDD to be built for each combination, which
       slows down the process. Improvements can be envisioned as one could build
       a single BDD covering all possible combinations using extra variables to
-      encode which resolution is selected; Such BDD could be computed once at
-      RE-time.
+      encode which resolution is selected; Such BDD could then be computed once
+      at RE-time.
   
 		\subsection[sec:most_appropriate]{What are most appropriate countermeasures?}
 	
@@ -462,13 +483,14 @@
         \{CM_i, CM_j, Dom\} \nvDash false \text{ for } i \neq j \hskip1cm \text{(selection-consistency)}
       \stopformula
     
-      Countermeasures come with a cost. The latter are elicited with regard to
-      the countermeasure's contributions to soft goals in the goal model (See
-      \in{Section}[sec:soft_goal]) \emdash{}such as \goal{Maximize\-[Operator
-      Safety]}, \goal{Minimize\-[Power Consumption]} or \goal{Maximize\-[Speed
-      Computation]}. Without loss of generality, only single costs are
-      considered here. Multiple costs can be combined by a weighted sum where
-      weights correspond to the priorities of the considered soft goals.
+      \indentation Countermeasures come with a cost. The latter are elicited
+      with regard to the countermeasure's contributions to soft goals in the
+      goal model (See \in{Section}[sec:soft_goal]) such as
+      \goal{Maximize\-[Operator Safety]}, \goal{Minimize\-[Power Consumption]}
+      or \goal{Maximize\-[Speed Computation]}. Without loss of generality, only
+      single costs are considered here. Multiple costs can be combined by a
+      weighted sum where weights correspond to the priorities of the considered
+      soft goals.
 
       \startdefinition{Countermeasure selection resolution cost}
 
@@ -498,7 +520,7 @@
       \startitemize[n]
 
         \item Finding the minimal cost for guaranteeing the RSR of the considered
-        high-level goals,
+        high-level goals.
         
         \noindent
         We may iteratively generate all possible selections and keep the
@@ -519,7 +541,7 @@
     
       In our example, the minimal cost for guaranteeing the RSR of 95\% for the
       goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]} is 1.
-      With 6 possible resolutions, there are 63 possible selections. Among them
+      With 6 possible resolutions, there are 64 possible selections. Among them
       24 are safe selections that guarantee the RSR with costs ranging from 1
       to 6 (we used unitary costs for the countermeasure goals). A single
       selection of two countermeasure goals maximizes the satisfaction rate of
@@ -537,10 +559,8 @@
         similarities with the NP-hard Knapsack optimization problem
         \cite[Cor09]. The latter is concerned with filling a bag with valued
         items without exceeding a maximal weight while maximizing value. The
-        problem here differs in that {\it (i)} the value and weight of items do
-        not simply sum; and {\it (ii)} adding a new countermeasure goal does
-        not necessarily increase the satisfaction rate of a high-level goal.
-        Improvements of our naïve algorithms are however expected as a
+        problem here differs in that the value and weight of items may not
+        simply sum. Improvements of our naïve algorithm are expected as a
         pseudo-polynomial algorithm exists for the Knapsack problem
         \cite[Cor09].
   
@@ -568,9 +588,10 @@
     [reference=sec:integrating,
      title={Integrating selected countermeasures in the goal model}]
 	
-    The selected countermeasures should be integrated in the original goal model.
-    For a given obstacle, integrating a countermeasure goal to an obstacle in a
-    goal model means:
+    The selected countermeasures should be integrated in the original goal
+    model in order to progress towards a more complete goal model. For a given
+    obstacle, integrating a countermeasure goal to an obstacle in a goal model
+    means:
     
     \startitemize[a]
     
@@ -626,23 +647,20 @@
       [reference=sec:integration_schema,
        title={Integration schemas for ensuring minimal changes}]
         
-      The integration of a single valid countermeasure goal ensures progress
-      towards a more complete model; it should also ensure that the {\it
-      minimal change} property is met, that is, nothing more than necessary is
-      modified.
-
-      Two alternative integration schemas may be used for this, dependent on
-      the obstacle resolution tactic being selected \cite[Lam09,Lam00]. 
+      Two alternative integration schemas may be used for ensuring that the
+      {\it minimal change} property is met, that is, nothing more than
+      necessary is modified. Which schema to apply depends on the obstacle
+      resolution tactic being selected \cite[Lam09,Lam00].
       
       \startitemize
 
         \item The first schema removes the obstructed goal; it should be
-        applied when the {\it substitute goal} or {\it weaken goal} tactic is
+        applied when the {\it Substitute goal} or {\it Weaken goal} tactic is
         used for resolving the obstacle.
       
         \item The second integration schema keeps the obstructed goal in the
-        model; it should be applied when the {\it avoid obstacle}, {\it reduce
-        obstacle likelihood}, or {\it mitigate obstacle} tactic is used.
+        model; it should be applied when the {\it Avoid obstacle}, {\it Reduce
+        obstacle likelihood}, or {\it Mitigate obstacle} tactic is used.
         
       \stopitemize
 
@@ -677,7 +695,7 @@
       anchor goal $AG$. Otherwise, the new refinement would not be complete.
 
       For example, the goal \goal{Achieve [Make Up Water Requested When Alarm
-      Raised]} assigned to the agent \agent{Controlling Software} is a
+      Raised]} assigned to the \agent{Controlling Software} agent is a
       countermeasure produced through the {\it agent substitution} tactic
       \cite[Lam09,Lam00]. Its anchor goal is \goal{Achieve [Make Up Water
       Requested When Loss Of Cooling]}. The following refinement is complete,
@@ -692,20 +710,20 @@
       \noindent We may therefore replace the old refinement by this one.
 
       It is easy to see that this first integration schema meets our minimal
-      change property. Non-obstructed goals are composed from non-obstructed
-      goals in the AND-refinements of $AG$ and its descendants, and in the siblings
-      of $AG$ and its ancestors. The former are kept as is whereas the latter
-      might need to be de-idealized through change propagation (see
-      \in{Section}[sec:propagation]). All these goals thus satisfy $G' \models
-      G$.
+      change property; $G_3$ remains untouched and anchor goal $AG$ and its
+      connected goals such as $G_1$ might be de-idealized through change
+      propagation (see \in{Section}[sec:propagation]). All these goals thus
+      satisfy $G' \models G$.
 
       \noindent {\bf Keeping the obstructed goal.}
       \in{Figure}[fig:integration_keep] shows a second integration schema. In
       this schema, a new refinement is introduced; it includes a de-idealized
-      version of the obstructed anchor and the countermeasure goal. The
+      version of the obstructed anchor, that is $\neg LO \rightarrow AG$, 
+      and the countermeasure goal. The
       obstructed anchor is de-idealized for removing the obstruction. The
       negation of the leaf obstacle is added to form a {\it by-case}
-      AND-Refinement \cite[Lam00].
+      AND-Refinement \cite[Lam00]. The de-idealization might requires
+      de-idealization of other connected goals such as $G_1$ and $PG$.
 
       \placefigure[here]
       	[fig:integration_keep]
@@ -734,8 +752,8 @@
 
       Note that the anchor goal is not de-idealized in this example. The new
       goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling And No
-      Valve Mechanical Failure]} is a de-idealization of the anchor goal. The
-      negation of the obstacle is added to the goal antecedent:
+      Valve Mechanical Failure]} is a de-idealization of the obstructed
+      subgoal. The negation of the obstacle is added to the goal antecedent:
 
       \startformula
         LossOfCooling \hskip.7ex\graymath{\wedge\hskip.5ex \neg MakeUpValveFailure}\hskip.7ex 
@@ -844,8 +862,8 @@
 
       Since this goal is a leaf goal, the propagation ends.
 
-      Change propagation in the general case proceeds as follows, as in
-      \cite[Lam98b]. 
+      \noindentation Change propagation in the general case proceeds as
+      follows, as in \cite[Lam98b].
       
       \startitemize
       
@@ -861,10 +879,10 @@
         parents) until leaf goals (resp. root goals) are reached.
       
       \stopitemize
+    
+      \noindentation The procedure is similar when applying {\it AddDisjunct}.
       
-      The procedure is similar when applying {\it AddDisjunct}.
-      
-      Such change propagation produces formal specifications that often need to
+      Such change propagation produces formal specifications that often need 
       be simplified. Moreover, other mechanisms are required for change
       propagation to goals not matching a known specification pattern. Even
       though pattern-based propagation can be performed semi-automatically,
@@ -878,8 +896,8 @@
       [reference=sec:exception_handling,
        title={Obstacle resolution as exception handling}]
 
-      The integration of countermeasure goals as such through new, explicit refinements
-      in the original model raises several issues.
+      The integration of countermeasure goals as such through new, explicit
+      refinements in the original model raises several issues:
       
       \startitemize
         
@@ -1139,7 +1157,7 @@
     appropriate countermeasures. The chapter proposed two integration schemas,
     to be selected according the specific resolution tactic being used, to
     guarante {\it minimal change} to the original model. Propagating the
-    changes through guarantee the correctness of the new model. However, such
+    changes through guarantees the correctness of the new model. However, such
     integrations intermixes ideal and exceptional cases. To mitigate this,
     extensions to the goal specification language were proposed to specify
     exceptions and de-idealization to goals together with refactoring
