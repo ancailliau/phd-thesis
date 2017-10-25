@@ -1040,7 +1040,7 @@
         
   \startsection
     [reference=sec:indentifying_most_critical_obstacles,
-     title={Highlighting most critical and likely obstacles}]
+     title={Identifying most likely and critical obstacles}]
 
     This section shows how likely and critical risks are pointed out based on
     the estimated statisfaction rates for leaf obstacles (see
@@ -1078,9 +1078,9 @@
   
     \stopdefinition
   
-    An obstacle is said to be {\it tolerable} if the goal's satisfaction rate
-    falls below some tolerable satisfaction rate but still above the required
-    satisfaction rate.
+    An obstacle is said to be {\it tolerable} if the goal's computed
+    satisfaction rate falls below the tolerable satisfaction rate but above the
+    required satisfaction rate.
   
     \startdefinition{Tolerable obstacle}
   
@@ -1090,7 +1090,7 @@
   
     \stopdefinition
   
-    \noindent To evaluate obstacles criticality, we may proceed in two ways:
+    \noindent To evaluate obstacle criticality, we may proceed in two ways:
   
     \startitemize
 
@@ -1108,7 +1108,9 @@
   
     In-between, we can evaluate the consequences of a {\it combination} of leaf
     obstacles. By iterating on the size of the combinations, we move from local
-    impact analysis to global impact analysis.
+    impact analysis to global impact analysis. A set of obstacle is {\it
+    critical} if the obstacles together causes the violation severity to drop
+    below $0$.
   
     For example, global impact analysis reveals that the root goal
     \goal{Achieve [Make Up Water Provided When Loss Of Cooling]} is satisfied
@@ -1124,16 +1126,14 @@
   
     \startdefinition{Most critical obstacle}
   
-      A probabilistic obstacle $O$ is the {\it most critical obstacle} for a
+      A probabilistic obstacle $O$ is a {\it most critical obstacle} for a
       goal $G$ if obstacle $O$ is critical and no other obstacle results in a
       higher violation severity $SV(G)$.
   
     \stopdefinition
     
-    A set of obstacle is {\it critical} if the obstacles together causes the
-    violation severity to drop below $0$. A set of obstacle is {\it the most
-    critical set of obstacles} if no other set of obstacles of the same size
-    causes a higher violation severity.
+     A set of obstacle is {\it a most critical set of obstacles} if no other
+     set of obstacles of the same size causes a higher violation severity.
     
   % \startdefinition{Severity of the consequences}
   % 
@@ -1168,12 +1168,12 @@
     \in{Figure}[fig:violation_diagram_single_value] shows a violation diagram
     for the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}
     with the leaf obstacles from the obstacle model; here, the combinations
-    contains a single leaf obstacle. We can see that most of
-    the obstacles taken alone have a zero violation severity; these are
-    therefore not critical for the system. Three obstacles are however
-    critical, namely \obstacle{Pump Mechanical Failure}, \obstacle{UPS Battery
-    Failure}, and \obstacle{Power Cabling Failure}. These critical obstacles
-    should be resolved in the next phase.
+    contains a single leaf obstacle. We can see that most of the obstacles
+    taken alone results in a violation severity equal to 0; these are therefore
+    not critical for the system. Three obstacles are however critical, namely
+    \obstacle{Pump Mechanical Failure}, \obstacle{UPS Battery Failure}, and
+    \obstacle{Power Cabling Failure}. These critical obstacles should be
+    resolved in the next phase.
   
     \placefigure[here]
     	[fig:violation_diagram_single_value]
@@ -1182,9 +1182,9 @@
         \externalfigure[../images/chap4/violation_diagram_single_value.pdf]
       }
   
-    Criticality assessment should be an iterative process. Once the most likely
-    and critical obstacle combinations of size $i$ are resolved, a new
-    violation diagram should be produced with obstacle combinations of size
+    \indentation Criticality assessment should be an iterative process. Once
+    most likely and critical obstacle combinations of size $i$ are resolved, a
+    new violation diagram should be produced with obstacle combinations of size
     $i+1$. The process ends when no obstacle combination is found critical and
     likely.
   
@@ -1193,14 +1193,14 @@
     considering pairs of obstacles, i.e. combinations of size $2$. Among the 91
     pairs of leaf obstacles, 39 are critical; there are 36 pairs that contains
     a critical obstacle identified with the previous violation diagram in
-    \in{Figure}[fig:violation_diagram_single_value]. 3 pairs of leaf obstacles
-    are critical and do not contain an obstacle critical alone. Those are
-    (\obstacle{Pump Electrical Failure} and \obstacle{Alarm Not Raised And Low
-    Water}), (\obstacle{Pump Electrical Failure}, \obstacle{Valve Mechanical
-    Failure}), and (\obstacle{Pump Electrical Failure}, \obstacle{Valve
-    Electrical Failure}). In our experience, we observed that most of the
-    likely and critical obstacle combinations are caused only by a subset of
-    these.
+    \in{Figure}[fig:violation_diagram_single_value]. Therefore, there are 3
+    pairs of leaf obstacles that are critical and do not contain an obstacle
+    critical alone. Those are (\obstacle{Pump Electrical Failure} and
+    \obstacle{Alarm Not Raised And Low Water}), (\obstacle{Pump Electrical
+    Failure}, \obstacle{Valve Mechanical Failure}), and (\obstacle{Pump
+    Electrical Failure}, \obstacle{Valve Electrical Failure}). In our
+    experience, we observed that most of the likely and critical obstacle
+    combinations are caused only by a subset of these.
   
     \placefigure[bottom]
     	[fig:violation_diagram_single_value2]
