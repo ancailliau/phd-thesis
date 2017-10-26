@@ -21,8 +21,8 @@ data2 = read.csv("/Users/acailliau/Google Drive/PhD/Dissertation/case-studies/am
 
 pointsToLabel <- c()
                 
-data$facet <- ifelse(data$violation_uncertainty == 0, 1, 2)
-data2$facet <- ifelse(data2$violation_uncertainty == 0, 1, 2)
+data$facet <- ifelse(data$violation_uncertainty == 0, 2, 1)
+data2$facet <- ifelse(data2$violation_uncertainty == 0, 2, 1)
 
 data$violation_uncertainty <- pmax(.0000001, data$violation_uncertainty)
 data2$violation_uncertainty <- pmax(.0000001, data2$violation_uncertainty)
@@ -33,7 +33,7 @@ breaks <- subset(data, violation_uncertainty > 0)[,2:3]
 
 print(data)
 
-p <- ggplot (data, aes(x = violation_uncertainty, y = uncertainty_spread))
+p <- ggplot (data, aes(y = violation_uncertainty, x = uncertainty_spread))
 
 p <- p + geom_point(data = subset(data, facet == 1), aes(colour = "a", shape = "a"))
 p <- p + geom_point(data = subset(data, facet == 2), aes(colour = "a", shape = "a"))
@@ -49,12 +49,12 @@ p <- p + geom_text_repel(aes(label = combination),
                          force = 10,
                          family="myriad",size=2.8222222)
                          
-p <- p + labs(x = "Violation Uncertainty (Log2)", y = "Uncertainty Spread")
+p <- p + labs(y = "Violation Uncertainty (Log2)", x = "Uncertainty Spread")
 
-p <- p + scale_y_continuous(breaks = c(0,.2,.4,.6),
+p <- p + scale_x_continuous(breaks = c(0,.2,.4,.6),
                             labels = function (x) round(x, digit=2))
 
-p <- p + scale_x_continuous(breaks = c(0,.0000001,.125,.25,.5,1),
+p <- p + scale_y_continuous(breaks = c(0,.0000001,.125,.25,.5,1),
                             labels = function(x) { lapply(x, function(y) { if (is.na(y) | y <= .000001) { percent(0) } else { percent(y) } } ) }, 
                             trans = log2_trans())
 
@@ -69,12 +69,12 @@ p <- p + scale_color_manual(
          breaks = c("a", "b")
      )
      
-p <- p + theme(legend.position = c(.28,.86)) + labs(col=NULL) + 
+p <- p + theme(legend.position = c(.86,.28)) + labs(col=NULL) + 
          theme(legend.key = element_rect(colour = NA, fill = NA), legend.margin=margin(t = c(-.1,.2,0,0), unit='cm')) +
          theme (legend.key = element_rect(size = 5),
                  legend.key.size = unit(.9, 'lines'))
 
-p <- p + facet_grid(~facet, scales = 'free', space = 'free')
+p <- p + facet_grid(facet~., scales = 'free', space = 'free')
 
 p <- p +   theme(strip.background = element_blank(),
         strip.text = element_blank())

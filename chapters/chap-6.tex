@@ -37,20 +37,20 @@
   uncertainty margins for leaf obstacles impact uncertainty margins for
   high-level goals, and how such uncertainty margins can be reduced. The
   techniques in the previous chapters for identifying likely and critical risks
-  and for selecting most appropriate countermeasures are extended to support
+  and for selecting most appropriate countermeasures are extended to cope with
   uncertainties in probability estimates.
 
-  Our framework is extended to cope with knowledge uncertainty by means of
+  Our framework is extended to support knowledge uncertainty by means of
   probability distributions. Such distributions allow experts to specify their
   knowledge about satisfaction rates of leaf obstacles. A repeated application
-  of the single-value propagation procedure in
-  \in{Section}[sec:computing_satrate], using sampled satisfaction rates for the
-  leaf obstacles, provides satisfaction rates for higher-level goals together
-  with uncertainty margins. Two metrics, the violation uncertainty and the
-  uncertainty spread, summarize the uncertainty about satisfaction rates. These
-  metrics provide finer-grained assessment for critical obstacles. Selecting
-  most appropriate countermeasures in presence of uncertainty guarantees that
-  higher-level goals are satisfied up to some uncertainty threshold.
+  of the single-value propagation procedure in \in{Section}[sec:computing_bdd],
+  using sampled satisfaction rates for the leaf obstacles, provides
+  satisfaction rates for higher-level goals together with uncertainty margins.
+  Two metrics, the violation uncertainty and the uncertainty spread, summarize
+  the uncertainty about satisfaction rates. These metrics provide finer-grained
+  assessment for critical obstacles. Selecting most appropriate countermeasures
+  in presence of uncertainty guarantees that higher-level goals are satisfied
+  up to some uncertainty threshold.
   
   The chapter is organized as follows.
   \in{Section}[sec:capturing_k_uncertainty] describes how knowledge uncertainty
@@ -75,10 +75,8 @@
     A {\it probability distribution} is a function assigning a specific
     probability to each possible single-point value in some domain. The domain
     considered here is the set of possible probability values, that is, the
-    interval $[0, 1]$. This section extends the probabilistic goal/obstacle
-    specification framework to capture the uncertainty about estimated
-    satisfaction rates of behavioral goals, assumptions, and obstacles in the
-    system-to-be.
+    interval $[0, 1]$. This section extends probabilistic goals and obstacles
+    to capture the uncertainty about estimated satisfaction rates.
 
     \in{Section}[sec:uncertainty_about_satrates] presents how uncertainty is
     captured in satisfaction rates. \in{Section}[sec:uncertainty_metrics]
@@ -88,13 +86,13 @@
   
 		\subsection[sec:uncertainty_about_satrates]{Uncertainty about satisfaction rates}
     
-      Let $A$ denote a probabilistic assertion specifying a goal, assumption
-      (prescriptive or descriptive), or obstacle in the goal/obstacle models.
+      Let $A$ denote a probabilistic assertion specifying a goal, an assumption
+      (prescriptive or descriptive), or an obstacle in the goal/obstacle models.
 
-      \startdefinition[def:sat_uncerainty]{Satisfaction Uncertainty}
+      \startdefinition[def:sat_uncerainty]{Satisfaction uncertainty}
       
-        The satisfaction uncertainty for assertion $A$, denoted by $su_A$, is
-        defined as a probability distribution over its single-point
+        The {\it satisfaction uncertainty} for assertion $A$, denoted by
+        $su_A$, is defined as a probability distribution over its single-point
         probabilities of satisfaction.
       
       \stopdefinition
@@ -165,11 +163,18 @@
     	that the goal's RSR will be met; and {\it (b)} the spread of satisfaction
     	uncertainty below this RSR.
 
-      \noindent {\bf Goal violation uncertainty.} The {\it violation
-      uncertainty} for a probabilistic goal $G$, denoted by $VU (G)$, is the
-      proportion of satisfaction uncertainty falling below the goal's
-      RSR\emdash{}that is, the probability of being below this threshold. It is
-      obtained as follows:
+      \noindent {\bf Goal violation uncertainty.} The violation uncertainty for
+      a goal is the probability of being below its required satisfaction rate.
+      
+      \startdefinition{Violation uncertainty}
+      
+        The {\it violation uncertainty} for a probabilistic goal $G$, denoted
+        by $VU (G)$, is the proportion of satisfaction uncertainty falling
+        below the goal's RSR.
+      
+      \stopdefinition 
+      
+      \noindent It is obtained as follows:
 
       \startformula
 
@@ -183,7 +188,7 @@
       Graphically, this violation uncertainty corresponds to the surface below
       the satisfaction uncertainty curve up to the goal's RSR. In our example,
       the violation uncertainty of \goal{Achieve [Make Up Water Provided When
-      Loss Of Cooling]} is $.7313\%$. This means that it is 73.13\% certain
+      Loss Of Cooling]} is $.7313$. This means that it is 73.13\% certain
       that the goal will not meet its RSR of 80\%. In
       \in{Figure}[fig:root_goal_uncertainty], most of the curve is on the left
       of the goal's RSR.
@@ -196,13 +201,21 @@
       the uncertainty is close to the goal's RSR, a small change to this RSR
       might drastically change the violation uncertainty score.
 
-    	The {\it uncertainty spread} for a goal $G$, denoted by $US (G)$,
-    	measures the spread of uncertainty below the goal's RSR. It is defined as
-    	the semi-standard deviation of its probability distribution with respect
-    	to this RSR. The semi-standard deviation of the distribution is used here
-    	for measuring spread. It differs from standard deviation as only values
-    	below a threshold are taken into account \cite[Roh11]\emdash{}here, those
-    	below the RSR. The uncertainty spread is obtained as follows.
+      The {\it uncertainty spread} for a goal measures the spread of
+      uncertainty below the goal's RSR.
+      
+      \startdefinition{Uncertainty spread}
+      
+        The {\it uncertainty spread} for a goal $G$, denoted by $US (G)$, is
+        the semi-standard deviation of its probability distribution with
+        respect to this RSR.
+        
+      \stopdefinition 
+      
+      The semi-standard deviation of the distribution is used here for
+      measuring spread. It differs from standard deviation as only values below
+      a threshold are taken into account \cite[Roh11]\emdash{}here, those below
+      the RSR. The uncertainty spread is obtained as follows.
 
       \startformula
       
@@ -239,11 +252,13 @@
       To facilitate the elicitation of distribution functions for leaf
       obstacles from domain experts, discrete points may be used that can be
       fitted to specific probability distributions\emdash{}such as Beta, PERT,
-      Triangular, etc. \cite[Vos08]. A {\it quantile} is a single probability
-      value attached to a cumulative probability. It indicates the cumulative
-      probability to observe a single value of probability of satisfaction
-      \cite[Bed01]. The 50\high{th} quantile, called {\it mode}, is the most
-      likely probability of satisfaction.
+      Triangular, etc. \cite[Vos08]. 
+      
+      A {\it quantile} is a single probability value attached to a cumulative
+      probability. It indicates the cumulative probability to observe a single
+      value of probability of satisfaction \cite[Bed01]. The 50\high{th}
+      quantile, called {\it mode}, is the most likely probability of
+      satisfaction.
  
    	  To further support such elicitation from domain experts, databases
    	  providing estimates for quantiles can be used; they are available in a
@@ -349,7 +364,7 @@
   
       As discussed in \in{Chapter}[chap:assessing], the use of multiple sources
       or multiple experts is generally recognized to increase the accuracy of
-      estimates and more mathematical approaches are recognized to produce more
+      estimates and more mathematical approaches are recognized to produce 
       accurate results \cite[Coo91, Cle99]. Among available approaches, some
       are aimed at characterizing expert judgements by comparative assessment
       between their estimates and known quantities. The derived characteristics
@@ -483,6 +498,7 @@
       probability values for satisfaction of obstructing leaf obstacles. To
       build a full probability distribution for a top goal in the goal model,
       we need to sample the satisfaction uncertainty for those leaf obstacles.
+      
       To sample a satisfaction uncertainty, a random number between $0$ and $1$
       is uniformly picked. The inverse of the cumulative distribution function
       associated with the satisfaction uncertainty is then used to get a
@@ -494,8 +510,8 @@
       given sample. The sampling is repeated a large number of times to obtain
       a set of probabilities of satisfaction for this top goal. The obtained
       set of probabilities can then be aggregated into a distribution by using
-      their frequency (This is known as {\it Kernel Density Estimation}
-      \cite[Fri01].) For example, by repetitive sampling for the leaf
+      their frequency; this is known as {\it Kernel Density Estimation}
+      \cite[Fri01]. For example, by repetitive sampling for the leaf
       obstacles, the following probabilities of satisfaction for the top goal
       \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}, in
       \in{Figure}[fig:make_up_water_provided], might be obtained:
@@ -531,12 +547,23 @@
       The third step in our approach for obstacle assessment in presence of
       knowledge uncertainty about satisfaction rates consists of prioritizing
       obstacles according to the metrics introduced in
-      \in{Section}[sec:uncertainty_metrics], that is, the  violation
-      uncertainty and uncertainty spread for top-level goals.
+      \in{Section}[sec:uncertainty_metrics], that is, the violation uncertainty
+      and uncertainty spread for top-level goals.
+      
+      \startdefinition{Critical obstacle in presence of uncertainty}
+      
+        An obstacle $O$ is {\it critical} for a goal $G$ if it results in a
+        positive violation uncertainty; that is $VU(G) > 0$.
+      
+      \stopdefinition
+      
+      \noindentation As in
+      \in{Section}[sec:indentifying_most_critical_obstacles], we may proceed
+      iteratively on the size of the combinations.
       
       \startitemize
       
-        \item The impact of each single leaf obstacle on the goal model must be
+        \item The impact of each single leaf obstacle on the goal model is first
         assessed individually. For a given top goal, the procedure in the
         previous section is applied for each leaf obstacle with the
         satisfaction probability of all other leaf goals being set to $0$. The
@@ -545,27 +572,30 @@
         \in{Section}[sec:uncertainty_metrics].
       
         The result may be represented on a scatter plot, called {\it violation
-        diagram}, to highlight the most critical obstacles to this top goal.
+        diagram with uncertainty}, to highlight the most critical obstacles to
+        a considered high-level goal. The $x$-axis reports the uncertainty
+        spread and the $y$-axis reports the violation uncertainty of the
+        obstacle combinations for the considered goal. 
       
         \item When all likely and critical individual obstacles are resolved,
         the violation uncertainty and uncertainty spread may be computed again
         with pairs of leaf obstacles in order to build a new violation diagram;
       
-        \item then with triples, and so forth.
+        \item Then with triples, and so forth.
       
       \stopitemize
-      
+
+      \placefigure[bottom]
+     	  [fig:violation_diagram]
+     	  {Violation diagram with uncertainty for the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.}
+        {\externalfigure[../images/chap6/violation_diagram.pdf]}
+        
       Our running example contains 12 leaf obstacles. The violation uncertainty
       and uncertainty spread for the top goal \goal{Achieve [Make Up Water
-      Provided When Loss Of Cooling]} are $90.70\%$ and $0.1818$, respectively.
-      \in{Figure}[fig:violation_diagram] shows the corresponding violation
-      diagram, where the $x$-axis is logarithmic. The following observations can be
-      made from it.
-      
-      \placefigure[top]
-     	  [fig:violation_diagram]
-     	  {Violation Diagram for the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.}
-        {\externalfigure[../images/chap6/violation_diagram.pdf]}
+      Provided When Loss Of Cooling]} resulting from the 12 obstacles are
+      $90.70\%$ and $0.1818$, respectively. \in{Figure}[fig:violation_diagram]
+      shows the violation diagram with uncertainty for leaf obstacles taken
+      alone. Among the 12 leaf obstacles, there are 4 critical obstacles:
       
       \startitemize
       
@@ -591,14 +621,17 @@
       
       \stopitemize
       
-      As \in{Figure}[fig:violation_diagram2] shows, the most critical pairs of
-      obstacles contain a critical obstacle identified to in the violation
-      diagram refering to single obstacles. This suggests the need for
-      iterating on the size of obstacle combinations.
+      As discussed in \in{Section}[sec:indentifying_most_critical_obstacles],
+      our experience indicates that most of the critical pairs of obstacles
+      contains an obstacle critical alone. This suggests the need for iterating
+      on the size of obstacle combinations. \in{Figure}[fig:violation_diagram2]
+      shows the violation diagram with uncertainty for the goal \goal{Achieve
+      [Make Up Water Provided When Loss Of Cooling]} considering pair of leaf
+      obstacles.
       
       \placefigure[here]
      	  [fig:violation_diagram2]
-     	  {Violation Diagram for the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.}
+     	  {Violation diagram with uncertainty for the goal \goal{Achieve [Make Up Water Provided When Loss Of Cooling]}.}
         {\externalfigure[../images/chap6/violation_diagram_2.pdf]}
       
   \stopsection
@@ -607,14 +640,14 @@
     reference=sec:selection_k_uncertainty,
     title={Selecting countermeasures with knowledge uncertainty}]
   
-    The previous section showed how likely and critical  obstacles can be highlighted in
-    the presence of knowledge uncertainty about satisfaction rates.
-    When countermeasures to these are identified,  most appropriate ones
-    should be selected. Selecting most appropriate countermeasures in
-    presence of knowledge uncertainty requires a relaxation of safe selections 
-    as defined in \in{Section}[sec:most_appropriate].
-    In the presence of uncertainty, a safe selection ensures that the violation
-    uncertainty is bounded.
+    The previous section showed how likely and critical obstacles can be
+    highlighted in the presence of knowledge uncertainty about satisfaction
+    rates. When countermeasures to these are identified, most appropriate ones
+    should be selected. Selecting most appropriate countermeasures in presence
+    of knowledge uncertainty requires a relaxation of safe selections as
+    defined in \in{Section}[sec:most_appropriate]. In the presence of
+    uncertainty, a safe selection ensures that the violation uncertainty is
+    bounded.
     
     \startdefinition{Safe Selection with Uncertainty}
     
@@ -655,7 +688,8 @@
     Back to our running example, consider the high-level goal \goal{Achieve
     [Make Up Water Provided When Loss Of Cooling]}. The minimal cost for
     guaranteing a violation uncertainty below $5\%$ ranges from $1$ to $6$.
-    There are 63 possibles selections; among these, 48 are safe. The
+    There are 63 possibles selections; among these, 48 are safe. The minimal
+    cost is $1$; we used unitary costs for the countermeasures. The
     countermeasure selection that minimizes the violation uncertainty only
     contains the countermeasure goal \goal{Achieve [Cooling System Repaired]}.
     The resulting violation uncertainty and uncertainty spread is $2.9\%$ and

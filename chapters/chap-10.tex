@@ -6,293 +6,281 @@
 
 \chapter[chap:relatedwork]{Related Work}
     
-  This chapter reviews the relevant work on risk analysis models and
-  techniques, quantitative requirements, uncertainty in requirements, exception
-  handling in requirements and requirements-driven runtime adaptation. The
-  related work presented here is restricted to software systems.
+  This chapter reviews relevant work on models and techniques for risk analysis
+  , quantitative requirements, uncertainty in requirements, exception handling
+  in requirements and requirements-driven runtime adaptation. The work
+  discussed here is restricted to software systems.
   
   The chapter is structured as follows. \in{Section}[sec:comparing_ra] reviews
-  the work related to risk analysis models and techniques not explicitly
-  connected to requirements, such as Fault Tree Analysis (FTA), HAZOP/HAZAN,
-  FMEA/FMECA, and CORAS. \in{Section}[sec:comparing_qre] discusses the quantitative
-  requirements approaches. \in{Section}[sec:comparing_rdre] presents and
-  discusses the models and techniques for risk analysis related to
-  requirements. \in{Section}[sec:comparing_um] reviews uncertainty
-  management for requirement models and techniques.
-  \in{Section}[sec:comparing_cr] discusses models and techniques for exception
-  handling. Last, \in{Section}[sec:comparing_as] details other runtime
-  adaptation models and techniques and compares these to our approach.
+  the work related to risk analysis not explicitly connected to requirements,
+  such as Fault Tree Analysis (FTA), HAZOP/HAZAN, FMEA/FMECA, and CORAS.
+  \in{Section}[sec:comparing_qre] discusses approaches for handling
+  quantitative requirements. \in{Section}[sec:comparing_rdre] discusses models
+  and techniques for risk analysis related to requirements.
+  \in{Section}[sec:comparing_um] addresses uncertainty management for
+  requirement models and techniques. \in{Section}[sec:comparing_cr] discusses
+  models and techniques for exception handling. Last,
+  \in{Section}[sec:comparing_as] details other runtime adaptation models and
+  techniques and compares these to our approach.
   
-  Our review do not include security risk analysis techniques such as {\it
-  attack trees} and {\it threat trees} \cite[Sch99,Hel02,Sch11], {\it
-  UMLSec} \cite[Jur01,Jur02], {\it SecureUML} \cite[Lod02], {\it Abuse Case}
-  \cite[McD99], or {\it Misuse Case} \cite[Sin05]. These frameworks deals
-  specifically with security concerns. Future research is required to better
-  understand how these relates to the presented approaches.
+  Our review does not include specific security risk analysis techniques such
+  as {\it attack trees} and {\it threat trees} \cite[Sch99,Hel02,Sch11] (these
+  are however close to {\it fault tree} addressed here), {\it UMLSec}
+  \cite[Jur01,Jur02], {\it SecureUML} \cite[Lod02], {\it Abuse Case}
+  \cite[McD99], or {\it Misuse Case} \cite[Sin05].
   
   \startsection[reference=sec:comparing_ra,title={Risk Analysis}]
     
-    This section briefly presents three classical risk analysis models and
-    techniques commonly found in the industry plus the CORAS approach. A more
-    detailed overview of conventional risk analysis approaches can be read in
-    \cite[Lev01].
+    This section briefly presents common risk analysis models used in the
+    industry. A more detailed overview can be found in \cite[Lev01].
     
-    \noindent {\bf Fault Tree Analysis.} Fault Tree Analysis (FTA) is a very
-    widely used method to analyze risks related to safety
+    \noindent {\bf Fault Tree Analysis.} Fault Tree Analysis (FTA) is a 
+    widely used method for analyzing risks related to safety
     \cite[Ves81,Bed01,Lev01,Lam09,Rui15]. Application domains range from
     aeronautics to software systems \cite[Lev83]. A
-    comprehensive introduction to FTA is provided in \cite[Ves81]. We briefly discuss here classical fault
-    trees and dynamic fault trees and refer the reader to \cite[Rui15] for a
-    more detailed discussion about state-of-the-art techniques for FTA.
+    comprehensive introduction to FTA is provided in \cite[Ves81]. We briefly discuss common fault
+    trees and dynamic fault trees, and refer to \cite[Rui15] for a
+    more detailed discussion about FTA state-of-the-art techniques.
       
-    Fault trees (FTs) models how failures propagate through a system, i.e., how
-    a basic event leads to a system failure. An FT is an acyclic graph with two
-    types of nodes: events and gates. The events of an FT model the failures
-    whereas the gates (the non-leaf nodes) model failure propagation. A leaf
-    event is called a {\it basic event}, a non-leaf event is known as an {\it
-    intermediate event}. Gates includes {\it AND} and {\it OR} gates modeling,
-    respectively, the AND-combinations (output is $true$ iff all inputs are
-    $true$) and OR-combinations (output is $true$ if at least one input is
-    $true$) of the child events (called inputs). An other gate is the {\it k/N}
-    gate that models a {\it voting} gate where at least $k$ child events shall
-    be $true$, among $N$, are required for the output to be $true$.
+    Fault trees (FTs) capture how failures propagate through a system, more
+    specifically, how a basic event leads to a system failure. An FT is an
+    acyclic graph with two types of nodes: events and gates. The events of an
+    FT capture failures whereas the gates are non-leaf nodes capturing failure
+    propagation. A leaf event is called a {\it basic event}; a non-leaf event
+    is known as an {\it intermediate event}. Gates includes {\it AND} and {\it
+    OR} gates for AND-combinations and OR-combinations of the child events,
+    respectively. A {\it k/N} gate captures a {\it voting} gate where at least
+    $k$ child events among $N$ must be {\it true} for the output to be $true$.
     
-    Analysis of fault tree is either {\it qualitative} or {\it quantitative}.
-    Qualitative analysis focuses on the structure of the fault tree; this type
-    of analysis includes identifying {\it cut-sets} (i.e., a combination of
-    basic events leading to the failure of the system). Different techniques
-    are available to efficiently compute these cut sets, such as a bottom-up
-    propagation, or a BDD-based computation \cite[Rui15]. Quantitative
-    analysis focuses on computing failures probabilities such as {\it system
-    reliability} (i.e., the probability that a system fails given the horizon
-    $t$), or {\it mean time between failures}, (i.e., the average duration
-    between two subsequent failures). Low-level events are annotated with
-    probabilities that are propagated from causing events to their consequences
-    in the fault tree. The probabilities can be single-value or multi-value
-    estimates such as probability distribution. A large number of techniques
-    are available to compute the probability of the root events \cite[Rui15].
+    The analysis of a fault tree is either qualitative or quantitative. {\it
+    Qualitative} analysis focuses on the structure of the fault tree; it
+    includes identifying {\it cut-sets}, i.e., combinations of basic events
+    leading to the failure of the system. Different techniques are available
+    for efficiently computing these cut sets, such as bottom-up propagation or
+    BDD-based computation \cite[Rui15]. {\it Quantitative} analysis focuses on
+    computing failure probabilities such as the probability that a system fails
+    given the horizon $t$ or the average duration between two subsequent
+    failures. Low-level events are annotated with probabilities that are
+    propagated from causing events to their consequences in the fault tree. The
+    probabilities can be single-value or multi-value estimates such as
+    probability distributions. A large number of techniques are available for
+    computing the probability of root events \cite[Rui15].
     
-    Standard Fault Trees (SFTs) provides a simple model for risk analysis but
-    lacks expressivity. Dynamic Fault Trees (DFTs) extends SFTs to support
+    Standard Fault Trees (SFTs) provide a simple model for risk analysis but
+    lack expressiveness. Dynamic Fault Trees (DFTs) extend SFTs to support
     finer-grained analysis. DFTs include additional gates such as {\it
-    Priority-AND} (inputs shall be $true$ in a specific order), {\it FDEP}
-    (Function DEPendency, inputs influence other inputs) and {\it SPARE} (model
+    Priority-AND} (inputs must be $true$ in a specific order), {\it FDEP}
+    (Function DEPendency where inputs influence other inputs) and {\it SPARE} (model
     components replaced by others). The quantitative analysis of a DFT is
-    usually performed by transforming the DFT into a Markov Chain that can be
+    usually performed by transforming it into a Markov Chain that can be
     further analyzed using standard techniques such as Model Checking
     \cite[Bai08].
   
-    \noindent {\bf HAZOP/HAZAN.} The approach HAZOP focuses on hazard and
-    operability problem identification \cite[Kle99,Lev01]. It deals with
-    deviation from the intended design (called {\it hazards} \cite[IEC61882]),
-    their possible causes and their consequences \cite[IEC61882]. Originally
-    designed for chemical plants, the HAZOP approach has been extended and used
-    in different settings such as administrative procedures, medical devices
-    \cite[IEC61882], and software systems
-    \cite[Ear92,Chu93,Bur93,Fen94,McD94,McD95,McD02,Par07].
+    \noindent {\bf HAZOP/HAZAN.} This approach focuses on the identification of
+    hazards and operability problems \cite[Kle99,Lev01]. It deals with
+    deviations from the intended design, their possible causes and their
+    consequences \cite[IEC61882]. Originally designed for chemical plants, the
+    HAZOP approach has been extended and used in different settings such as
+    administrative procedures, medical devices \cite[IEC61882], and software
+    systems \cite[Ear92,Chu93,Bur93,Fen94,McD94,McD95,McD02,Par07].
     
     An accurate and detailed design is required to carry out an HAZOP analysis.
-    At a later stage, it is, however, more costly and sometimes impossible to
-    introduce major changes in the design; \cite[Kle99] reports the
+    At later stages, it is however more costly and sometimes impossible to
+    introduce major changes in the design; \cite[Kle99] reports on the
     application of HAZOP analysis on preliminary designs.
     
-    The system under scrutiny is divided into parts. (The size of the parts
-    depends on the complexity.) Each part and characteristic are examined and
-    challenged by the use of guide words such as {\ss NO OR NOT}, {\ss MORE},
-    and {\ss LATE} to feed the elicitation process. Specific guide words were
-    developed for software systems \cite[Bur93,McD94,McD95,McD02,Han04].
-    In the context of software systems, UML attributes and entities might be
-    used as a basis for the application of the guide-words \cite[Han04].
+    The system under scrutiny is divided into parts. Each part is examined and
+    challenged by the use of guide words, such as {\ss NO OR NOT}, {\ss MORE},
+    and {\ss LATE}, to feed the elicitation process. Specific guide words were
+    developed for software systems \cite[Bur93,McD94,McD95,McD02,Han04]. For
+    these, UML attributes and entities may be used as a basis for the
+    application of guide words \cite[Han04].
   
-    In the chemical process context, \cite[Vai96] extends an expert system,
-    aimed at generating HAZOP analysis, with quantitative information about the
+    In the context of chemical processes, \cite[Vai96] extends expert systems,
+    aimed at generating HAZOP analysis with quantitative information about the
     processes and the materials used. The consequences of a hazard are then
     ranked according to their severities.
   
-    Once identified, the hazards might be assessed. The assessment might be on
-    standard consensus techniques or rely on Fault Tree Analysis to compute
+    Once identified, hazards need be assessed. The assessment may be based on
+    on standard consensus techniques or rely on Fault Tree Analysis to compute
     more accurate estimates \cite[Kle99]. Once assessed, the consequences for
-    the employees, the public and the environment, and the plant and profit are
-    estimated. The hazard assessment and the consequence assessment are then
-    compared to target criteria \cite[Kle99].
+    the surrouding environment are estimated. Hazard assessment and consequence
+    assessment are then compared with respect to target criteria \cite[Kle99].
   
     \noindent {\bf FMEA/FMECA.} Failure Modes and Effects Analysis (FMEA) is a
-    systematic technique for identifying failure modes of a system (or a
-    subsystem) and for evaluating the consequences of the failure modes on the
-    higher levels \cite[Haa02,Lev01]. Failure Modes, Effects and Criticality
-    Analysis (FMECA) extends FMEA with quantitative analysis. The identified
-    failure effects are organized according to their criticality (on an $x$-axis)
-    and likelihood (on a $y$-axis) in a {\it criticality matrix}. Such
-    criticality matrix helps the risk engineers to identify likely and critical 
-    failures. We refer the reader to \cite[Haa02] for a detailed survey
-    related to the application of FMEA to software systems.
+    systematic technique for identifying failure modes of a system (or
+    subsystem) and for evaluating the consequences of failure modes
+    \cite[Haa02,Lev01]. Failure Modes, Effects and Criticality Analysis (FMECA)
+    extends FMEA with quantitative analysis. The identified failure effects are
+    organized according to their criticality (on an $x$-axis) and likelihood
+    (on a $y$-axis) in a {\it criticality matrix}. Such criticality matrix
+    helps risk engineers identify likely and critical failures. The reader is
+    referred to \cite[Haa02] for a detailed survey related to the application
+    of FMEA to software systems.
     
-    \noindent {\bf CORAS}. CORAS is a model-driven risk analysis approach with
-    a strong focus on defensive security analysis \cite[Lun10]. The framework
-    is centered around protecting a set of identified assets. The approach is
-    structured in eight steps. Steps 1 to 4 focuses on the preparation of the
-    risk analysis. These are important steps but are considered as out of scope
-    for this review, Step 5 to 8 however directly relates to the
-    identify-assess-control cycles: (Step 5) Risk identification using threats
-    diagrams; (Step 6) Risk estimation using threats diagrams; (Step 7) Risk
-    evaluation using risk diagrams; (Step 8) Risk treatments using treatments
-    diagrams. More details about these steps can be found in \cite[Sol11]. The
-    approach is supported by a dedicated tool support \cite[See12]. The tool
-    enables the analyst to build the various diagrams used in the approach and
-    to run most of the analysis proposed in \cite[Sol11]. A wide variety of
-    case-studies \cite[Bra07c,Bra07,Ref15,Sol13] from various industries and
-    of different size illustrates and validates the practical applicability of
-    the approach.
-        
-    Risk identification (Step 5) is driven by the protection of the assets.
-    This step produces a threat diagram identifying the risks harming the
-    identified assets. An {\it asset} is defined as {\it something to which a
-    stakeholder assigns value and hence for which the stakeholder requires
-    protection}. This general concept might be physical objects (such as
-    computers), virtual elements (such as customer database, or online store),
-    or desirable properties (such as compliance, or reputation). The risks are
-    further refined in categories \cite[Sol11]. In the framework, an {\it
-    unwanted incident} is an event that harms or reduces the value of an asset;
-    a {\it threat} is a potential cause of an unwanted incident; a {\it threat
-    scenario} is a chain or series of events that is initiated by a threat, and
-    that may lead to an unwanted incident; a {\it vulnerability} is a weakness,
-    flaw or deficiency that opens, for, or may be exploited by, a threat to
-    cause harm to or reduce the value of an assets. Threat scenarios are
-    connected to other threats scenarios and threat by {\it leads-to} links. A
-    vulnerability decorates either a link between a party and a threat
-    scenario, either a {\it leads-to} relation. These elements and their
-    relations are identified during (Step 5) by a structured workshop where
-    experts and risk analysts identify as many elements as possible.
-        
-    After the identification and documentation of the risks, (Step 6) focuses
-    on risk estimation. During a structured workshop, the unwanted incidents
-    are annotated with a likelihood. A {\it likelihood} is defined as the
-    frequency or the probability of something to occur. The estimates might be
-    qualitative or quantitative. To help to support the estimation, a calculus
-    is provided to compute the likelihood of a dependent artifact. The calculus
-    might be used to check whether the estimate of the unwanted incident is
-    coherent with the other estimates of threats and threats scenarios. Such
-    technique might be useful to identify incomplete, inconsistent or ambiguous
-    risk analysis \cite[Ref15]. Likelihoods may be specified
-    using equations combining key indicators whose value might change over
-    time \cite[Ref09]. However, little support is provided to identify such key indicators,
-    to combine these in likelihood and how these key indicators should be
-    monitored.
-        
-    The uncertainty of the estimates might be captured using intervals instead
-    of single-point values \cite[Sol11]. The calculus is extended to support
-    these intervals by applying the operation (such as addition, multiplication
-    or subtraction) on the bounds of the interval. Distributions might replace
-    intervals for a more refined analysis but, to the best of our knowledge,
-    this has not been done.
-        
-    A {\it consequence} is the impact of an unwanted incident on an asset in
-    terms of harm or reduced asset value. The consequences are estimated on a
-    qualitative or quantitative scale. Most commonly, the consequences are
-    classified as insignificant, minor, moderate, major or catastrophic.
-    However, for specific assets, a quantitative value, such as monetary or
-    time, might be used.
-        
-    Estimated risks are then evaluated and prioritized (Step 7). The unwanted
-    incidents are displayed on a risk matrix, whose rows are the frequencies
-    and columns are the consequences, to identify likely and critical  risks.
-    The risk matrix indicates risks that are acceptable and risks that are not
-    acceptable. Which cell is acceptable is determined by the analyst and the
-    customer based on a risk evaluation criteria.
-        
-    (Step 8) is concerned with the identification, assessment, and selection of
-    countermeasures to unacceptable risks. In CORAS, countermeasures are called
-    {\it treatments}. A {\it treatment} is an appropriate measure to reduce
-    risk. Using a structured workshop, the analyst and experts identify
-    possible countermeasures. Using countermeasures categories, such as avoid,
-    reduce consequences, reduce likelihood, transfer, or retain helps to
-    generate alternative countermeasures. Once countermeasures are identified,
-    their cost and reduction effect in both likelihood and consequence are
-    estimated. The benefit for a countermeasure regarding an asset is computed
-    as a combination of the risk probability, the risk reduction, and the
-    consequences. Best countermeasures are then selected during the workshop.
-    \cite[Sol13b] proposes a technique for systematic countermeasures selection
-    when estimates are quantitative. The procedure is structured in three
-    steps: {\it (a)} the countermeasures are annotated with their cost and
-    reduction effect; {\it (b)} for each unwanted incident, a decision diagram
-    display the countermeasures combined cost and the reduced probability of
-    the incident; {\it (c)} the countermeasures minimizing their combined cost
-    the probability of the incident are selected.
+    \noindent {\bf CORAS}. CORAS is a model-driven risk analysis methodology
+    with a strong focus on defensive security analysis \cite[Lun10]. It is
+    concerned with protecting a set of identified assets. The approach is
+    structured in eight steps. Steps 1 to 4 focuses on preliminaries for risk
+    analysis. These steps are somewhat out of scope of this review as these are
+    not specific for risk assessment and control. Step 5 to 8 however directly
+    relate to identify-assess-control cycles.
     
-    \noindent {\bf Comparing with our approach.} We can observe some
-    differences between these approaches and ours:
+    \startitemize
+    
+      \item Step 5 (Risk identification) is driven by the protection of the
+      assets. This step produces a threat diagram identifying the risks harming
+      the identified assets. An {\it asset} is defined as \quote{something to
+      which a stakeholder assigns value and hence for which the stakeholder
+      requires protection}. It may refer to physical objects (such as
+      computers), virtual elements (such as customer database or online store),
+      or desirable properties (such as compliance or reputation) \cite[Sol11].
+      An {\it unwanted incident} is an event that harms or reduces the value of
+      an asset; a {\it threat} is a potential cause of an unwanted incident; a
+      {\it threat scenario} is a chain or series of events that is initiated by
+      a threat and may lead to an unwanted incident; a {\it vulnerability} is a
+      weakness, flaw or deficiency that results in a threat. Threat scenarios
+      are connected with other threats scenarios and threats. A vulnerability
+      decorates link outbouding a threat or a threat scenario. Those elements
+      and their inter-relations are identified during a structured workshop
+      where experts and risk analysts identify as many elements as possible.
+      
+      \item Step 6 (Risk estimation) focuses on risk estimation. During a
+      structured workshop, the unwanted incidents are annotated with a
+      likelihood. A {\it likelihood} is defined as the frequency or probability
+      of something occuring. The estimates may be qualitative or quantitative.
+      To help support the estimation, a calculus is provided to compute the
+      likelihood of a dependent artifact. The calculus may be used to check
+      whether the estimate of the unwanted incident is coherent with the other
+      estimates of threats and threat scenarios. Such technique may prove
+      effective for identifying incomplete, inconsistent or ambiguous risk
+      analysis \cite[Ref15]. Likelihoods can be specified using equations
+      combining key indicators whose value might change over time \cite[Ref09].
+      Little support is provided to identify key indicators, combine these and
+      monitor them.
+      
+      The uncertainty on estimates can be captured using intervals instead of
+      single-point values \cite[Sol11]. The calculus is extended to support
+      such intervals. Distributions can replace intervals for a more refined
+      analysis\emdash{}to the best of our knowledge, this has not been done so
+      far.
+        
+      In CORAS, a {\it consequence} is the impact of an unwanted incident on an
+      asset; it is captured in terms of harm or reduced asset value. The
+      consequences are estimated on a qualitative or quantitative scale. Most
+      commonly, they are classified as insignificant, minor, moderate, major or
+      catastrophic. For specific assets, a quantitative value, such as monetary
+      or time, might be used.
+
+      \item Step 7 (Risk evaluation) prioritizes estimated risks. The unwanted
+      incidents are displayed on a risk matrix whose rows are frequencies and
+      columns are consequences. To identify likely and critical risks, this
+      matrix indicates risks that are acceptable and risks that are
+      unacceptable. Which cell is acceptable is determined by the analyst and
+      the customer based on risk evaluation criteria.
+
+      \item Step 8 (Risk treatments) is concerned with the identification,
+      assessment, and selection of countermeasures to unacceptable risks. In
+      CORAS, {\it treatments} are appropriate measures for risk reduction. Risk
+      analyst and domain experts identify possible treatments during a
+      structured workshop. Treatment categories such as avoid, reduce
+      consequences, reduce likelihood, transfer, or retain help explore
+      alternative treatments. Once those are identified, their cost and
+      reduction effect in both likelihood and consequences are estimated. The
+      benefit of a treatment regarding an asset is computed as a combination of
+      the risk probability, the risk reduction, and the consequences. Best
+      treatments are then selected during the workshop. A technique for
+      systematic treatment selection when estimates are quantitative is
+      proposed in \cite[Sol13b]. The procedure is structured in three steps:
+      {\it (a)} the treatments are annotated with their cost and reduction
+      effect; {\it (b)} for each unwanted incident, a decision diagram displays
+      the cost and the reduced probability of the incident for treatment
+      combinations; {\it (c)} the combination minimizing the cost and the
+      probability of the incident are selected.
+    
+    \stopitemize
+    
+    More details about these steps can be found in \cite[Sol11]. The approach
+    is supported by dedicated tool support \cite[See12,Sol11]. A wide variety
+    of case-studies \cite[Bra07c,Bra07,Ref15,Sol13] from industries with
+    varying size illustrate and validate the practical applicability of the
+    approach.
+        
+    \noindent {\bf Comparing common risk analysis techniques with our
+    approach.} Some differences between the preceding approaches and our may be
+    observed:
     
     \startitemize
       
-      \item The lack of connection with a goal model may make it hard to
-      identify the root events for starting backward causal analysis. Fault
-      Tree analysis is often anchored on Event Trees \cite[Lev01] or used as a
-      complimentary technique to provide more precise estimates for the risks
-      identified using HAZOP/HAZAN or FMEA/FMECA. CORAS anchors the risk
-      analysis on assets; however, this appears, to us, to be vague and
-      unprecise to start a risk analysis. For example, what does it mean to
-      protect a user database?
+      \item Their lack of connection with a goal model may make it hard to
+      identify root events for starting backward causal analysis. Fault Tree
+      analysis is often anchored on Event Trees \cite[Lev01] or used as a
+      complementary technique to provide more precise estimates for the risks
+      identified with HAZOP/HAZAN or FMEA/FMECA. The CORAS methodology anchors
+      risk analysis on assets. This appears to be a fairly vague and unprecise
+      starting point for a risk analysis.
     
-      \item Unlike the presented approaches, our approach is anchored in a
-      refinement structure on probabilistic goal/obstacle assertions. In Fault
-      Tree Analysis and CORAS, the risk trees are not grounded on a formal
-      framework; their nodes are just event names and their causal links have
-      no precise semantics. As a consequence, the correctness of event
+      \item Unlike the preceding approaches, our work is anchored on a
+      refinement structure refering to probabilistic goal/obstacle assertions.
+      In Fault Tree Analysis and CORAS, the risk trees are not grounded on any
+      formal apparatus; their nodes are just event names and their causal links
+      have no precise semantics. As a consequence, the correctness of event
       decompositions cannot be established, and the propagation rules may
       appear ad hoc. In HAZOP/HAZAN and FMEA/FMECA, there is no structure at
-      all among risks.
+      all for linking risks.
       
-      \item In these approaches, the likelihoods and their contributions have
-      no precise semantics that would enable formal reasoning or monitoring of
-      these likelihoods.
+      \item In the preceding approaches, likelihoods and their contributions
+      have no precise semantics that would enable formal reasoning or runtime
+      monitoring.
       
-      \item Our approach is integrated into an overall method for risk
-      identification, assessment, and resolution. For example, FTA proposes no
-      mechanism for risk resolution; no approach presented here integrates the
-      selected countermeasures back into the model. Lastly, none of these
-      approaches support risk analysis cycle where risks to countermeasures are
-      identified, assessed and controlled.
+      \item Our approach is integrated into a comprehensive method for risk
+      identification, assessment, and resolution. FTA proposes no mechanism for
+      risk resolution. None of the approaches reviewed in this section
+      integrates the selected countermeasures back into some model. Lastly,
+      none of these approaches supports risk analysis cycles where risks to
+      countermeasures are identified, assessed and controlled (see
+      \in{Section}[sec:iterating_oa]).
     
     \stopitemize
       
   \stopsection
   
-  \startsection[reference=sec:comparing_qre,title={Quantitative Requirements Engineering}]
+  \startsection[reference=sec:comparing_qre,title={Quantitative Requirements Frameworks}]
   
-    The related work in this section focuses on models and techniques for
+    The work reviewed in this section focuses on models and techniques for
     quantitative requirements that are not explicitly connecting requirements
-    and risks. This section discusses exclusively quantitative analysis. We
-    refer the user to \cite[Hor11] for available qualitative techniques to
-    analyze requirements models.
+    to risks. This section exclusively refers to quantitative analysis. The
+    reader may check \cite[Hor11] for available qualitative analysis techniques
+    on requirements models.
       
-    \noindent {\bf KAOS-based Approaches.} \cite[Let04] proposes an approach
-    to probabilistically reason on goal models for selecting the most
-    appropriate alternatives. In the proposal, goals are annotated with quality
-    variables, such as {\it Failure Rate} or {\it Response Time}. On leaf
-    goals, these quality variables are estimated using probability
-    distributions that are analytically combined for obtaining probability
-    distributions for the quality variables of top goals. The combinations are
-    obtained by applying domain-specific propagation equations that annotate
-    the refinement structure. High-level goals are decorated with objective
-    functions to maximize or minimize, together with a target value.
+    \noindent {\bf KAOS-based Approaches.} An approach for probabilistic
+    reasoning on goal models to select the most appropriate alternatives is
+    proposed in \cite[Let04]. Goals there are annotated with quality variables
+    such as {\it Failure Rate} or {\it Response Time}. These quality variables
+    are estimated on leaf goals using probability distributions that are
+    analytically combined to obtain probability distributions for the quality
+    variables of top goals. The combinations are obtained by applying
+    domain-specific propagation equations that annotate the refinement
+    structure. High-level goals are decorated with objective functions to be
+    maximized or minimized, together with some target value.
   
-    \cite[Lut12,Lut12b,Ell14] discusses how quantitative goal-oriented
-    requirements engineering helped in designing a molecular system.
+    The work in \cite[Lut12,Lut12b,Ell14] discusses how quantitative goal-oriented
+    RE helped in designing molecular systems. In particular,
     \cite[Lut12b] introduces {\it THRESHOLD} refinement nodes. In such
     refinement, the parent goal is satisfied if \quote{enough} subgoals are
     satisfied. \quote{Enough} subgoals are satisfied if at least $k$ subgoals
-    are satisfied over all $N$ possible subgoals.
+    are satisfied among all $N$ possible subgoals.
     
-    \cite[Dar15,Pon17] evaluates how quantitative reasoning can be used to
-    assess accessibility in physical buildings. The approach differs from
-    common approaches by generating a domain specific assessment tool for
-    assessing the satisfaction of goals.
+    The work in \cite[Dar15,Pon17] evaluates how quantitative reasoning can be
+    used to assess accessibility in physical buildings. The approach differs
+    from common approaches by providing a domain specific assessment tool for
+    goal satisfaction.
       
-    \noindent {\bf Tropos.} \cite[Gio02,Gio03] introduces a formal framework
-    for reasoning with goal models. This formal framework was then applied in
-    \cite[Gio05] to the framework Tropos \cite[Bre04]. In addition to
-    refinement links, the goal model includes qualitative relationships between
-    goals. These relations include $++,+,-,--$:
+    \noindent {\bf Tropos-based approaches.} A formal framework is introduced in \cite[Gio02,Gio03]
+    for reasoning about goal models. This framework was applied in
+    \cite[Gio05] to Tropos models \cite[Bre04]. In addition to goal
+    refinement links, the model includes qualitative relationships among
+    goals. These relations include:
 
     \vskip-.09cm
     \startitemize[packed]
@@ -302,308 +290,305 @@
          \item $G_1 \xrightarrow{}{--} G_2$: the satisfaction of $G_1$ implies the denial of $G_2$.
     \stopitemize
     
-    The relations $+,-$ might be annotated with a weight, enabling quantitative
-    analysis, representing the strength by which the satisfiability/deniability
+    Those relations might be annotated with a weight to enable quantitative
+    analysis. This weight represents the strength by which the satisfiability/deniability
     of the source goal influences the satisfiability/deniability of the target
     goal.
     
-    In the framework, goals are annotated with two attributes, {\it SAT} and
-    {\it DEN}, that quantify the value of evidence for the goal being satisfied
-    or denied, respectively. The values of these attributes are qualitative and
-    ranges from {\it Full} to {\it Partial} to {\it None}, or from real
-    variable $inf$ to real variable $sup$ when using quantitative analysis
-    (these needs to be specified by the user).
+    Goals there are annotated with two attributes, {\it SAT} and {\it DEN},
+    that quantify the value of evidence for the goal being satisfied or denied,
+    respectively. The values of these attributes are qualitative and range from
+    {\it Full} to {\it Partial} to {\it None}, or from a real variable $inf$ to
+    a real variable $sup$ (to be specified by the user).
     
-    A propagation algorithm uses propagation rules to compute the values {\it
-    SAT} and {\it DEN} of the root nodes. The algorithm starts from leaf goals
+    An algorithm uses propagation rules to compute the  {\it
+    SAT} and {\it DEN} values for the root nodes. The algorithm starts from leaf goals
     and propagates the values to the goals directly connected to these leaf
     goals. The process is then repeated until a fixpoint is reached.
     
-    \noindent {\bf i* models for selecting architecture components.}
-    \cite[Fra03,Fra04] reports the application of i* goal models \cite[Yu97a]
-    to select architecture components. Architecture components are modeled as
-    actors, and the selection of the most appropriate components is driven by
-    the satisfaction of goals and soft goals. Soft goals are quantified using
+    \noindent {\bf Use of i* models for selecting architecture components.} The
+    work in \cite[Fra03,Fra04] reports on the use of i* goal models
+    \cite[Yu97a] to select architectural components. The latter are modeled as
+    i* actors; the selection of most appropriate components is driven by the
+    satisfaction of soft goals. Soft goals are quantified using
     architecture-specific metrics such as diversity, packaging, uniformity,
-    connectivity. These architecture-specific metrics are then computed for the
-    alternative architectures to drive the selection of the most appropriate
-    one. It is not clear how these metrics are estimated.
+    connectivity. These metrics are computed for alternative architectures to
+    drive the selection of a most appropriate one. It is not clear how these
+    metrics are estimated though.
       
-    \noindent {\bf Quantitative GRL.} \cite[Amy10] introduces a quantitative
-    reasoning layer to Goal-oriented Requirement Language (GRL). The reasoning
-    is aimed at comparing the relative effectiveness of alternative designs.
-    Satisfaction values are assigned to intentional elements (nodes of the goal
-    model graph) and propagated to the other intentional elements through the
-    decomposition, contribution and dependency links. The propagation might be
-    forward (from leaf nodes to root nodes) or backward (from root nodes to
-    leaf nodes) or a mix of both. Forward analysis answers \quote{what if?}
-    questions whereas backward analysis focus on \quote{is it possible?}
-    questions. A qualitative assessment and a hybrid assessment (mixing both
-    qualitative and quantitative information) are also proposed.
+    \noindent {\bf Quantitative GRL.} A quantitative reasoning layer to the
+    Goal-oriented Requirement Language (GRL) is introduced in \cite[Amy10]. The
+    reasoning is aimed at comparing the relative effectiveness of alternative
+    designs. Satisfaction values are assigned to nodes of a goal model graph
+    and propagated to the other nodes through decomposition, contribution and
+    dependency links. The propagation may be forward (from leaf nodes to root
+    nodes) or backward (from root nodes to leaf nodes), or a mix of both.
+    Forward analysis answers \quote{what if?} questions whereas backward
+    analysis focus on \quote{is it possible?} questions. Qualitative assessment
+    and hybrid assessment mixing both qualitative and quantitative information
+    are also proposed.
       
-    \noindent {\bf Approach by G. Chatzikonstantinou and K. Kontogiannis.} In
-    \cite[Cha13], the degree of satisfaction for a goal is determined by the
-    degree of satisfaction of its subgoals, and the degree of satisfaction of
-    other goals that are connected through {\it Contribution Links}.
-    Contribution links indicate whether the source goal contributes to the
-    satisfaction or violation of the target goal. These links are weighted
-    according to the probability a source goal satisfy or deny the target goal.
-    The approach \cite[Cha13] generates a Markov Logic Network (MLN) \emdash
-    an MLN is similar to a Bayesian network \emdash from a goal model. The MLN
-    is then trained with past data to obtain the numerical values for the
+    \noindent {\bf Markov Logic Netword-based approach.} In \cite[Cha13], the
+    degree of satisfaction for a goal is determined by the degree of
+    satisfaction of its subgoals together with the degree of satisfaction of
+    other goals connected through {\it Contribution Links}. The latter indicate
+    whether the source goal contributes to the satisfaction or violation of the
+    target goal. These links are weighted according to the probability for a
+    source goal to satisfy or deny the target goal. This approach generates a
+    Markov Logic Network, similar to a Bayesian network, from a goal model. The
+    network is then trained with past data to obtain numerical values for the
     contributions links.
     
-    \noindent {\bf Comparing our approach.} As these approaches are not
-    connected to risks, the focus of these is more on selecting alternative
-    design, such as selecting alternative goal refinements or selecting
-    alternative agents to satisfy high-level objectives.
+    \noindent {\bf Comparing quantitative requirements frameworks with our
+    approach.} The preceding approaches are not connected to risks; their focus
+    is more on selecting alternative designs, such as selecting alternative
+    goal refinements or selecting alternative agents to satisfy high-level
+    objectives.
     
-    Unlike all approaches presented in this section, our approach links the
-    partial satisfaction of the goals to the satisfaction of the risks. (Next
-    section will discuss models and methodologies incorporating both a
-    requirement and a risk model.) The satisfaction of the requirement is
-    computed from the risks preventing their satisfaction. With a risk
-    AND/OR-refinement structure for propagating probabilities from fine-grained
-    risks, the estimates are easier to obtain and interpret in terms of
-    application-specific phenomena. Also, it documents the rationale for the
-    partial satisfaction of the goals. A notable exception is \cite[Let04]
-    where quality variables are easy to obtain and interpret.
+    Unlike all approaches presented in \in{Section}[sec:comparing_qre], our
+    approach links the partial satisfaction of goals to the occurence of risks.
+    Requirement satisfaction is determined from the risks preventing
+    satisfaction. With a risk AND/OR-refinement structure for propagating
+    probabilities from fine-grained risks, the estimates are easier to obtain
+    and interpret in terms of application-specific phenomena. Moreover risks
+    document the rationale for the partial satisfaction of the goals. (A
+    notable exception is \cite[Let04] where quality variables can be obtained
+    and interpreted fairly easily.)
       
-    Our approach differs in several directions from the presented approaches,
-    specifically:
+    Our approach differs in several directions from the previously presented
+    approaches.
     
     \startitemize
            
       \item Unlike \cite[Gio02, Gio03, Gio05, Fra03, Fra04, Amy10,
-      Cha13], our approach relies on a precise semantic in terms of behavior.
-      This enables the estimates to be grounded on real-world phenomena.
+      Cha13], our approach relies on a precise semantics in terms of behaviors.
+      This enables estimates to be grounded on real-world phenomena.
       
       \item The approaches proposed in \cite[Gio02, Gio03, Gio05, Amy10,
-      Cha13] propagate the partial satisfaction through refinements and
+      Cha13] propagate partial satisfaction through refinements and
       contribution links. Our approach does not include such contribution
-      links. As the goals appear to have no precise definitions in terms of
-      behaviors, it is unclear how contributions links are defined and differ
-      from partial refinements, in a quantitative setting.
+      links. As the goals there appear to have no precise definition in terms of
+      behaviors, it is unclear how contributions links are defined and how they differ
+      from partial refinements in a quantitative setting.
       
-      \item Unlike \cite[Gio02, Gio03, Gio05, Fra03, Fra04, Amy10,
-      Cha13], our approach compares the {\it computed} satisfaction rate to
-      {\it required} satisfaction rate. In \cite[Let04], objective functions
-      are decorated with a target value, similar to our RSR.
+      \item Unlike \cite[Gio02, Gio03, Gio05, Fra03, Fra04, Amy10, Cha13], our
+      approach introduces probabilistic goals and compares {\it computed}
+      satisfaction rates with {\it required} satisfaction rates. In
+      \cite[Let04], objective functions are decorated with a target
+      value\emdash{}somewhat similar to our required satisfaction rate.
       
       \item Our framework takes a probabilistic approach; goals and obstacles
       are estimated with a single value indicating both their satisfaction
       ($sr$) and their non-satisfaction ($1-sr$). In \cite[Gio02, Gio03, Gio05,
-      Amy10, Cha13], goals are estimated with
-      2 values indicating the satisfaction ($SAT$) and their non-satisfaction
-      ($DEN$). This increases the number of elements to be elicited by experts.
-      Also, such theory might not be as well understood as the probability
-      theory. In particular, experts might overlook that $SAT \neq 1-DEN$.
+      Amy10, Cha13], goals are estimated with 2 values indicating the
+      satisfaction ($SAT$) and their non-satisfaction ($DEN$). This increases
+      the number of elements to be elicited by experts. Moreover, the
+      underlying theory might not be as well understood as probability theory.
+      In particular, experts might overlook that $SAT \neq 1-DEN$.
       
-      \item The approaches proposed in \cite[Let04,Fra03,Fra04] rely on
-      domain-specific variables and equations. These approaches appear to be
-      finer-grained as it relies on domain-specific knowledge. However, these
-      variables and the equations must be defined in an ad-hoc manner.
+      \item The approaches in \cite[Let04,Fra03,Fra04] rely on domain-specific
+      variables and equations. They appear to be finer-grained as they rely on
+      domain-specific knowledge. However, these variables and equations must be
+      defined in an ad-hoc manner.
       
-      \item The domain specific assessment tools presented in
-      \cite[Dar15,Pon17] could easily integrate with this approach.
+      \item The domain-specific assessment tools in \cite[Dar15,Pon17] might be
+      easily integrate with our proposed technique for obstacle assessment.
     
     \stopitemize
       
-    \cite[Lut12,Lut12b,Ell14] introduces a new type of refinement node: the
-    {\it THRESHOLD} node. This is somewhat similar to a the $k/N$ gate in Fault
+    The work in \cite[Lut12,Lut12b,Ell14] introduces a new type of refinement node called
+    {\it THRESHOLD} node. This is somewhat similar to a  $k/N$ gate in Fault
     Tree Analysis. {\it THRESHOLD}-refinements are not probabilistic
-    refinements, the parent goal is satisfied if \quote{enough} subgoals {\it
-    are} satisfied, not if \quote{enough} subgoals {\it might be} satisfied;
+    refinements; the parent goal is satisfied if \quote{enough} subgoals {\it
+    are} satisfied, not if \quote{enough} subgoals {\it could be} satisfied;
     this differs from our approach.
       
     The backward reasoning applied in \cite[Amy10] for identifying the leaf
-    goals that are sufficient for satisfying the parent goal is not relevant in
-    our framework as we do not consider alternatives. However, the sets of leaf
-    obstacles that are adequate for preventing the satisfaction of the parent
-    goal can be computed in our approach with the obstruction superset (see
-    \in{Section}[sec:computing_bdd]).
+    goals that are sufficient for satisfying the parent goal is not relevant to
+    our framework as we do not consider alternative goal OR-refinements.
+    However, the sets of leaf obstacles preventing the satisfaction of the
+    parent goal can be computed in our approach through obstruction supersets
+    (see \in{Section}[sec:computing_bdd]).
     
   \stopsection
   
-  \startsection[reference=sec:comparing_rdre,title={Risk-Driven Requirements Engineering}]
+  \startsection[reference=sec:comparing_rdre,title={Risk-Driven Requirements Engineering Approaches}]
   
-    This section reviews the approaches where requirements and risks are
-    integrated in a unified qualitative or quantitative framework.
+    This section reviews approaches where requirements and risks are integrated
+    in a unified qualitative or quantitative framework.
       
-    \noindent {\bf DDP.} The process "Defect Detection and Prevention" (DDP)
-    originated from NASA, Jet Propulsion Lab \cite[Cor01, Fea03]. It is
-    designed as an aid to the decision making process in the early phases of a
-    project. In theses phases, information on which decisions are made are
-    often incomplete and uncertain. The process is structured in 4 steps: {\it
-    (1)} Overview the problem and DDP methodology; {\it (2)} Develop the impact
-    information; {\it (3)} Develop the effect information; {\it (4)} Decision
-    making. The main concepts of the approach are {\it requirements} (what the
-    system shall satisfy), {\it failure modes} (what could prevent the
-    requirements to be satisfied) and {\it PACTs} (what can be done to reduce
-    the likelihood or impact of a failure mode). PACT stands for "Preventions,
-    Analyzes, process Controls, and Tests." A detailed presentation of the
+    \noindent {\bf DDP.} The \quote{Defect Detection and Prevention} (DDP)
+    process originated from NASA Jet Propulsion Lab \cite[Cor01, Fea03]. It is
+    designed as an aid to decision making in the early phases of a project. In
+    these phases, information on which decisions are made are often incomplete
+    and uncertain. The process is structured in four steps: {\it (1)} Overview
+    the problem and DDP methodology; {\it (2)} Develop the impact information;
+    {\it (3)} Develop effect information; {\it (4)} Decision making. The main
+    concepts of the approach are {\it requirements} (what the system shall
+    satisfy), {\it failure modes} (what could prevent the requirements from
+    being satisfied) and {\it PACTs} (what can be done to reduce the likelihood
+    or impact of a failure mode). (PACT stands for \quote{Preventions,
+    Analyzes, process Controls, and Tests.}) A detailed presentation of the
     concepts and the process can be found in \cite[Fea03]. The approach is
     supported by a tool, with a strong focus on decision making and
-    visualization to help these decisions \cite[Fea03]. The process has been
-    used internally at NASA for a long period in various settings, for examples
-    see \cite[Sha06,Fea08b,Fea08c].
+    visualization to help in decisions \cite[Fea03]. The process has been used
+    internally at NASA for a long period in various settings, see
+    \cite[Sha06,Fea08b,Fea08c].
   
     A {\it requirement} is defined as \quote{\it whatever the system under
     scrutiny is to achieve, and the constraints under which it must operate}.
-    Requirements are specified in the natural language. Requirements are
-    organized in trees that can be seen as folders grouping requirements
-    according to the modeler's conventions. The trees do not convey a
-    structural meaning. Leaf requirements are decorated with a weight,
-    indicating their relative importance about the other requirements. The
-    weight of the leaf goals might be inferred from the weight of the
-    high-level goals \cite[Mes04].
+    Requirements are specified in natural language. They are organized in trees
+    that can be seen as folders grouping requirements according to the
+    modeler's conventions. The trees do not convey any structural meaning. Leaf
+    requirements are decorated with a weight, indicating their relative
+    importance with respect to other requirements. The weight of leaf goals can
+    be inferred from the weight of higher-level goals \cite[Mes04].
   
     A {\it failure mode} is defined as \quote{\it a thing, that, should it
     occurs, will lead to loss of requirement}. Failure modes are informally
-    specified using natural language. They are organized in OR-tree, indicating
-    an alternative way to cause a parent failure mode to happen. Failures mode
-    are identified during structured workshops. During these workshops,
-    previous DDP analysis helps the experts to determine the risks from similar
-    systems or setting \cite[Fea03].
+    specified using natural language. They are organized in OR-trees,
+    indicating an alternative way of causing a parent failure mode to happen.
+    Failures mode are identified during structured workshops where previous DDP
+    analysis helps the experts to determine the risks from similar systems or
+    settings \cite[Fea03].
   
     The identified failure modes impact requirements. An impact matrix
-    quantitatively specifies the proportion of the requirement that would be
-    lost if the failure mode occurs (between $0$ and $1$). If multiple failure
-    modes impact a requirement, the impacts are summed, leading to values that
-    might be above $1$. In that case, the sums are capped to $1$ when
-    evaluating how the requirements are attained. Summing without capping
-    better emphasis the amount of risk to overcome to satisfy the requirement.
-    For example, an impact of $1.8$ might requires more effort to be reduced
-    than an impact of $1.1$.
+    quantitatively specifies, for each requirement, the proportion (between $0$
+    and $1$) that would be lost if the failure mode occurs . If multiple
+    failure modes impact a requirement, the impacts are summed, leading to
+    values that might be above $1$. In such cases, the sums are capped to $1$
+    when evaluating how the requirements are attained. Note that summing
+    without capping would better emphasize the amount of risk to overcome for
+    requirement satisfaction. For example, an impact of $1.8$ might requires
+    more effort to be reduced than an impact of $1.1$.
           
-    Failure modes are decorated with a priori likelihood and a cost of repair.
-    Likelihoods and costs are specified by experts, during workshops and
-    agreeing on a single value. For each failure mode, we can compute its
-    global impact by summing the impact of the weighted requirements. This
-    helps to identify the most critical failure modes. By taking the PACTs into
-    account, it helps to identify the failure modes that are not enough
-    mitigated.
+    Failure modes are decorated with a likelihood and a cost of repair.
+    Likelihoods and costs are specified by experts during workshops where they
+    need to agree on a single value. For each failure mode, a global impact can
+    be computed by summing the impact of the weighted requirements. This helps
+    identify most critical failure modes.
+    
+    By taking PACTs into account, failure modes that are not enough mitigated
+    can be highlighted. A {\it PACT} is \quote{\it anything that could be done
+    to reduce the likelihood of a failure mode and/or reduce their impact on
+    requirements}. These include preventive measures, detections, and
+    alleviations. {\it Preventive measures} include, for example, training,
+    standards, selection of high-quality parts. {\it Detections} discover
+    instances of the failure mode through analysis or testing prior to their
+    use or release. {\it Alleviations} reduce the severity of the failure mode
+    such as defensive programming. A PACT is decorated with a cost that might
+    be a measure of budget, schedule, physical resources (such as weight or
+    power), scarce resources (such as time from skilled experts), or a
+    combination of these.
   
-    A {\it PACT} is \quote{\it anything that could be done to reduce, the
-    likelihood of a failure mode and/or reduce their impact on requirements}.
-    These include preventive measures, detections, and alleviations: {\it
-    Preventive measures} includes, for example, training, standards, selection
-    of high-quality parts; {\it Detections} discover instances of the failure
-    mode through analysis or test prior to their use or release; and {\it
-    alleviations} reduce the severity of the failure mode such as defensive
-    programming. A PACT is decorated with a cost that might be a measure of
-    budget, schedule, physical resources (such as weight or power), scarce
-    resources (such as time from skilled experts) or a combination of these.
+    PACTs influence the likelihood of failure modes. The {\it effect matrix}
+    quantitatively specifies the effect of a PACT on a failure mode. It
+    contains a row for each PACTs and a column for each failure mode. Each
+    combination of PACT and failure mode needs to be assessed. The effects are
+    multiplicative, and the order in which they are applied is not relevant.
   
-    PACTs influence the failure modes likelihood. The effect matrix
-    quantitatively specifies the effect of a PACT on a failure mode. The effect
-    matrix contains a row for each PACTs and a column for each failure mode;
-    Each combination of PACT and failure mode needs to be assessed. The effects
-    are multiplicative, and the order in which they are applied is not relevant.
-  
-    The selection of the most appropriate PACTs is supported by a wide
-    selection of visualizations \cite[Fea06]. These appear to facilitate the
-    decision making process \cite[Cor02]. Efforts have also been provided to
-    support the semi-automated selection of best PACTs given a budget. A large
-    number of combinations requires techniques such as genetic algorithms
-    \cite[Cor02]. A dedicated technique helps to automatically identify the
-    key PACTs, even with important uncertainty \cite[Men03]. The techniques
-    rely on a learning framework to iteratively select the PACTs that mostly
-    reduces the uncertainty and increases the requirements satisfaction.
+    The selection of most appropriate PACTs is supported by a wide selection of
+    visualizations \cite[Fea06]. These appear to facilitate the decision making
+    process \cite[Cor02]. Efforts have also been provided to support
+    semi-automated selection of best PACTs given a budget. A large number of
+    combinations requires optimization techniques such as genetic algorithms
+    \cite[Cor02]. A dedicated technique helps to automatically identify the key
+    PACTs, even with important uncertainty \cite[Men03]. The techniques rely on
+    a learning framework to iteratively select the PACTs that mostly reduce
+    uncertainty and increase requirements satisfaction.
       
-    \noindent {\bf Goal-Risk Framework.} \cite[Asn06,Asn11] extends the Tropos
-    framework with risks and countermeasures. In the framework, a {\it risk} is
-    an event having an adverse impact on goals whereas a {\it countermeasure}
-    is a treatment that can be adopted to mitigate the effect of the risk. The
+    \noindent {\bf Goal-Risk Framework.} The work in \cite[Asn06,Asn11] extends
+    the Tropos framework with risks and countermeasures. A {\it risk} there is
+    an event having an adverse impact on goals. A {\it countermeasure} is a
+    treatment that can be adopted to mitigate the effect of a risk. The
     framework is structured in three layers: a {\it asset layer} (called {\it
     goal layer} in \cite[Asn06,Asn06b,Asn06c,Asn07,Asn07b,Asn07c]), an {\it
-    event layer} and a {\it treatment layer} with {\it impact} links between
-    events and goals, and {\it effect} links between treatments and events. An
-    event is annotated with a (risk) likelihood, and the (risk) severity is
-    modeled as a contribution (positive or negative) from an event to goal.
-    Events and treatments can be AND-/OR-refined and can contribute to other
-    goals, events, or treatments. Different strategies are available for
-    identifying possible treatments \cite[Asn06b]. The framework proposed in
-    \cite[Asn06] is extended to support treatments mitigating the impact of an
-    event \cite[Asn06], trust between the actors of the system
-    \cite[Asn07], and quantitative reasoning \cite[Asn07c].
+    event layer}, and a {\it treatment layer} capturing {\it impact} links
+    between events and goals, and {\it effect} links between treatments and
+    events. An event is annotated with a (risk) likelihood; a (risk) severity
+    is expressed as a contribution (positive or negative) from an event to
+    goal. Events and treatments can be AND-/OR-refined and can contribute to
+    other goals, events, or treatments. Different strategies are available for
+    identifying possible treatments \cite[Asn06b]. The work in \cite[Asn06] was
+    extended to support treatments mitigating the impact of an event
+    \cite[Asn06], trust among actors of the system \cite[Asn07], and
+    quantitative reasoning \cite[Asn07c].
       
-    Events and treatments are annotated with {\it SAT} and {\it DEN} attributes
-    that quantify the evidence that the event, respectively the treatment, is
-    satisfied or denied. A treatment is {\it effective} for an event if it
-    introduces a conflict between the {\it SAT} and the {\it DEN} values of the
-    event (e.g., the event is fully satisfied, and fully denied).
+    Events (respectively, treatments) are annotated with {\it SAT} and {\it
+    DEN} attributes that quantify the evidence that an event (respectively, the
+    treatment) is satisfied or denied. A treatment is {\it effective} for an
+    event if it introduces a conflict between the {\it SAT} and the {\it DEN}
+    values of the event (e.g., the event is fully satisfied and fully denied).
 
-    The analysis proposed in \cite[Asn06] aims at identifying the solutions
-    that satisfy the high-level goals desired values while minimizing the total
-    cost. A solution is a set of leaf goals and treatments. As an input, it
-    takes the desired satisfaction values (i.e., minimal SAT-value that is
-    accepted) and the acceptable risk values (i.e. maximal DEN-value that is
-    accepted) for the top goals. Using backward analysis \cite[Hor10,Seb04], it
-    identifies the leaf goals that are sufficient to satisfy the root goals. It
-    then assess, using forward analysis \cite[Gio05] (i.e. propagates the
-    estimated SAT/DEN-values of the events to the root goals), whether
-    treatments shall be introduced. The algorithm identifies the admissible
-    values for the events and then the possible countermeasures values that
-    guarantee these event values. Such analysis may also be performed on
-    quantitative inputs \cite[Asn07c].
+    The analysis proposed in \cite[Asn06] aims at identifying solutions that
+    satisfy the desired values for high-level goals while minimizing a total
+    cost. A solution is a set of leaf goals and treatments. As input, their
+    analysis takes the desired satisfaction values (i.e., minimal SAT-value
+    accepted) and the acceptable risk values (i.e., maximal DEN-value accepted)
+    for the top goals. Using backward analysis \cite[Hor10,Seb04], leaf goals
+    that are sufficient for satisfying the root goals are identified. Forward
+    analysis \cite[Gio05] propagates the estimated SAT/DEN-values of the events
+    to the root goals in order to assess whether treatments need be introduced.
+    The algorithm identifies admissible values for the events and then possible
+    countermeasures values that guarantee these event values. Such analysis can
+    also be performed on quantitative inputs \cite[Asn07c].
     
-    \cite[Sha12,Sha13] propose an extension to the Goal-Risk framework for
-    prioritizing risks with a Risk/Cost analysis. It is, however, unclear how
-    prioritization is achieved and how costs are obtained.
+    The work in \cite[Sha12,Sha13] proposes an extension to the Goal-Risk
+    framework for prioritizing risks with a Risk/Cost analysis. It is, however,
+    unclear how prioritization is achieved and how costs are obtained.
     
     \noindent {\bf KAOS-based Approaches.} In \cite[Sab11], KAOS goal models
     are extended with probabilities and propagation rules for technology
-    qualification. Experts assess the probability of satisfaction of leaf
-    obstacles. These probabilities are then propagated bottom-up up to the root
-    goals using propagation rules.
+    qualification. Domain experts there assess the probability of satisfaction
+    of leaf obstacles. These probabilities are then propagated bottom-up up to
+    the root goals using propagation rules.
         
-    \noindent {\bf RiskML.} \cite[Sie14] introduces a risk-oriented framework
-    for selecting Open Source Software (OSS) components. The approach
+    \noindent {\bf RiskML.} A risk-oriented framework is introduced in
+    \cite[Sie14] for selecting Open Source Software components. The approach
     introduces a language, called {\it RiskML}, to relate risks to goals. A
     {\it risk} is defined as \quote{{\it a composed concept modeling a lack of
     knowledge about some happening and what could be the negative
-    consequences}} \cite[Sie14]. Risks are not modeled as a first-class entity
+    consequences}} \cite[Sie14]. Risks are not captured as first-class entity
     but as a triplet of situations (in which the events occurs), events (that
     prevent the satisfaction of goals) and goals (that are not satisfied). A
     {\it situation} is a state of the world that exposes or prevents events,
     and increases or decreases their probability of occurrence. {\it
-    Indicators} quantifies the occurrence of situations; these need to be
-    estimated by experts. A propagation algorithm, inspired by \cite[Gio03],
-    computes scores representing the exposure of the goals to the identified
-    risks, using the estimated indicators. These scores are a relative measure
-    for comparing alternatives but are not meant to be interpreted as a
+    Indicators} quantify the occurrence of situations. These need to be
+    estimated by experts. A propagation algorithm, inspired from \cite[Gio03],
+    computes scores representing the exposure of goals to the identified risks
+    using the estimated indicators. These scores provide a relative measure for
+    comparing alternatives; they are not meant to be interpreted as a
     probability or degree of belief. Integrating RiskML and i* models enables
-    the degree of belief of higher-level goals to be be computed from the
+    the degree of belief of higher-level goals to be determined from the
     estimated indicators \cite[Cos15].
     
-    \noindent {\bf Comparing with our approach.} These approaches, like our,
-    integrates both requirements and their related risks. However, some
-    differences can be observed:
+    \noindent {\bf Comparing risk-driven RE approaches with our approach.} Like
+    ours, hte preceding techniques integrate both requirements and their
+    related risks. The following differences can however be noted:
     
     \startitemize
       
-      \item Unlike \cite[Fea03,Asn11,Sab11,Sha12,Sha13,Sie14], our
-      approach relies on a precise semantic in terms of behavior. This enables
-      the estimates to be grounded on real-world phenomena. In general, these
-      numbers are often very subjective, with no or little physical
-      interpretation in the application domain, e.g., in \cite[Kai02]. In
-      \cite[Sab11], the lack of precise semantics in terms of behavior limits
-      precise reasoning and questions the correctness of propagations. For
+      \item Unlike \cite[Fea03,Asn11,Sab11,Sha12,Sha13,Sie14], our approach
+      relies on a precise semantics in terms of behavior. This enables
+      estimates to be grounded on real-world phenomena. In general, these
+      numbers turn to be subjective, with no or little physical interpretation
+      in the application domain, see \cite[Kai02]. In \cite[Sab11], the lack of
+      precise semantics in terms of behavior limits the degree of precise
+      reasoning and even questions the correctness of propagations. For
       example, the AND-propagation rule does not apply to case-driven or
       non-minimal refinements; the OR-propagation rule for obstacles can be
       made simpler thanks to obstacle disjointness.
       
-      \item Our framework takes a probabilistic approach;
-      \cite[Asn11,Sha12,Sha13] adopts a different approach where goals are
-      estimated with two values indicating the satisfaction ($SAT$) and their
+      \item Our framework follows a probabilistic approach; In
+      \cite[Asn11,Sha12,Sha13] a different approach is taken where goals are
+      estimated with two values indicating satisfaction ($SAT$) and 
       non-satisfaction ($DEN$).
     
-      \item Unlike \cite[Fea03,Asn11,Sab11,Sha12,Sha13,Sie14], our
-      probabilistic goals are supported in terms of {\it computed} vs. {\it
-      required} satisfaction rates. In \cite[Sab11], the notion of required
-      satisfaction rate does not appear relevant to the objectives of this
-      approach; obstacle prioritization is therefore different.
+      \item Unlike \cite[Fea03,Asn11,Sab11,Sha12,Sha13,Sie14], we support
+      probabilistic goals and make a distinction between {\it computed} and
+      {\it required} satisfaction rates. In \cite[Sab11], the notion of
+      required satisfaction rate does not appear relevant to the objectives of
+      this approach; obstacle prioritization is therefore different.
       
       \item Unlike \cite[Fea03], the refinement structure of goals and
       obstacles convey a structural meaning enabling the propagation of
@@ -614,37 +599,37 @@
     
   \stopsection
     
-  \startsection[reference=sec:comparing_um,title={Requirements Uncertainty Managment}]
+  \startsection[reference=sec:comparing_um,title={Requirements Uncertainty Handling}]
     
-    Work on handling uncertainty in RE has been mainly devoted to physical uncertainty
-    rather than knowledge uncertainty (as defined in
+    Work on handling uncertainty in RE has been mainly devoted to physical
+    uncertainty rather than knowledge uncertainty (as defined in
     \in{Chapter}[chap:knowledge-uncertainty]). For a detailed discussion and
-    state-of-the-art related to the uncertainty in the specific context of
-    self-adaptive systems, we refer the reader to \cite[Esf13].
+    state of the art related to uncertainty in the specific context of
+    self-adaptive systems, see \cite[Esf13].
     
     \noindent {\bf Fault Tree Analysis.} Knowledge uncertainty is supported in
     Fault Tree Analysis through probabilistic distributions on leaf events and
     Monte-Carlo simulation for propagation to root causes \cite[Rui15].
     
-    \noindent {\bf DDP.} In \cite[Men03], a dedicated technique helps to
-    automatically identify the most important countermeasures in the presence
-    of uncertainty. The approach iteratively selects the countermeasures to
-    reduce the uncertainty and increases the requirements satisfaction.
+    \noindent {\bf DDP.} In \cite[Men03], a dedicated technique helps in
+    automatically identifying the most important countermeasures in the
+    presence of uncertainty. The approach iteratively selects countermeasures
+    to reduce uncertainty and increase requirements satisfaction.
     
-    \noindent {\bf KAOS-based approaches.} Related work on handling physical
+    \noindent {\bf KAOS-based approaches.} Work on handling physical
     uncertainty through obstacle analysis was discussed in the previous
-    section. The approach \cite[Let04] is extended in \cite[Hea11] for
-    selecting best system design alternatives in presence of uncertainty. The
-    quality variables are random variables whose value is modeled as a
-    probability distribution. The top probability distribution is obtained
+    section. The approach in \cite[Let04] is extended in \cite[Hea11] for
+    selecting best system design alternatives in presence of uncertainty. 
+    Quality variables there are random variables whose value is modeled as a
+    probability distribution. A top probability distribution is obtained
     through repeated single-value propagation. The approach is supported by a
     tool \cite[Bus17]. Based on a framework for statistical decision making,
     the technique in \cite[Let14] evaluates the gain of perfect information
     and helps identify alternatives maximizing benefits while reducing project
     risks.
     
-    \cite[Sab11] extends the KAOS goal/obstacle models with a probabilistic
-    layer for technology qualification (see previous
+    The work in \cite[Sab11] extends  KAOS goal/obstacle models with a probabilistic
+    layer for technology qualification (as introduced in
     \in{Section}[sec:comparing_ra]). The probability of satisfaction for leaf
     obstacles is estimated by a triangular distribution. The distribution for
     the root goal is then computed by Monte-Carlo simulation and a single-value
@@ -653,95 +638,90 @@
     \noindent {\bf Fuzzy-based approaches.} Fuzzy goals may be introduced for
     coping with satisfaction uncertainty. The available approaches are more
     oriented towards self-adaption at system runtime. The concern there is to
-    reason in terms of proximity of goals being fully satisfied\emdash{}rather
+    reason in terms of proximity of goals to being fully satisfied\emdash{}rather
     than in terms of probabilities of satisfaction.
         
-    {\it RELAX} is a structured natural language including operators to
-    explicit capture environmental uncertainty \cite[Whi09,Whi10]. Operators,
+    {\it RELAX} is a structured natural language including operators for
+    explicit capturing environmental uncertainty \cite[Whi09,Whi10]. Operators,
     such as {\ss\it MAY}, {\ss\it AS EARLY AS POSSIBLE}, or {\ss\it AS MANY AS
-    POSSIBLE}, constraints how the goal can be relaxed at runtime. The semantic
+    POSSIBLE}, constraints how a goal can be relaxed at runtime. The semantic
     of RELAX is defined in terms of fuzzy logic. A variation of threat
-    modeling, based on obstacles, identify the sources of uncertainty in the
-    satisfaction of the goals \cite[Che09c]. The countermeasures either changes
-    the goal model either RELAXes the goal specifications. In
-    \cite[Ram12,Fre14], RELAXed goals are automatically learned using an
-    executable specification of the system. The approach can be summarised as
-    follows: {\it (a)} A search process generates semi-randomly RELAXed goal
-    models; {\it (b)} the RELAXed goals are scored by running the executable
-    specification and monitoring the satisfaction of the goals; {\it (c)} if
-    enough iterations have been performed, the process stops and outputs a
-    RELAXed model, otherwise, new RELAXed models are generated and {\it (b)} is
-    executed again. In \cite[Ram12b], claims, introduced to document and
-    support decisions \cite[Wel09,Wel10,Wel11], are RELAXed to improve the
-    number of required adaptations.
+    modeling, based on obstacles, identifying the sources of uncertainty in the
+    satisfaction of goals \cite[Che09c]. Countermeasures there either change
+    the goal model or RELAX goal specifications. In \cite[Ram12,Fre14], RELAXed
+    goals are automatically learned using an executable specification of the
+    system. The approach can be summarised as follows: {\it (a)} a search
+    process semi-randomly generates RELAXed goal models; {\it (b)} the RELAXed
+    goals are scored by running the executable specification and monitoring the
+    satisfaction of the goals; {\it (c)} if enough iterations have been
+    performed, the process stops and outputs a RELAXed model; otherwise, new
+    RELAXed models are generated and {\it (b)} is executed again. In
+    \cite[Wel09,Wel10,Wel11], claims are introduced to document and support
+    decisions and are RELAXed in \cite[Ram12b] to improve the number of
+    required adaptations.
     
-    \cite[Bar10] introduces {\it fuzzy goals} to provide more flexibility
-    necessary in systems where goals might not be measured or whose
-    specification is not entirely known. Crisp goals are goals that must be
-    fully satisfied, in oppositions to fuzzy goals where fuzzy membership
-    function quantifies the degree of goal satisfaction. A fuzzy logic-based
-    approach combines both crisp and fuzzy goals \cite[Cha16,Cha16b]. A
-    bottom-up propagation algorithm computes the degree of satisfaction for
-    both types of goals. The degree of satisfaction of a fuzzy goal depends on
-    the degree of satisfaction of the children in the refinements, and on the
-    degree of satisfaction of the goals that positively and negatively
-    contribute to that goal. The algorithm might be parallelized to enable fast
-    computation on large graphs \cite[Cha16b].
+    \cite[Bar10] introduces {\it fuzzy goals} to provide more flexibility for
+    systems where goals might not be measured or whose specification is not
+    entirely known. Crisp goals are goals that must be fully satisfied, in
+    constrast with to fuzzy goals where fuzzy membership functions quantify the
+    degree of goal satisfaction. A fuzzy logic-based approach integrates both
+    crisp and fuzzy goals \cite[Cha16,Cha16b]. A bottom-up propagation
+    algorithm computes the degree of satisfaction for both types of goals. The
+    degree of satisfaction of a fuzzy goal depends on the degree of
+    satisfaction of the children in the refinements, together with the degree
+    of satisfaction of the goals that positively or negatively contribute to
+    that goal. The algorithm might be parallelized to enable fast computation
+    on large graphs \cite[Cha16b].
         % How values for leaf goals is obtained is not actually discussed...
       
     \noindent {\bf Dempster-Shafer theory-based approach.} The theory of belief
-    function (or Dempster-Shafer) is an other approach to reason about
+    functions (or Dempster-Shafer) is another approach for reasoning about
     uncertainty. In this approach, beliefs about possibilities (element of the
-    domain of interest) are bounded by two values: belief and plausibility.
-    \cite[Liu05] proposes to evaluate risks using Dempster-Shafer theory. This
-    theory allows experts to independently assess the risk likelihoods and how
-    risks combine. Experts can also assess their uncertainty about the
+    domain of interest) are bounded by two values: belief and plausibility. The work in
+    \cite[Liu05] proposes to evaluate risks using Dempster-Shafer theory. It
+     allows experts to independently assess  risk likelihoods and how
+    risks combine. Experts can also assess their uncertainty about 
     estimated values. The experts' opinions are then combined to provide a
     unified assessment of the risks with their uncertainty margins.
     
     \noindent {\bf Model uncertainty.} Other approaches focus on
     \quote{design-time} uncertainties which enable reasoning about the presence
-    or absence of model elements. In \cite[Hor14], the i* goal models
-    presented in \cite[Hor16] are integrated with the MAVO framework
-    \cite[Sal12] to highlight the uncertainties in the model structure, i.e.,
-    in terms of absence and presence of model elements, that must be resolved
-    for meeting the desired goal satisfaction levels. In \cite[Fra06], a
-    framework for metrics on i* is introduced to reason quantitatively about
-    the properties of an i* model. An other approach \cite[Esp13] defines
-    metrics over KAOS models to measure their complexity and completeness.
+    or absence of model elements. In \cite[Hor14], the i* goal models presented
+    in \cite[Hor16] are integrated with the MAVO framework \cite[Sal12] to
+    highlight uncertainties in the model structure in terms of absence and
+    presence of model elements, to be resolved for meeting the desired goal
+    satisfaction levels. In \cite[Fra06], metrics on i* models are introduced
+    to quantitatively reason about properties of an i* model. Another approach
+    \cite[Esp13] defines metrics over KAOS models to measure their complexity
+    and completeness.
     
-    \noindent {\bf Comparing our approach.} Our approach differs from the
-    presented approaches in various aspects:
+    \noindent {\bf Comparing requirement uncertainty handling with our
+    approach.} Our approach differs from the preceding approaches in the
+    following respects.
     
     \startitemize
     
-      \item Contrary to our approach, none of the presented approaches supports
-      assessment for multiple experts. These approaches could benefit from
-      integrating multiple sources of assessment to reduce uncertainty margins.
+      \item None of the presented approaches support assessment by multiple
+      experts. The reviewed approaches could benefit from integrating multiple
+      sources of assessment to reduce uncertainty margins.
       
-      \item Unlike \cite[Whi09,Che09c,Whi10,Bar10,Cha16,Cha16b], our
-      approach is not based on fuzzy logic. Our approach might be applied there
-      to elicit membership functions and regulate the fuzziness of goal
+      \item Unlike \cite[Whi09,Che09c,Whi10,Bar10,Cha16,Cha16b], our approach
+      is not based on fuzzy logic. Our approach might be applied there to
+      elicit membership functions and regulate the fuzziness of goal
       satisfaction.
     
       \item The approach proposed in \cite[Liu05], based on Dempster-Shafer
       theory, allows experts to disagree on both the estimated probabilities
-      and the risk model structure, which is not supported in our framework.
+      and the risk model structure; this is not supported in our framework.
       However, the Dempster-Shafer theory is less known by risk analysis
-      experts; this might prevent the approach to be applied in a real,
-      industrial setting.
+      experts; this might prevent the approach for being applied in real,
+      industrial settings.
     
-    \stopitemize
-    
-    \noindent Also, regarding the previous comparison, we might note that
-    
-    \startitemize
-    
-      \item Regarding FTA, as seen in \in{Section}[sec:comparing_ra], our
+      \item With respect to FTA, as seen in \in{Section}[sec:comparing_ra], our
       approach exploits a goal refinement graph to assess the severity of risk
-      consequences. However, the approach for computing satisfaction rates of
-      high-level goals is very similar to the BDD-based propagation techniques
-      for computing the probability of a root event \cite[Bed01].
+      consequences. The approach for computing satisfaction rates of high-level
+      goals appears somewhat similar to the BDD-based propagation techniques
+      used for computing the probability of a root event in \cite[Bed01].
     
       \item Unlike \cite[Sab11], our approach is not limited to one triangular
       distribution per obstacle, and we support multiple experts. Our
@@ -749,8 +729,8 @@
       propagation through the obstacle/goal model.
 
       \item As pointed in the previous section, the technique proposed in
-      \cite[Let04,Hea11] appears more finer-grained at the cost of eliciting
-      domain-specific propagation variables and equations.
+      \cite[Let04,Hea11] appears more finer-grained at the cost of needing to
+      elicit domain-specific propagation variables and equations.
         
       \item The approach in \cite[Let14] might be adapted for selecting most
       critical obstacles.
@@ -759,41 +739,43 @@
   
   \stopsection
   
-  \startsection[reference=sec:comparing_cr,title={Models and Techniques for Controlling Risks}]
+  \startsection
+    [reference=sec:comparing_cr,
+     title={Approaches for Controlling Requirement-Related Risks}]
   
-    This section discusses the relevant work related to controlling risks and
-    more precisely to our technique presented in
+    This section discusses relevant work related to risks control and,
+    specifically related to techniques presented in
     \in{Chapter}[chap:controlling_obstacle].
     
-    \noindent {\bf Generating Countermeasures.} \cite[Sut98b] proposes
-    scenario-based heuristics to generate risks together with generic
-    requirements that could mitigate these.
+    \noindent {\bf Exploring countermeasures.} The work in \cite[Sut98b]
+    proposes scenario-based heuristics for identifying risks together with
+    generic requirements that could mitigate these.
 
-    As a recall from Background Chapter, in the context of KAOS, goal-oriented
-    formal techniques are available, such as regression calculus \cite[Lam00]
-    or a learning-based approach \cite[Alr16].
+    In the context of KAOS, goal-oriented formal techniques are available such
+    as a regression calculus \cite[Lam00] or a learning-based approach
+    \cite[Alr16], see \in{Chapter}[chap-background].
     
-    In the context of Tropos, \cite[Bry06b,Bry06c] extends the framework Secure
-    Tropos\emdash{}a variant of Tropos with specific constructs dedicated to
-    the modeling of security-related concepts \cite[Gio05b]\emdash{}to
+    The work in \cite[Bry06b,Bry06c] extends Secure
+    Tropos, a Tropos variant with specific constructs dedicated to
+    modeling of security-related concepts \cite[Gio05b], to
     automatically generate alternative models. The problem of generating
-    alternatives is formulated as a planning problem; Actions correspond to the
-    application of model primitives, such as adding or removing links whereas
-    the Planning Objective is to satisfy predicates encoding \quote{correct}
+    alternatives is formulated as a planning problem. Actions correspond to the
+    application of model primitives, such as adding or removing links, whereas
+    the planning objective is to satisfy predicates encoding \quote{correct}
     models. The planning actions do not introduce new intentional elements such
     as goals or actors. A planner then produces a plan that, once applied to
     the initial model, corresponds to an alternative design satisfying the
-    initial goals. Alternative designs might then be evaluated to identify the
+    initial goals. Alternative designs may then be evaluated to identify 
     most promising ones \cite[Bry07]. Alternative configurations may be
-    generated at runtime, when a reconfiguration is required \cite[Bry06].
-    Alternative designs that minimize the risk of some specified high-level
+    generated at runtime when a reconfiguration is required \cite[Bry06].
+    Alternative designs that minimize the risk related to some specified high-level
     goals may be automatically generated by combining planning
     \cite[Bry06b,Bry06c] with the quantitative Goal-Risk Framework
     \cite[Asn06d].
   
-    \noindent {\bf Integrating Countermeasures.} We are not aware of any work
-    on the systematic integration of countermeasures in a requirement model
-    with a clear, precise semantics. However, the relevance and importance of
+    \noindent {\bf Model revision with countermeasures.} We are not aware of
+    any work on the systematic integration of countermeasures in a requirement
+    model based on a clear, precise semantics. The relevance and importance of
     default-based reasoning have been recognized in the context of elaborating
     requirements or specifications.
 
@@ -804,11 +786,11 @@
     their valid application. The tracing of exceptional requirements is not
     discussed there.
     
-    \cite[Bro06] proposes an extension to the KAOS framework to specify
-    changes in the goal's formal specifications based on A-LTL \cite[Zha06].
-    A-LTL is an adaptation-based extension to linear temporal logic that
-    introduces an extra {\it adapt} operator. Using the operator, the user can
-    specify changes in specification over time.
+    The work in \cite[Bro06] proposes an extension to the KAOS framework to
+    specify changes in the goal's formal specifications based on A-LTL
+    \cite[Zha06]. A-LTL is an adaptation-based extension to linear temporal
+    logic that introduces an extra {\it adapt} operator. Using the latter,
+    the user can specify changes in specification over time.
   
     In \cite[Rya93], a specification is structured through axioms and {\it
     Overrides} relations. Such relations are derived from the structural
@@ -819,37 +801,36 @@
     \cite[Sch93], default specifications are introduced together with
     exceptions to increase the completeness of algebraic specifications.
     
-    \noindent {\bf Comparing our approach.} Our approach mainly differs from
-    those previous efforts in the following directions.
+    \noindent {\bf Comparing risk control approach with our approach.} Our
+    approach from those previous efforts in the following directions.
     
     \startitemize
 
-      \item Unlike \cite[Rya93,Sch93,Zow97,Bro06], our techniques operate
-      at requirements level and benefit from the refinement structure of a goal
-      model. This structure helps in building a model where exception handling
-      is integrated and in propagating required changes throughout the model.
+      \item Unlike \cite[Rya93,Sch93,Zow97,Bro06], our techniques operate at
+      requirements level and benefit from the refinement structure of a goal
+      model. This structure helps building a model where exception handling is
+      integrated and required changes are propagated throughout the model.
   
-      \item Unlike \cite[Rya93,Sch93,Zow97,Bro06,Asn11], new requirements
-      for a more robust system are incrementally integrated through obstacle
-      analysis. The model updates are traceable back to the identified
-      obstructed goals and their obstacles.
+      \item Unlike \cite[Rya93,Sch93,Zow97,Bro06,Asn11], new requirements for a
+      more robust system are incrementally integrated. Model updates are
+      traceable back to the obstructed goals and their obstacles.
 
       \item The {\it But} relation introduced in \cite[Sch93] somewhat
-      corresponds to our {\it Except} relation. Also, our {\it Replace}, {\it
+      corresponds to our {\it Except} relation. Our {\it Replace}, {\it
       RelaxedTo} and {\it Provided} annotations could be encoded into the
       specification using the {\it adapt} A-LTL operator as in \cite[Bro06].
       However, this would clutter the specification as exceptional cases would
-      be mixed in the ideal one.
+      be mixed with the ideal one.
   
     \stopitemize
   
     At the programming level, aspects may be used for separating exception
-    handling from normal code \cite[Lip00]. At modeling level, \cite[Ali12]
-    convincingly shows how aspects can be used for separating exceptional
-    behaviors from normal ones. As an alternative to the approach advocated in
-    this thesis, robustness aspects might be incorporated in a goal model by
-    use of constructs similar to the ones presented in \cite[Gil09, Mus07,
-    Mor13]. To the best of our knowledge, we are not aware of aspect-oriented
+    handling from normal code \cite[Lip00]. At modeling level, the work in
+    \cite[Ali12] convincingly shows how aspects can be used for separating
+    exceptional behaviors from normal ones. As an alternative to the approach
+    advocated in this thesis, robustness aspects might be incorporated in a
+    goal model by use of constructs similar to the ones presented in
+    \cite[Gil09, Mus07, Mor13]. We are not aware of aspect-oriented
     requirements engineering models or techniques that focus on exceptions
     handling as proposed in \in{Chapter}[chap:controlling_obstacle].
   
@@ -857,60 +838,61 @@
   
   \startsection[reference=sec:comparing_as,title={Requirements-Driven Runtime Adaptation}]
   
-    The literature on runtime adaptation of software system is vast and covers
-    a diversity of concerns. We refer the reader to
-    \cite[Che09b,Saw10,DeL13,Yan14,Jur15] for an overview of the
-    state-of-the-art techniques and approaches. We discuss the approaches
-    closely related to our risk-driven runtime adaptation techniques presented
+    The literature on runtime adaptation of software systems is vast and covers
+    a wide range of concerns. See
+    \cite[Che09b,Saw10,DeL13,Yan14,Jur15] for an overview of 
+    state-of-the-art techniques and approaches. We here discuss  approaches
+    closely related to the risk-driven runtime adaptation techniques presented
     in \in{Chapter}[runtime].
   
-    \noindent {\bf Early (KAOS-Based) Monitoring Approaches.} Upon
-    \cite[Fic95], \cite[Fea98] proposes an approach that builds on KAOS to
-    monitor the satisfaction of the requirements at runtime. Monitored
-    parameters, identified at RE-time, are monitored at runtime; when a
-    violation is observed, a reconciliation tactic, identified at RE-time, is
-    chosen and deployed.
+    \noindent {\bf Early (KAOS-based) monitoring approaches.} Following
+    \cite[Fic95], the work in \cite[Fea98] proposes an approach that builds on
+    KAOS to monitor the satisfaction of requirements at runtime. System
+    parameters identified at RE-time from goal specification are monitored at
+    runtime; when a violation is observed, a reconciliation tactic, identified
+    at RE-time, is chosen and deployed.
 
-    \noindent {\sc\bf ReqMon.} \cite[Rob03,Rob05,Rob06] builds on
-    \cite[Fic95,Fea98] to monitor requirements and obstacles. Based on a
-    goal/obstacle, monitor specifications are extracted from the obstacles
-    assigned to monitoring agents. These specifications are then turned
-    automatically into executable monitors within the {\sc ReqMon}
-    infrastructure; Specification patterns drives the transformation. The
-    approach aimed at raising alerts. The approach was extended so that goals
-    can be formalized using UCM Object Constraint Language (OCL) \cite[Rob07].
+    \noindent {\bf{\sc\bf ReqMon} monitoring.} The work in
+    \cite[Rob03,Rob05,Rob06] builds on \cite[Fic95,Fea98] to monitor
+    requirements and obstacles. Based on a goal/obstacle model, monitor
+    specifications are extracted from obstacles assigned to monitoring agents.
+    These specifications are turned automatically into executable monitors
+    within the {\sc ReqMon} infrastructure; specification patterns drive the
+    transformation. The approach is aimed at raising alerts. The approach was
+    extended to support goals formalized in UCM Object Constraint Language
+    (OCL) \cite[Rob07].
   
-    \noindent {\bf Adaptive goals.} \cite[Bar10b] extends KAOS with adaptive
-    goals. Adaptive goals prescribe a set of possible adaptations that can be
-    performed when goals are violated. Adaptations include adding and removing
-    goals, modifying goal specifications, etc.
+    \noindent {\bf Adaptive goals.} The work in \cite[Bar10b] extends KAOS with
+    adaptive goals. The latter prescribe a set of possible adaptations that can
+    be performed when goals are violated. Adaptations include adding and
+    removing goals, modifying goal specifications, etc.
     
-    \noindent {\bf Context-based Approaches.} \cite[Ali09,Ali10] details a
-    tool-supported approach where goals, refinements, agent assignment and
-    contributions to soft goals can be decorated with context conditions; the
-    approach introduce {\it Context Goal Models}. These context conditions are
-    Boolean AND/OR formulas that are then monitored, at runtime, to switch to
-    more appropriate alternative refinements. In \cite[Ali11], a context is
-    both a target (desirable) state to be reached by a set of requirements and
-    a current state that enables requirements (like a precondition) or activate
-    requirements (like a trigger condition). Based on this notion of context,
-    \cite[Ali11] identifies 4 type of assumptions: {\it (a)} {\it Activation
-    Assumptions} captures that a context requires a set of specific
-    requirements; {\it (b)} {\it Adaptability Assumptions} captures that a context is
-    needed by a requirement; {\it (c)} {\it Refinement Assumptions} captures that
-    subgoals satisfy their parent goal; {\it (d)} {\it Requirements Achievement
-    Assumptions} captures that a requirement is satisfied if a target variant
-    is achieved. These assumptions are represented as a Boolean CNF formula of
-    atomic propositions that are monitored at runtime. At runtime, the system
-    decides what variant of the system shall be selected and deployed. Two
-    metrics drive the decision process: {\it Assumption Validity} that captures
-    the statistical evidence of a variant to satisfy the root goal; and {\it
-    Assumption Criticality} that captures the extend to which a context
-    condition prevents a variant to satisfy the root goal.
+    \noindent {\bf Context-based approaches.} The work in \cite[Ali09,Ali10]
+    details a tool-supported approach where goals, refinements, agent
+    assignments and contributions to soft goals can be decorated with context
+    conditions. Context conditions there are Boolean AND/OR formulas that are
+    then monitored at runtime to switch to more appropriate alternative
+    refinements. In \cite[Ali11], a context is both a target state to be
+    reached by a set of requirements and a current state that enables
+    requirements (like a precondition) or activate requirements (like a trigger
+    condition). Based on this notion of context, the approach in \cite[Ali11]
+    identifies 4 type of assumptions: {\it (a)} {\it activation assumptions}
+    capture that a context requires a set of specific requirements; {\it (b)}
+    {\it adaptability assumptions} capture that a context is needed by a
+    requirement; {\it (c)} {\it refinement assumptions} capture that subgoals
+    satisfy their parent goal; {\it (d)} {\it requirements achievement
+    Assumptions} capture that a requirement is satisfied if a target variant is
+    achieved. These assumptions are represented as a Boolean formula where
+    atomic propositions are monitored at runtime. The system there decides what
+    variant should be selected and deployed. Two metrics drive the decision
+    process: {\it assumption validity} that captures the statistical evidence
+    of a variant to satisfy the root goal; and {\it assumption criticality}
+    that captures the extend to which a context condition prevents a variant
+    from satisfying the root goal.
   
-    \cite[Gui15,Gui17] extends {\it Contextual Goal Models} with {\it
-    Pragmatic Goals}. A {\it pragmatic goal} captures variations in the goal
-    interpretation. It focuses on the variation of the quality variables such
+    The work in \cite[Gui15,Gui17] extends \cite[Ali10]. It
+    introduces {\it pragmatic goals} capturing variations in goal
+    interpretations. It focuses on variations of quality variables such
     as time, errors, delays, etc. For example, consider the requirement
     \quote{\it Ambulances shall be on scene in a timely fashion}; the
     interpretation of \quote{\it timely fashion} would vary from one context (a
@@ -924,245 +906,225 @@
     \cite[Gui15,Gui17]. If multiple plans are available, the best plan
     regarding the quality variable is selected.
   
-    \cite[Men16] combines {\it Runtime Goal Models} \cite[Dal13] and {\it
-    Contextual Goal Models} \cite[Ali09,Ali10]. Based on the goal refinement
-    annotations, a Discrete Time Markov Chain (DTMC) is build from the leaf
-    goals to the root goals. The DTMC for a leaf goal is a simple DTMC with a
-    success and a failure probability. The DTMC for a non-leaf goal is obtained
-    by combining the DTMC of the subgoals according to the annotation (parallel
-    combination, sequential combinations, number of retries, etc.) Once the
-    DTMC for the root goal is obtained, a probabilistic model checker provides
-    an estimate of the probability to satisfy the root goal; the model checker
-    computes the probability to satisfy $\ltlF(\wedge_i G_i)$ where $G_i$ are
-    the leaf goals. A parametric model checker computes a parametric expression
-    representing the probability to satisfy the root goal to enable computation
-    at runtime; the parameters are the values of the success and failure
-    probabilities for the leaf goals. The impact of context on the failure
-    probabilities is briefly discussed in \cite[Men14].
+    Yet another work \cite[Men16] combines \cite[Dal13] and \cite[Ali10]. Based
+    on goal refinement annotations, a Discrete Time Markov Chain (DTMC) is
+    built from the leaf goals to the root goals. The DTMC for a leaf goal is a
+    simple DTMC with success and failure probabilities. The DTMC for a non-leaf
+    goal is obtained by combining the DTMC of the subgoals according to the
+    annotation (parallel combination, sequential combinations, number of
+    retries, etc.) Once the DTMC for the root goal is obtained, a probabilistic
+    model checker provides an estimate of the probability of satisfying the
+    root goal; at runtime the model checker computes the probability to satisfy
+    $\ltlF(\wedge_i G_i)$ where $G_i$ are leaf goals. To enable computation, a
+    parametric model checker computes a parametric expression representing the
+    probability to satisfy the root goal ; the parameters are the values of the
+    success and failure probabilities for the leaf goals. The impact of context
+    on the failure probabilities is briefly discussed in \cite[Men14].
   
-    \noindent {\bf Product-line based approach.} \cite[Epi09] proposes an
-    approach to learn transition probabilities in a Discrete Time Markov Chain
-    (DTMC). At runtime, transitions between the nodes of the DTMC are
-    observed, and probabilities for these transitions are computed. These
-    probabilities then feed the Bayesian inference to learn new, revised,
-    probabilities taking into account both the previously observed
-    probabilities and the last observed one. A probabilistic model checker than
-    then provides whether the reliability and performance are satisfied.
-    \cite[Ghe09] builds upon to detect and predict requirements failures.
+    \noindent {\bf DTMC-based approaches.} The approach in \cite[Epi09] learns
+    transition probabilities in a Discrete Time Markov Chain (DTMC). At
+    runtime, transitions between the nodes of the DTMC are observed, and
+    probabilities for these transitions are computed. These probabilities feed
+    a Bayesian inference to learn revised probabilities taking into account
+    both the previously observed probabilities and the last observed one. A
+    probabilistic model checker determines whether the reliability and
+    performance are satisfied. \cite[Ghe09] builds upon \cite[Epi09] to detect
+    and predict requirements failures.
     
-    In \cite[Ghe13], the software is modeled as a dynamic product line (DSPL),
-    and the different configurations define the possible space for the
-    adaptations. From the DSPL models, a parametric Markov Chain is generated.
-    Efficient runtime verification technique then drives the selection of the
-    most appropriate configuration at system runtime \cite[Fil16].
+    In \cite[Ghe13], the software is modeled as a dynamic product line (DSPL);
+    different configurations define the possible space for adaptations. From
+    DSPL models, a parametric Markov Chain is generated. An efficient runtime
+    verification technique drives the selection of most appropriate
+    configurations at system runtime \cite[Fil16].
     
-    In \cite[Fil11,Fil14,Fil15b], a control-theoretical approach automatically
-    generates controllers for self-adaptive systems. The user provides a
-    running software, a parameter that impacts some non-functional
-    requirements. The approach first learns a linear-model binding the
+    In \cite[Fil11,Fil14,Fil15b], a control-theoretical approach is taken to automatically
+    generate controllers for self-adaptive systems. The user provides a
+    running software and a parameter that impacts some non-functional
+    requirements. The approach first learns a linear model binding the
     parameter to the non-functional requirements; a controller is then
     generated to tune the parameter according to the non-functional
     requirement. Multiple non-functional requirements and multiple parameters
     may be integrated in the approach \cite[Fil15c].
     
-    \cite[Fil15] discusses an approach for filtering the monitored
-    probabilities to reduce the noise of the observations while maintaining an
+    An approach for filtering the monitored probabilities is described in
+    \cite[Fil15] to reduce the noise of observations while maintaining an
     accurate tracking for the real probabilities.
     
-    \noindent {\bf Awareness and Evolution Requirements.} \cite[Sou11b]
-    introduces {\it Awareness Requirements} ({\it AwReq}) to reason about
-    requirement satisfaction. {\it Awareness Requirements} are
-    meta-requirements about the system requirements that are monitored at
-    runtime, using {\it ReqMon}. {\it Evolution Requirements} ({\it EvoReq})
-    enables reasoning about the evolution of requirements \cite[Sou12]. {\it
-    Evolution Requirements} are meta-requirements contraining how system
-    requirements shall be change when required. {\it AwReq} and {\it EvoReq}
-    complements each other, in a framework called {\it Zanshin}, to specify a
-    feedback loop for self-adaptive systems \cite[Sou13]. {\it AwReq} indicates
-    the situations in which an adaptation is required whereas {\it EvoReq}
-    prescribes what adaptation shall be deployed. How awareness requirements
-    interacts in a control-theoritic approach for self-adaptive systems is
-    discussed in \cite[Sou11].
+    \noindent {\bf Awareness and Evolution Requirements.} {\it Awareness
+    Requirements} ({\it AwReq}) \cite[Sou11b] reason about requirement
+    satisfaction. These are meta-requirements about the system requirements
+    that are monitored at runtime using {\it ReqMon} \cite[Rob06]. {\it
+    Evolution Requirements} ({\it EvoReq}) enable reasoning about the evolution
+    of requirements \cite[Sou12]. They are meta-requirements contraining how
+    system requirements should change when required. {\it AwReq} and {\it
+    EvoReq} complement each other to specify a feedback loop for self-adaptive
+    systems \cite[Sou13]. {\it AwReq} indicate situations in which an
+    adaptation is required whereas {\it EvoReq} prescribe what adaptation
+    should be deployed. How awareness requirements interact in a
+    control-theoretic approach for self-adaptive systems is discussed in
+    \cite[Sou11].
     
-    \noindent {\bf Tropos for Adaptive Systems.} \cite[Mor08,Mor17b] extends
-    the Tropos framework specifically for automated systems. It proposes three
-    dimensions: a goal dimension, an environment dimension, and a failure
-    dimension. In the framework, goals are decorated with conditions formally
-    specifying the goal; conditions includes {\it creation condition}, {\it
-    pre-conditions}, {\it target conditions}, etc. The conditions are expressed
-    in a non-temporal propositional logic. The failure model captures the
-    exceptional situations and possible mitigations. A failure model contains
-    {\it Failure} that models states where goals are not satisfied; {\it
-    Errors} are events\emdash{}formalised as boolean conditions\emdash that
-    lead to failures (called {\it symptoms} in \cite[Mor08]); and {\it
-    Recovery actions} are activities that anticipate, prevent and recover from
-    errors. The reasoning about errors is not quantitative and no dedicated
-    algorithm is available for selecting the most appropriate recovery actions.
+    \noindent {\bf Tropos for Adaptive Systems.} The work in
+    \cite[Mor08,Mor17b] extends the Tropos framework for automated systems
+    along three dimensions: a goal dimension, an environment dimension, and a
+    failure dimension. In the framework, goals are decorated with conditions
+    formally specifying the goal; conditions includes {\it creation condition},
+    {\it pre-conditions}, {\it target conditions}, etc. The conditions are
+    expressed in a non-temporal propositional logic. The failure model captures
+    exceptional situations and possible mitigations. A failure model includes
+    {\it Failures} capturing states where goals are not satisfied; {\it Error}
+    events, formalised as Boolean conditions, lead to failures; and {\it
+    Recovery actions} anticipate, prevent and recover from errors. Reasoning
+    about errors is not quantitative; no dedicated algorithm is available for
+    selecting most appropriate recovery actions.
     
-    \noindent {\sc\bf Olympus.} \cite[Ram11] proposes a genetic algorithm to
-    choose the best configuration for an overlay network. Sequences of actions
-    to change a software system from one configuration to another may then be
-    generated \cite[Ram10]. In \cite[Ram11b] utility functions are generated
-    from a goal model with RELAXed requirements to enable the monitoring of
-    goals. Depending on the type of goal, the technique automatically generates
-    a state-based (invariant goal), metric-based (real-valued goal) or fuzzy
-    logic-based (RELAX goal) utility function that, fed with monitored values,
-    provides an estimate for the goal satisfaction. Utility scores are then
-    propagated in the goal model from the monitored goals to the root goals.
-    \cite[Che13] illustrates how these techniques intertwine to enable
-    self-adaptation of software systems.
+    \noindent {\sc\bf Olympus.} In \cite[Ram11] a genetic algorithm is
+    described for choosing the best configuration for an overlay network.
+    Sequences of actions to change a software system from one configuration to
+    another may then be generated \cite[Ram10]. In \cite[Ram11b] utility
+    functions are generated from a goal model with RELAXed requirements to
+    enable the monitoring of goals. Depending on the type of goal, the
+    technique automatically generates a state-based, metric-based or fuzzy
+    logic-based utility function that, fed with monitored values, provides an
+    estimate for goal satisfaction. Utility scores are then propagated in the
+    goal model from monitored goals to root goals. The work in \cite[Che13]
+    illustrates how these techniques intertwine to enable self-adaptation of
+    software systems.
     
-    \noindent {\bf Self-adaptation for Service-based systems.} Approach in
+    \noindent {\bf Self-adaptation for Service-based systems.} The approach in
     \cite[Ori12,Qur09,Qur10,Qur10b,Qur11,Qur11b] introduces a framework for
-    requirements on self-adaptive, service-based systems. At design-time a
+    requirements on self-adaptive service-based systems. At design-time, a
     forest of goal models is elicited to cover a wide variety of refinement
     alternatives. At runtime, the best alternatives are selected to satisfy
-    high-level requirements and maximize the user preferences. User preferences
-    are determined explicitly by the user or might be detected by the adaptive
-    software.
+    high-level requirements and maximize user preferences. The latter are
+    determined explicitly by the user or detected by the adaptive software.
     
-    \noindent {\bf Surprise-based approach.} \cite[Ben14,Ben15] drafts a
-    preliminary approach where the need for adaptation is inferred from
-    surprise. A surprise is defined as \quote{\it how much monitored information
-    differs from previously monitored information}.
+    \noindent {\bf Surprise-based approach.} A preliminary approach is outlined
+    in \cite[Ben14,Ben15] where the need for adaptation is inferred from
+    surprise. A surprise is defined as \quote{\it how much monitored
+    information differs from previously monitored information}.
   
-    \noindent {\bf Comparing our approach.} Some comparison from the previous
-    section also applies:
+    \noindent {\bf Comparing requirement-driven runtime adaptation with our
+    approach.} The preceding efforts may be related with ours as follows.
     
     \startitemize
     
-      \item Our approach builds on a precise semantic defined in terms of
-      behaviors. This is particularly important when monitoring; otherwise,
-      these efforts are somewhat limited by lack of precise characterization in
-      terms of observed states and behaviors. Unlike \cite[Ram11, Ali10,
-      Gui17, Men16, Sou13], we are able to monitor behaviors and not just
-      state predicates. We might, therefore, detect complex behaviors (such as
-      $P$ occurs between $S$ and $Q$) that appear to be hard to model with
-      other approaches.
+      \item Our approach builds on a precise semantics defined in terms of
+      behaviors. This is particularly important for monitoring; otherwise, the
+      results are somewhat limited by lack of precise characterization in terms
+      of observed states and behaviors. Unlike \cite[Ram11, Ali10, Gui17,
+      Men16, Sou13], we are able to monitor behaviors and not just state
+      predicates. We can therefore detect complex behaviors (such as $P$ occurs
+      between $S$ and $Q$) that appear to be hard to model with other
+      approaches.
       
-      \item Unlike some of the presented approaches, such as
-      \cite[Rob03,Rob05,Rob06,Ori12,Ghe13,Fil16], we propagate the
-      monitored satisfaction rate through the goal/obstacle refinement trees.
-      This enables the computation of the satisfaction rate of goals that are
-      not directly monitorable. Our risk-driven adaptation, therefore, benefits
-      from the goal/obstacle refinement structure.
+      \item Unlike some of the preceding approaches
+      \cite[Rob03,Rob05,Rob06,Ori12,Ghe13,Fil16], we propagate monitored
+      satisfaction rates through goal/obstacle refinement trees. This enables
+      computation of the satisfaction rates of goals that are not directly
+      monitorable. Our risk-driven adaptation thus benefits from the
+      goal/obstacle refinement structure.
     
-      \item Unlike most of the approaches presented here, our approach does not
-      focus on selecting alternatives or configuration parameters but on
+      \item Unlike most of the preceding approaches, our approach does not
+      focus on selecting alternatives or configuration parameters but rather on
       selecting appropriate countermeasures to risks. The approach in
-      \cite[Rob07] focuses on raising alerts. Our approach appears to be
-      closer to \cite[Bar10], as the goal model itself might be adapted.
+      \cite[Rob07] focuses on raising alerts. Our approach appears to be closer
+      to \cite[Bar10] as the goal model itself might be adapted.
     
-    \stopitemize
-    
-    More specifically related to runtime adaptation approaches, our techniques
-    differ for the following reasons:
-    
-    \startitemize
-    
-      \item Our approach shares similarities with \cite[Ghe09,Ghe13,Fil16]
-      in terms of probabilistic formalization and use of formal verification
+      \item Our approach shares similarities with \cite[Ghe09,Ghe13,Fil16] in
+      terms of probabilistic formalization and use of formal verification
       techniques. It does however not require building an explicit behavior
-      model. The approach \cite[Men16] also relies on probabilistic model
-      checking, but the Markov Chain do not model the behavior of the system.
+      model. The approach in \cite[Men16] also relies on probabilistic model
+      checking, but the Markov Chain there does not model the behavior of the
+      system.
   
       \item The focus in \cite[Sou11b,Sou12] is on meta-requirements about
-      other requirements. Our approach limits to a single meta-requirement,
-      guaranteeing that the computed satisfaction rate is above the required
-      satisfaction rate, and a single evolution meta-requirement that is
-      selecting the most appropriate countermeasures.
+      other requirements. Our approach is restricted to an implicit
+      meta-requirement (the computed satisfaction rates remain above required
+      satisfaction rates) and an implicit evolution meta-requirement (most
+      appropriate countermeasures are selected.)
       
-      \item Unlike \cite[Rob07,Mor08,Ram11b], our monitoring procedure does
-      not rely on specification patterns or type of goals. We also support
-      temporal operators, such as $\ltlU$ or $\ltlW$. However, the monitored
-      leaf obstacles shall be formalized in Linear Temporal Logic.
+      \item Unlike \cite[Rob07,Mor08,Ram11b], our monitoring procedure does not
+      rely on specification patterns or goal types. We also support temporal
+      operators such as $\ltlU$ or $\ltlW$. The monitored leaf obstacles are
+      formalized in Linear Temporal Logic.
       
-      \item Unlike \cite[Ori12,Qur09,Qur10,Qur10b,Qur11,Qur11b], our
-      approach is not specific to self-adaptive, service-based systems. The
-      type of adaptation is therefore different.
+      \item Unlike \cite[Ori12,Qur09,Qur10,Qur10b,Qur11,Qur11b], our approach
+      is not specific to self-adaptive service-based systems. The type of
+      adaptation is therefore different.
       
       \item Unlike \cite[Mor17b,Ali09,Ali10,Sou13], our approach is
-      quantitative. This enables a different, finer-grained, set of techniques.
+      quantitative. This enables a different, finer-grained set of techniques.
       
     \stopitemize
     
-    Aside from these frameworks for software adaptation, other monitoring
+    Beyond those frameworks for software adaptation, other monitoring
     techniques could relate to our approach. Monitoring techniques such as
     \cite[Bar04,Sam05,Tha05] focus on failure detection; our focus in on
     probabilistic assessment. In \cite[Sam05,Lee07], the observed trace is
     divided into smaller samples so that properties can be checked on each
     sample; statistical reasoning is then applied to extract a probability. Our
     approach proposes an alternative without sampling the observed behavior
-    into fixed-size samples. These approaches are not integrated with a
-    requirement or risk models; they are restricted to monitoring LTL
-    assertions.
+    into fixed-size samples. These approaches do not incorporate requirements
+    or risk models; they are restricted to monitoring LTL assertions.
     
-    Also, our approach could benefit from the approach proposed in
-    \cite[Fil15] to smooth out monitored satisfaction rates. The approach
-    drafted in \cite[Ben14,Ben15] could be applied to our monitored
-    satisfaction rates to detect critical changes. This, however, needs to be
-    further studied as no precise semantic appears to be available.
+    Our approach could benefit from \cite[Fil15] to smooth out monitored
+    satisfaction rates. The approach drafted in \cite[Ben14,Ben15] could be
+    applied to our monitored satisfaction rates to detect critical changes.
+    This, however, needs to be further studied as no precise semantics appears
+    to be available.
     
-    The problem of deploying countermeasures and computing the sequence of
-    actions required to adapt the running software system is more complex than
+    The problem of deploying countermeasures and computing sequence of actions
+    required to adapt the running software system turns to be more complex than
     the simplistic approach presented in \in{Section}[sec:sw_update].
-    Approaches such as \cite[Ram10] could integrate to take the complexity of
-    the problem into account.
+    Approaches such as \cite[Ram10] could be integrated to take the complexity
+    of the problem into account.
     
     Other approaches to runtime adaptation, such as Rainbow
-    \cite[Gar03,Gar04,Gar09], focuses on architectural models. These approaches
-    tend to focus on low-level requirements and do not benefit from the
-    refinement structure enabling more complex adaptations; A detailed
-    comparison between the requirements-based approach Zanshin and the
+    \cite[Gar03,Gar04,Gar09], focus on architectural models. These approaches
+    tend to consider low-level requirements; they do not benefit from
+    refinement structures enabling more complex adaptations; A detailed
+    comparison between a requirements-based approach \cite[Sou13] and the
     architecture-based approach Rainbow \cite[Gar04] is available in
-    \cite[Ang13]. Other approaches, such as \cite[Che14,Kra07], mixes both
-    requirements and architectural model to propose better adaptations
-    \cite[Saw10,Nus01]. Other approaches such as \cite[Cas11] tackles the
-    different problem of localizing faulty components by monitoring a software
-    system.
-    
-    Last, crossing the related work presented in the previous sections,
-    highlighted some interesting connections.
+    \cite[Ang13]. Other approaches such as \cite[Che14,Kra07] mix both
+    requirements and architectural models to propose better adaptations
+    \cite[Saw10,Nus01]. In \cite[Cas11] a different problem of localizing
+    faulty components by monitoring a software system is considered
+
+    Our study of the relevant literature led us to some further connections.
     
     \startitemize
     
-      \item The approach presented in \cite[Asn11] could be combined with
-      their previous effort \cite[Asn06d] to achieve risk-driven software
-      adaptation similar to our techniques.
-    
-      \item In \cite[Bar10,Bar10b], adaptive goals prescribes the possible
-      adaptation that can be performed when a goal is violated. Our integration
-      schemas changing the goal model, as introduced in
-      \in{Section}[sec:integrating], might be seen as strategies that can be
-      applied to the adaptive goal monitoring the obstructed leaf goal and the
-      obstructing leaf obstacle.
+      \item The approach in \cite[Asn11] could be combined with their previous
+      effort \cite[Asn06d] to achieve risk-driven software adaptation in a
+      similar spirit to our techniques.
       
       \item The approach proposed in \cite[Dal13] appears to be similar to
       Dynamic Fault Trees with temporal requirements as described in
-      \cite[Rui15]. The proposed approach in \cite[Men16] to compute the
-      probability to satisfy a root goal based on a bottom-up propagation of
-      Markov Chains appears to be similar to the computation procedure used in
-      Dynamic Fault Trees \cite[Dug92, Rao09].
+      \cite[Rui15].
+
+      \item The approach proposed in \cite[Men16] to compute the probability to
+      satisfy a root goal based on bottom-up propagation through Markov Chains
+      appears to be similar to the computation procedure used in Dynamic Fault
+      Trees \cite[Dug92, Rao09].
     
     \stopitemize
     
   \stopsection
   
-    \section {Summary}
+  \section {Summary}
 
-    This section presented the relevant work related to our approach. Our
-    approach mainly distinguishes from the other approaches in the following
-    aspects. Our approach proposes a quantitative risk analysis framework
-    anchored on requirements; The risks are identified, assessed and controlled
-    regarding these requirements. The tree structure in the goal/obstacle
-    models enables finer-grained obstacles to be assessed by the experts or
-    monitored at runtime while enabling obstacles to be prioritized or best
-    countermeasures to be selected regarding high-level objectives. The
-    semantic of our probabilistic goals and obstacles are precisely defined in
-    terms of observable states and behaviors. Lastly, multiple cycles of risk
-    analysis might be performed where risks to countermeasures are identified,
-    assessed and controlled.
-
-    Next chapter will conclude and discuss the open issues and perspectives.
+    This section discussed the relevant work related to our approach. To sum
+    up, our results are mainly distinguished from this work in the following
+    aspects: our quantitative risk analysis framework is anchored on
+    requirements; the risks are identified, assessed and controlled with regard
+    to these requirements. The tree structure in the goal/obstacle models
+    enables finer-grained obstacles to be assessed by experts and monitored at
+    runtime while enabling obstacles to be prioritized and best countermeasures
+    to be selected with respect to high-level objectives. The semantics of our
+    probabilistic goals and obstacles are precisely defined in terms of
+    observable states and behaviors. Lastly, multiple cycles of risk analysis
+    can be performed where risks to countermeasures are identified, assessed
+    and controlled.
   
 \stopcomponent

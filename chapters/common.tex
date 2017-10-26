@@ -322,12 +322,23 @@
 \definepapersize[ciaco-thesis][width=160mm,height=240mm]
 \setuppapersize[ciaco-thesis][ciaco-thesis]
 %\setuppapersize[ciaco-thesis][A4]
+
+% Avoid orphan and widow
+\startsetups[mypenalties]
+    \setdefaultpenalties
+    \setpenalties\widowpenalties{2}{10000}
+    \setpenalties\clubpenalties {2}{10000}
+\stopsetups
+
+\setuplayout[]
+
 \setuplayout
    [backspace=20mm,
     width=120mm,
     topspace=20mm,
     height=200mm,
-    location={middle,middle}]
+    location={middle,middle},
+    setups=mypenalties]
     %marking=on]
 
 % Draft mode
@@ -1044,5 +1055,7 @@
 
 % Setup item lists
 \setupitemize[left={\bgroup\it(}, right={)\egroup}, headstyle=\it, distance=1em, stopper=]
+
+
 
 \stopenvironment

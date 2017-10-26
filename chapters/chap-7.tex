@@ -47,7 +47,7 @@
   overall approach for dynamically switching to most appropriate countermeasure
   at runtime. \in{Section}[sec:runtime_running_example] introduces a specific
   running example of runtime adaptation. \in{Section}[sec:monitoring] details
-  how probabilistic obstacles can be monitored at run-time.
+  how probabilistic obstacles can be monitored at runtime.
   \in{Section}[sec:obstaclebased_adaptation] details how probabilistic
   obstacles may drive the runtime adaptation process.
   \in{Section}[sec:sw_update] explains how the running software can be adapted
@@ -70,11 +70,11 @@
     exceed their required satisfaction rate. The satisfaction rate of
     high-level goals is obtained from the monitored satisfaction rate of leaf
     obstacles by up-propagation through the goal/obstacle model, using the
-    technique presented in \in{Chapter}[chap:assessing]. The monitored
+    technique presented in \in{Section}[sec:computing_bdd]. The monitored
     satisfaction rate of a leaf obstacle is obtained by counting the observed
     behaviors.
 
-    \noindent More specifically, our approach comprises 7 steps detailed in the
+    \noindent More specifically, our approach comprises 6 steps detailed in the
     next sections. The relation among steps is shown in
     \in{Figure}[fig:overview_approach].
     
@@ -103,7 +103,7 @@
       \item {\bf Compute high-level goal satisfaction rates.} The monitored
       satisfaction rate of leaf obstacles is up-propagated through
       obstacle/goal refinement trees up to high-level goals. (As explained in
-      \in{Chapter}[chap:assessing], however performed here at runtime.)
+      \in{Chapter}[sec:computing_bdd], however performed here at runtime.)
 
       \item {\bf Selecte countermeasures.} The comparison between the monitored
       satisfaction rates obtained for those goals and their required
@@ -203,6 +203,11 @@
       reads finite traces and outputs the corresponding truth value. As
       suggested by \in{Figure}[fig:ltl3_approach], this FSM is built from the
       formula and its negation \cite[Bau11].
+    
+      \placefigure[top]
+     	  [fig:ltl3_approach]
+     	  {Steps for computing monitor FSM from input formula $\phi$.}
+        {\externalfigure[../images/chap7/ltl3_approach.pdf][scale=1000]}
       
       \startitemize
       
@@ -219,11 +224,6 @@
         automaton (DFA) using powersets construction \cite[Bai08].
       
       \stopitemize
-    
-      \placefigure[top]
-     	  [fig:ltl3_approach]
-     	  {Steps for computing monitor FSM from input formula $\phi$.}
-        {\externalfigure[../images/chap7/ltl3_approach.pdf][scale=1000]}
       
       The monitor FSM results from the product of both DFAs. Let $(s_1,s_2)$
       denote a state in this product, where $s_1$ is the DFA state
@@ -259,11 +259,12 @@
       an obstacle of form $\ltlF(C \wedge \Theta OC)$ is the upper bound among
       the state probabilities of $C \wedge \Theta OC$. We may at runtime count
       the number of observed behaviors satisfying and not satisfying the
-      formula $C \wedge \Theta OC$ from states $s$; the ratio between the
-      number of observed behaviors satisfying the formula and the number of
-      observed behaviors may be used as estimates for the corresponding state
-      probability. The automata-based monitoring procedure for $LTL_3$
-      determines at runtime whether $C \wedge \Theta OC$ is satisfied from $s$.
+      formula $C \wedge \Theta OC$; for a state $s$, the ratio between the
+      number of observed behaviors rooted in $s$ satisfying the formula and the
+      number of observed behaviors rooted in $s$ may be used as estimates for
+      the corresponding state probability. The automata-based monitoring
+      procedure for $LTL_3$ determines at runtime whether $C \wedge \Theta OC$
+      is satisfied for a behavior rooted in $s$.
 
       \startdefinition[def:monitored_satrate]{Monitored Satisfaction Rate}
     
@@ -305,7 +306,7 @@
 
       As the semantics of our language is synchronous \cite[Let08],
       observations are made at a regular pace. If observations are performed
-      every second, the Metric Linear temporal logic (M-LTL) formula $C \wedge
+      every second, the Metric Linear Temporal Logic (M-LTL) formula $C \wedge
       \Theta OC$ inside the $\ltlF$-operator can be transformed into an LTL
       conjunction. Back to our example, if observations are performed every
       second, we observe:
@@ -315,7 +316,7 @@
       \stopformula
       
       \noindent {\bf {\bi (b)} Filtering observed states.} As time goes by, the
-      number of monitors will increases and the monitored state probability will
+      number of monitors will increase and the monitored state probability will
       then vary less and less. This problem is acknowledged in other approaches
       such as \cite[Epi09]. Indeed, at the begining, 10 new positive monitors
       might strongly impact the state probability, e.g., 
@@ -421,7 +422,7 @@
       as \cite[dAm05] amalgamate the last two cases. Other monitoring
       techniques, such as \cite[Bas11], support richer logics such as metric
       temporal logic and first-order logic. These techniques might be used in
-      place of $LTL_3$; this might improve the applicability or the technique
+      place of $LTL_3$; this might improve the applicability of the technique
       to industrial settings.
 
       \noindent {\bf {\bi (d)} Obtaining monitored satisfaction rates.} In this
@@ -479,21 +480,22 @@
       triggers a new virtual monitor which increases the number of available
       data.
     
-      For example, let us require that the monitored satisfaction rate should
-      differ from the exact value by at most 1\% with 95\% certainty, that is,
-      95\% of the values lies within $\pm1.96\sigma$ of the exact value, where
-      $\sigma$ is the standard deviation. This interval holds if the variation
-      around the exact satisfaction rate has a normal distribution
-      \cite[Wac07]. In our example, $1.96\sigma$ must be equal to $.01$. As the
-      value of $\sigma$ is not known, the following unbiased estimator provides
-      an estimate \cite[Wac07]:
+      For example, let us require that the monitored satisfaction rate of a
+      leaf obstacle should differ from the exact value by at most 1\% with 95\%
+      certainty, that is, 95\% of the values lies within $\pm1.96\sigma$ of the
+      exact value, where $\sigma$ is the standard deviation. This interval
+      holds if the variation around the exact satisfaction rate has a normal
+      distribution \cite[Wac07]. In our example, $1.96\sigma$ must be equal to
+      $.01$. As the value of $\sigma$ is not known, the following unbiased
+      estimator provides an estimate \cite[Wac07]:
 
       \startformula
         \hat{\sigma} = \sqrt{\frac{p\times(1-p)}{n}},
       \stopformula
     
-      where $p$ is the estimated satisfaction rate. Replacing $\sigma$ by $\hat\sigma$ in
-      our example results in the following expression:
+      where $p$ is the estimated satisfaction rate for the considered leaf
+      obstacle. Replacing $\sigma$ by $\hat\sigma$ in our example results in
+      the following expression:
     
       \startformula
         1.96\hat\sigma = 1.96 \sqrt{\frac{p\times(1-p)}{n}} = 0.01.
@@ -510,14 +512,14 @@
     
       Our accuracy bound thus requires $6146$ observations of the state with
       the lowest state probability. With one observation every second, it
-      requires at least 1h 42m 26s. Note that this is a lower bound; as discussed in
-      \in{Section}[sec:defining_obstacles], the
-      satisfaction rate is the lowest state probability; to reach that
-      uncertainty, the system has to stay in the same state for the required
-      timespan. This indicates how fast our technique may compute a
+      requires at least 1h 42m 26s. Note that this is a lower bound; as
+      discussed in \in{Section}[sec:defining_obstacles], the satisfaction rate
+      is the lowest state probability; to reach that uncertainty, the system
+      has to spend the required timespan in this state with the lowest state
+      probability. This indicates how fast our technique may compute a
       statistically accurate monitored satisfaction rate. (Note that such
       limitation applies to any monitoring technique with the same amount of
-      observed data.)
+      observed data and the same statistical guarantees.)
       
       In the opposite direction, we may compute the uncertainty margins given a
       timespan of observation. Assume that we make an observation every second for 30
@@ -530,7 +532,7 @@
       
       The \quote{exact} monitored satisfaction rate lies between $78\%$ and
       $81\%$ with 95\% of certainty; this is already a narrow interval. Such
-      information might be used at run-time to decide whether it is reasonable
+      information might be used at runtime to decide whether it is reasonable
       to adapt the running software.
     
       In our example, we used the estimated satisfaction rate $p = 0.2$. If no
@@ -538,11 +540,11 @@
       this value maximizes the number $n$ of observations. This guarantees the
       accuracy for any satisfaction rate.
       
-      \in{Figure}[fig:satrate-dusty_environment] shows the evolution of the
-      95\% confidence interval as more states are observed in dark gray. We can
-      see that the confidence interval is large at the begining where few
-      observations are available, and narrow around the satisfaction rate when
-      more observations are available.
+      \in{Figure}[fig:satrate-dusty_environment] shows in dark gray the
+      evolution of the 95\% confidence interval as more observations are made.
+      We can see that the confidence interval is large at the begining where
+      few observations are available, and narrow around the satisfaction rate
+      when more observations are available.
     
     \stopsubsection
 
@@ -566,12 +568,12 @@
     \startitemize
     
       \item The up-propagation procedure described in
-      \in{Chapter}[chap:assessing] determine the actual satisfaction rate of
+      \in{Section}[sec:computing_bdd] determine the actual satisfaction rate of
       high-level goals from the monitored satisfaction rate of leaf obstacles.
     
       \item The countermeasure selection procedure described in
-      \in{Chapter}[chap:controlling_obstacle] is then used to select most
-      appropriate countermeasures.
+      \in{Section}[sec:selecting_cm] is then used to select most appropriate
+      countermeasures.
     
       \item Countermeasures are then integrated in the ideal model and deployed
       in the running system\emdash{}\in{Section}[sec:sw_update] will describe
@@ -643,7 +645,7 @@
     system. The {\it deactivation} procedure is responsible for its removal. These
     procedures are used to:
     
-    \startitemize
+    \startitemize[packed]
     
       \item add, remove or replace a running component; 
       
@@ -683,7 +685,7 @@
   
 	\startsection[reference=sec:update_k_uncertainty,title={Updating uncertain probability values at runtime}]
   
-    Managing uncertainty at run-time is a critical challenge \cite[Ben10].
+    Managing uncertainty at runtime is a critical challenge \cite[Ben10].
     \in{Chapter}[chap:knowledge-uncertainty] discussed how knowledge
     uncertainty can be integrated with obstacle assessment and control. 
     
@@ -694,7 +696,7 @@
     
     To integrate knowledge uncertainty at runtime, the current monitored satisfaction rate
     should no longer be expressed as a single-value but rather as a multi-value
-    satisfaction rate, typically a {\it Normal} probability distribution.
+    satisfaction rate.
     
     \noindent The process for obtaining the monitored satisfaction rate is
     updated as follows.
@@ -772,14 +774,15 @@
     runtime. The proposed monitoring technique extends the $LTL_3$ approach in
     \cite[Bau11] to support the monitoring of probabilistic assertions. The
     monitors are built at RE time; at runtime, virtual copies of $LTL_3$
-    monitors keep track of obstacle satisfaction. State probabilities for each
-    observed state can thereby be estimated; their upper bound provides the
-    monitored obstacle satisfaction rates. The latter are propagated through
-    the obstacle/goal model up to the system’s high-level goals. The monitored
-    satisfaction rates thereby obtained for these goals are compared with their
-    required satisfaction rate; when the former fall below the latter, more
-    appropriate countermeasures replace the current ones to remain above the
-    required threshold.
+    monitors keep track of whether observed behavior satisfy obstacle
+    specifications. State probabilities for each observed state can thereby be
+    estimated; their upper bound provides the monitored obstacle satisfaction
+    rates. The latter are propagated through the obstacle/goal model up to the
+    system’s high-level goals. The monitored satisfaction rates thereby
+    obtained for these goals are compared with their required satisfaction
+    rate; when the former fall below the latter, more appropriate
+    countermeasures replace the current ones to remain above the required
+    threshold.
     
     The next chapter describes the tools supporting the various techniques
     presented in the thesis.
